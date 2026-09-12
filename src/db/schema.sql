@@ -230,3 +230,94 @@ CREATE TABLE IF NOT EXISTS model_variable_weights (
     is_locked           INTEGER NOT NULL DEFAULT 0,
     CONSTRAINT uq_model_variable UNIQUE (model_id, variable_code)
 );
+
+-- --------------------------------------------------------------------
+-- LAYER 4: COMPUTED SCORING RESULTS & AUDIT
+-- --------------------------------------------------------------------
+
+-- 15. Riwayat Sesi Eksekusi Skoring
+CREATE TABLE IF NOT EXISTS scoring_runs (
+    run_id              TEXT PRIMARY KEY,
+    model_id            TEXT NOT NULL REFERENCES priority_models(model_id) ON DELETE RESTRICT,
+    operating_mode      TEXT NOT NULL,                        -- 'OPERATIONAL_2025' atau 'BENCHMARK_2024'
+    roads_evaluated     INTEGER NOT NULL DEFAULT 350,
+    top105_concordance  REAL,                                 -- Persentase overlap terhadap Top-105 (audit benchmark)
+    execution_time_ms   INTEGER NOT NULL,                     -- Waktu komputasi (milidetik)
+    run_by_user_id      TEXT NOT NULL,
+    executed_at         TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_runs_model ON scoring_runs(model_id);
+CREATE INDEX IF NOT EXISTS idx_runs_mode ON scoring_runs(operating_mode);
+
+-- 16. Hasil Peringkat & Dekomposisi 17 Faktor per Ruas
+CREATE TABLE IF NOT EXISTS road_priority_scores (
+    score_id            TEXT PRIMARY KEY,
+    run_id              TEXT NOT NULL REFERENCES scoring_runs(run_id) ON DELETE CASCADE,
+    road_key            TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    final_score         REAL NOT NULL,                        -- Skor komposit [0.0 s.d. 1.0]
+    priority_rank       INTEGER NOT NULL,                     -- Peringkat 1 s.d. 350
+    tier_category       TEXT NOT NULL,                        -- 'TOP_35', 'TOP_70', 'TOP_105', 'REGULAR'
+    subtotal_teknis     REAL NOT NULL,                        -- Kontribusi Kategori 1
+    subtotal_akses      REAL NOT NULL,                        -- Kontribusi Kategori 2
+    subtotal_pelayanan  REAL NOT NULL,                        -- Kontribusi Kategori 3
+    subtotal_spasial    REAL NOT NULL,                        -- Kontribusi Kategori 4
+    factor_breakdown    TEXT NOT NULL,                        -- JSON string rincian 17 faktor {variable: {raw, norm, eff, contrib}}
+    CONSTRAINT uq_run_road UNIQUE (run_id, road_key),
+    CONSTRAINT uq_run_rank UNIQUE (run_id, priority_rank)     -- Garansi tidak ada peringkat kembar (Strict Bijective)
+);
+
+CREATE INDEX IF NOT EXISTS idx_scores_rank ON road_priority_scores(run_id, priority_rank);
+CREATE INDEX IF NOT EXISTS idx_scores_road ON road_priority_scores(run_id, road_key);
+
+-- --------------------------------------------------------------------
+-- DATABASE TRIGGERS: IMMUTABLE BASELINE & LOCKED MODEL PROTECTION
+-- --------------------------------------------------------------------
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_model_update
+BEFORE UPDATE ON priority_models
+FOR EACH ROW
+WHEN OLD.is_locked = 1 OR OLD.model_lifecycle = 'BASELINE_LOCKED'
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot modify locked or baseline priority model.');
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_model_delete
+BEFORE DELETE ON priority_models
+FOR EACH ROW
+WHEN OLD.is_locked = 1 OR OLD.model_lifecycle = 'BASELINE_LOCKED'
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot delete locked or baseline priority model.');
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_cat_weight_update
+BEFORE UPDATE ON model_category_weights
+FOR EACH ROW
+WHEN (SELECT is_locked FROM priority_models WHERE model_id = OLD.model_id) = 1
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot modify category weights of a locked priority model.');
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_cat_weight_delete
+BEFORE DELETE ON model_category_weights
+FOR EACH ROW
+WHEN (SELECT is_locked FROM priority_models WHERE model_id = OLD.model_id) = 1
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot delete category weights of a locked priority model.');
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_var_weight_update
+BEFORE UPDATE ON model_variable_weights
+FOR EACH ROW
+WHEN (SELECT is_locked FROM priority_models WHERE model_id = OLD.model_id) = 1
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot modify variable weights of a locked priority model.');
+END;
+
+CREATE TRIGGER IF NOT EXISTS trg_prevent_locked_var_weight_delete
+BEFORE DELETE ON model_variable_weights
+FOR EACH ROW
+WHEN (SELECT is_locked FROM priority_models WHERE model_id = OLD.model_id) = 1
+BEGIN
+    SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot delete variable weights of a locked priority model.');
+END;

@@ -138,12 +138,7 @@ export function seedModelDefinitions(db: DatabaseSync): {
       is_locked,
       created_by_user_id
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ON CONFLICT(model_code) DO UPDATE SET
-      model_name = excluded.model_name,
-      description = excluded.description,
-      model_lifecycle = excluded.model_lifecycle,
-      operating_mode = excluded.operating_mode,
-      is_locked = excluded.is_locked
+    ON CONFLICT(model_code) DO NOTHING
   `);
 
   insertModelStmt.run(
@@ -168,10 +163,7 @@ export function seedModelDefinitions(db: DatabaseSync): {
       normalized_weight,
       is_locked
     ) VALUES (?, ?, ?, ?, ?, ?)
-    ON CONFLICT(model_id, category_code) DO UPDATE SET
-      raw_weight = excluded.raw_weight,
-      normalized_weight = excluded.normalized_weight,
-      is_locked = excluded.is_locked
+    ON CONFLICT(model_id, category_code) DO NOTHING
   `);
 
   let insertedCategoryWeights = 0;
@@ -209,11 +201,7 @@ export function seedModelDefinitions(db: DatabaseSync): {
       effective_weight,
       is_locked
     ) VALUES (?, ?, ?, ?, ?, ?, ?)
-    ON CONFLICT(model_id, variable_code) DO UPDATE SET
-      category_code = excluded.category_code,
-      local_weight = excluded.local_weight,
-      effective_weight = excluded.effective_weight,
-      is_locked = excluded.is_locked
+    ON CONFLICT(model_id, variable_code) DO NOTHING
   `);
 
   let insertedVariableWeights = 0;
