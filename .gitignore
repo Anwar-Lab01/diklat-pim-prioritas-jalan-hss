@@ -3,3 +3,6 @@ node_modules/
 *.db-shm
 .DS_Store
 Thumbs.db
+data/diklat_pim.db
+data/diklat_pim.db-wal
+data/diklat_pim.db-shm
