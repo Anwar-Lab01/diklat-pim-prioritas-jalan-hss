@@ -1,9 +1,9 @@
 // src/server.ts
-import { fileURLToPath as fileURLToPath3 } from "node:url";
+import { fileURLToPath as fileURLToPath4 } from "node:url";
 
 // src/server/server.ts
 import path3 from "node:path";
-import { fileURLToPath as fileURLToPath2 } from "node:url";
+import { fileURLToPath as fileURLToPath3 } from "node:url";
 import express from "express";
 
 // src/config/constants.ts
@@ -329,41 +329,72 @@ var VARIABLE_DEFINITIONS = [
 import { DatabaseSync } from "node:sqlite";
 import fs2 from "node:fs";
 import path2 from "node:path";
+import { fileURLToPath as fileURLToPath2 } from "node:url";
+var __filename2 = fileURLToPath2(import.meta.url);
+var __dirname2 = path2.dirname(__filename2);
 var dbInstance = null;
 function getDatabase(dbPath = DB_PATH) {
   if (dbInstance) {
     return dbInstance;
   }
+  const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  let targetPath = dbPath;
+  if (isServerless) {
+    const candidates = [
+      dbPath,
+      path2.resolve(PROJECT_ROOT, "data/diklat_pim_deploy.db"),
+      path2.resolve(process.cwd(), "data/diklat_pim_deploy.db"),
+      path2.resolve(__dirname2, "../data/diklat_pim_deploy.db"),
+      path2.resolve(__dirname2, "../../data/diklat_pim_deploy.db"),
+      "/var/task/data/diklat_pim_deploy.db"
+    ];
+    const found = candidates.find((c) => fs2.existsSync(c));
+    if (found) {
+      const tmpPath = path2.join("/tmp", path2.basename(found));
+      try {
+        if (!fs2.existsSync(tmpPath) || fs2.statSync(tmpPath).size !== fs2.statSync(found).size) {
+          fs2.copyFileSync(found, tmpPath);
+        }
+        targetPath = tmpPath;
+      } catch (copyErr) {
+        console.warn("Failed copying database to /tmp, falling back to direct open:", copyErr);
+        targetPath = found;
+      }
+    }
+  }
   try {
-    if (!fs2.existsSync(DB_DIR)) {
-      fs2.mkdirSync(DB_DIR, { recursive: true });
+    const dir = path2.dirname(targetPath);
+    if (!fs2.existsSync(dir)) {
+      fs2.mkdirSync(dir, { recursive: true });
     }
   } catch {
   }
   const isProductionOrVercel = Boolean(
     process.env.NODE_ENV === "production" || process.env.VERCEL || process.env.DB_READONLY === "1"
   );
-  const isDeployDb = dbPath === DEPLOY_DB_PATH || path2.basename(dbPath) === "diklat_pim_deploy.db";
-  const isReadOnly = isProductionOrVercel || isDeployDb;
+  const isDeployDb = targetPath.includes("diklat_pim_deploy.db");
+  const isReadOnly = (isProductionOrVercel || isDeployDb) && !isServerless;
   let db;
   if (isReadOnly) {
     try {
-      db = new DatabaseSync(dbPath, { readOnly: true });
+      db = new DatabaseSync(targetPath, { readOnly: true });
     } catch {
-      db = new DatabaseSync(dbPath);
+      db = new DatabaseSync(targetPath);
     }
     try {
       db.exec("PRAGMA foreign_keys = ON;");
     } catch {
     }
   } else {
-    db = new DatabaseSync(dbPath);
+    db = new DatabaseSync(targetPath);
     db.exec("PRAGMA foreign_keys = ON;");
-    db.exec("PRAGMA journal_mode = WAL;");
-    const schemaPath = path2.resolve(PROJECT_ROOT, "src/db/schema.sql");
-    if (fs2.existsSync(schemaPath)) {
-      const schemaSql = fs2.readFileSync(schemaPath, "utf8");
-      db.exec(schemaSql);
+    if (!isDeployDb) {
+      db.exec("PRAGMA journal_mode = WAL;");
+      const schemaPath = path2.resolve(PROJECT_ROOT, "src/db/schema.sql");
+      if (fs2.existsSync(schemaPath)) {
+        const schemaSql = fs2.readFileSync(schemaPath, "utf8");
+        db.exec(schemaSql);
+      }
     }
   }
   dbInstance = db;
@@ -1936,8 +1967,8 @@ var SpatialService = class {
 };
 
 // src/server/server.ts
-var __filename2 = fileURLToPath2(import.meta.url);
-var __dirname2 = path3.dirname(__filename2);
+var __filename3 = fileURLToPath3(import.meta.url);
+var __dirname3 = path3.dirname(__filename3);
 function createServer() {
   const app2 = express();
   const uiService = new UiDataService();
@@ -2126,7 +2157,7 @@ function createServer() {
   });
   return app2;
 }
-if (process.argv[1] === fileURLToPath2(import.meta.url)) {
+if (process.argv[1] === fileURLToPath3(import.meta.url)) {
   const PORT = process.env.PORT || 3e3;
   const app2 = createServer();
   app2.listen(PORT, () => {
@@ -2142,7 +2173,7 @@ if (process.argv[1] === fileURLToPath2(import.meta.url)) {
 // src/server.ts
 var app = createServer();
 var server_default = app;
-if (process.argv[1] === fileURLToPath3(import.meta.url)) {
+if (process.argv[1] === fileURLToPath4(import.meta.url)) {
   const PORT = process.env.PORT || 3e3;
   app.listen(PORT, () => {
     console.log(`================================================================`);
