@@ -46,6 +46,13 @@ export const SELECTION_HALO_STYLE = {
   lineJoin: 'round',
 };
 
+export const HIT_TARGET_STYLE = {
+  weight: 16,
+  opacity: 0,
+  lineCap: 'round',
+  lineJoin: 'round',
+};
+
 export const REFERENCE_NETWORK_STYLES = {
   PROVINSI: {
     color: '#6366f1', // Indigo-500

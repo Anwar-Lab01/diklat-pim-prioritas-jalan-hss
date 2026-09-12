@@ -6,6 +6,7 @@
 import {
   ROAD_TIER_STYLES,
   SELECTION_HALO_STYLE,
+  HIT_TARGET_STYLE,
   REFERENCE_NETWORK_STYLES,
   ADMINISTRATIVE_STYLES,
   RTRW_COLORS,
@@ -30,12 +31,13 @@ const state = {
   pageSize: 50,
   precisionMode: false,
 
-  // --- Phase 4 Web GIS State ---
+  // --- Phase 4 & 4.5 Web GIS State ---
   map: null,
   mapInitialized: false,
   mapLayers: {
     osmBasemap: null,
     countyRoads: null,
+    countyRoadsHitTarget: null,
     provincialRoads: null,
     nationalRoads: null,
     connectors: null,
@@ -236,16 +238,31 @@ function switchView(viewName) {
   }
 
   // Load view data
-  if (viewName === 'dashboard') loadDashboard();
-  else if (viewName === 'prioritas') loadPriorityTable();
-  else if (viewName === 'peta') {
+  const drawerEl = document.getElementById('road-detail-drawer');
+  if (viewName === 'dashboard') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadDashboard();
+  } else if (viewName === 'prioritas') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadPriorityTable();
+  } else if (viewName === 'peta') {
+    if (state.selectedRoadDetail) {
+      drawerEl?.classList.add('drawer-map-mode');
+    }
     if (!state.mapInitialized) {
       initMap();
     } else {
-      setTimeout(() => state.map?.invalidateSize(), 50);
+      setTimeout(() => {
+        state.map?.invalidateSize();
+      }, 50);
     }
-  } else if (viewName === 'data-sumber') loadProvenance();
-  else if (viewName === 'model') loadModel();
+  } else if (viewName === 'data-sumber') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadProvenance();
+  } else if (viewName === 'model') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadModel();
+  }
 }
 
 // --- VIEW 1: DASHBOARD ---
@@ -604,6 +621,21 @@ async function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Dinas PUTR Kab. HSS',
   }).addTo(state.map);
 
+  // Offline detection and graceful fallback banner
+  state.mapLayers.osmBasemap.on('tileerror', () => {
+    document.getElementById('map-offline-banner')?.classList.remove('hidden');
+    document.getElementById('hss-map').style.backgroundColor = '#f1f5f9';
+  });
+  state.mapLayers.osmBasemap.on('load', () => {
+    const isNeutral = document.getElementById('layer-basemap-neutral')?.checked;
+    if (!isNeutral) {
+      document.getElementById('map-offline-banner')?.classList.add('hidden');
+    }
+  });
+
+  // Map zoom listener for facility decluttering
+  state.map.on('zoomend', handleMapZoomChange);
+
   initMapControls();
   state.mapInitialized = true;
 
@@ -614,8 +646,11 @@ function initMapControls() {
   // Focus HSS button
   document.getElementById('map-btn-fit-hss')?.addEventListener('click', fitHssBounds);
 
-  // Reset Map Filters button
-  document.getElementById('map-btn-reset-filters')?.addEventListener('click', () => {
+  // Clear Road Selection button
+  document.getElementById('map-btn-clear-selection')?.addEventListener('click', clearRoadSelection);
+
+  // Reset Map Filters button & Empty State Reset button
+  const resetFiltersAction = () => {
     const searchEl = document.getElementById('map-search-input');
     const distEl = document.getElementById('map-filter-district');
     const tierEl = document.getElementById('map-filter-tier');
@@ -628,9 +663,12 @@ function initMapControls() {
 
     state.mapFilters = { search: '', district: 'ALL', tier: 'ALL', condition: 'ALL' };
     applyMapFilters();
-  });
+  };
 
-  // Live search input & autocomplete
+  document.getElementById('map-btn-reset-filters')?.addEventListener('click', resetFiltersAction);
+  document.getElementById('map-btn-empty-reset')?.addEventListener('click', resetFiltersAction);
+
+  // Live search input & autocomplete with keyboard navigation
   const searchInput = document.getElementById('map-search-input');
   const autocompleteBox = document.getElementById('map-search-autocomplete');
 
@@ -639,6 +677,39 @@ function initMapControls() {
     state.mapFilters.search = q;
     handleMapSearchAutocomplete(q);
     applyMapFilters();
+  });
+
+  searchInput?.addEventListener('keydown', (e) => {
+    const box = document.getElementById('map-search-autocomplete');
+    if (box?.classList.contains('hidden') || currentAutocompleteMatches.length === 0) {
+      if (e.key === 'Enter') {
+        applyMapFilters();
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      autocompleteSelectedIndex = (autocompleteSelectedIndex + 1) % currentAutocompleteMatches.length;
+      renderAutocompleteItems(searchInput.value.trim());
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      autocompleteSelectedIndex = (autocompleteSelectedIndex - 1 + currentAutocompleteMatches.length) % currentAutocompleteMatches.length;
+      renderAutocompleteItems(searchInput.value.trim());
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (autocompleteSelectedIndex >= 0 && autocompleteSelectedIndex < currentAutocompleteMatches.length) {
+        selectFromMapAutocomplete(currentAutocompleteMatches[autocompleteSelectedIndex].properties.road_key);
+      } else if (currentAutocompleteMatches.length === 1) {
+        selectFromMapAutocomplete(currentAutocompleteMatches[0].properties.road_key);
+      } else {
+        box.classList.add('hidden');
+        applyMapFilters();
+      }
+    } else if (e.key === 'Escape') {
+      box.classList.add('hidden');
+      autocompleteSelectedIndex = -1;
+    }
   });
 
   document.addEventListener('click', (e) => {
@@ -686,51 +757,64 @@ function initMapControls() {
   // Basemap radio toggles
   document.querySelectorAll('input[name="basemap-layer"]').forEach((radio) => {
     radio.addEventListener('change', (e) => {
+      const banner = document.getElementById('map-offline-banner');
       if (e.target.value === 'osm') {
         if (!state.map.hasLayer(state.mapLayers.osmBasemap)) {
           state.mapLayers.osmBasemap.addTo(state.map);
         }
         document.getElementById('hss-map').style.backgroundColor = '';
+        banner?.classList.add('hidden');
       } else {
         if (state.map.hasLayer(state.mapLayers.osmBasemap)) {
           state.map.removeLayer(state.mapLayers.osmBasemap);
         }
         document.getElementById('hss-map').style.backgroundColor = '#f8fafc';
+        banner?.classList.remove('hidden');
       }
+      updateDynamicLegend();
     });
   });
 
   // Reference road layer toggles
   document.getElementById('layer-roads-provincial')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.provincialRoads, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-roads-national')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.nationalRoads, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-connectors')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.connectors, e.target.checked);
+    updateDynamicLegend();
   });
 
   // Facilities layer toggles
   document.getElementById('layer-fac-hospital')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.rsud, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-fac-puskesmas')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.puskesmas, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-fac-market')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.markets, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-fac-school')?.addEventListener('change', (e) => {
-    toggleLayerVisibility(state.mapLayers.schools, e.target.checked);
+    updateSchoolsVisibility(e.target.checked);
+    updateDynamicLegend();
   });
 
   // Admin layer toggles
   document.getElementById('layer-admin-districts')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.districts, e.target.checked);
+    updateDynamicLegend();
   });
   document.getElementById('layer-admin-villages')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.villages, e.target.checked);
+    updateDynamicLegend();
   });
 
   // RTRW layer toggle (on-demand loading)
@@ -738,8 +822,7 @@ function initMapControls() {
     if (e.target.checked) {
       if (!state.mapData.rtrw) {
         await loadRtrwLayer();
-      }
-      if (state.mapLayers.rtrw) {
+      } else if (state.mapLayers.rtrw) {
         state.mapLayers.rtrw.addTo(state.map);
       }
     } else {
@@ -747,6 +830,7 @@ function initMapControls() {
         state.map.removeLayer(state.mapLayers.rtrw);
       }
     }
+    updateDynamicLegend();
   });
 }
 
@@ -788,6 +872,7 @@ async function loadMapData() {
     }
 
     updateMapStatus();
+    updateDynamicLegend();
   } catch (err) {
     console.error('Error loading map data:', err);
   }
@@ -809,7 +894,51 @@ function renderThematicRoads(features) {
   if (state.mapLayers.countyRoads) {
     state.map.removeLayer(state.mapLayers.countyRoads);
   }
+  if (state.mapLayers.countyRoadsHitTarget) {
+    state.map.removeLayer(state.mapLayers.countyRoadsHitTarget);
+  }
 
+  const setupRoadInteractivity = (feature, layer) => {
+    const p = feature.properties;
+    const tierStyle = ROAD_TIER_STYLES[p.tier_category] || ROAD_TIER_STYLES.REGULAR;
+
+    const tooltipContent = `
+      <div class="p-1 text-xs leading-relaxed">
+        <div class="font-bold text-slate-900">${escapeHtml(p.display_name)}</div>
+        <div class="text-[10px] text-slate-500 font-mono">No: ${p.nomor_ruas} | ${p.road_key}</div>
+        <div class="text-[11px] text-slate-700">Kecamatan: <strong>${escapeHtml(p.district_name)}</strong></div>
+        <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
+          <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
+          <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
+        </div>
+        <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
+          <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(p.tier_category)}</span>
+          <span class="text-slate-600">Mantap: ${p.mantap_pct.toFixed(1)}%</span>
+        </div>
+      </div>
+    `;
+    layer.bindTooltip(tooltipContent, {
+      sticky: true,
+      className: 'shadow-md rounded-lg border border-slate-200',
+    });
+
+    layer.on('click', () => {
+      selectRoadOnMap(p.road_key);
+      openRoadDetail(p.road_key);
+    });
+  };
+
+  // 1. Invisible hit target layer (weight: 16, opacity: 0) for effortless clicking
+  state.mapLayers.countyRoadsHitTarget = L.geoJSON(
+    { type: 'FeatureCollection', features },
+    {
+      pane: 'countyRoadsPane',
+      style: HIT_TARGET_STYLE,
+      onEachFeature: setupRoadInteractivity,
+    }
+  ).addTo(state.map);
+
+  // 2. Visible thematic priority styled road layer
   state.mapLayers.countyRoads = L.geoJSON(
     { type: 'FeatureCollection', features },
     {
@@ -825,35 +954,7 @@ function renderThematicRoads(features) {
           lineJoin: 'round',
         };
       },
-      onEachFeature: (feature, layer) => {
-        const p = feature.properties;
-        const tierStyle = ROAD_TIER_STYLES[p.tier_category] || ROAD_TIER_STYLES.REGULAR;
-
-        const tooltipContent = `
-          <div class="p-1 text-xs leading-relaxed">
-            <div class="font-bold text-slate-900">${escapeHtml(p.display_name)}</div>
-            <div class="text-[10px] text-slate-500 font-mono">No: ${p.nomor_ruas} | ${p.road_key}</div>
-            <div class="text-[11px] text-slate-700">Kecamatan: <strong>${escapeHtml(p.district_name)}</strong></div>
-            <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
-              <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
-              <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
-            </div>
-            <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
-              <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(p.tier_category)}</span>
-              <span class="text-slate-600">Mantap: ${p.mantap_pct.toFixed(1)}%</span>
-            </div>
-          </div>
-        `;
-        layer.bindTooltip(tooltipContent, {
-          sticky: true,
-          className: 'shadow-md rounded-lg border border-slate-200',
-        });
-
-        layer.on('click', () => {
-          selectRoadOnMap(p.road_key);
-          openRoadDetail(p.road_key);
-        });
-      },
+      onEachFeature: setupRoadInteractivity,
     }
   ).addTo(state.map);
 }
@@ -987,9 +1088,18 @@ function renderVillages(data) {
 }
 
 async function loadRtrwLayer() {
+  if (state.mapData.rtrw && state.mapLayers.rtrw) {
+    if (!state.map.hasLayer(state.mapLayers.rtrw)) {
+      state.mapLayers.rtrw.addTo(state.map);
+    }
+    updateDynamicLegend();
+    return;
+  }
+
   const spinner = document.getElementById('rtrw-loading-indicator');
   spinner?.classList.remove('hidden');
 
+  const t0 = performance.now();
   try {
     const res = await fetch('/api/map/rtrw');
     const json = await res.json();
@@ -1003,10 +1113,10 @@ async function loadRtrwLayer() {
         const color = RTRW_COLORS[pola] || '#94a3b8';
         return {
           fillColor: color,
-          fillOpacity: 0.35,
+          fillOpacity: 0.28,
           weight: 0.5,
           color: '#64748b',
-          opacity: 0.5,
+          opacity: 0.4,
         };
       },
       onEachFeature: (f, layer) => {
@@ -1014,8 +1124,18 @@ async function loadRtrwLayer() {
         layer.bindTooltip(`<div class="text-[11px] font-semibold">${escapeHtml(pola)}</div>`, { sticky: true });
       },
     });
+
+    if (document.getElementById('layer-rtrw')?.checked) {
+      state.mapLayers.rtrw.addTo(state.map);
+    }
+
+    const t1 = performance.now();
+    console.info(`[Phase 4.5] RTRW layer rendered in ${(t1 - t0).toFixed(1)}ms (${json.data.features?.length || 2832} polygons)`);
+    updateDynamicLegend();
   } catch (err) {
     console.error('Error loading RTRW overlay:', err);
+    const rtrwToggle = document.getElementById('layer-rtrw');
+    if (rtrwToggle) rtrwToggle.checked = false;
   } finally {
     spinner?.classList.add('hidden');
   }
@@ -1059,64 +1179,113 @@ function applyMapFilters() {
     features = features.filter((f) => f.properties.mantap_pct < 40.0);
   }
 
+  // Empty state handling
+  const emptyStateEl = document.getElementById('map-empty-state');
+  if (features.length === 0) {
+    emptyStateEl?.classList.remove('hidden');
+  } else {
+    emptyStateEl?.classList.add('hidden');
+  }
+
   renderThematicRoads(features);
 
-  // Update status bar
+  // Update status badge & text
+  const badge = document.getElementById('map-filtered-badge');
+  if (badge) {
+    badge.textContent = `Menampilkan ${features.length} dari 350 ruas`;
+    badge.className = features.length === 350
+      ? 'px-2.5 py-1 rounded-full font-bold bg-sky-100 text-sky-800'
+      : 'px-2.5 py-1 rounded-full font-bold bg-amber-100 text-amber-800';
+  }
+
   const statRoads = document.getElementById('map-stat-visible-roads');
   if (statRoads) {
     statRoads.textContent = `Menampilkan ${features.length} dari 350 ruas jalan`;
   }
 }
 
+let autocompleteSelectedIndex = -1;
+let currentAutocompleteMatches = [];
+
 function handleMapSearchAutocomplete(query) {
   const box = document.getElementById('map-search-autocomplete');
   if (!box || !state.mapData.countyRoads) return;
 
+  autocompleteSelectedIndex = -1;
+
   if (!query || query.length < 2) {
     box.classList.add('hidden');
     box.innerHTML = '';
+    currentAutocompleteMatches = [];
     return;
   }
 
-  const matches = state.mapData.countyRoads.features
+  currentAutocompleteMatches = state.mapData.countyRoads.features
     .filter((f) => {
       const p = f.properties;
       return (
         p.display_name.toLowerCase().includes(query) ||
+        p.canonical_name.toLowerCase().includes(query) ||
         p.nomor_ruas.includes(query) ||
         p.road_key.toLowerCase().includes(query)
       );
     })
     .slice(0, 8);
 
-  if (matches.length === 0) {
-    box.classList.add('hidden');
-    box.innerHTML = '';
+  if (currentAutocompleteMatches.length === 0) {
+    box.innerHTML = `
+      <div class="px-3 py-2.5 text-xs text-slate-500 italic text-center">
+        Tidak ada ruas jalan yang cocok dengan "${escapeHtml(query)}"
+      </div>
+    `;
+    box.classList.remove('hidden');
     return;
   }
 
-  box.innerHTML = matches
-    .map(
-      (m) => `
-    <div class="px-3 py-2 hover:bg-sky-50 cursor-pointer border-b border-slate-100 last:border-0 flex items-center justify-between" onclick="selectFromMapAutocomplete('${m.properties.road_key}')">
-      <div>
-        <div class="font-semibold text-slate-800 text-xs">${escapeHtml(m.properties.display_name)}</div>
-        <div class="text-[10px] text-slate-400 font-mono">No. ${m.properties.nomor_ruas} | ${m.properties.district_name}</div>
-      </div>
-      <div class="text-right font-mono">
-        <span class="text-xs font-bold text-slate-900">#${m.properties.priority_rank}</span>
-      </div>
-    </div>
-  `
-    )
-    .join('');
-
+  renderAutocompleteItems(query);
   box.classList.remove('hidden');
+}
+
+function renderAutocompleteItems(query) {
+  const box = document.getElementById('map-search-autocomplete');
+  if (!box) return;
+
+  const escaped = escapeRegExp(query);
+  const regex = new RegExp(`(${escaped})`, 'gi');
+
+  box.innerHTML = currentAutocompleteMatches
+    .map((m, idx) => {
+      const p = m.properties;
+      const highlightedName = escapeHtml(p.display_name).replace(regex, '<mark class="bg-sky-200 text-slate-900 rounded px-0.5">$1</mark>');
+      const highlightedKey = escapeHtml(p.road_key).replace(regex, '<mark class="bg-sky-200 text-slate-900 rounded px-0.5">$1</mark>');
+      const highlightedNum = escapeHtml(p.nomor_ruas).replace(regex, '<mark class="bg-sky-200 text-slate-900 rounded px-0.5">$1</mark>');
+      const isSelected = idx === autocompleteSelectedIndex;
+
+      return `
+        <div class="px-3 py-2 cursor-pointer border-b border-slate-100 last:border-0 flex items-center justify-between transition-colors ${
+          isSelected ? 'bg-sky-100' : 'hover:bg-slate-50'
+        }" onclick="selectFromMapAutocomplete('${p.road_key}')" data-index="${idx}">
+          <div>
+            <div class="font-semibold text-slate-800 text-xs">${highlightedName}</div>
+            <div class="text-[10px] text-slate-500 font-mono">No. ${highlightedNum} | ${highlightedKey} | ${escapeHtml(p.district_name)}</div>
+          </div>
+          <div class="text-right font-mono shrink-0 ml-2">
+            <span class="text-xs font-bold text-slate-900">#${p.priority_rank}</span>
+          </div>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 window.selectFromMapAutocomplete = function (roadKey) {
   const box = document.getElementById('map-search-autocomplete');
   box?.classList.add('hidden');
+  autocompleteSelectedIndex = -1;
   selectRoadOnMap(roadKey);
   openRoadDetail(roadKey);
 };
@@ -1147,6 +1316,9 @@ window.selectRoadOnMap = function (roadKey) {
 
   state.selectedRoadKey = roadKey;
 
+  // Show "Hapus Pilihan" button
+  document.getElementById('map-btn-clear-selection')?.classList.remove('hidden');
+
   // Clear previous halo
   if (state.mapLayers.selectionHalo) {
     state.map.removeLayer(state.mapLayers.selectionHalo);
@@ -1158,10 +1330,32 @@ window.selectRoadOnMap = function (roadKey) {
     style: SELECTION_HALO_STYLE,
   }).addTo(state.map);
 
-  // Zoom to road
+  // Zoom to road with viewport padding accounting for drawer width on desktop
   const bounds = state.mapLayers.selectionHalo.getBounds();
   if (bounds.isValid()) {
-    state.map.fitBounds(bounds, { padding: [60, 60], maxZoom: 15 });
+    const isDesktop = window.innerWidth >= 1024;
+    const drawerEl = document.getElementById('road-detail-drawer');
+    const isDrawerOpen = drawerEl && !drawerEl.classList.contains('hidden');
+    // On desktop, drawer takes ~576px on right. Give padding [460, 40] so road is centered in left viewport
+    const rightPad = isDesktop && isDrawerOpen ? 460 : 60;
+    state.map.fitBounds(bounds, {
+      paddingBottomRight: [rightPad, 40],
+      paddingTopLeft: [40, 40],
+      maxZoom: 15,
+    });
+  }
+};
+
+window.clearRoadSelection = function () {
+  if (state.mapLayers.selectionHalo && state.map) {
+    state.map.removeLayer(state.mapLayers.selectionHalo);
+    state.mapLayers.selectionHalo = null;
+  }
+  state.selectedRoadKey = null;
+  document.getElementById('map-btn-clear-selection')?.classList.add('hidden');
+
+  if (window.location.hash.startsWith('#peta')) {
+    history.replaceState(null, '', '#peta');
   }
 };
 
@@ -1176,9 +1370,11 @@ window.viewRoadOnMap = async function (roadKey) {
   }
 
   setTimeout(() => {
-    selectRoadOnMap(roadKey);
     openRoadDetail(roadKey);
-  }, 200);
+    setTimeout(() => {
+      selectRoadOnMap(roadKey);
+    }, 50);
+  }, 150);
 };
 
 function fitHssBounds() {
@@ -1196,6 +1392,170 @@ function toggleLayerVisibility(layer, isVisible) {
   } else {
     if (state.map.hasLayer(layer)) state.map.removeLayer(layer);
   }
+}
+
+function handleMapZoomChange() {
+  const isSchoolChecked = document.getElementById('layer-fac-school')?.checked;
+  if (isSchoolChecked) {
+    updateSchoolsVisibility(true);
+  }
+  updateDynamicLegend();
+}
+
+function updateSchoolsVisibility(isChecked) {
+  if (!state.mapLayers.schools || !state.map) return;
+  const zoom = state.map.getZoom();
+  if (isChecked && zoom >= 12.5) {
+    if (!state.map.hasLayer(state.mapLayers.schools)) {
+      state.map.addLayer(state.mapLayers.schools);
+    }
+  } else {
+    if (state.map.hasLayer(state.mapLayers.schools)) {
+      state.map.removeLayer(state.mapLayers.schools);
+    }
+  }
+}
+
+function updateDynamicLegend() {
+  const container = document.getElementById('map-legend-body');
+  if (!container) return;
+
+  let html = '';
+
+  // 1. Prioritas Jalan Kabupaten (Always present)
+  html += `
+    <div>
+      <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Prioritas Jalan Kabupaten</div>
+      <div class="space-y-1">
+        <div class="flex items-center space-x-2">
+          <span class="w-5 h-1.5 bg-rose-600 rounded-full inline-block"></span>
+          <span class="font-semibold text-rose-800">Top 35 (Sangat Mendesak)</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="w-5 h-1 bg-orange-500 rounded-full inline-block"></span>
+          <span class="text-slate-700">Rank 36–70 (Prioritas Tinggi)</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="w-5 h-1 bg-amber-500 rounded-full inline-block"></span>
+          <span class="text-slate-700">Rank 71–105 (Kebijakan)</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="w-5 h-0.5 bg-slate-500 inline-block"></span>
+          <span class="text-slate-600">Rank 106–350 (Reguler Jaringan)</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 2. Jaringan Referensi (Only if any checked)
+  const showProv = document.getElementById('layer-roads-provincial')?.checked;
+  const showNas = document.getElementById('layer-roads-national')?.checked;
+  const showConn = document.getElementById('layer-connectors')?.checked;
+
+  if (showProv || showNas || showConn) {
+    html += `
+      <div class="border-t border-slate-100 pt-1.5">
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Jaringan Referensi</div>
+        <div class="space-y-1">
+          ${showNas ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-1 bg-teal-700 inline-block"></span>
+              <span class="text-slate-700">Jalan Nasional (8)</span>
+            </div>` : ''}
+          ${showProv ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-1 bg-indigo-500 inline-block"></span>
+              <span class="text-slate-700">Jalan Provinsi (4)</span>
+            </div>` : ''}
+          ${showConn ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-0.5 border-t border-dashed border-slate-400 inline-block"></span>
+              <span class="text-slate-600 font-mono text-[10px]">Konektor Analisis (Topologi)</span>
+            </div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // 3. Administrasi (Only if checked)
+  const showDist = document.getElementById('layer-admin-districts')?.checked;
+  const showVil = document.getElementById('layer-admin-villages')?.checked;
+  if (showDist || showVil) {
+    html += `
+      <div class="border-t border-slate-100 pt-1.5">
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Batas Administrasi</div>
+        <div class="space-y-1">
+          ${showDist ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-4 h-2 border border-dashed border-slate-500 bg-sky-100/40 inline-block"></span>
+              <span class="text-slate-700">Kecamatan (11)</span>
+            </div>` : ''}
+          ${showVil ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-4 h-1 border-t border-dotted border-slate-400 inline-block"></span>
+              <span class="text-slate-600">Desa/Kelurahan (148)</span>
+            </div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // 4. Fasilitas Publik (Only active ones)
+  const showHosp = document.getElementById('layer-fac-hospital')?.checked;
+  const showPusk = document.getElementById('layer-fac-puskesmas')?.checked;
+  const showMkt = document.getElementById('layer-fac-market')?.checked;
+  const showSch = document.getElementById('layer-fac-school')?.checked;
+
+  if (showHosp || showPusk || showMkt || showSch) {
+    const currentZoom = state.map?.getZoom() || 11;
+    html += `
+      <div class="border-t border-slate-100 pt-1.5">
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Fasilitas Publik</div>
+        <div class="grid grid-cols-2 gap-1 text-[11px]">
+          ${showHosp ? `
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 bg-rose-600 rounded-sm inline-block"></span>
+              <span>RSUD</span>
+            </div>` : ''}
+          ${showPusk ? `
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 bg-emerald-600 rounded-full inline-block"></span>
+              <span>Puskesmas</span>
+            </div>` : ''}
+          ${showMkt ? `
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 bg-amber-500 rounded-full inline-block"></span>
+              <span>Pasar</span>
+            </div>` : ''}
+          ${showSch ? `
+            <div class="flex items-center space-x-1.5 col-span-2">
+              <span class="w-2.5 h-2.5 bg-sky-600 rounded-full inline-block"></span>
+              <span>Sekolah ${currentZoom < 12.5 ? '<em class="text-[10px] text-slate-400">(Zoom ≥ 12.5)</em>' : ''}</span>
+            </div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  // 5. RTRW Pola Ruang (ONLY if checked and loaded!)
+  const showRtrw = document.getElementById('layer-rtrw')?.checked;
+  if (showRtrw && state.mapData.rtrw) {
+    html += `
+      <div class="border-t border-slate-100 pt-1.5">
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pola Ruang RTRW</div>
+        <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[10px]">
+          ${Object.entries(RTRW_COLORS).slice(0, 8).map(([name, col]) => `
+            <div class="flex items-center space-x-1.5 truncate" title="${escapeHtml(name)}">
+              <span class="w-2.5 h-2.5 rounded-sm inline-block shrink-0" style="background-color: ${col}"></span>
+              <span class="truncate">${escapeHtml(name.replace('Kawasan ', ''))}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
 }
 
 function updateMapStatus() {
@@ -1324,6 +1684,11 @@ window.openRoadDetail = async function (roadKey) {
     renderRoadDetailDrawer(json.data);
 
     const drawer = document.getElementById('road-detail-drawer');
+    if (state.currentView === 'peta') {
+      drawer.classList.add('drawer-map-mode');
+    } else {
+      drawer.classList.remove('drawer-map-mode');
+    }
     drawer.classList.remove('hidden');
 
     // Update URL hash parameter without triggering navigation
@@ -1335,7 +1700,9 @@ window.openRoadDetail = async function (roadKey) {
 };
 
 function closeDetailDrawer() {
-  document.getElementById('road-detail-drawer').classList.add('hidden');
+  const drawer = document.getElementById('road-detail-drawer');
+  drawer.classList.add('hidden');
+  drawer.classList.remove('drawer-map-mode');
   state.selectedRoadDetail = null;
 
   // Clean URL query
