@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pendukung Prioritas Penanganan Jalan — Kabupaten Hulu Sungai Selatan</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP BAR -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Left: Logo & System Identity -->
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded bg-sky-600 flex items-center justify-center font-bold text-white shadow-inner">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="text-sm font-semibold tracking-wide text-white uppercase">Pemerintah Kabupaten Hulu Sungai Selatan</div>
+          <div class="text-xs text-sky-400 font-medium">Sistem Pendukung Prioritas Penanganan Jalan (Dinas PUTR)</div>
+        </div>
+      </div>
+
+      <!-- Right: Operating Context Controls -->
+      <div class="flex items-center space-x-4">
+        
+        <!-- Operating Mode Selector -->
+        <div class="flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700">
+          <label for="mode-select" class="text-xs text-slate-400 font-medium px-2">Mode:</label>
+          <select id="mode-select" class="bg-slate-900 text-xs font-semibold text-white rounded px-2.5 py-1 border-0 focus:ring-1 focus:ring-sky-500 cursor-pointer">
+            <option value="OPERATIONAL_2025" selected>OPERASIONAL 2025 (Aktif)</option>
+            <option value="BENCHMARK_2024">TOLOK UKUR 2024 (Audit)</option>
+          </select>
+        </div>
+
+        <!-- Model Badge -->
+        <div class="hidden md:flex items-center space-x-1.5 px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-lg text-xs">
+          <span class="text-slate-400">Model:</span>
+          <span class="font-semibold text-emerald-400">POLICY_DEFAULT_V1</span>
+          <span class="text-slate-500 text-[10px] uppercase px-1 py-0.2 bg-slate-700 rounded">Terkunci</span>
+        </div>
+
+        <!-- Year Badge -->
+        <div class="hidden lg:flex items-center space-x-1 px-2.5 py-1 bg-slate-800/80 border border-slate-700 rounded-lg text-xs text-slate-300">
+          <span class="text-slate-400">Tahun:</span>
+          <span id="data-year-badge" class="font-semibold text-white">2025</span>
+        </div>
+
+        <!-- Verification Status -->
+        <div class="flex items-center space-x-1.5 text-xs text-emerald-400 font-medium">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="hidden sm:inline">350/350 Ruas Terverifikasi</span>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- BENCHMARK WARNING BANNER (Rendered only when BENCHMARK_2024 is active) -->
+  <div id="benchmark-warning-banner" class="hidden bg-amber-500 text-slate-950 px-4 py-2.5 shadow-sm border-b border-amber-600 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm font-semibold">
+      <div class="flex items-center space-x-2">
+        <svg class="w-5 h-5 text-slate-950 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+        </svg>
+        <span>
+          <strong>PERHATIAN: MODE TOLOK UKUR / AUDIT REFERENSI 2024 AKTIF.</strong> 
+          Peringkat di bawah dihitung menggunakan baseline kondisi survei 2024 untuk membandingkan keselarasan model terhadap label acuan historis (Konkordansi Top-105: 73 ruas / 69,52%). <em>Ini bukan kondisi jalan riil tahun 2025!</em>
+        </span>
+      </div>
+      <button id="btn-restore-operational" class="ml-4 underline hover:text-white shrink-0 text-xs uppercase font-bold tracking-wider">
+        Kembali ke Mode Operasional 2025
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div class="flex-1 flex max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-x-6">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="w-60 shrink-0 hidden md:block">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-3 sticky top-24 space-y-1">
+        
+        <div class="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Navigasi Sistem</div>
+
+        <a href="#dashboard" id="nav-dashboard" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-sky-50 text-sky-700 font-semibold">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#prioritas" id="nav-prioritas" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+          </svg>
+          <span>Prioritas Jalan</span>
+          <span class="ml-auto text-[10px] bg-sky-100 text-sky-800 font-bold px-1.5 py-0.5 rounded">350</span>
+        </a>
+
+        <a href="#data-sumber" id="nav-data-sumber" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16M9 4v16"></path>
+          </svg>
+          <span>Data & Sumber</span>
+        </a>
+
+        <a href="#model" id="nav-model" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+          </svg>
+          <span>Model Prioritas</span>
+        </a>
+
+        <div class="pt-3 pb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">Modul Lanjutan</div>
+
+        <!-- Disabled Upcoming Modules -->
+        <div class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 cursor-not-allowed opacity-75">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+          <span>Peta Spasial GIS</span>
+          <span class="ml-auto text-[9px] bg-slate-200 text-slate-600 font-semibold px-1.5 py-0.5 rounded uppercase">Fase 4</span>
+        </div>
+
+        <div class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 cursor-not-allowed opacity-75">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Simulasi Skenario</span>
+          <span class="ml-auto text-[9px] bg-slate-200 text-slate-600 font-semibold px-1.5 py-0.5 rounded uppercase">Fase 5</span>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 text-[11px] text-slate-500 px-3 space-y-1">
+          <div class="font-semibold text-slate-700">Versi Rilis: MVP v1.0.0</div>
+          <div>Basis Data: SQLite WAL</div>
+          <div>Otoritas: Dinas PUTR HSS</div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="flex-1 min-w-0 space-y-6">
+
+      <!-- ============================================================ -->
+      <!-- VIEW 1: DASHBOARD -->
+      <!-- ============================================================ -->
+      <section id="view-dashboard" class="space-y-6">
+        
+        <!-- Header Title -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard Eksekutif Prioritas Jalan</h1>
+            <p class="text-sm text-slate-500">Ringkasan strategis kondisi kemantapan dan profil prioritas 350 ruas jalan kabupaten.</p>
+          </div>
+          <div class="text-xs text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
+            Status Model: <span class="font-bold text-slate-800">POLICY_DEFAULT_V1 (Terkunci)</span>
+          </div>
+        </div>
+
+        <!-- 5 KPI Summary Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4" id="kpi-cards-container">
+          <!-- Populated dynamically via JS -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
+        </div>
+
+        <!-- Middle Row: Category Weights & 2025 Condition Context -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Category Weight Overview -->
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Bobot Kebijakan 4 Kategori</h2>
+                <p class="text-xs text-slate-500">Konfigurasi bobot operasional aktif model POLICY_DEFAULT_V1</p>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-sky-100 text-sky-800">Total: 100%</span>
+            </div>
+            <div id="category-weights-container" class="space-y-3">
+              <!-- Populated via JS -->
+            </div>
+            <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600 border border-slate-200">
+              💡 <em>Catatan Kebijakan:</em> Nilai bobot di atas merupakan bobot kebijakan default murni. Modul penyesuaian bobot interaktif dan simulasi skenario pimpinan akan diaktifkan pada Fase 5.
+            </div>
+          </div>
+
+          <!-- 2025 Road Condition Breakdown -->
+          <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Konteks Kondisi Fisik Jaringan (2025)</h2>
+                <p class="text-xs text-slate-500">Survei resmi Dinas PUTR HSS (Total 732,460 km)</p>
+              </div>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Otoritatif</span>
+            </div>
+            <div id="condition-breakdown-container" class="space-y-3">
+              <!-- Populated via JS -->
+            </div>
+            <div class="pt-2 text-xs text-slate-500 flex items-center justify-between">
+              <span>Sumber: <strong>Dashboard Analitik 2025 Revisi</strong></span>
+              <span>Tingkat Kemantapan: <strong class="text-emerald-600">53,64% Mantap</strong></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom: Top 10 Priority Snapshot -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-100 gap-2">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Potret 10 Ruas Prioritas Penanganan Teratas</h2>
+              <p class="text-xs text-slate-500">Ruas dengan nilai komposit tertinggi berdasarkan perhitungan 17 variabel normatif.</p>
+            </div>
+            <a href="#prioritas" class="inline-flex items-center text-xs font-semibold text-sky-600 hover:text-sky-800 space-x-1">
+              <span>Lihat Seluruh 350 Ruas Jalan</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Rank</th>
+                  <th class="py-2.5 px-3">No. Ruas</th>
+                  <th class="py-2.5 px-3">Nama Ruas Jalan</th>
+                  <th class="py-2.5 px-3">Kecamatan</th>
+                  <th class="py-2.5 px-3 text-right">Panjang</th>
+                  <th class="py-2.5 px-3 text-center">Kemantapan</th>
+                  <th class="py-2.5 px-3 text-right">Skor Prioritas</th>
+                  <th class="py-2.5 px-3 text-center">Tier</th>
+                  <th class="py-2.5 px-3 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="top10-table-body" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW 2: PRIORITY TABLE (350 ROADS) -->
+      <!-- ============================================================ -->
+      <section id="view-prioritas" class="hidden space-y-5">
+        
+        <!-- Header Title -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Daftar Prioritas Penanganan Jalan</h1>
+            <p class="text-sm text-slate-500">Tabel lengkap 350 ruas jalan kabupaten berdasarkan urutan prioritas teknokratis.</p>
+          </div>
+          <div class="text-xs text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
+            Total Ruas: <span class="font-bold text-slate-900">350 Ruas Kanonikal</span>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls Bar -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <!-- Search input -->
+            <div>
+              <label for="table-search" class="block text-xs font-semibold text-slate-700 mb-1">Pencarian Ruas:</label>
+              <div class="relative">
+                <input type="text" id="table-search" placeholder="Cari nama ruas atau no. ruas..." class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+                <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- District Filter -->
+            <div>
+              <label for="filter-district" class="block text-xs font-semibold text-slate-700 mb-1">Kecamatan:</label>
+              <select id="filter-district" class="w-full py-1.5 px-2.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+                <option value="ALL">Semua Kecamatan (11)</option>
+                <!-- Populated via JS -->
+              </select>
+            </div>
+
+            <!-- Priority Tier Filter -->
+            <div>
+              <label for="filter-tier" class="block text-xs font-semibold text-slate-700 mb-1">Tier Prioritas:</label>
+              <select id="filter-tier" class="w-full py-1.5 px-2.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+                <option value="ALL">Semua Tier</option>
+                <option value="TOP_35">Tier 1: TOP_35 (Urgensi Sangat Tinggi / 35 Ruas)</option>
+                <option value="TOP_70">Tier 2: TOP_70 (Urgensi Tinggi / 35 Ruas)</option>
+                <option value="TOP_105">Tier 3: TOP_105 (Urgensi Menengah / 35 Ruas)</option>
+                <option value="REGULAR">Tier 4: Reguler Jaringan (245 Ruas)</option>
+              </select>
+            </div>
+
+            <!-- Condition Band Filter -->
+            <div>
+              <label for="filter-condition" class="block text-xs font-semibold text-slate-700 mb-1">Kondisi Kemantapan:</label>
+              <select id="filter-condition" class="w-full py-1.5 px-2.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:bg-white focus:ring-1 focus:ring-sky-500 focus:border-sky-500">
+                <option value="ALL">Semua Kondisi</option>
+                <option value="MANTAP">Mantap (≥ 60%)</option>
+                <option value="TRANSISI">Transisi (40% - 60%)</option>
+                <option value="KRITIS">Kritis / Tidak Mantap (< 40%)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Sub-bar: Sort & Reset & Row counter -->
+          <div class="flex flex-wrap items-center justify-between pt-2 border-t border-slate-100 text-xs">
+            <div class="flex items-center space-x-3">
+              <label for="sort-select" class="font-semibold text-slate-600">Urutkan:</label>
+              <select id="sort-select" class="py-1 px-2 text-xs bg-slate-50 border border-slate-300 rounded focus:ring-1 focus:ring-sky-500">
+                <option value="rank_asc" selected>Peringkat Teratas (1 s.d. 350)</option>
+                <option value="rank_desc">Peringkat Terbawah (350 s.d. 1)</option>
+                <option value="score_desc">Skor Prioritas Tertinggi</option>
+                <option value="mantap_asc">Kemantapan Terendah (Paling Rusak)</option>
+                <option value="mantap_desc">Kemantapan Tertinggi</option>
+                <option value="length_desc">Ruas Terpanjang</option>
+              </select>
+              <button id="btn-reset-filters" class="text-xs text-slate-500 hover:text-slate-800 underline font-medium">
+                Reset Filter
+              </button>
+            </div>
+
+            <div class="text-slate-500 font-medium">
+              Menampilkan <span id="table-filtered-count" class="font-bold text-slate-900">350</span> dari <span class="font-bold text-slate-900">350</span> ruas jalan
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 350-Road Table Container -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto custom-scrollbar max-h-[700px]">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+                <tr>
+                  <th class="py-3 px-3">Rank</th>
+                  <th class="py-3 px-3">No. Ruas</th>
+                  <th class="py-3 px-3">Nama Ruas Jalan</th>
+                  <th class="py-3 px-3">Kecamatan</th>
+                  <th class="py-3 px-3 text-right">Panjang</th>
+                  <th class="py-3 px-3 text-center">Kemantapan %</th>
+                  <th class="py-3 px-3 text-right">Skor Prioritas</th>
+                  <th class="py-3 px-3 text-center">Tier Prioritas</th>
+                  <th class="py-3 px-3 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="priority-table-body" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs">
+            <div class="flex items-center space-x-2">
+              <span class="text-slate-600">Baris per halaman:</span>
+              <select id="page-size-select" class="bg-white border border-slate-300 rounded px-2 py-1 text-xs">
+                <option value="25">25</option>
+                <option value="50" selected>50</option>
+                <option value="100">100</option>
+                <option value="350">Semua (350)</option>
+              </select>
+            </div>
+            <div id="pagination-controls" class="flex items-center space-x-1">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW 3: DATA & SUMBER (PROVENANCE SCREEN) -->
+      <!-- ============================================================ -->
+      <section id="view-data-sumber" class="hidden space-y-6">
+        
+        <!-- Header Title -->
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Otoritas Data & Provenance Sistem</h1>
+          <p class="text-sm text-slate-500">Status integritas data otoritatif dan penelusuran sumber kebenaran (Single Source of Truth).</p>
+        </div>
+
+        <!-- 9 Checklist Items -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 class="text-base font-bold text-slate-900">Checklist Integritas Data Otoritatif</h2>
+            <span class="text-xs font-bold px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full">100% Terverifikasi</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Komponen Data</th>
+                  <th class="py-2.5 px-3 text-center">Nilai Aktual</th>
+                  <th class="py-2.5 px-3 text-center">Standar Otoritas</th>
+                  <th class="py-2.5 px-3">Sumber Otoritatif</th>
+                  <th class="py-2.5 px-3 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody id="provenance-checklist-body" class="divide-y divide-slate-100 text-slate-700 text-xs">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Governance Rules Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl border border-slate-200 p-4 space-y-2">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+              <span class="text-sky-600">🔒</span>
+              <span>Prinsip Otoritas Identitas Kanonikal</span>
+            </h3>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
+              <li>Penyambungan data (*data join*) <strong>DILARANG KERAS</strong> menggunakan nama bebas ruas jalan.</li>
+              <li>Identitas resmi mengacu mutlak pada <code>road_key</code> (HSS-KAB-001 s.d. 350) dan SK Bupati HSS.</li>
+              <li>Ruas dengan nama identik (seperti Jl. Mawar) dipisah secara tegas berdasarkan nomor ruas dan wilayah administratif.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 p-4 space-y-2">
+            <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+              <span class="text-emerald-600">🛡️</span>
+              <span>Isolasi & Perlindungan Perhitungan</span>
+            </h3>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
+              <li>Geometri sintetis (konektor jembatan 4 fitur) diisolasi dan <strong>BUKAN</strong> kandidat penanganan jalan.</li>
+              <li>Data kondisi lama survei 2023 diisolasi dari perhitungan operasional 2025.</li>
+              <li>Acuan historis <code>label_top105</code> diisolasi secara ketat dan tidak mempengaruhi kalkulasi skor.</li>
+            </ul>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW 4: MODEL PRIORITAS SCREEN -->
+      <!-- ============================================================ -->
+      <section id="view-model" class="hidden space-y-6">
+        
+        <!-- Header Title -->
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Model Prioritas Normatif</h1>
+          <p class="text-sm text-slate-500">Spesifikasi matematis model pembobotan hierarkis 2-level dan definisi 17 variabel.</p>
+        </div>
+
+        <!-- Active Model Info Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <div class="text-xs uppercase font-bold text-sky-600">Model Kebijakan Aktif</div>
+              <h2 class="text-lg font-bold text-slate-900">POLICY_DEFAULT_V1</h2>
+              <p class="text-xs text-slate-500">Bobot Kategori Historis (Level 1) + Bobot Lokal Netral Merata (Level 2)</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 font-bold border border-slate-300">BASELINE_LOCKED</span>
+              <div class="text-[10px] text-slate-400 mt-1">Immutabilitas Dilindungi Triggers Database</div>
+            </div>
+          </div>
+
+          <!-- Formula box -->
+          <div class="bg-slate-900 text-white rounded-lg p-4 font-mono text-xs overflow-x-auto space-y-1">
+            <div class="text-slate-400">// FORMULA KOMPOSIT SKOR PRIORITAS (Level 1 & Level 2)</div>
+            <div class="text-sky-300">FinalScore = ∑ [ W_k^* × ( ∑ w_{k,i} × X_{norm,k,i} ) ]</div>
+            <div class="text-slate-400">// Invarian: ∑ W_k^* = 1.000000 | ∑ w_{k,i} = 1.000000 | ∑ Ω_{k,i} = 1.000000</div>
+          </div>
+        </div>
+
+        <!-- 4 Categories Table -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-3">
+          <h3 class="font-bold text-slate-900 text-sm">Struktur Bobot 4 Kategori (Level 1)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Kode Kategori</th>
+                  <th class="py-2.5 px-3">Nama Kategori</th>
+                  <th class="py-2.5 px-3 text-center">Jumlah Variabel</th>
+                  <th class="py-2.5 px-3 text-right">Bobot Mentah (Raw)</th>
+                  <th class="py-2.5 px-3 text-right">Bobot Normalisasi (W_k*)</th>
+                  <th class="py-2.5 px-3 text-right">Porsi %</th>
+                </tr>
+              </thead>
+              <tbody id="model-categories-body" class="divide-y divide-slate-100 text-slate-700 text-xs">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 17 Variables Table -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-3">
+          <h3 class="font-bold text-slate-900 text-sm">Katalog 17 Variabel Normatif (Level 2)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-2.5">No</th>
+                  <th class="py-2 px-2.5">Variabel</th>
+                  <th class="py-2 px-2.5">Kategori</th>
+                  <th class="py-2 px-2.5">Satuan</th>
+                  <th class="py-2 px-2.5 text-center">Arah</th>
+                  <th class="py-2 px-2.5 text-right">Bobot Lokal (w)</th>
+                  <th class="py-2 px-2.5 text-right">Bobot Efektif (Ω)</th>
+                </tr>
+              </thead>
+              <tbody id="model-variables-body" class="divide-y divide-slate-100 text-slate-700 text-xs">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SLIDE-OVER DRAWER: ROAD DETAIL & 17-FACTOR EXPLAINABILITY -->
+  <!-- ============================================================ -->
+  <div id="road-detail-drawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="drawer-title" role="dialog" aria-modal="true">
+    
+    <!-- Backdrop -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-slate-900/60 transition-opacity"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-2xl bg-white shadow-2xl flex flex-col">
+        
+        <!-- Drawer Header -->
+        <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between border-b border-slate-800">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span id="drawer-road-key" class="text-xs font-mono font-bold bg-sky-600 text-white px-2 py-0.5 rounded">HSS-KAB-000</span>
+              <span id="drawer-nomor-ruas" class="text-xs text-slate-400">No. Ruas: 000</span>
+            </div>
+            <h2 id="drawer-title" class="text-lg font-bold text-white mt-1">Nama Ruas Jalan</h2>
+            <div id="drawer-district" class="text-xs text-sky-400">Kecamatan Kandangan</div>
+          </div>
+          <button id="btn-close-drawer" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Drawer Body (Scrollable) -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+
+          <!-- Section A: Identitas Ruas -->
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
+              <span>📋</span>
+              <span>A. Identitas Ruas (SK Bupati Otoritatif)</span>
+            </h3>
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <span class="text-slate-400 block">Nama Resmi SK:</span>
+                <span id="d-canonical-name" class="font-semibold text-slate-800">-</span>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Desa Terlintasi:</span>
+                <span id="d-village" class="font-semibold text-slate-800">-</span>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Panjang Resmi:</span>
+                <span id="d-length" class="font-semibold text-slate-800">-</span>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Lebar Rata-rata:</span>
+                <span id="d-width" class="font-semibold text-slate-800">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section B: Status Kondisi Fisik 2025 -->
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
+                <span>🛣️</span>
+                <span>B. Kondisi Jalan Resmi 2025</span>
+              </h3>
+              <span class="text-[10px] text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded">Survei Lapangan 2025</span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+              <div class="bg-white p-2 rounded border border-slate-200">
+                <span class="text-slate-400 text-[10px] block">Baik</span>
+                <span id="d-kondisi-baik" class="font-bold text-emerald-600">0.00 km</span>
+              </div>
+              <div class="bg-white p-2 rounded border border-slate-200">
+                <span class="text-slate-400 text-[10px] block">Sedang</span>
+                <span id="d-kondisi-sedang" class="font-bold text-sky-600">0.00 km</span>
+              </div>
+              <div class="bg-white p-2 rounded border border-slate-200">
+                <span class="text-slate-400 text-[10px] block">Rusak Ringan</span>
+                <span id="d-kondisi-rr" class="font-bold text-amber-600">0.00 km</span>
+              </div>
+              <div class="bg-white p-2 rounded border border-slate-200">
+                <span class="text-slate-400 text-[10px] block">Rusak Berat</span>
+                <span id="d-kondisi-rb" class="font-bold text-rose-600">0.00 km</span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-1 text-xs">
+              <div>Mantap: <strong id="d-mantap-summary" class="text-emerald-700">0.00 km (0%)</strong></div>
+              <div>Tidak Mantap: <strong id="d-tidak-mantap-summary" class="text-rose-700">0.00 km (0%)</strong></div>
+            </div>
+          </div>
+
+          <!-- Section C: Hasil Skor & Peringkat Prioritas -->
+          <div class="bg-sky-50 border border-sky-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <span class="text-xs uppercase font-bold text-sky-700 block">Hasil Skoring Prioritas</span>
+              <div class="flex items-baseline space-x-2 mt-1">
+                <span class="text-3xl font-black text-slate-900" id="d-final-score">0.000000</span>
+                <span class="text-xs text-slate-500 font-medium">Skor Komposit</span>
+              </div>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="text-right">
+                <div class="text-xs text-slate-500">Peringkat Jaringan:</div>
+                <div class="text-2xl font-black text-sky-700" id="d-priority-rank">#0 <span class="text-sm font-normal text-slate-500">/ 350</span></div>
+              </div>
+              <div id="d-tier-badge" class="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider">
+                TOP_35
+              </div>
+            </div>
+          </div>
+
+          <!-- Semantic Notice -->
+          <div class="text-[11px] text-slate-500 bg-slate-100 p-2.5 rounded-lg border border-slate-200">
+            ⚠️ <em>Catatan Semantik:</em> Tier Prioritas menunjukkan kelompok tingkat urgensi penanganan, <strong>BUKAN</strong> rekomendasi perlakuan teknis jalan.
+          </div>
+
+          <!-- Section D: Dekomposisi 4 Kategori (Explainability Level 1) -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center space-x-1.5">
+                <span>📊</span>
+                <span>D. Kontribusi 4 Kategori (Level 1)</span>
+              </h3>
+              <span class="text-[11px] text-slate-500">Subtotal & Porsi terhadap Skor</span>
+            </div>
+            <div id="d-category-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+          <!-- Section E: Dekomposisi 17 Faktor Normatif (Explainability Level 2) -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center space-x-1.5">
+                <span>🔬</span>
+                <span>E. Rincian Dekomposisi 17 Faktor (Level 2)</span>
+              </h3>
+              
+              <!-- Precision Toggle -->
+              <label class="flex items-center space-x-1.5 text-xs text-slate-600 cursor-pointer">
+                <input type="checkbox" id="precision-toggle" class="rounded text-sky-600 focus:ring-sky-500">
+                <span class="font-medium">Mode Presisi Teknis</span>
+              </label>
+            </div>
+
+            <!-- 17 Factors Table -->
+            <div class="border border-slate-200 rounded-lg overflow-hidden">
+              <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                    <tr>
+                      <th class="py-2 px-2.5">Variabel</th>
+                      <th class="py-2 px-2.5">Nilai Mentah</th>
+                      <th class="py-2 px-2 text-center">Arah</th>
+                      <th class="py-2 px-2 text-right">Norm (X)</th>
+                      <th class="py-2 px-2 text-right">Bobot Efektif (Ω)</th>
+                      <th class="py-2 px-2.5 text-right font-bold text-sky-900">Kontribusi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="d-factors-body" class="divide-y divide-slate-100 text-slate-700">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Mathematical Invariant Proof Box -->
+            <div id="d-math-audit-box" class="bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-xs text-emerald-900 space-y-1 font-mono">
+              <!-- Populated via JS -->
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Drawer Footer -->
+        <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+          <span>Kunci Kanonikal: <code id="footer-road-key" class="font-bold text-slate-800">HSS-KAB-000</code></span>
+          <button id="btn-close-drawer-bottom" class="px-3 py-1.5 bg-white border border-slate-300 rounded font-semibold text-slate-700 hover:bg-slate-100">
+            Tutup
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Application Script -->
+  <script src="/app.js"></script>
+</body>
+</html>

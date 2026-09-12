@@ -8,6 +8,9 @@
     "db:seed": "node --experimental-strip-types src/ingestion/ingestAuthoritativeData.ts",
     "test:phase1": "node --experimental-strip-types src/tests/phase1-verification.ts",
     "test:phase2": "node --experimental-strip-types src/tests/phase2-verification.ts",
+    "test:phase3": "node --experimental-strip-types src/tests/phase3-verification.ts",
+    "start": "node --experimental-strip-types src/server/server.ts",
+    "dev": "node --experimental-strip-types src/server/server.ts",
     "smoke": "node --experimental-strip-types src/cli/smoke.ts",
     "smoke:score": "node --experimental-strip-types src/cli/smokeScore.ts",
     "score": "node --experimental-strip-types src/cli/runScore.ts"
@@ -18,5 +21,8 @@
     "diklat-pim"
   ],
   "author": "Antigravity",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
