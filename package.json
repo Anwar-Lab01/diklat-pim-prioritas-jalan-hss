@@ -32,5 +32,9 @@
     "@turf/turf": "^7.4.0",
     "express": "^5.2.1",
     "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.2"
   }
 }

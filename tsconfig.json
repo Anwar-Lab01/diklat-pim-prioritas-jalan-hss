@@ -10,7 +10,9 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "api/**/*"]
 }
