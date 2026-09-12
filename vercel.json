@@ -3,7 +3,7 @@
   "outputDirectory": "src/public",
   "functions": {
     "api/index.js": {
-      "includeFiles": "data/diklat_pim_deploy.db,01_authoritative_seed/**,src/public/**"
+      "includeFiles": "{data/**,01_authoritative_seed/**,src/public/**}"
     }
   },
   "rewrites": [
