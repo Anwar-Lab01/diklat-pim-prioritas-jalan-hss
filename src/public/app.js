@@ -271,11 +271,14 @@ function switchView(viewName) {
     }
     if (!state.mapInitialized) {
       initMap();
-    } else {
-      setTimeout(() => {
-        state.map?.invalidateSize();
-      }, 50);
     }
+    [50, 150, 350, 700].forEach((delay) => {
+      setTimeout(() => {
+        if (state.map) {
+          state.map.invalidateSize({ pan: false });
+        }
+      }, delay);
+    });
   } else if (viewName === 'data-sumber') {
     drawerEl?.classList.remove('drawer-map-mode');
     loadProvenance();
@@ -616,6 +619,11 @@ async function initMap() {
     attributionControl: true,
   });
 
+  // Ensure local vendored leaflet image asset path is authoritative
+  if (typeof L !== 'undefined' && L.Icon && L.Icon.Default) {
+    L.Icon.Default.imagePath = '/vendor/leaflet/images/';
+  }
+
   // Create Deterministic Custom Panes with explicit z-index (Administrative hierarchy)
   const panes = [
     { name: 'basemapPane', zIndex: 200 },
@@ -634,6 +642,25 @@ async function initMap() {
     state.map.createPane(p.name);
     state.map.getPane(p.name).style.zIndex = p.zIndex;
   });
+
+  // Force clean container sizing
+  state.map.invalidateSize({ pan: false });
+
+  // Attach ResizeObserver to container to react to window resizes and panel adjustments
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(() => {
+      if (state.map) {
+        state.map.invalidateSize({ pan: false });
+      }
+    });
+    ro.observe(mapContainer);
+  } else {
+    window.addEventListener('resize', () => {
+      if (state.map) {
+        state.map.invalidateSize({ pan: false });
+      }
+    });
+  }
 
   // 1. OpenStreetMap TileLayer (Peta Jalan)
   state.mapLayers.osmBasemap = L.tileLayer(BASEMAP_CONFIG.osm.url, {
@@ -673,6 +700,14 @@ async function initMap() {
   state.mapInitialized = true;
 
   await loadMapData();
+
+  // Final sizing pass and viewport alignment after all GeoJSON layers are mounted
+  setTimeout(() => {
+    if (state.map) {
+      state.map.invalidateSize({ pan: false });
+      fitHssBounds();
+    }
+  }, 100);
 }
 
 function initMapControls() {
@@ -769,14 +804,22 @@ function initMapControls() {
 
   // Layer panel toggle
   const layersBtn = document.getElementById('btn-toggle-layers');
-  const layersPanel = document.getElementById('map-layers-panel');
+  const gisSidePanel = document.getElementById('gis-side-panel');
   const closeLayersBtn = document.getElementById('btn-close-layers');
 
-  layersBtn?.addEventListener('click', () => {
-    layersPanel?.classList.toggle('hidden');
-  });
+  const toggleGisPanel = () => {
+    gisSidePanel?.classList.toggle('hidden');
+    setTimeout(() => {
+      state.map?.invalidateSize({ pan: false });
+    }, 50);
+  };
+
+  layersBtn?.addEventListener('click', toggleGisPanel);
   closeLayersBtn?.addEventListener('click', () => {
-    layersPanel?.classList.add('hidden');
+    gisSidePanel?.classList.add('hidden');
+    setTimeout(() => {
+      state.map?.invalidateSize({ pan: false });
+    }, 50);
   });
 
   // Legend collapse toggle
@@ -1686,9 +1729,8 @@ window.viewRoadOnMap = async function (roadKey) {
 
   if (!state.mapInitialized) {
     await initMap();
-  } else {
-    state.map.invalidateSize();
   }
+  [50, 150, 300].forEach((d) => setTimeout(() => state.map?.invalidateSize({ pan: false }), d));
 
   setTimeout(() => {
     openRoadDetail(roadKey);

@@ -81,7 +81,7 @@
 
   <!-- TOP BAR -->
   <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Left: Logo & System Identity -->
       <div class="flex items-center space-x-3">
@@ -134,7 +134,7 @@
 
   <!-- BENCHMARK WARNING BANNER (Rendered only when BENCHMARK_2024 is active) -->
   <div id="benchmark-warning-banner" class="hidden bg-amber-500 text-slate-950 px-4 py-2.5 shadow-sm border-b border-amber-600 transition-all">
-    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm font-semibold">
+    <div class="max-w-[1920px] w-full mx-auto flex items-center justify-between text-xs sm:text-sm font-semibold">
       <div class="flex items-center space-x-2">
         <svg class="w-5 h-5 text-slate-950 shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -151,7 +151,7 @@
   </div>
 
   <!-- MAIN APP CONTAINER -->
-  <div class="flex-1 flex max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-x-6">
+  <div class="flex-1 flex max-w-[1920px] w-full mx-auto px-3 sm:px-5 lg:px-6 2xl:px-8 py-5 space-x-4 lg:space-x-5">
     
     <!-- SIDEBAR NAVIGATION -->
     <aside class="w-60 shrink-0 hidden md:block">
@@ -546,45 +546,58 @@
           </div>
         </div>
 
-        <!-- Map Main Canvas & Overlays -->
-        <div class="relative w-full rounded-xl overflow-hidden border border-slate-300 shadow-sm bg-slate-100">
-          <!-- Leaflet Map Div -->
-          <div id="hss-map" class="w-full h-[620px] z-0"></div>
+        <!-- Map Main Workspace: 2-Column Responsive Desktop Composition -->
+        <div class="flex flex-col xl:flex-row gap-4 items-stretch">
+          
+          <!-- Left/Center: Web GIS Map Viewport (Flex-1 Dominant) -->
+          <div class="flex-1 min-w-0 relative rounded-xl overflow-hidden border border-slate-300 shadow-sm bg-slate-100 flex flex-col">
+            <!-- Leaflet Map Div -->
+            <div id="hss-map" class="w-full h-[650px] 2xl:h-[740px] min-h-[560px] z-0 flex-1" style="background-color: #f1f5f9;"></div>
 
-          <!-- Offline Warning Notice (Subtle, non-blocking) -->
-          <div id="map-offline-banner" class="hidden absolute top-3 left-14 z-[1000] bg-amber-50/95 backdrop-blur-sm border border-amber-300 text-amber-900 px-3 py-1.5 rounded-lg shadow-md text-xs flex items-center space-x-2">
-            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <span>Basemap daring tidak tersedia — menggunakan latar netral.</span>
-          </div>
+            <!-- Offline Warning Notice (Subtle, non-blocking) -->
+            <div id="map-offline-banner" class="hidden absolute top-3 left-14 z-[1000] bg-amber-50/95 backdrop-blur-sm border border-amber-300 text-amber-900 px-3 py-1.5 rounded-lg shadow-md text-xs flex items-center space-x-2">
+              <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+              </svg>
+              <span>Basemap daring tidak tersedia — menggunakan latar netral.</span>
+            </div>
 
-          <!-- Empty State Overlay on Zero Filter Match -->
-          <div id="map-empty-state" class="hidden absolute inset-0 z-[1000] flex items-center justify-center pointer-events-none">
-            <div class="bg-white/95 backdrop-blur-sm border border-slate-300 shadow-2xl rounded-2xl p-6 max-w-sm text-center pointer-events-auto space-y-3">
-              <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-xl">🔍</div>
-              <h3 class="font-bold text-slate-900 text-sm">Tidak Ada Ruas yang Sesuai</h3>
-              <p class="text-xs text-slate-500">Tidak ada ruas jalan yang memenuhi kriteria filter aktif saat ini.</p>
-              <button id="map-btn-empty-reset" class="px-4 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg text-xs shadow-sm transition">
-                Reset Filter
+            <!-- Empty State Overlay on Zero Filter Match -->
+            <div id="map-empty-state" class="hidden absolute inset-0 z-[1000] flex items-center justify-center pointer-events-none">
+              <div class="bg-white/95 backdrop-blur-sm border border-slate-300 shadow-2xl rounded-2xl p-6 max-w-sm text-center pointer-events-auto space-y-3">
+                <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-xl">🔍</div>
+                <h3 class="font-bold text-slate-900 text-sm">Tidak Ada Ruas yang Sesuai</h3>
+                <p class="text-xs text-slate-500">Tidak ada ruas jalan yang memenuhi kriteria filter aktif saat ini.</p>
+                <button id="map-btn-empty-reset" class="px-4 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg text-xs shadow-sm transition">
+                  Reset Filter
+                </button>
+              </div>
+            </div>
+
+            <!-- Tablet/Mobile Toggle Button for GIS Controls (Visible on < xl) -->
+            <div class="xl:hidden absolute top-3 right-3 z-[1000]">
+              <button id="btn-toggle-layers" class="bg-white/95 hover:bg-white text-slate-800 border border-slate-300 shadow-md font-semibold text-xs px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition backdrop-blur-sm">
+                <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span>Kontrol & Legenda</span>
               </button>
             </div>
           </div>
 
-          <!-- Floating Layer Control Toggle & Panel -->
-          <div class="absolute top-3 right-3 z-[1000] flex flex-col items-end space-y-2">
-            <button id="btn-toggle-layers" class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 shadow-md font-semibold text-xs px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition">
-              <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-              </svg>
-              <span>Lapisan Data (Layers)</span>
-            </button>
+          <!-- Right: Dedicated GIS Side Panel (Controls + Legend) -->
+          <div id="gis-side-panel" class="w-full xl:w-80 2xl:w-[340px] shrink-0 flex flex-col space-y-3 xl:max-h-[740px] xl:overflow-y-auto custom-scrollbar">
 
-            <!-- Layer Panel Dropdown (6 Standard Groups) -->
-            <div id="map-layers-panel" class="w-72 bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl rounded-xl p-3 text-xs space-y-3 hidden custom-scrollbar max-h-[520px] overflow-y-auto">
-              <div class="font-bold uppercase tracking-wider text-[11px] text-slate-500 border-b border-slate-100 pb-1 flex justify-between items-center">
-                <span>Kontrol Lapisan GIS</span>
-                <button id="btn-close-layers" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
+            <!-- Card 1: Kontrol Lapisan GIS (All 7 Groups) -->
+            <div id="map-layers-panel" class="w-full bg-white border border-slate-200 shadow-sm rounded-xl p-3.5 text-xs space-y-3 custom-scrollbar">
+              <div class="font-bold uppercase tracking-wider text-[11px] text-slate-500 border-b border-slate-100 pb-1.5 flex justify-between items-center">
+                <span class="flex items-center space-x-1.5 text-slate-700">
+                  <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                  </svg>
+                  <span>Kontrol Lapisan GIS</span>
+                </span>
+                <button id="btn-close-layers" class="xl:hidden text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
               </div>
 
               <!-- Group 1: Prioritas -->
@@ -619,7 +632,7 @@
                 </label>
               </div>
 
-              <!-- Group 3: Administrasi -->
+              <!-- Group 3: Batas Administrasi -->
               <div class="space-y-1.5 border-t border-slate-100 pt-2">
                 <div class="font-semibold text-slate-800 text-[11px] uppercase tracking-wider flex items-center space-x-1.5 text-slate-700">
                   <span>🏛️</span>
@@ -742,21 +755,24 @@
                 </label>
               </div>
             </div>
-          </div>
 
-          <!-- Dynamic Map Legend -->
-          <div class="absolute bottom-4 left-4 z-[1000]">
-            <div id="map-legend-card" class="bg-white/95 backdrop-blur-sm border border-slate-300 shadow-xl rounded-xl p-3 text-xs max-w-xs transition-all">
-              <div class="flex items-center justify-between font-bold text-slate-800 pb-1 border-b border-slate-100 mb-2">
-                <span class="text-[11px] uppercase tracking-wider text-slate-500">Legenda Tematik</span>
+            <!-- Card 2: Legenda Tematik -->
+            <div id="map-legend-card" class="bg-white border border-slate-200 shadow-sm rounded-xl p-3.5 text-xs">
+              <div class="flex items-center justify-between font-bold text-slate-800 pb-1.5 border-b border-slate-100 mb-2">
+                <span class="text-[11px] uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
+                  <span>🎨</span>
+                  <span>Legenda Tematik</span>
+                </span>
                 <button id="btn-toggle-legend-body" class="text-slate-400 hover:text-slate-700 text-[10px]">▼</button>
               </div>
               <!-- Dynamic Legend Container -->
-              <div id="map-legend-body" class="space-y-2 max-h-64 overflow-y-auto custom-scrollbar">
+              <div id="map-legend-body" class="space-y-2 max-h-72 overflow-y-auto custom-scrollbar">
                 <!-- Populated dynamically via JS to reflect only active layers -->
               </div>
             </div>
+
           </div>
+
         </div>
 
         <!-- Map Footer KPI & Active Status -->
