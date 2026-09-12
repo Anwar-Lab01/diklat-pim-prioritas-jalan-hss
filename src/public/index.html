@@ -68,6 +68,10 @@
       pointer-events: none !important;
       white-space: nowrap !important;
     }
+    /* Phase 4.7: Tooltip visibility toggle via CSS (non-destructive) */
+    .tooltips-hidden .leaflet-tooltip {
+      display: none !important;
+    }
   </style>
   <!-- Leaflet CSS & JS (Local Vendored for Offline First) -->
   <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
@@ -695,6 +699,46 @@
                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
                   <input type="radio" name="basemap-layer" value="satellite" id="layer-basemap-satellite" class="text-sky-600 focus:ring-sky-500" />
                   <span>Citra Satelit (ESRI World Imagery)</span>
+                </label>
+              </div>
+
+              <!-- Group 7: Interaksi Peta (Phase 4.7) -->
+              <div class="space-y-1.5 border-t border-slate-100 pt-2">
+                <div class="font-semibold text-slate-800 text-[11px] uppercase tracking-wider flex items-center space-x-1.5 text-cyan-700">
+                  <span>🖱️</span>
+                  <span>7. Interaksi Peta</span>
+                </div>
+
+                <!-- Master Popup Toggle -->
+                <label class="flex items-center space-x-2 text-slate-800 cursor-pointer font-medium">
+                  <input type="checkbox" id="popup-master" checked class="rounded text-cyan-600 focus:ring-cyan-500" />
+                  <span>Aktifkan Popup</span>
+                </label>
+
+                <!-- Subordinate popup toggles (indented) -->
+                <div id="popup-subordinates" class="pl-5 space-y-1">
+                  <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                    <input type="checkbox" id="popup-administrasi" checked class="rounded text-slate-500 focus:ring-slate-400" />
+                    <span>Administrasi (Desa/Kel.)</span>
+                  </label>
+                  <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                    <input type="checkbox" id="popup-fasilitas" checked class="rounded text-slate-500 focus:ring-slate-400" />
+                    <span>Fasilitas Publik</span>
+                  </label>
+                  <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                    <input type="checkbox" id="popup-jaringan" checked class="rounded text-slate-500 focus:ring-slate-400" />
+                    <span>Jaringan Referensi</span>
+                  </label>
+                  <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                    <input type="checkbox" id="popup-rtrw" checked class="rounded text-slate-500 focus:ring-slate-400" />
+                    <span>Pola Ruang RTRW</span>
+                  </label>
+                </div>
+
+                <!-- Tooltip Toggle (separate from popups) -->
+                <label class="flex items-center space-x-2 text-slate-800 cursor-pointer font-medium border-t border-slate-50 pt-1">
+                  <input type="checkbox" id="tooltip-master" checked class="rounded text-cyan-600 focus:ring-cyan-500" />
+                  <span>Tooltip Ringkas</span>
                 </label>
               </div>
             </div>

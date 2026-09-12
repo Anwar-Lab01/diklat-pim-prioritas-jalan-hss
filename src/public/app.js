@@ -70,6 +70,18 @@ const state = {
     condition: 'ALL',
   },
   selectedRoadKey: null,
+
+  // --- Phase 4.7 Popup & Tooltip Interaction Control ---
+  popupSettings: {
+    masterEnabled: true,
+    administrasi: true,
+    fasilitas: true,
+    jaringanReferensi: true,
+    polaRuangRtrw: true,
+  },
+  tooltipSettings: {
+    enabled: true,
+  },
 };
 
 window.appState = state;
@@ -848,6 +860,91 @@ function initMapControls() {
     }
     updateDynamicLegend();
   });
+
+  // --- Phase 4.7 Map Interaction & Popup Controls ---
+  const popupMaster = document.getElementById('popup-master');
+  const popupAdmin = document.getElementById('popup-administrasi');
+  const popupFac = document.getElementById('popup-fasilitas');
+  const popupRef = document.getElementById('popup-jaringan');
+  const popupRtrw = document.getElementById('popup-rtrw');
+  const tooltipMaster = document.getElementById('tooltip-master');
+  const subWrapper = document.getElementById('popup-subordinates');
+
+  function syncPopupControlsUI() {
+    const enabled = state.popupSettings.masterEnabled;
+    if (popupMaster) popupMaster.checked = enabled;
+    if (popupAdmin) {
+      popupAdmin.checked = state.popupSettings.administrasi;
+      popupAdmin.disabled = !enabled;
+    }
+    if (popupFac) {
+      popupFac.checked = state.popupSettings.fasilitas;
+      popupFac.disabled = !enabled;
+    }
+    if (popupRef) {
+      popupRef.checked = state.popupSettings.jaringanReferensi;
+      popupRef.disabled = !enabled;
+    }
+    if (popupRtrw) {
+      popupRtrw.checked = state.popupSettings.polaRuangRtrw;
+      popupRtrw.disabled = !enabled;
+    }
+    if (subWrapper) {
+      subWrapper.style.opacity = enabled ? '1' : '0.45';
+      subWrapper.style.pointerEvents = enabled ? 'auto' : 'none';
+    }
+  }
+
+  function updateTooltipVisibility(enabled) {
+    const mapEl = document.getElementById('hss-map');
+    if (!mapEl) return;
+    if (enabled) {
+      mapEl.classList.remove('tooltips-hidden');
+    } else {
+      mapEl.classList.add('tooltips-hidden');
+    }
+  }
+
+  window.syncPopupControlsUI = syncPopupControlsUI;
+  window.updateTooltipVisibility = updateTooltipVisibility;
+
+  popupMaster?.addEventListener('change', (e) => {
+    state.popupSettings.masterEnabled = e.target.checked;
+    if (!e.target.checked) {
+      state.map?.closePopup();
+    }
+    syncPopupControlsUI();
+  });
+
+  popupAdmin?.addEventListener('change', (e) => {
+    state.popupSettings.administrasi = e.target.checked;
+    if (!e.target.checked) state.map?.closePopup();
+  });
+
+  popupFac?.addEventListener('change', (e) => {
+    state.popupSettings.fasilitas = e.target.checked;
+    if (!e.target.checked) state.map?.closePopup();
+  });
+
+  popupRef?.addEventListener('change', (e) => {
+    state.popupSettings.jaringanReferensi = e.target.checked;
+    if (!e.target.checked) state.map?.closePopup();
+  });
+
+  popupRtrw?.addEventListener('change', (e) => {
+    state.popupSettings.polaRuangRtrw = e.target.checked;
+    if (!e.target.checked) state.map?.closePopup();
+  });
+
+  tooltipMaster?.addEventListener('change', (e) => {
+    state.tooltipSettings.enabled = e.target.checked;
+    updateTooltipVisibility(e.target.checked);
+  });
+
+  // Initial sync with state
+  syncPopupControlsUI();
+  if (tooltipMaster) tooltipMaster.checked = state.tooltipSettings.enabled;
+  updateTooltipVisibility(state.tooltipSettings.enabled);
 }
 
 function setBasemapMode(mode) {
@@ -1079,7 +1176,10 @@ function renderThematicRoads(features) {
       className: 'shadow-md rounded-lg border border-slate-200',
     });
 
-    layer.on('click', () => {
+    layer.on('click', (e) => {
+      if (e && e.originalEvent) {
+        L.DomEvent.stopPropagation(e);
+      }
       selectRoadOnMap(p.road_key);
       openRoadDetail(p.road_key);
     });
@@ -1162,7 +1262,7 @@ function renderReferenceNetwork(data) {
       onEachFeature: (f, layer) => {
         const p = f.properties;
         const name = p.connector_name || p.road_name || 'Konektor Jaringan Analisis';
-        layer.bindPopup(`
+        const popupContent = `
           <div class="p-1.5 text-xs">
             <div class="font-bold text-slate-800">${escapeHtml(name)}</div>
             <div class="text-[11px] text-amber-700 font-semibold mt-1">Konektor Jaringan Analisis (Topologi)</div>
@@ -1170,7 +1270,11 @@ function renderReferenceNetwork(data) {
               Elemen sintetis pemodelan jaringan. Bukan ruas SK bupati, bukan jembatan fisik, dan tidak memiliki peringkat prioritas penanganan.
             </div>
           </div>
-        `);
+        `;
+        layer.on('click', (e) => {
+          if (!state.popupSettings.masterEnabled || !state.popupSettings.jaringanReferensi) return;
+          L.popup().setLatLng(e.latlng).setContent(popupContent).openOn(state.map);
+        });
       },
     }
   ).addTo(state.map);
@@ -1192,13 +1296,17 @@ function renderFacilities(data) {
         },
         onEachFeature: (f, layer) => {
           const p = f.properties;
-          layer.bindPopup(`
+          const popupContent = `
             <div class="p-1.5 text-xs">
               <div class="font-bold text-slate-900">${escapeHtml(p.facility_name)}</div>
               <div class="text-[11px] text-slate-600 font-medium capitalize">${p.facility_type}</div>
               <div class="text-[10px] text-slate-500 mt-0.5">Kecamatan: ${p.district || '-'} | Desa: ${p.village || '-'}</div>
             </div>
-          `);
+          `;
+          layer.on('click', (e) => {
+            if (!state.popupSettings.masterEnabled || !state.popupSettings.fasilitas) return;
+            L.popup().setLatLng(e.latlng).setContent(popupContent).openOn(state.map);
+          });
         },
       }
     );
@@ -1230,10 +1338,41 @@ function renderVillages(data) {
     pane: 'villagesPane',
     style: ADMINISTRATIVE_STYLES.villages,
     onEachFeature: (f, layer) => {
-      const name = f.properties.nama_desa || f.properties.village_name || f.properties.NAMOBJ || 'Desa';
+      const p = f.properties;
+      const name = p.nama_desa || p.village_name || p.NAMOBJ || 'Desa';
+      const adminType = p.admin_type || '-';
+      const kecamatan = p.district_name || p.nama_kecamatan || '-';
+      const kode = p.village_id || '-';
+      const luas = p.area_ha_source ? `${Number(p.area_ha_source).toFixed(2)} ha` : '-';
+
+      // Hover tooltip (respects CSS-based tooltip toggle and close-zoom threshold >= 12)
       layer.bindTooltip(`<span class="text-[10px] text-slate-600">${escapeHtml(name)}</span>`, {
         permanent: false,
         direction: 'center',
+      });
+      layer.on('tooltipopen', () => {
+        if (state.map && state.map.getZoom() < 12) {
+          layer.closeTooltip();
+        }
+      });
+
+      // Click popup with guard (Phase 4.7)
+      layer.on('click', (e) => {
+        if (!state.popupSettings.masterEnabled || !state.popupSettings.administrasi) return;
+        L.popup({ className: 'shadow-md rounded-lg border border-slate-200' })
+          .setLatLng(e.latlng)
+          .setContent(`
+            <div class="p-2 text-xs leading-relaxed min-w-[180px]">
+              <div class="font-bold text-slate-900 text-sm">${escapeHtml(name)}</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">${escapeHtml(adminType)}</div>
+              <div class="mt-1.5 space-y-0.5">
+                <div class="text-[11px] text-slate-700">Kecamatan: <strong>${escapeHtml(kecamatan)}</strong></div>
+                <div class="text-[11px] text-slate-600">Kode Wilayah: <span class="font-mono">${escapeHtml(kode)}</span></div>
+                <div class="text-[11px] text-slate-600">Luas: ${luas}</div>
+              </div>
+            </div>
+          `)
+          .openOn(state.map);
       });
     },
   });
@@ -1288,6 +1427,21 @@ async function loadRtrwLayer() {
         `, {
           sticky: true,
           className: 'shadow-md rounded-lg border border-slate-200 bg-white/95',
+        });
+
+        // Click popup with guard (Phase 4.7)
+        layer.on('click', (e) => {
+          if (!state.popupSettings.masterEnabled || !state.popupSettings.polaRuangRtrw) return;
+          L.popup({ className: 'shadow-md rounded-lg border border-slate-200' })
+            .setLatLng(e.latlng)
+            .setContent(`
+              <div class="p-2 text-xs leading-relaxed">
+                <div class="font-bold text-slate-900">${escapeHtml(pola)}</div>
+                <div class="text-[10px] text-slate-600 mt-0.5">Kecamatan: ${escapeHtml(kec)}</div>
+                <div class="text-[10px] text-slate-500">Luas: ${luas} | Kode: ${kode}</div>
+              </div>
+            `)
+            .openOn(state.map);
         });
       },
     });
