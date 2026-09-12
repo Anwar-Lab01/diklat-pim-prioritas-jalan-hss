@@ -1,7 +1,16 @@
 /**
  * Sistem Pendukung Prioritas Penanganan Jalan Kabupaten Hulu Sungai Selatan
- * Client Application Controller (Phase 3 MVP)
+ * Client Application Controller (Phase 3 & Phase 4 Web GIS)
  */
+
+import {
+  ROAD_TIER_STYLES,
+  SELECTION_HALO_STYLE,
+  REFERENCE_NETWORK_STYLES,
+  ADMINISTRATIVE_STYLES,
+  RTRW_COLORS,
+  createFacilityIcon,
+} from './mapStyle.js';
 
 const state = {
   mode: 'OPERATIONAL_2025',
@@ -20,6 +29,40 @@ const state = {
   page: 1,
   pageSize: 50,
   precisionMode: false,
+
+  // --- Phase 4 Web GIS State ---
+  map: null,
+  mapInitialized: false,
+  mapLayers: {
+    osmBasemap: null,
+    countyRoads: null,
+    provincialRoads: null,
+    nationalRoads: null,
+    connectors: null,
+    rsud: null,
+    puskesmas: null,
+    markets: null,
+    schools: null,
+    districts: null,
+    villages: null,
+    rtrw: null,
+    selectionHalo: null,
+  },
+  mapData: {
+    countyRoads: null,
+    referenceNetwork: null,
+    facilities: null,
+    districts: null,
+    villages: null,
+    rtrw: null,
+  },
+  mapFilters: {
+    search: '',
+    district: 'ALL',
+    tier: 'ALL',
+    condition: 'ALL',
+  },
+  selectedRoadKey: null,
 };
 
 // --- INITIALIZATION ---
@@ -133,10 +176,15 @@ function reloadActiveData() {
     loadDashboard();
   } else if (state.currentView === 'prioritas') {
     loadPriorityTable();
+  } else if (state.currentView === 'peta') {
+    if (state.mapInitialized) {
+      loadMapCountyRoads();
+    }
   }
   if (state.selectedRoadDetail) {
     openRoadDetail(state.selectedRoadDetail.identity.road_key);
   }
+  updateMapStatus();
 }
 
 // --- ROUTING ---
@@ -147,6 +195,7 @@ function handleRouting() {
   const viewMap = {
     '#dashboard': 'dashboard',
     '#prioritas': 'prioritas',
+    '#peta': 'peta',
     '#data-sumber': 'data-sumber',
     '#model': 'model',
   };
@@ -154,12 +203,15 @@ function handleRouting() {
   const targetView = viewMap[baseHash] || 'dashboard';
   switchView(targetView);
 
-  // Check for deep link to road detail: e.g. #prioritas?road=HSS-KAB-025
+  // Check for deep link to road detail: e.g. #prioritas?road=HSS-KAB-025 or #peta?road=HSS-KAB-025
   if (query) {
     const params = new URLSearchParams(query);
     const roadKey = params.get('road');
     if (roadKey) {
       openRoadDetail(roadKey);
+      if (targetView === 'peta') {
+        setTimeout(() => selectRoadOnMap(roadKey), 300);
+      }
     }
   }
 }
@@ -186,7 +238,13 @@ function switchView(viewName) {
   // Load view data
   if (viewName === 'dashboard') loadDashboard();
   else if (viewName === 'prioritas') loadPriorityTable();
-  else if (viewName === 'data-sumber') loadProvenance();
+  else if (viewName === 'peta') {
+    if (!state.mapInitialized) {
+      initMap();
+    } else {
+      setTimeout(() => state.map?.invalidateSize(), 50);
+    }
+  } else if (viewName === 'data-sumber') loadProvenance();
   else if (viewName === 'model') loadModel();
 }
 
@@ -317,9 +375,12 @@ function renderDashboard(data) {
       </td>
       <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${r.final_score.toFixed(6)}</td>
       <td class="py-2.5 px-3 text-center">${renderTierBadge(r.tier_category)}</td>
-      <td class="py-2.5 px-3 text-center">
-        <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2.5 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
-          Detail & Dekomposisi
+      <td class="py-2.5 px-3 text-center whitespace-nowrap">
+        <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition mr-1" onclick="event.stopPropagation(); viewRoadOnMap('${r.road_key}')">
+          Peta
+        </button>
+        <button class="text-xs bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 font-semibold px-2 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
+          Detail
         </button>
       </td>
     </tr>
@@ -364,7 +425,7 @@ function populateDistrictFilter(roads) {
 function applyTableFilters() {
   let list = [...state.roads];
 
-  // 1. Text Search (display_name, nomor_ruas, road_key)
+  // 1. Text Search
   if (state.search) {
     const q = state.search;
     list = list.filter(
@@ -373,7 +434,7 @@ function applyTableFilters() {
         r.canonical_name.toLowerCase().includes(q) ||
         r.nomor_ruas.includes(q) ||
         r.road_key.toLowerCase().includes(q)
-    );
+      );
   }
 
   // 2. District Filter
@@ -457,8 +518,11 @@ function renderPriorityTable() {
       </td>
       <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${r.final_score.toFixed(6)}</td>
       <td class="py-2.5 px-3 text-center">${renderTierBadge(r.tier_category)}</td>
-      <td class="py-2.5 px-3 text-center">
-        <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
+      <td class="py-2.5 px-3 text-center whitespace-nowrap">
+        <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition mr-1" onclick="event.stopPropagation(); viewRoadOnMap('${r.road_key}')">
+          Peta
+        </button>
+        <button class="text-xs bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 font-semibold px-2 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
           Detail
         </button>
       </td>
@@ -497,6 +561,650 @@ window.changePage = function (newPage) {
   state.page = newPage;
   renderPriorityTable();
 };
+
+// --- VIEW 5: PETA PRIORITAS (WEB GIS SPATIAL ENGINE - FASE 4) ---
+async function initMap() {
+  if (state.mapInitialized) return;
+
+  const mapContainer = document.getElementById('hss-map');
+  if (!mapContainer) return;
+
+  // Initialize Leaflet Map
+  // Center roughly at Kandangan / Hulu Sungai Selatan (-2.6885, 115.245)
+  state.map = L.map('hss-map', {
+    center: [-2.6885, 115.245],
+    zoom: 11,
+    minZoom: 9,
+    maxZoom: 18,
+    attributionControl: true,
+  });
+
+  // Create Deterministic Custom Panes with explicit z-index
+  const panes = [
+    { name: 'basemapPane', zIndex: 200 },
+    { name: 'rtrwPane', zIndex: 350 },
+    { name: 'villagesPane', zIndex: 380 },
+    { name: 'districtsPane', zIndex: 400 },
+    { name: 'refRoadsPane', zIndex: 450 },
+    { name: 'connectorsPane', zIndex: 460 },
+    { name: 'countyRoadsPane', zIndex: 500 },
+    { name: 'selectionHaloPane', zIndex: 600 },
+    { name: 'facilitiesPane', zIndex: 700 },
+  ];
+
+  panes.forEach((p) => {
+    state.map.createPane(p.name);
+    state.map.getPane(p.name).style.zIndex = p.zIndex;
+  });
+
+  // Basemap TileLayer (OpenStreetMap)
+  state.mapLayers.osmBasemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    pane: 'basemapPane',
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Dinas PUTR Kab. HSS',
+  }).addTo(state.map);
+
+  initMapControls();
+  state.mapInitialized = true;
+
+  await loadMapData();
+}
+
+function initMapControls() {
+  // Focus HSS button
+  document.getElementById('map-btn-fit-hss')?.addEventListener('click', fitHssBounds);
+
+  // Reset Map Filters button
+  document.getElementById('map-btn-reset-filters')?.addEventListener('click', () => {
+    const searchEl = document.getElementById('map-search-input');
+    const distEl = document.getElementById('map-filter-district');
+    const tierEl = document.getElementById('map-filter-tier');
+    const condEl = document.getElementById('map-filter-condition');
+
+    if (searchEl) searchEl.value = '';
+    if (distEl) distEl.value = 'ALL';
+    if (tierEl) tierEl.value = 'ALL';
+    if (condEl) condEl.value = 'ALL';
+
+    state.mapFilters = { search: '', district: 'ALL', tier: 'ALL', condition: 'ALL' };
+    applyMapFilters();
+  });
+
+  // Live search input & autocomplete
+  const searchInput = document.getElementById('map-search-input');
+  const autocompleteBox = document.getElementById('map-search-autocomplete');
+
+  searchInput?.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    state.mapFilters.search = q;
+    handleMapSearchAutocomplete(q);
+    applyMapFilters();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!searchInput?.contains(e.target) && !autocompleteBox?.contains(e.target)) {
+      autocompleteBox?.classList.add('hidden');
+    }
+  });
+
+  // District, Tier, Condition Filter dropdowns
+  document.getElementById('map-filter-district')?.addEventListener('change', (e) => {
+    state.mapFilters.district = e.target.value;
+    applyMapFilters();
+  });
+
+  document.getElementById('map-filter-tier')?.addEventListener('change', (e) => {
+    state.mapFilters.tier = e.target.value;
+    applyMapFilters();
+  });
+
+  document.getElementById('map-filter-condition')?.addEventListener('change', (e) => {
+    state.mapFilters.condition = e.target.value;
+    applyMapFilters();
+  });
+
+  // Layer panel toggle
+  const layersBtn = document.getElementById('btn-toggle-layers');
+  const layersPanel = document.getElementById('map-layers-panel');
+  const closeLayersBtn = document.getElementById('btn-close-layers');
+
+  layersBtn?.addEventListener('click', () => {
+    layersPanel?.classList.toggle('hidden');
+  });
+  closeLayersBtn?.addEventListener('click', () => {
+    layersPanel?.classList.add('hidden');
+  });
+
+  // Legend collapse toggle
+  const legendBtn = document.getElementById('btn-toggle-legend-body');
+  const legendBody = document.getElementById('map-legend-body');
+  legendBtn?.addEventListener('click', () => {
+    legendBody?.classList.toggle('hidden');
+    legendBtn.textContent = legendBody?.classList.contains('hidden') ? '▲' : '▼';
+  });
+
+  // Basemap radio toggles
+  document.querySelectorAll('input[name="basemap-layer"]').forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      if (e.target.value === 'osm') {
+        if (!state.map.hasLayer(state.mapLayers.osmBasemap)) {
+          state.mapLayers.osmBasemap.addTo(state.map);
+        }
+        document.getElementById('hss-map').style.backgroundColor = '';
+      } else {
+        if (state.map.hasLayer(state.mapLayers.osmBasemap)) {
+          state.map.removeLayer(state.mapLayers.osmBasemap);
+        }
+        document.getElementById('hss-map').style.backgroundColor = '#f8fafc';
+      }
+    });
+  });
+
+  // Reference road layer toggles
+  document.getElementById('layer-roads-provincial')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.provincialRoads, e.target.checked);
+  });
+  document.getElementById('layer-roads-national')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.nationalRoads, e.target.checked);
+  });
+  document.getElementById('layer-connectors')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.connectors, e.target.checked);
+  });
+
+  // Facilities layer toggles
+  document.getElementById('layer-fac-hospital')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.rsud, e.target.checked);
+  });
+  document.getElementById('layer-fac-puskesmas')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.puskesmas, e.target.checked);
+  });
+  document.getElementById('layer-fac-market')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.markets, e.target.checked);
+  });
+  document.getElementById('layer-fac-school')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.schools, e.target.checked);
+  });
+
+  // Admin layer toggles
+  document.getElementById('layer-admin-districts')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.districts, e.target.checked);
+  });
+  document.getElementById('layer-admin-villages')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.villages, e.target.checked);
+  });
+
+  // RTRW layer toggle (on-demand loading)
+  document.getElementById('layer-rtrw')?.addEventListener('change', async (e) => {
+    if (e.target.checked) {
+      if (!state.mapData.rtrw) {
+        await loadRtrwLayer();
+      }
+      if (state.mapLayers.rtrw) {
+        state.mapLayers.rtrw.addTo(state.map);
+      }
+    } else {
+      if (state.mapLayers.rtrw && state.map.hasLayer(state.mapLayers.rtrw)) {
+        state.map.removeLayer(state.mapLayers.rtrw);
+      }
+    }
+  });
+}
+
+async function loadMapData() {
+  try {
+    const [roadsRes, refRes, facRes, distRes, vilRes] = await Promise.all([
+      fetch(`/api/map/roads?mode=${state.mode}`).then((r) => r.json()),
+      fetch('/api/map/reference-network').then((r) => r.json()),
+      fetch('/api/map/facilities').then((r) => r.json()),
+      fetch('/api/map/districts').then((r) => r.json()),
+      fetch('/api/map/villages').then((r) => r.json()),
+    ]);
+
+    if (distRes.success) {
+      state.mapData.districts = distRes.data;
+      renderDistricts(distRes.data);
+      populateMapDistrictFilter(distRes.data);
+    }
+
+    if (vilRes.success) {
+      state.mapData.villages = vilRes.data;
+      renderVillages(vilRes.data);
+    }
+
+    if (refRes.success) {
+      state.mapData.referenceNetwork = refRes.data;
+      renderReferenceNetwork(refRes.data);
+    }
+
+    if (facRes.success) {
+      state.mapData.facilities = facRes.data;
+      renderFacilities(facRes.data);
+    }
+
+    if (roadsRes.success) {
+      state.mapData.countyRoads = roadsRes.data;
+      renderThematicRoads(roadsRes.data.features);
+      fitHssBounds();
+    }
+
+    updateMapStatus();
+  } catch (err) {
+    console.error('Error loading map data:', err);
+  }
+}
+
+async function loadMapCountyRoads() {
+  try {
+    const roadsRes = await fetch(`/api/map/roads?mode=${state.mode}`).then((r) => r.json());
+    if (roadsRes.success) {
+      state.mapData.countyRoads = roadsRes.data;
+      applyMapFilters();
+    }
+  } catch (err) {
+    console.error('Error reloading map county roads:', err);
+  }
+}
+
+function renderThematicRoads(features) {
+  if (state.mapLayers.countyRoads) {
+    state.map.removeLayer(state.mapLayers.countyRoads);
+  }
+
+  state.mapLayers.countyRoads = L.geoJSON(
+    { type: 'FeatureCollection', features },
+    {
+      pane: 'countyRoadsPane',
+      style: (feature) => {
+        const tier = feature.properties.tier_category || 'REGULAR';
+        const style = ROAD_TIER_STYLES[tier] || ROAD_TIER_STYLES.REGULAR;
+        return {
+          color: style.color,
+          weight: style.weight,
+          opacity: style.opacity,
+          lineCap: 'round',
+          lineJoin: 'round',
+        };
+      },
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties;
+        const tierStyle = ROAD_TIER_STYLES[p.tier_category] || ROAD_TIER_STYLES.REGULAR;
+
+        const tooltipContent = `
+          <div class="p-1 text-xs leading-relaxed">
+            <div class="font-bold text-slate-900">${escapeHtml(p.display_name)}</div>
+            <div class="text-[10px] text-slate-500 font-mono">No: ${p.nomor_ruas} | ${p.road_key}</div>
+            <div class="text-[11px] text-slate-700">Kecamatan: <strong>${escapeHtml(p.district_name)}</strong></div>
+            <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
+              <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
+              <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
+            </div>
+            <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
+              <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(p.tier_category)}</span>
+              <span class="text-slate-600">Mantap: ${p.mantap_pct.toFixed(1)}%</span>
+            </div>
+          </div>
+        `;
+        layer.bindTooltip(tooltipContent, {
+          sticky: true,
+          className: 'shadow-md rounded-lg border border-slate-200',
+        });
+
+        layer.on('click', () => {
+          selectRoadOnMap(p.road_key);
+          openRoadDetail(p.road_key);
+        });
+      },
+    }
+  ).addTo(state.map);
+}
+
+function renderReferenceNetwork(data) {
+  const provincialFeatures = data.features.filter((f) => f.properties.network_class === 'PROVINSI');
+  const nationalFeatures = data.features.filter((f) => f.properties.network_class === 'NASIONAL');
+  const connectorFeatures = data.features.filter((f) => f.properties.network_class === 'KONEKTOR_ANALISIS');
+
+  // Provincial
+  state.mapLayers.provincialRoads = L.geoJSON(
+    { type: 'FeatureCollection', features: provincialFeatures },
+    {
+      pane: 'refRoadsPane',
+      style: REFERENCE_NETWORK_STYLES.PROVINSI,
+      onEachFeature: (f, layer) => {
+        const name = f.properties.road_name || 'Jalan Provinsi';
+        layer.bindTooltip(
+          `<b>${escapeHtml(name)}</b><br/><span class="text-xs text-indigo-700 font-semibold">Jalan Provinsi (4 Ruas)</span>`,
+          { sticky: true }
+        );
+      },
+    }
+  ).addTo(state.map);
+
+  // National
+  state.mapLayers.nationalRoads = L.geoJSON(
+    { type: 'FeatureCollection', features: nationalFeatures },
+    {
+      pane: 'refRoadsPane',
+      style: REFERENCE_NETWORK_STYLES.NASIONAL,
+      onEachFeature: (f, layer) => {
+        const name = f.properties.road_name || 'Jalan Nasional';
+        layer.bindTooltip(
+          `<b>${escapeHtml(name)}</b><br/><span class="text-xs text-teal-700 font-semibold">Jalan Nasional (8 Ruas)</span>`,
+          { sticky: true }
+        );
+      },
+    }
+  ).addTo(state.map);
+
+  // Connectors (SEMANTIC SAFETY: No priority score, not a physical bridge)
+  state.mapLayers.connectors = L.geoJSON(
+    { type: 'FeatureCollection', features: connectorFeatures },
+    {
+      pane: 'connectorsPane',
+      style: REFERENCE_NETWORK_STYLES.KONEKTOR_ANALISIS,
+      onEachFeature: (f, layer) => {
+        const name = f.properties.connector_name || 'Konektor Jaringan Analisis';
+        layer.bindPopup(`
+          <div class="p-1.5 text-xs">
+            <div class="font-bold text-slate-800 flex items-center space-x-1">
+              <span class="w-2.5 h-0.5 bg-slate-400 inline-block border-t border-dashed"></span>
+              <span>${escapeHtml(name)}</span>
+            </div>
+            <div class="text-[11px] text-slate-600 mt-1">
+              <strong>Konektor Jaringan Analisis (Topologi)</strong><br/>
+              Elemen konektivitas jaringan jalan untuk analisis permodelan spasial.
+            </div>
+            <div class="mt-2 bg-slate-50 p-1.5 rounded border border-slate-200 text-[10px] text-slate-500">
+              ⚠ <em>Non-prioritas kabupaten. Tidak memiliki skor/bobot, tidak memiliki implikasi penanganan, dan bukan struktur jembatan fisik.</em>
+            </div>
+          </div>
+        `);
+      },
+    }
+  ).addTo(state.map);
+}
+
+function renderFacilities(data) {
+  const rsudFeatures = data.features.filter((f) => f.properties.facility_type === 'hospital');
+  const puskesmasFeatures = data.features.filter((f) => f.properties.facility_type === 'puskesmas');
+  const marketFeatures = data.features.filter((f) => f.properties.facility_type === 'market');
+  const schoolFeatures = data.features.filter((f) => f.properties.facility_type === 'school');
+
+  const createMarkerLayer = (features, type) => {
+    return L.geoJSON(
+      { type: 'FeatureCollection', features },
+      {
+        pane: 'facilitiesPane',
+        pointToLayer: (feature, latlng) => {
+          return L.marker(latlng, { icon: createFacilityIcon(type) });
+        },
+        onEachFeature: (f, layer) => {
+          const p = f.properties;
+          layer.bindPopup(`
+            <div class="p-1.5 text-xs">
+              <div class="font-bold text-slate-900">${escapeHtml(p.facility_name)}</div>
+              <div class="text-[11px] text-slate-600 font-medium capitalize">${p.facility_type}</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Kecamatan: ${p.district || '-'} | Desa: ${p.village || '-'}</div>
+            </div>
+          `);
+        },
+      }
+    );
+  };
+
+  state.mapLayers.rsud = createMarkerLayer(rsudFeatures, 'hospital').addTo(state.map);
+  state.mapLayers.puskesmas = createMarkerLayer(puskesmasFeatures, 'puskesmas').addTo(state.map);
+  state.mapLayers.markets = createMarkerLayer(marketFeatures, 'market').addTo(state.map);
+  state.mapLayers.schools = createMarkerLayer(schoolFeatures, 'school'); // schools off by default
+}
+
+function renderDistricts(data) {
+  state.mapLayers.districts = L.geoJSON(data, {
+    pane: 'districtsPane',
+    style: ADMINISTRATIVE_STYLES.districts,
+    onEachFeature: (f, layer) => {
+      const name = f.properties.nama_kecamatan || f.properties.district_name || f.properties.WADMKC || 'Kecamatan';
+      layer.bindTooltip(`<span class="font-bold text-xs text-slate-700">Kec. ${escapeHtml(name)}</span>`, {
+        permanent: false,
+        direction: 'center',
+        className: 'bg-white/80 px-1 py-0.5 rounded text-xs border border-slate-200',
+      });
+    },
+  }).addTo(state.map);
+}
+
+function renderVillages(data) {
+  state.mapLayers.villages = L.geoJSON(data, {
+    pane: 'villagesPane',
+    style: ADMINISTRATIVE_STYLES.villages,
+    onEachFeature: (f, layer) => {
+      const name = f.properties.nama_desa || f.properties.village_name || f.properties.NAMOBJ || 'Desa';
+      layer.bindTooltip(`<span class="text-[10px] text-slate-600">${escapeHtml(name)}</span>`, {
+        permanent: false,
+        direction: 'center',
+      });
+    },
+  });
+}
+
+async function loadRtrwLayer() {
+  const spinner = document.getElementById('rtrw-loading-indicator');
+  spinner?.classList.remove('hidden');
+
+  try {
+    const res = await fetch('/api/map/rtrw');
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+
+    state.mapData.rtrw = json.data;
+    state.mapLayers.rtrw = L.geoJSON(json.data, {
+      pane: 'rtrwPane',
+      style: (feature) => {
+        const pola = feature.properties.NAMOBJ || feature.properties.pola_ruang || '';
+        const color = RTRW_COLORS[pola] || '#94a3b8';
+        return {
+          fillColor: color,
+          fillOpacity: 0.35,
+          weight: 0.5,
+          color: '#64748b',
+          opacity: 0.5,
+        };
+      },
+      onEachFeature: (f, layer) => {
+        const pola = f.properties.NAMOBJ || f.properties.pola_ruang || 'Pola Ruang';
+        layer.bindTooltip(`<div class="text-[11px] font-semibold">${escapeHtml(pola)}</div>`, { sticky: true });
+      },
+    });
+  } catch (err) {
+    console.error('Error loading RTRW overlay:', err);
+  } finally {
+    spinner?.classList.add('hidden');
+  }
+}
+
+function applyMapFilters() {
+  if (!state.mapData.countyRoads) return;
+
+  let features = state.mapData.countyRoads.features;
+
+  // Search
+  if (state.mapFilters.search) {
+    const q = state.mapFilters.search;
+    features = features.filter((f) => {
+      const p = f.properties;
+      return (
+        p.display_name.toLowerCase().includes(q) ||
+        p.canonical_name.toLowerCase().includes(q) ||
+        p.nomor_ruas.includes(q) ||
+        p.road_key.toLowerCase().includes(q)
+      );
+    });
+  }
+
+  // District
+  if (state.mapFilters.district !== 'ALL') {
+    features = features.filter((f) => f.properties.district_name === state.mapFilters.district);
+  }
+
+  // Tier
+  if (state.mapFilters.tier !== 'ALL') {
+    features = features.filter((f) => f.properties.tier_category === state.mapFilters.tier);
+  }
+
+  // Condition
+  if (state.mapFilters.condition === 'MANTAP') {
+    features = features.filter((f) => f.properties.mantap_pct >= 60.0);
+  } else if (state.mapFilters.condition === 'TRANSISI') {
+    features = features.filter((f) => f.properties.mantap_pct >= 40.0 && f.properties.mantap_pct < 60.0);
+  } else if (state.mapFilters.condition === 'KRITIS') {
+    features = features.filter((f) => f.properties.mantap_pct < 40.0);
+  }
+
+  renderThematicRoads(features);
+
+  // Update status bar
+  const statRoads = document.getElementById('map-stat-visible-roads');
+  if (statRoads) {
+    statRoads.textContent = `Menampilkan ${features.length} dari 350 ruas jalan`;
+  }
+}
+
+function handleMapSearchAutocomplete(query) {
+  const box = document.getElementById('map-search-autocomplete');
+  if (!box || !state.mapData.countyRoads) return;
+
+  if (!query || query.length < 2) {
+    box.classList.add('hidden');
+    box.innerHTML = '';
+    return;
+  }
+
+  const matches = state.mapData.countyRoads.features
+    .filter((f) => {
+      const p = f.properties;
+      return (
+        p.display_name.toLowerCase().includes(query) ||
+        p.nomor_ruas.includes(query) ||
+        p.road_key.toLowerCase().includes(query)
+      );
+    })
+    .slice(0, 8);
+
+  if (matches.length === 0) {
+    box.classList.add('hidden');
+    box.innerHTML = '';
+    return;
+  }
+
+  box.innerHTML = matches
+    .map(
+      (m) => `
+    <div class="px-3 py-2 hover:bg-sky-50 cursor-pointer border-b border-slate-100 last:border-0 flex items-center justify-between" onclick="selectFromMapAutocomplete('${m.properties.road_key}')">
+      <div>
+        <div class="font-semibold text-slate-800 text-xs">${escapeHtml(m.properties.display_name)}</div>
+        <div class="text-[10px] text-slate-400 font-mono">No. ${m.properties.nomor_ruas} | ${m.properties.district_name}</div>
+      </div>
+      <div class="text-right font-mono">
+        <span class="text-xs font-bold text-slate-900">#${m.properties.priority_rank}</span>
+      </div>
+    </div>
+  `
+    )
+    .join('');
+
+  box.classList.remove('hidden');
+}
+
+window.selectFromMapAutocomplete = function (roadKey) {
+  const box = document.getElementById('map-search-autocomplete');
+  box?.classList.add('hidden');
+  selectRoadOnMap(roadKey);
+  openRoadDetail(roadKey);
+};
+
+function populateMapDistrictFilter(districtsGeoJson) {
+  const select = document.getElementById('map-filter-district');
+  if (!select || !districtsGeoJson?.features) return;
+
+  const names = districtsGeoJson.features
+    .map((f) => f.properties.nama_kecamatan || f.properties.district_name || f.properties.WADMKC)
+    .filter(Boolean)
+    .sort();
+
+  select.innerHTML = '<option value="ALL">Semua Kecamatan (11)</option>';
+  for (const name of names) {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  }
+}
+
+window.selectRoadOnMap = function (roadKey) {
+  if (!state.mapData.countyRoads || !state.map) return;
+
+  const feature = state.mapData.countyRoads.features.find((f) => f.properties.road_key === roadKey);
+  if (!feature) return;
+
+  state.selectedRoadKey = roadKey;
+
+  // Clear previous halo
+  if (state.mapLayers.selectionHalo) {
+    state.map.removeLayer(state.mapLayers.selectionHalo);
+  }
+
+  // Draw Cyan Selection Halo in selectionHaloPane
+  state.mapLayers.selectionHalo = L.geoJSON(feature, {
+    pane: 'selectionHaloPane',
+    style: SELECTION_HALO_STYLE,
+  }).addTo(state.map);
+
+  // Zoom to road
+  const bounds = state.mapLayers.selectionHalo.getBounds();
+  if (bounds.isValid()) {
+    state.map.fitBounds(bounds, { padding: [60, 60], maxZoom: 15 });
+  }
+};
+
+window.viewRoadOnMap = async function (roadKey) {
+  window.location.hash = `#peta?road=${roadKey}`;
+  switchView('peta');
+
+  if (!state.mapInitialized) {
+    await initMap();
+  } else {
+    state.map.invalidateSize();
+  }
+
+  setTimeout(() => {
+    selectRoadOnMap(roadKey);
+    openRoadDetail(roadKey);
+  }, 200);
+};
+
+function fitHssBounds() {
+  if (state.mapLayers.countyRoads && state.mapLayers.countyRoads.getBounds().isValid()) {
+    state.map.fitBounds(state.mapLayers.countyRoads.getBounds(), { padding: [20, 20] });
+  } else {
+    state.map.setView([-2.6885, 115.245], 11);
+  }
+}
+
+function toggleLayerVisibility(layer, isVisible) {
+  if (!layer || !state.map) return;
+  if (isVisible) {
+    if (!state.map.hasLayer(layer)) layer.addTo(state.map);
+  } else {
+    if (state.map.hasLayer(layer)) state.map.removeLayer(layer);
+  }
+}
+
+function updateMapStatus() {
+  const statMode = document.getElementById('map-stat-mode');
+  if (statMode) {
+    statMode.textContent = `Mode: ${state.mode}`;
+    statMode.className = state.mode === 'BENCHMARK_2024' ? 'font-semibold text-amber-600' : 'font-semibold text-emerald-700';
+  }
+}
 
 // --- VIEW 3: DATA & SUMBER (PROVENANCE) ---
 async function loadProvenance() {
@@ -618,7 +1326,7 @@ window.openRoadDetail = async function (roadKey) {
     const drawer = document.getElementById('road-detail-drawer');
     drawer.classList.remove('hidden');
 
-    // Update URL hash parameter without triggering reload
+    // Update URL hash parameter without triggering navigation
     const currentBase = window.location.hash.split('?')[0] || '#prioritas';
     history.replaceState(null, '', `${currentBase}?road=${roadKey}`);
   } catch (err) {
@@ -773,7 +1481,7 @@ function getTierBadgeClass(tier) {
 }
 
 function getTierDisplayName(tier) {
-  // STRICT RULE: Never label as "Pemeliharaan Rutin" or "Regular Maintenance"
+  // STRICT RULE: Never label as 'Pemeliharaan Rutin' or 'Regular Maintenance'
   switch (tier) {
     case 'TOP_35':
       return 'TOP_35 (Tier 1)';

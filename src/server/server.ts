@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { UiDataService } from '../services/uiDataService.ts';
 import { ModelService } from '../services/modelService.ts';
+import { SpatialService } from '../services/spatialService.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,7 @@ export function createServer() {
   const app = express();
   const uiService = new UiDataService();
   const modelService = new ModelService();
+  const spatialService = new SpatialService();
 
   app.use(express.json());
 
@@ -92,6 +94,80 @@ export function createServer() {
           variables,
         },
       });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6. Web GIS Map APIs (Phase 4)
+  // 6A. County Roads with Spatial Geometries & Active Scoring Run
+  app.get('/api/map/roads', (req, res) => {
+    try {
+      const mode = (req.query.mode as any) || 'OPERATIONAL_2025';
+      const modelCode = (req.query.model as string) || 'POLICY_DEFAULT_V1';
+      const data = spatialService.getCountyRoadsWithScores(mode, modelCode);
+      res.json({ success: true, total: data.features.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6B. Reference Transport Network (Provincial, National & Analytical Connectors)
+  app.get('/api/map/reference-network', (req, res) => {
+    try {
+      const data = spatialService.getReferenceNetworkGeoJson();
+      res.json({ success: true, total: data.features.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6C. Public Facilities (285 points: RSUD, Puskesmas, Sekolah, Pasar)
+  app.get('/api/map/facilities', (req, res) => {
+    try {
+      const typeFilter = req.query.type as string | undefined;
+      const data = spatialService.getPublicFacilitiesGeoJson(typeFilter);
+      res.json({ success: true, total: data.features.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6D. Administrative District Boundaries (11 Kecamatan)
+  app.get('/api/map/districts', (req, res) => {
+    try {
+      const data = spatialService.getDistrictsGeoJson();
+      res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6E. Administrative Village Boundaries (148 Desa/Kelurahan)
+  app.get('/api/map/villages', (req, res) => {
+    try {
+      const data = spatialService.getVillagesGeoJson();
+      res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6F. RTRW Pola Ruang Categories
+  app.get('/api/map/rtrw/categories', (req, res) => {
+    try {
+      const data = spatialService.getRtrwCategories();
+      res.json({ success: true, total: data.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6G. RTRW Pola Ruang GeoJSON Overlay (On-demand)
+  app.get('/api/map/rtrw', (req, res) => {
+    try {
+      const data = spatialService.getRtrwGeoJson();
+      res.json({ success: true, total: data.features?.length || 0, data });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }
