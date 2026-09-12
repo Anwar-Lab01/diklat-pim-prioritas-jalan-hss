@@ -2369,6 +2369,8 @@ function getInitialSimConfig() {
   };
 }
 
+const getBaselineSimulationConfig = getInitialSimConfig;
+
 // Proportional Sibling Auto-Balancing (Category Level)
 function simRebalanceCategorySiblings(currentCategories, editedCode, newWeight) {
   const clamped = Math.min(1.0, Math.max(0.0, Number(newWeight) || 0));
@@ -3205,4 +3207,11 @@ function initSimulationEventListeners() {
   document.getElementById('btn-close-sim-modal-bottom')?.addEventListener('click', window.closeSimulationExplainModal);
   document.getElementById('modal-sim-backdrop')?.addEventListener('click', window.closeSimulationExplainModal);
 }
+
+// Window Aliases for Compatibility & External Automation
+window.openSimExplainModal = window.openSimulationExplainModal;
+window.closeSimExplainModal = window.closeSimulationExplainModal;
+window.resetSimulationWeights = window.resetSimulationToBaseline;
+window.setMapColorSource = setMapColorSource;
+
 
