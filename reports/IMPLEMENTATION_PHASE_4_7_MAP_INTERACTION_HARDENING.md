@@ -2,7 +2,7 @@
 
 **Closure Report**  
 **Sistem Pendukung Prioritas Penanganan Jalan Kabupaten Hulu Sungai Selatan**  
-**Checkpoint Closure Commit:** `TBD (Phase 4.7 Commit)`  
+**Checkpoint Closure Commit:** `d84fcaf`  
 **Baseline Regression:** `229 / 229 PASS`  
 **Application Runtime:** Express.js + Modular SPA Client (`http://localhost:3000/#peta`)  
 **Operating Mode:** `OPERATIONAL_2025`  
