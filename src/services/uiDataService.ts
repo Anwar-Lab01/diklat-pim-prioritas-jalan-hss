@@ -9,6 +9,7 @@ import { BenchmarkService } from './benchmarkService.ts';
 export interface DashboardData {
   operatingMode: 'OPERATIONAL_2025' | 'BENCHMARK_2024';
   modelCode: string;
+  run_id: string;
   kpis: {
     totalRoads: number;
     totalLengthKm: number;
@@ -56,6 +57,7 @@ export interface DashboardData {
 }
 
 export interface PriorityTableRow {
+  run_id: string;
   road_key: string;
   nomor_ruas: string;
   display_name: string;
@@ -264,6 +266,7 @@ export class UiDataService {
     return {
       operatingMode,
       modelCode,
+      run_id: latestRun.run.run_id,
       kpis: {
         totalRoads: 350,
         totalLengthKm: condSummary.total_panjang_km,
@@ -299,6 +302,7 @@ export class UiDataService {
 
     const stmt = this.db.prepare(`
       SELECT
+        s.run_id,
         r.road_key,
         r.nomor_ruas,
         r.display_name,

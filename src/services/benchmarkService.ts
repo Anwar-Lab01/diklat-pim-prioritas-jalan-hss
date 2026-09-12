@@ -40,17 +40,64 @@ export class BenchmarkService {
    * Note: This is an audit / concordance tool ONLY.
    * label_top105 is NEVER used as a scoring input.
    */
-  evaluateBenchmarkConcordance(): BenchmarkComparisonResult {
-    // 1. Execute or get BENCHMARK_2024 scoring run
-    const scoringResult = this.scoringSvc.executeScoringRun(
-      'BENCHMARK_2024',
-      'POLICY_DEFAULT_V1',
-      'AUDIT_BENCHMARK_RUNNER'
-    );
+  evaluateBenchmarkConcordance(modelCode: string = 'POLICY_DEFAULT_V1'): BenchmarkComparisonResult {
+    // 1. Reuse existing latest BENCHMARK_2024 scoring run if available
+    let latestRun = this.scoringSvc.getLatestScoringRun('BENCHMARK_2024', modelCode);
+    let runId: string;
+    let policyTop105: Array<{ road_key: string; priority_rank: number; final_score: number; display_name: string }>;
+    let policyTop105Keys: Set<string>;
+    let scoreMap: Map<string, { road_key: string; priority_rank: number; final_score: number; display_name: string }>;
 
-    const rankedScores = scoringResult.rankedScores;
-    const policyTop105 = rankedScores.slice(0, 105);
-    const policyTop105Keys = new Set(policyTop105.map((r) => r.road_key));
+    if (latestRun) {
+      runId = latestRun.run.run_id;
+      const roadsStmt = this.db.prepare('SELECT road_key, display_name FROM roads');
+      const allRoads = roadsStmt.all() as unknown as Array<{ road_key: string; display_name: string }>;
+      const rMap = new Map(allRoads.map((r) => [r.road_key, r.display_name]));
+
+      policyTop105 = latestRun.scores.slice(0, 105).map((s) => ({
+        road_key: s.road_key,
+        priority_rank: s.priority_rank,
+        final_score: s.final_score,
+        display_name: rMap.get(s.road_key) || s.road_key,
+      }));
+      policyTop105Keys = new Set(policyTop105.map((r) => r.road_key));
+      scoreMap = new Map(
+        latestRun.scores.map((s) => [
+          s.road_key,
+          {
+            road_key: s.road_key,
+            priority_rank: s.priority_rank,
+            final_score: s.final_score,
+            display_name: rMap.get(s.road_key) || s.road_key,
+          },
+        ])
+      );
+    } else {
+      const scoringResult = this.scoringSvc.executeScoringRun(
+        'BENCHMARK_2024',
+        modelCode,
+        'AUDIT_BENCHMARK_RUNNER'
+      );
+      runId = scoringResult.runId;
+      policyTop105 = scoringResult.rankedScores.slice(0, 105).map((r) => ({
+        road_key: r.road_key,
+        priority_rank: r.priority_rank,
+        final_score: r.final_score,
+        display_name: r.display_name,
+      }));
+      policyTop105Keys = new Set(policyTop105.map((r) => r.road_key));
+      scoreMap = new Map(
+        scoringResult.rankedScores.map((r) => [
+          r.road_key,
+          {
+            road_key: r.road_key,
+            priority_rank: r.priority_rank,
+            final_score: r.final_score,
+            display_name: r.display_name,
+          },
+        ])
+      );
+    }
 
     // 2. Load historical label_top105 ground-truth flags
     const baselineCsv = fs.readFileSync(SEED_FILES.priorityBaselineCanonical, 'utf8');
@@ -79,10 +126,7 @@ export class BenchmarkService {
       SET top105_concordance = ?
       WHERE run_id = ?
     `);
-    updateRunStmt.run(Math.round(concordancePct * 100) / 100, scoringResult.runId);
-
-    // 5. Build difference lists
-    const scoreMap = new Map(rankedScores.map((r) => [r.road_key, r]));
+    updateRunStmt.run(Math.round(concordancePct * 100) / 100, runId);
 
     const onlyInPolicy = policyTop105
       .filter((r) => !historicalTop105Keys.has(r.road_key))
@@ -117,7 +161,7 @@ export class BenchmarkService {
     onlyInHistorical.sort((a, b) => a.priority_rank - b.priority_rank);
 
     return {
-      total_evaluated: rankedScores.length,
+      total_evaluated: scoreMap.size,
       historical_top105_count: historicalTop105Keys.size,
       policy_top105_count: policyTop105.length,
       overlap_count: overlapCount,
