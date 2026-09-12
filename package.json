@@ -6,6 +6,7 @@
   "scripts": {
     "db:init": "node --experimental-strip-types src/ingestion/ingestAuthoritativeData.ts",
     "db:seed": "node --experimental-strip-types src/ingestion/ingestAuthoritativeData.ts",
+    "db:deploy-snapshot": "node --experimental-strip-types scripts/generate_deploy_db.ts",
     "test:phase1": "node --experimental-strip-types src/tests/phase1-verification.ts",
     "test:phase2": "node --experimental-strip-types src/tests/phase2-verification.ts",
     "test:phase3": "node --experimental-strip-types src/tests/phase3-verification.ts",

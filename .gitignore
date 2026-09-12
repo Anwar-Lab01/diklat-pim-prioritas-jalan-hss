@@ -6,3 +6,4 @@ Thumbs.db
 data/diklat_pim.db
 data/diklat_pim.db-wal
 data/diklat_pim.db-shm
+!data/diklat_pim_deploy.db

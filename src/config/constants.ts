@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -6,7 +7,14 @@ const __dirname = path.dirname(__filename);
 export const PROJECT_ROOT = path.resolve(__dirname, '../../');
 
 export const DB_DIR = path.resolve(PROJECT_ROOT, 'data');
-export const DB_PATH = path.resolve(DB_DIR, 'diklat_pim.db');
+export const DEPLOY_DB_PATH = path.resolve(DB_DIR, 'diklat_pim_deploy.db');
+export const DEFAULT_DEV_DB_PATH = path.resolve(DB_DIR, 'diklat_pim.db');
+
+export const DB_PATH = process.env.DB_PATH
+  ? path.resolve(PROJECT_ROOT, process.env.DB_PATH)
+  : (process.env.NODE_ENV === 'production' || process.env.VERCEL || !fs.existsSync(DEFAULT_DEV_DB_PATH))
+    ? DEPLOY_DB_PATH
+    : DEFAULT_DEV_DB_PATH;
 
 export const SEED_BASE_DIR = path.resolve(
   PROJECT_ROOT,
