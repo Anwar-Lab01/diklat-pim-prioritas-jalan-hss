@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
+import * as turf from '@turf/turf';
 import { getDatabase } from '../db/connection.ts';
 import { SEED_FILES, AUTHORITY_INVARIANTS } from '../config/constants.ts';
 import { ScoringService } from './scoringService.ts';
@@ -65,6 +66,7 @@ export class SpatialService {
   private cachedNationalGeoJson: any = null;
   private cachedConnectorsGeoJson: any = null;
   private cachedDistrictsGeoJson: any = null;
+  private cachedKabupatenGeoJson: any = null;
   private cachedVillagesGeoJson: any = null;
   private cachedRtrwGeoJson: any = null;
   private cachedRtrwCategories: Array<{ nama_pola_ruang: string; feature_count: number }> | null = null;
@@ -395,6 +397,70 @@ export class SpatialService {
       this.cachedDistrictsGeoJson = JSON.parse(fs.readFileSync(SEED_FILES.districtsGeoJson, 'utf8'));
     }
     return this.cachedDistrictsGeoJson;
+  }
+
+  /**
+   * Retrieve the Kabupaten Hulu Sungai Selatan outer boundary deterministically
+   * derived by dissolving / unioning all 11 authoritative district polygons.
+   * The derived geometry is display context only (no scoring attributes).
+   */
+  getKabupatenGeoJson(): {
+    type: 'FeatureCollection';
+    name: 'kabupaten_hss_boundary';
+    features: Array<{
+      type: 'Feature';
+      properties: {
+        boundary_type: 'KABUPATEN';
+        regency_name: 'Hulu Sungai Selatan';
+        province_name: 'Kalimantan Selatan';
+        label: 'Batas Kabupaten Hulu Sungai Selatan';
+        source: 'DISSOLVE_11_DISTRICTS';
+        district_count: number;
+      };
+      geometry: any;
+    }>;
+  } {
+    if (this.cachedKabupatenGeoJson) {
+      return this.cachedKabupatenGeoJson;
+    }
+
+    const districtsGeoJson = this.getDistrictsGeoJson();
+    if (!districtsGeoJson.features || districtsGeoJson.features.length !== AUTHORITY_INVARIANTS.DISTRICT_COUNT) {
+      throw new Error(
+        `Kabupaten dissolve failed: expected ${AUTHORITY_INVARIANTS.DISTRICT_COUNT} districts, found ${districtsGeoJson.features?.length}`
+      );
+    }
+
+    let unionPoly = districtsGeoJson.features[0];
+    for (let i = 1; i < districtsGeoJson.features.length; i++) {
+      const merged = turf.union(turf.featureCollection([unionPoly, districtsGeoJson.features[i]]));
+      if (!merged) {
+        throw new Error(`Kabupaten dissolve failed at district index ${i}`);
+      }
+      unionPoly = merged;
+    }
+
+    this.cachedKabupatenGeoJson = {
+      type: 'FeatureCollection',
+      name: 'kabupaten_hss_boundary',
+      bbox: turf.bbox(unionPoly),
+      features: [
+        {
+          type: 'Feature',
+          properties: {
+            boundary_type: 'KABUPATEN',
+            regency_name: 'Hulu Sungai Selatan',
+            province_name: 'Kalimantan Selatan',
+            label: 'Batas Kabupaten Hulu Sungai Selatan',
+            source: 'DISSOLVE_11_DISTRICTS',
+            district_count: districtsGeoJson.features.length,
+          },
+          geometry: unionPoly.geometry,
+        },
+      ],
+    };
+
+    return this.cachedKabupatenGeoJson;
   }
 
   /**

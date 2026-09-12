@@ -143,6 +143,55 @@ export function createServer() {
     }
   });
 
+  // 6D-1. Derived Kabupaten Hulu Sungai Selatan Boundary (Display Context)
+  app.get('/api/map/kabupaten', (req, res) => {
+    try {
+      const data = spatialService.getKabupatenGeoJson();
+      res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6D-2. Basemap Provider Configurations
+  app.get('/api/map/basemap-config', (req, res) => {
+    try {
+      const satelliteTileUrl = process.env.SATELLITE_TILE_URL ||
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      const satelliteAttribution = process.env.SATELLITE_ATTRIBUTION ||
+        'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+
+      res.json({
+        success: true,
+        data: {
+          neutral: {
+            id: 'neutral',
+            label: 'Latar Netral',
+            isOffline: true,
+          },
+          osm: {
+            id: 'osm',
+            label: 'Peta Jalan',
+            isOffline: false,
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Dinas PUTR Kab. HSS',
+            maxZoom: 19,
+          },
+          satellite: {
+            id: 'satellite',
+            label: 'Citra Satelit',
+            isOffline: false,
+            url: satelliteTileUrl,
+            attribution: satelliteAttribution,
+            maxZoom: 19,
+          },
+        },
+      });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   // 6E. Administrative Village Boundaries (148 Desa/Kelurahan)
   app.get('/api/map/villages', (req, res) => {
     try {

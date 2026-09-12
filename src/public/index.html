@@ -56,6 +56,18 @@
         pointer-events: auto !important;
       }
     }
+    /* Cartographic District & Administrative Labels */
+    .district-label {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      font-weight: 700 !important;
+      font-size: 11px !important;
+      color: #1e293b !important;
+      text-shadow: 0 0 3px #ffffff, 0 0 5px #ffffff, 0 0 7px #ffffff, 0 0 9px #ffffff !important;
+      pointer-events: none !important;
+      white-space: nowrap !important;
+    }
   </style>
   <!-- Leaflet CSS & JS (Local Vendored for Offline First) -->
   <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
@@ -451,7 +463,15 @@
             <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Peta Prioritas Spasial Jalan</h1>
             <p class="text-sm text-slate-500">Visualisasi geografis 350 ruas jalan kabupaten, simpul transportasi referensi, dan fasilitas publik.</p>
           </div>
-          <div class="flex items-center space-x-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Map Presets -->
+            <div class="flex items-center space-x-1 border border-slate-200 bg-white p-1 rounded-lg shadow-sm">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1.5">Preset:</span>
+              <button id="preset-prioritas" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition" title="Prioritas Jalan Kabupaten & Batas Administrasi">Prioritas</button>
+              <button id="preset-pelayanan" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition" title="Prioritas Jalan, Fasilitas Publik & Batas Kecamatan">Pelayanan</button>
+              <button id="preset-tataruang" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition" title="Prioritas Jalan, Pola Ruang RTRW & Batas Administrasi">Tata Ruang</button>
+            </div>
+
             <button id="map-btn-fit-hss" class="text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 font-semibold px-3 py-1.5 rounded-lg shadow-sm flex items-center space-x-1.5 transition">
               <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
@@ -601,6 +621,10 @@
                   <span>🏛️</span>
                   <span>3. Batas Administrasi</span>
                 </div>
+                <label class="flex items-center space-x-2 text-slate-800 cursor-pointer font-medium">
+                  <input type="checkbox" id="layer-admin-kabupaten" checked class="rounded text-slate-900 focus:ring-slate-800" />
+                  <span>Batas Kabupaten HSS (Utama)</span>
+                </label>
                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
                   <input type="checkbox" id="layer-admin-districts" checked class="rounded text-slate-600 focus:ring-slate-500" />
                   <span>Batas 11 Kecamatan</span>
@@ -661,12 +685,16 @@
                   <span>6. Peta Dasar (Basemap)</span>
                 </div>
                 <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
-                  <input type="radio" name="basemap-layer" value="osm" id="layer-basemap-osm" checked class="text-sky-600 focus:ring-sky-500" />
-                  <span>OpenStreetMap (Online Tiles)</span>
-                </label>
-                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
                   <input type="radio" name="basemap-layer" value="neutral" id="layer-basemap-neutral" class="text-sky-600 focus:ring-sky-500" />
                   <span>Latar Netral (Offline Canvas)</span>
+                </label>
+                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                  <input type="radio" name="basemap-layer" value="osm" id="layer-basemap-osm" checked class="text-sky-600 focus:ring-sky-500" />
+                  <span>Peta Jalan (OpenStreetMap)</span>
+                </label>
+                <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                  <input type="radio" name="basemap-layer" value="satellite" id="layer-basemap-satellite" class="text-sky-600 focus:ring-sky-500" />
+                  <span>Citra Satelit (ESRI World Imagery)</span>
                 </label>
               </div>
             </div>

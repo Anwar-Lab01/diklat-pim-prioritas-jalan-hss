@@ -11,7 +11,8 @@
     "test:phase3": "node --experimental-strip-types src/tests/phase3-verification.ts",
     "test:phase4": "node --experimental-strip-types src/tests/phase4-verification.ts",
     "test:phase4-ui": "node --experimental-strip-types src/tests/phase4-ui-hardening-verification.ts",
-    "test:all": "node --experimental-strip-types src/tests/phase1-verification.ts && node --experimental-strip-types src/tests/phase2-verification.ts && node --experimental-strip-types src/tests/phase3-verification.ts && node --experimental-strip-types src/tests/phase4-verification.ts && node --experimental-strip-types src/tests/phase4-ui-hardening-verification.ts",
+    "test:phase4-carto": "node --experimental-strip-types src/tests/phase4-cartographic-verification.ts",
+    "test:all": "node --experimental-strip-types src/tests/phase1-verification.ts && node --experimental-strip-types src/tests/phase2-verification.ts && node --experimental-strip-types src/tests/phase3-verification.ts && node --experimental-strip-types src/tests/phase4-verification.ts && node --experimental-strip-types src/tests/phase4-ui-hardening-verification.ts && node --experimental-strip-types src/tests/phase4-cartographic-verification.ts",
     "start": "node --experimental-strip-types src/server/server.ts",
     "dev": "node --experimental-strip-types src/server/server.ts",
     "smoke": "node --experimental-strip-types src/cli/smoke.ts",
@@ -26,6 +27,7 @@
   "author": "Antigravity",
   "license": "UNLICENSED",
   "dependencies": {
+    "@turf/turf": "^7.4.0",
     "express": "^5.2.1",
     "leaflet": "^1.9.4"
   }

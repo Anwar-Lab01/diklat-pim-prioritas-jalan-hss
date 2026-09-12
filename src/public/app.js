@@ -10,6 +10,8 @@ import {
   REFERENCE_NETWORK_STYLES,
   ADMINISTRATIVE_STYLES,
   RTRW_COLORS,
+  RTRW_FAMILY_LABELS,
+  BASEMAP_CONFIG,
   createFacilityIcon,
 } from './mapStyle.js';
 
@@ -31,11 +33,12 @@ const state = {
   pageSize: 50,
   precisionMode: false,
 
-  // --- Phase 4 & 4.5 Web GIS State ---
+  // --- Phase 4, 4.5 & 4.6 Web GIS State ---
   map: null,
   mapInitialized: false,
   mapLayers: {
     osmBasemap: null,
+    satelliteBasemap: null,
     countyRoads: null,
     countyRoadsHitTarget: null,
     provincialRoads: null,
@@ -45,6 +48,7 @@ const state = {
     puskesmas: null,
     markets: null,
     schools: null,
+    kabupaten: null,
     districts: null,
     villages: null,
     rtrw: null,
@@ -54,6 +58,7 @@ const state = {
     countyRoads: null,
     referenceNetwork: null,
     facilities: null,
+    kabupaten: null,
     districts: null,
     villages: null,
     rtrw: null,
@@ -66,6 +71,9 @@ const state = {
   },
   selectedRoadKey: null,
 };
+
+window.appState = state;
+window.fitHssBounds = fitHssBounds;
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -596,12 +604,13 @@ async function initMap() {
     attributionControl: true,
   });
 
-  // Create Deterministic Custom Panes with explicit z-index
+  // Create Deterministic Custom Panes with explicit z-index (Administrative hierarchy)
   const panes = [
     { name: 'basemapPane', zIndex: 200 },
     { name: 'rtrwPane', zIndex: 350 },
-    { name: 'villagesPane', zIndex: 380 },
-    { name: 'districtsPane', zIndex: 400 },
+    { name: 'villagesPane', zIndex: 370 },
+    { name: 'districtsPane', zIndex: 380 },
+    { name: 'kabupatenPane', zIndex: 390 },
     { name: 'refRoadsPane', zIndex: 450 },
     { name: 'connectorsPane', zIndex: 460 },
     { name: 'countyRoadsPane', zIndex: 500 },
@@ -614,24 +623,36 @@ async function initMap() {
     state.map.getPane(p.name).style.zIndex = p.zIndex;
   });
 
-  // Basemap TileLayer (OpenStreetMap)
-  state.mapLayers.osmBasemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  // 1. OpenStreetMap TileLayer (Peta Jalan)
+  state.mapLayers.osmBasemap = L.tileLayer(BASEMAP_CONFIG.osm.url, {
     pane: 'basemapPane',
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Dinas PUTR Kab. HSS',
+    maxZoom: BASEMAP_CONFIG.osm.maxZoom,
+    attribution: BASEMAP_CONFIG.osm.attribution,
   }).addTo(state.map);
 
-  // Offline detection and graceful fallback banner
-  state.mapLayers.osmBasemap.on('tileerror', () => {
+  // 2. Satellite Imagery TileLayer (Citra Satelit - ESRI World Imagery / Configurable)
+  state.mapLayers.satelliteBasemap = L.tileLayer(BASEMAP_CONFIG.satellite.url, {
+    pane: 'basemapPane',
+    maxZoom: BASEMAP_CONFIG.satellite.maxZoom,
+    attribution: BASEMAP_CONFIG.satellite.attribution,
+  });
+
+  // Offline detection and graceful fallback banner for tile layers
+  const handleTileError = () => {
     document.getElementById('map-offline-banner')?.classList.remove('hidden');
     document.getElementById('hss-map').style.backgroundColor = '#f1f5f9';
-  });
-  state.mapLayers.osmBasemap.on('load', () => {
+  };
+  state.mapLayers.osmBasemap.on('tileerror', handleTileError);
+  state.mapLayers.satelliteBasemap.on('tileerror', handleTileError);
+
+  const handleTileLoad = () => {
     const isNeutral = document.getElementById('layer-basemap-neutral')?.checked;
     if (!isNeutral) {
       document.getElementById('map-offline-banner')?.classList.add('hidden');
     }
-  });
+  };
+  state.mapLayers.osmBasemap.on('load', handleTileLoad);
+  state.mapLayers.satelliteBasemap.on('load', handleTileLoad);
 
   // Map zoom listener for facility decluttering
   state.map.on('zoomend', handleMapZoomChange);
@@ -754,24 +775,15 @@ function initMapControls() {
     legendBtn.textContent = legendBody?.classList.contains('hidden') ? '▲' : '▼';
   });
 
-  // Basemap radio toggles
+  // Quick Map Presets
+  document.getElementById('preset-prioritas')?.addEventListener('click', () => applyMapPreset('prioritas'));
+  document.getElementById('preset-pelayanan')?.addEventListener('click', () => applyMapPreset('pelayanan'));
+  document.getElementById('preset-tataruang')?.addEventListener('click', () => applyMapPreset('tataruang'));
+
+  // Basemap radio toggles (Latar Netral, Peta Jalan, Citra Satelit)
   document.querySelectorAll('input[name="basemap-layer"]').forEach((radio) => {
     radio.addEventListener('change', (e) => {
-      const banner = document.getElementById('map-offline-banner');
-      if (e.target.value === 'osm') {
-        if (!state.map.hasLayer(state.mapLayers.osmBasemap)) {
-          state.mapLayers.osmBasemap.addTo(state.map);
-        }
-        document.getElementById('hss-map').style.backgroundColor = '';
-        banner?.classList.add('hidden');
-      } else {
-        if (state.map.hasLayer(state.mapLayers.osmBasemap)) {
-          state.map.removeLayer(state.mapLayers.osmBasemap);
-        }
-        document.getElementById('hss-map').style.backgroundColor = '#f8fafc';
-        banner?.classList.remove('hidden');
-      }
-      updateDynamicLegend();
+      setBasemapMode(e.target.value);
     });
   });
 
@@ -807,7 +819,11 @@ function initMapControls() {
     updateDynamicLegend();
   });
 
-  // Admin layer toggles
+  // Administrative layer toggles
+  document.getElementById('layer-admin-kabupaten')?.addEventListener('change', (e) => {
+    toggleLayerVisibility(state.mapLayers.kabupaten, e.target.checked);
+    updateDynamicLegend();
+  });
   document.getElementById('layer-admin-districts')?.addEventListener('change', (e) => {
     toggleLayerVisibility(state.mapLayers.districts, e.target.checked);
     updateDynamicLegend();
@@ -834,15 +850,128 @@ function initMapControls() {
   });
 }
 
+function setBasemapMode(mode) {
+  const mapEl = document.getElementById('hss-map');
+  const banner = document.getElementById('map-offline-banner');
+
+  if (mode === 'osm') {
+    if (state.map.hasLayer(state.mapLayers.satelliteBasemap)) {
+      state.map.removeLayer(state.mapLayers.satelliteBasemap);
+    }
+    if (!state.map.hasLayer(state.mapLayers.osmBasemap)) {
+      state.mapLayers.osmBasemap.addTo(state.map);
+    }
+    if (mapEl) mapEl.style.backgroundColor = '';
+    banner?.classList.add('hidden');
+  } else if (mode === 'satellite') {
+    if (state.map.hasLayer(state.mapLayers.osmBasemap)) {
+      state.map.removeLayer(state.mapLayers.osmBasemap);
+    }
+    if (!state.map.hasLayer(state.mapLayers.satelliteBasemap)) {
+      state.mapLayers.satelliteBasemap.addTo(state.map);
+    }
+    if (mapEl) mapEl.style.backgroundColor = '';
+    banner?.classList.add('hidden');
+  } else {
+    // neutral
+    if (state.map.hasLayer(state.mapLayers.osmBasemap)) {
+      state.map.removeLayer(state.mapLayers.osmBasemap);
+    }
+    if (state.map.hasLayer(state.mapLayers.satelliteBasemap)) {
+      state.map.removeLayer(state.mapLayers.satelliteBasemap);
+    }
+    if (mapEl) mapEl.style.backgroundColor = '#f1f5f9';
+    banner?.classList.remove('hidden');
+  }
+
+  // Adjust RTRW fill opacity if active
+  if (state.mapLayers.rtrw) {
+    const isSat = mode === 'satellite';
+    state.mapLayers.rtrw.setStyle({
+      fillOpacity: isSat ? 0.50 : 0.40,
+    });
+  }
+
+  updateDynamicLegend();
+}
+
+async function applyMapPreset(preset) {
+  const kabCheckbox = document.getElementById('layer-admin-kabupaten');
+  const distCheckbox = document.getElementById('layer-admin-districts');
+  const vilCheckbox = document.getElementById('layer-admin-villages');
+  const hospCheckbox = document.getElementById('layer-fac-hospital');
+  const puskCheckbox = document.getElementById('layer-fac-puskesmas');
+  const mktCheckbox = document.getElementById('layer-fac-market');
+  const schCheckbox = document.getElementById('layer-fac-school');
+  const rtrwCheckbox = document.getElementById('layer-rtrw');
+
+  if (preset === 'prioritas') {
+    if (kabCheckbox) kabCheckbox.checked = true;
+    if (distCheckbox) distCheckbox.checked = true;
+    if (vilCheckbox) vilCheckbox.checked = false;
+    if (hospCheckbox) hospCheckbox.checked = false;
+    if (puskCheckbox) puskCheckbox.checked = false;
+    if (mktCheckbox) mktCheckbox.checked = false;
+    if (schCheckbox) schCheckbox.checked = false;
+    if (rtrwCheckbox) rtrwCheckbox.checked = false;
+  } else if (preset === 'pelayanan') {
+    if (kabCheckbox) kabCheckbox.checked = true;
+    if (distCheckbox) distCheckbox.checked = true;
+    if (vilCheckbox) vilCheckbox.checked = false;
+    if (hospCheckbox) hospCheckbox.checked = true;
+    if (puskCheckbox) puskCheckbox.checked = true;
+    if (mktCheckbox) mktCheckbox.checked = true;
+    if (schCheckbox) schCheckbox.checked = true;
+    if (rtrwCheckbox) rtrwCheckbox.checked = false;
+  } else if (preset === 'tataruang') {
+    if (kabCheckbox) kabCheckbox.checked = true;
+    if (distCheckbox) distCheckbox.checked = true;
+    if (vilCheckbox) vilCheckbox.checked = false;
+    if (hospCheckbox) hospCheckbox.checked = false;
+    if (puskCheckbox) puskCheckbox.checked = false;
+    if (mktCheckbox) mktCheckbox.checked = false;
+    if (schCheckbox) schCheckbox.checked = false;
+    if (rtrwCheckbox) rtrwCheckbox.checked = true;
+  }
+
+  toggleLayerVisibility(state.mapLayers.kabupaten, kabCheckbox?.checked);
+  toggleLayerVisibility(state.mapLayers.districts, distCheckbox?.checked);
+  toggleLayerVisibility(state.mapLayers.villages, vilCheckbox?.checked);
+  toggleLayerVisibility(state.mapLayers.rsud, hospCheckbox?.checked);
+  toggleLayerVisibility(state.mapLayers.puskesmas, puskCheckbox?.checked);
+  toggleLayerVisibility(state.mapLayers.markets, mktCheckbox?.checked);
+  updateSchoolsVisibility(schCheckbox?.checked);
+
+  if (rtrwCheckbox?.checked) {
+    if (!state.mapData.rtrw) {
+      await loadRtrwLayer();
+    } else if (state.mapLayers.rtrw && !state.map.hasLayer(state.mapLayers.rtrw)) {
+      state.mapLayers.rtrw.addTo(state.map);
+    }
+  } else {
+    if (state.mapLayers.rtrw && state.map.hasLayer(state.mapLayers.rtrw)) {
+      state.map.removeLayer(state.mapLayers.rtrw);
+    }
+  }
+
+  updateDynamicLegend();
+}
+
 async function loadMapData() {
   try {
-    const [roadsRes, refRes, facRes, distRes, vilRes] = await Promise.all([
+    const [roadsRes, refRes, facRes, distRes, vilRes, kabRes] = await Promise.all([
       fetch(`/api/map/roads?mode=${state.mode}`).then((r) => r.json()),
       fetch('/api/map/reference-network').then((r) => r.json()),
       fetch('/api/map/facilities').then((r) => r.json()),
       fetch('/api/map/districts').then((r) => r.json()),
       fetch('/api/map/villages').then((r) => r.json()),
+      fetch('/api/map/kabupaten').then((r) => r.json()),
     ]);
+
+    if (kabRes && kabRes.success) {
+      state.mapData.kabupaten = kabRes.data;
+      renderKabupaten(kabRes.data);
+    }
 
     if (distRes.success) {
       state.mapData.districts = distRes.data;
@@ -875,6 +1004,34 @@ async function loadMapData() {
     updateDynamicLegend();
   } catch (err) {
     console.error('Error loading map data:', err);
+  }
+}
+
+function renderKabupaten(data) {
+  if (state.mapLayers.kabupaten && state.map.hasLayer(state.mapLayers.kabupaten)) {
+    state.map.removeLayer(state.mapLayers.kabupaten);
+  }
+
+  state.mapLayers.kabupaten = L.geoJSON(data, {
+    pane: 'kabupatenPane',
+    style: {
+      color: ADMINISTRATIVE_STYLES.kabupaten.color,
+      weight: ADMINISTRATIVE_STYLES.kabupaten.weight,
+      opacity: ADMINISTRATIVE_STYLES.kabupaten.opacity,
+      fill: ADMINISTRATIVE_STYLES.kabupaten.fill,
+    },
+    onEachFeature: (f, layer) => {
+      layer.bindTooltip('Batas Kabupaten Hulu Sungai Selatan', {
+        sticky: true,
+        direction: 'top',
+        className: 'text-xs font-bold text-slate-900 bg-white/95 px-2 py-1 rounded shadow',
+      });
+    },
+  });
+
+  const checkbox = document.getElementById('layer-admin-kabupaten');
+  if (!checkbox || checkbox.checked) {
+    state.mapLayers.kabupaten.addTo(state.map);
   }
 }
 
@@ -989,33 +1146,28 @@ function renderReferenceNetwork(data) {
       onEachFeature: (f, layer) => {
         const name = f.properties.road_name || 'Jalan Nasional';
         layer.bindTooltip(
-          `<b>${escapeHtml(name)}</b><br/><span class="text-xs text-teal-700 font-semibold">Jalan Nasional (8 Ruas)</span>`,
+          `<b>${escapeHtml(name)}</b><br/><span class="text-xs text-teal-800 font-semibold">Jalan Nasional (8 Ruas)</span>`,
           { sticky: true }
         );
       },
     }
   ).addTo(state.map);
 
-  // Connectors (SEMANTIC SAFETY: No priority score, not a physical bridge)
+  // Analytical Connectors
   state.mapLayers.connectors = L.geoJSON(
     { type: 'FeatureCollection', features: connectorFeatures },
     {
       pane: 'connectorsPane',
       style: REFERENCE_NETWORK_STYLES.KONEKTOR_ANALISIS,
       onEachFeature: (f, layer) => {
-        const name = f.properties.connector_name || 'Konektor Jaringan Analisis';
+        const p = f.properties;
+        const name = p.connector_name || p.road_name || 'Konektor Jaringan Analisis';
         layer.bindPopup(`
           <div class="p-1.5 text-xs">
-            <div class="font-bold text-slate-800 flex items-center space-x-1">
-              <span class="w-2.5 h-0.5 bg-slate-400 inline-block border-t border-dashed"></span>
-              <span>${escapeHtml(name)}</span>
-            </div>
-            <div class="text-[11px] text-slate-600 mt-1">
-              <strong>Konektor Jaringan Analisis (Topologi)</strong><br/>
-              Elemen konektivitas jaringan jalan untuk analisis permodelan spasial.
-            </div>
-            <div class="mt-2 bg-slate-50 p-1.5 rounded border border-slate-200 text-[10px] text-slate-500">
-              ⚠ <em>Non-prioritas kabupaten. Tidak memiliki skor/bobot, tidak memiliki implikasi penanganan, dan bukan struktur jembatan fisik.</em>
+            <div class="font-bold text-slate-800">${escapeHtml(name)}</div>
+            <div class="text-[11px] text-amber-700 font-semibold mt-1">Konektor Jaringan Analisis (Topologi)</div>
+            <div class="text-[10px] text-slate-500 mt-1 leading-relaxed">
+              Elemen sintetis pemodelan jaringan. Bukan ruas SK bupati, bukan jembatan fisik, dan tidak memiliki peringkat prioritas penanganan.
             </div>
           </div>
         `);
@@ -1064,10 +1216,10 @@ function renderDistricts(data) {
     style: ADMINISTRATIVE_STYLES.districts,
     onEachFeature: (f, layer) => {
       const name = f.properties.nama_kecamatan || f.properties.district_name || f.properties.WADMKC || 'Kecamatan';
-      layer.bindTooltip(`<span class="font-bold text-xs text-slate-700">Kec. ${escapeHtml(name)}</span>`, {
-        permanent: false,
+      layer.bindTooltip(`Kec. ${escapeHtml(name)}`, {
+        permanent: true,
         direction: 'center',
-        className: 'bg-white/80 px-1 py-0.5 rounded text-xs border border-slate-200',
+        className: 'district-label',
       });
     },
   }).addTo(state.map);
@@ -1109,19 +1261,34 @@ async function loadRtrwLayer() {
     state.mapLayers.rtrw = L.geoJSON(json.data, {
       pane: 'rtrwPane',
       style: (feature) => {
-        const pola = feature.properties.NAMOBJ || feature.properties.pola_ruang || '';
+        const pola = feature.properties.nama_objek || feature.properties.NAMOBJ || feature.properties.pola_ruang || '';
         const color = RTRW_COLORS[pola] || '#94a3b8';
+        const isSat = document.getElementById('layer-basemap-satellite')?.checked;
         return {
           fillColor: color,
-          fillOpacity: 0.28,
-          weight: 0.5,
-          color: '#64748b',
-          opacity: 0.4,
+          fillOpacity: isSat ? 0.50 : 0.40,
+          weight: 0.8,
+          color: '#334155',
+          opacity: 0.5,
         };
       },
-      onEachFeature: (f, layer) => {
-        const pola = f.properties.NAMOBJ || f.properties.pola_ruang || 'Pola Ruang';
-        layer.bindTooltip(`<div class="text-[11px] font-semibold">${escapeHtml(pola)}</div>`, { sticky: true });
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties;
+        const pola = p.nama_objek || p.NAMOBJ || p.pola_ruang || 'Pola Ruang';
+        const kec = p.kecamatan || p.WADMKC || '-';
+        const luas = p.luas_ha ? `${Number(p.luas_ha).toFixed(2)} ha` : '-';
+        const kode = p.kode_kawasan || '-';
+
+        layer.bindTooltip(`
+          <div class="text-xs p-1">
+            <div class="font-bold text-slate-900">${escapeHtml(pola)}</div>
+            <div class="text-[10px] text-slate-600 mt-0.5">Kecamatan: ${escapeHtml(kec)}</div>
+            <div class="text-[10px] text-slate-500">Luas: ${luas} | Kode: ${kode}</div>
+          </div>
+        `, {
+          sticky: true,
+          className: 'shadow-md rounded-lg border border-slate-200 bg-white/95',
+        });
       },
     });
 
@@ -1130,7 +1297,7 @@ async function loadRtrwLayer() {
     }
 
     const t1 = performance.now();
-    console.info(`[Phase 4.5] RTRW layer rendered in ${(t1 - t0).toFixed(1)}ms (${json.data.features?.length || 2832} polygons)`);
+    console.info(`[Phase 4.6] RTRW categorical layer rendered in ${(t1 - t0).toFixed(1)}ms (${json.data.features?.length || 2832} polygons)`);
     updateDynamicLegend();
   } catch (err) {
     console.error('Error loading RTRW overlay:', err);
@@ -1478,13 +1645,19 @@ function updateDynamicLegend() {
   }
 
   // 3. Administrasi (Only if checked)
+  const showKab = document.getElementById('layer-admin-kabupaten')?.checked;
   const showDist = document.getElementById('layer-admin-districts')?.checked;
   const showVil = document.getElementById('layer-admin-villages')?.checked;
-  if (showDist || showVil) {
+  if (showKab || showDist || showVil) {
     html += `
       <div class="border-t border-slate-100 pt-1.5">
         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Batas Administrasi</div>
         <div class="space-y-1">
+          ${showKab ? `
+            <div class="flex items-center space-x-2">
+              <span class="w-4 h-1 border-t-2 border-slate-900 inline-block"></span>
+              <span class="text-slate-900 font-medium">Batas Kabupaten HSS</span>
+            </div>` : ''}
           ${showDist ? `
             <div class="flex items-center space-x-2">
               <span class="w-4 h-2 border border-dashed border-slate-500 bg-sky-100/40 inline-block"></span>
@@ -1544,12 +1717,15 @@ function updateDynamicLegend() {
       <div class="border-t border-slate-100 pt-1.5">
         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pola Ruang RTRW</div>
         <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[10px]">
-          ${Object.entries(RTRW_COLORS).slice(0, 8).map(([name, col]) => `
-            <div class="flex items-center space-x-1.5 truncate" title="${escapeHtml(name)}">
+          ${Object.entries(RTRW_COLORS).map(([name, col]) => {
+            const label = RTRW_FAMILY_LABELS[name] || name.replace('Kawasan ', '');
+            return `
+            <div class="flex items-center space-x-1.5 truncate" title="${name}">
               <span class="w-2.5 h-2.5 rounded-sm inline-block shrink-0" style="background-color: ${col}"></span>
-              <span class="truncate">${escapeHtml(name.replace('Kawasan ', ''))}</span>
+              <span class="truncate text-slate-700">${label}</span>
             </div>
-          `).join('')}
+          `;
+          }).join('')}
         </div>
       </div>
     `;

@@ -78,35 +78,96 @@ export const REFERENCE_NETWORK_STYLES = {
 };
 
 export const ADMINISTRATIVE_STYLES = {
+  kabupaten: {
+    color: '#0f172a', // Slate-900 (darkest administrative boundary)
+    weight: 3.5, // Visually strongest border (3–4 px)
+    opacity: 1.0,
+    dashArray: null, // Solid line
+    fill: false,
+    label: 'Batas Kabupaten Hulu Sungai Selatan',
+  },
   districts: {
-    color: '#475569', // Slate-600
-    weight: 1.5,
-    dashArray: '4, 4',
-    fill: true,
-    fillColor: '#0284c7',
-    fillOpacity: 0.03,
+    color: '#475569', // Slate-600 (medium neutral)
+    weight: 1.8, // Thinner than kabupaten (1.5–2 px)
+    opacity: 0.85,
+    dashArray: '6, 4', // Dashed line
+    fill: false,
+    label: 'Batas 11 Kecamatan',
   },
   villages: {
-    color: '#94a3b8', // Slate-400
-    weight: 0.8,
-    dashArray: '2, 3',
+    color: '#94a3b8', // Slate-400 (subtle neutral)
+    weight: 0.8, // Thin dotted line
+    opacity: 0.6,
+    dashArray: '2, 4', // Dotted subtle line
     fill: false,
+    label: 'Batas 148 Desa/Kelurahan',
   },
 };
 
+/**
+ * 12 Authoritative Categorical Pola Ruang RTRW Symbology Families
+ * Semantic visual families:
+ * - Water: Blue family
+ * - Settlements: Red / Rose family
+ * - Agriculture: Yellow / Golden & Olive / Lime family
+ * - Forest: Forest green, medium green & HPK green-brown
+ * - Conservation / Sensitive: Deep emerald & Purple-brown
+ * - Fisheries: Cyan / Aqua family
+ * - Tourism: Magenta / Violet family
+ */
 export const RTRW_COLORS = {
-  'Kawasan Perkebunan': '#a3e635',
-  'Kawasan Tanaman Pangan': '#fde047',
-  'Kawasan Permukiman Perdesaan': '#fed7aa',
-  'Kawasan Permukiman Perkotaan': '#fca5a5',
-  'Badan Air': '#67e8f9',
-  'Kawasan Hutan Produksi Tetap': '#86efac',
-  'Kawasan Hutan Lindung': '#4ade80',
-  'Kawasan Perikanan Budi Daya': '#7dd3fc',
-  'Kawasan Pariwisata': '#d8b4fe',
-  'Kawasan Hutan Produksi yang dapat Dikonversi': '#bbf7d0',
-  'Kawasan Lindung Gambut': '#c084fc',
-  'Cagar Alam': '#22c55e',
+  'Badan Air': '#0284c7', // Strong blue (Sky-600)
+  'Kawasan Permukiman Perkotaan': '#dc2626', // Strong red / coral (Red-600)
+  'Kawasan Permukiman Perdesaan': '#fb7185', // Lighter red / rose (Rose-400)
+  'Kawasan Tanaman Pangan': '#eab308', // Yellow / golden (Amber-500)
+  'Kawasan Perkebunan': '#65a30d', // Olive / lime-green (Lime-600)
+  'Kawasan Hutan Lindung': '#14532d', // Dark forest green (Green-900)
+  'Kawasan Hutan Produksi Tetap': '#16a34a', // Medium green (Green-600)
+  'Kawasan Hutan Produksi yang dapat Dikonversi': '#854d0e', // Green-brown secondary forest (Amber-800)
+  'Cagar Alam': '#064e3b', // Deep conservation green (Emerald-900)
+  'Kawasan Lindung Gambut': '#7e22ce', // Purple/brown distinctive tone (Purple-700)
+  'Kawasan Perikanan Budi Daya': '#06b6d4', // Cyan / aqua (Cyan-500)
+  'Kawasan Pariwisata': '#c026d3', // Magenta / violet (Fuchsia-600)
+};
+
+export const RTRW_FAMILY_LABELS = {
+  'Badan Air': 'Air (Badan Air)',
+  'Kawasan Permukiman Perkotaan': 'Permukiman (Perkotaan)',
+  'Kawasan Permukiman Perdesaan': 'Permukiman (Perdesaan)',
+  'Kawasan Tanaman Pangan': 'Pertanian (Tanaman Pangan)',
+  'Kawasan Perkebunan': 'Pertanian (Perkebunan)',
+  'Kawasan Hutan Lindung': 'Kehutanan (Hutan Lindung)',
+  'Kawasan Hutan Produksi Tetap': 'Kehutanan (Hutan Produksi Tetap)',
+  'Kawasan Hutan Produksi yang dapat Dikonversi': 'Kehutanan (HPK)',
+  'Cagar Alam': 'Konservasi (Cagar Alam)',
+  'Kawasan Lindung Gambut': 'Konservasi (Lindung Gambut)',
+  'Kawasan Perikanan Budi Daya': 'Perikanan (Budi Daya)',
+  'Kawasan Pariwisata': 'Pariwisata',
+};
+
+export const BASEMAP_CONFIG = {
+  neutral: {
+    id: 'neutral',
+    label: 'Latar Netral',
+    isOffline: true,
+    color: '#f1f5f9',
+  },
+  osm: {
+    id: 'osm',
+    label: 'Peta Jalan',
+    isOffline: false,
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Dinas PUTR Kab. HSS',
+    maxZoom: 19,
+  },
+  satellite: {
+    id: 'satellite',
+    label: 'Citra Satelit',
+    isOffline: false,
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    maxZoom: 19,
+  },
 };
 
 /**
