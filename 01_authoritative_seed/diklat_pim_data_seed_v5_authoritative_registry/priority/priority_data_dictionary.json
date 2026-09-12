@@ -1,0 +1,153 @@
+{
+  "dataset_role": "proposed normative baseline/reference only",
+  "rows": 350,
+  "identity": {
+    "business_key": "nomor_ruas",
+    "display_field": "nama_ruas",
+    "warning": "Do not join across sources by road name alone."
+  },
+  "condition_authority": "Treatment Engine; normalized condition fields here are baseline/reference values, not the future canonical condition source.",
+  "variables": [
+    {
+      "field": "norm_panjang_ruas",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_lebar_ruas",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_kondisi_sedang",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_rusak_ringan",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_rusak_berat",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_permukaan_aspal_penmac",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_permukaan_beton",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_penduduk_dilayani",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_desa_dilalui",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_kecamatan_dilalui",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_koneksi_jalan_provinsi",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_koneksi_jalan_nasional",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_jarak_rsud_cost",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_jarak_puskesmas_cost",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_jarak_sd_smp_cost",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_jarak_pasar_cost",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "field": "norm_jarak_ibukota_kabupaten_cost",
+      "type": "normalized_score",
+      "range_expected": [
+        0,
+        1
+      ]
+    }
+  ],
+  "label": {
+    "field": "label_top105",
+    "meaning": "Reference label: Top-105 normative priority set.",
+    "do_not_use_as_raw_input": true
+  }
+}

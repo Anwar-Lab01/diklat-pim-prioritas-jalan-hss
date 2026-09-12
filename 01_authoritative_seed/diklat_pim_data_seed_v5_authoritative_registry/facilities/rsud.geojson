@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "rsud",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "facility_id": "rsud-01", "facility_type": "hospital", "facility_subtype": "RSUD", "facility_name": "RSUD HASAN BASRI", "npsn": null, "ownership_status": null, "address": null, "village": null, "district": null, "student_total": null, "teacher_total": null, "staff_total": null }, "geometry": { "type": "Point", "coordinates": [ 115.259655277841418, -2.80057291188085 ] } },
+{ "type": "Feature", "properties": { "facility_id": "rsud-02", "facility_type": "hospital", "facility_subtype": "RSUD", "facility_name": "RSUD DAHA SEJAHTERA", "npsn": null, "ownership_status": null, "address": null, "village": null, "district": null, "student_total": null, "teacher_total": null, "staff_total": null }, "geometry": { "type": "Point", "coordinates": [ 115.118548459849407, -2.635777681003166 ] } }
+]
+}

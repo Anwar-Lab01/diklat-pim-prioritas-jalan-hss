@@ -1,0 +1,411 @@
+road_key,road_geometry_id,source_road_code,source_object_id,candidate_nomor_ruas,identity_match_status,display_name,district_id,district_name,intersection_length_m
+HSS-KAB-001,hss-county-001,001,1,,unresolved,Jl. Pangeran Antasari - SP. Loklua,63.06.05,Kandangan,580.65
+HSS-KAB-002,hss-county-002,002,2,002,treatment_engine_alias,Jl. Soeprapto - Jl. HM. Rusli,63.06.05,Kandangan,516.85
+HSS-KAB-003,hss-county-003,003,3,003,treatment_engine_alias,Jl. Pasar Kandangan - Oprit Jembatan Loklua,63.06.05,Kandangan,281.49
+HSS-KAB-004,hss-county-004,004,4,004,exact_normalized,Jl. Soetoyo - Teluk Mesjid,63.06.05,Kandangan,258.94
+HSS-KAB-005,hss-county-005,005,5,005,exact_normalized,Jl. Teluk Mesjid - SP.4 Muara Banta,63.06.05,Kandangan,1430.7
+HSS-KAB-006,hss-county-006,006,326,006,exact_normalized,Jl. Merah Johansyah - Jl. Melati,63.06.05,Kandangan,828.08
+HSS-KAB-007,hss-county-007,007,58,007,exact_normalized,Jl. Menuju Stadion 2 Desember,63.06.05,Kandangan,297.09
+HSS-KAB-008,hss-county-008,008,13,008,exact_normalized,Jl. Aluh Idut,63.06.05,Kandangan,1341.94
+HSS-KAB-009,hss-county-009,009,18,009,exact_normalized,Jl. Panglima Batur,63.06.05,Kandangan,1089.81
+HSS-KAB-010,hss-county-010,010,15,010,exact_normalized,Jl. Nusa Indah,63.06.05,Kandangan,384.68
+HSS-KAB-011,hss-county-011,011,10,011,exact_normalized,Jl. Anggrek,63.06.05,Kandangan,229.48
+HSS-KAB-012,hss-county-012,012,11,012,exact_normalized,Jl. Kenanga,63.06.05,Kandangan,230.96
+HSS-KAB-013,hss-county-013,013,54,,unresolved,Mawar (Kandangan Utara),63.06.05,Kandangan,228.23
+HSS-KAB-014,hss-county-014,014,38,014,exact_normalized,Jl. Kamboja,63.06.05,Kandangan,214.09
+HSS-KAB-015,hss-county-015,015,14,015,exact_normalized,Jl. Dahlia,63.06.05,Kandangan,182.5
+HSS-KAB-016,hss-county-016,016,9,016,exact_normalized,Jl. KS. Tubun,63.06.05,Kandangan,961.89
+HSS-KAB-017,hss-county-017,017,6,017,exact_normalized,Jl. Pemuda,63.06.05,Kandangan,274.36
+HSS-KAB-018,hss-county-018,018,8,018,exact_normalized,Jl. Parindra,63.06.05,Kandangan,275.68
+HSS-KAB-019,hss-county-019,019,7,019,exact_normalized,Jl. Wahab Syahrani,63.06.05,Kandangan,128.49
+HSS-KAB-020,hss-county-020,020,7,,unresolved,Musyawarah (Kandangan),63.06.05,Kandangan,317.58
+HSS-KAB-021,hss-county-021,021,43,,unresolved,Sekolah Islam (Kandangan Barat),63.06.05,Kandangan,197.62
+HSS-KAB-022,hss-county-022,022,44,022,treatment_engine_alias,Jl. Rahma Bahran,63.06.05,Kandangan,221.0
+HSS-KAB-023,hss-county-023,023,16,023,treatment_engine_alias,Jl. Brigjend. Katamso,63.06.05,Kandangan,352.32
+HSS-KAB-024,hss-county-024,024,17,024,exact_normalized,JL. Kolonel Sugiono,63.06.05,Kandangan,220.6
+HSS-KAB-025,hss-county-025,025,27,025,exact_normalized,Singakarsa - Palas,63.06.05,Kandangan,5317.75
+HSS-KAB-026,hss-county-026,026,338,026,exact_normalized,Singakarsa - Getek,63.06.05,Kandangan,203.92
+HSS-KAB-027,hss-county-027,027,48,027,exact_normalized,Parincahan - Singakarsa (Jl. Harapan),63.06.05,Kandangan,664.87
+HSS-KAB-028,hss-county-028,028,19,028,exact_normalized,Jl. Budi Bakti - Tiga Desember,63.06.05,Kandangan,804.41
+HSS-KAB-029,hss-county-029,029,20,029,exact_normalized,Jl. Jafri Zamzam,63.06.05,Kandangan,1073.82
+HSS-KAB-030,hss-county-030,030,709,030,exact_normalized,Sungai Damang - Amawang Kiri,63.06.05,Kandangan,2513.42
+HSS-KAB-031,hss-county-031,031,22,031,exact_normalized,Amawang Muka - Getek,63.06.05,Kandangan,5405.81
+HSS-KAB-032,hss-county-032,032,23,032,exact_normalized,Jl. Amawang Kanan - Wasah Hulu,63.06.05,Kandangan,1678.46
+HSS-KAB-032,hss-county-032,032,23,032,exact_normalized,Jl. Amawang Kanan - Wasah Hulu,63.06.06,Simpur,1493.02
+HSS-KAB-033,hss-county-033,033,24,033,exact_normalized,Jl. DI. Panjaitan - Loklua,63.06.05,Kandangan,410.32
+HSS-KAB-034,hss-county-034,034,0,034,exact_normalized,Jl. Jend. Sudirman,63.06.01,Sungai Raya,1602.97
+HSS-KAB-034,hss-county-034,034,0,034,exact_normalized,Jl. Jend. Sudirman,63.06.05,Kandangan,837.43
+HSS-KAB-035,hss-county-035,035,40,035,exact_normalized,Jl. AES. Nasution,63.06.05,Kandangan,235.9
+HSS-KAB-036,hss-county-036,036,45,036,exact_normalized,Tembok Lama - Loklua,63.06.05,Kandangan,844.65
+HSS-KAB-037,hss-county-037,037,46,037,treatment_engine_alias,Jl. Kesehatan - Komp. Rumah Dokter,63.06.05,Kandangan,284.18
+HSS-KAB-038,hss-county-038,038,51,038,exact_normalized,Jl. Samping Bappeda - Mesjid Darul Halik,63.06.05,Kandangan,192.36
+HSS-KAB-039,hss-county-039,039,62,039,exact_normalized,Jl. Bina Bakat,63.06.05,Kandangan,241.28
+HSS-KAB-040,hss-county-040,040,25,,unresolved,Baluti - Jambu Hulu/Paku,63.06.02,Padang Batung,467.92
+HSS-KAB-040,hss-county-040,040,25,,unresolved,Baluti - Jambu Hulu/Paku,63.06.05,Kandangan,3605.96
+HSS-KAB-041,hss-county-041,041,26,041,exact_normalized,SP.3 Baluti - Amawang,63.06.05,Kandangan,1572.06
+HSS-KAB-042,hss-county-042,042,28,,unresolved,Sei. Kupang Utara - SP.4 Lungau,63.06.05,Kandangan,2355.94
+HSS-KAB-043,hss-county-043,043,36,,unresolved,SP.4 Lungau - Bangkau,63.06.05,Kandangan,8100.44
+HSS-KAB-044,hss-county-044,044,37,,unresolved,Sp.4 Lungau - Garis,63.06.05,Kandangan,8181.61
+HSS-KAB-045,hss-county-045,045,337,045,exact_normalized,Gambir -SP. Empat Lungau,63.06.05,Kandangan,2939.35
+HSS-KAB-046,hss-county-046,046,29,046,exact_normalized,Bariang - Getek,63.06.05,Kandangan,1237.69
+HSS-KAB-047,hss-county-047,047,30,047,exact_normalized,Muara Banta - Karang Jawa,63.06.02,Padang Batung,314.71
+HSS-KAB-047,hss-county-047,047,30,047,exact_normalized,Muara Banta - Karang Jawa,63.06.05,Kandangan,1277.87
+HSS-KAB-048,hss-county-048,048,31,048,exact_normalized,Sungai Paring - Sei Hanyar Pantai Ulin,63.06.05,Kandangan,1292.19
+HSS-KAB-048,hss-county-048,048,31,048,exact_normalized,Sungai Paring - Sei Hanyar Pantai Ulin,63.06.06,Simpur,4560.66
+HSS-KAB-049,hss-county-049,049,33,049,exact_normalized,Kandangan Hulu - SP. Tabihi,63.06.02,Padang Batung,614.83
+HSS-KAB-049,hss-county-049,049,33,049,exact_normalized,Kandangan Hulu - SP. Tabihi,63.06.05,Kandangan,630.02
+HSS-KAB-050,hss-county-050,050,34,050,exact_normalized,Banyu Barau - Sungai Kalang,63.06.05,Kandangan,2103.4
+HSS-KAB-051,hss-county-051,051,35,051,treatment_engine_alias,Tibung Raya - Asam Cangkok,63.06.01,Sungai Raya,803.2
+HSS-KAB-051,hss-county-051,051,35,051,treatment_engine_alias,Tibung Raya - Asam Cangkok,63.06.05,Kandangan,58.12
+HSS-KAB-052,hss-county-052,052,958,052,exact_normalized,Gambah Dalam - Rantauan,63.06.05,Kandangan,1519.64
+HSS-KAB-053,hss-county-053,053,41,053,exact_normalized,Gambah Luar - Gambah Dalam,63.06.05,Kandangan,1289.51
+HSS-KAB-054,hss-county-054,054,42,054,exact_normalized,Pegangsaan Timur - Teluk Aman,63.06.05,Kandangan,1047.39
+HSS-KAB-055,hss-county-055,055,47,055,exact_normalized,Gambah Luar - Sungai Kudung,63.06.05,Kandangan,886.87
+HSS-KAB-056,hss-county-056,056,151,056,exact_normalized,Bakarung Tengah - Karang Jawa,63.06.02,Padang Batung,2088.7
+HSS-KAB-056,hss-county-056,056,151,056,exact_normalized,Bakarung Tengah - Karang Jawa,63.06.05,Kandangan,1679.92
+HSS-KAB-057,hss-county-057,057,50,057,treatment_engine_alias,Jl. Papagaran/Pelangsatan,63.06.05,Kandangan,982.5
+HSS-KAB-058,hss-county-058,058,152,058,exact_normalized,Jl. Tembok Kacil. Sei. Kudung,63.06.02,Padang Batung,41.37
+HSS-KAB-058,hss-county-058,058,152,058,exact_normalized,Jl. Tembok Kacil. Sei. Kudung,63.06.05,Kandangan,331.15
+HSS-KAB-059,hss-county-059,059,53,059,treatment_engine_alias,Jl. Mesjid Kuba,63.06.05,Kandangan,211.86
+HSS-KAB-060,hss-county-060,060,57,,unresolved,Jl. Sungai Karuh Tembus Tawar,63.06.05,Kandangan,1955.91
+HSS-KAB-061,hss-county-061,061,59,061,exact_normalized,Jl. Rambai - Bariang,63.06.05,Kandangan,1202.4
+HSS-KAB-062,hss-county-062,062,60,062,exact_normalized,Jl. Jangkang - Pantai Ulin,63.06.05,Kandangan,1574.62
+HSS-KAB-062,hss-county-062,062,60,062,exact_normalized,Jl. Jangkang - Pantai Ulin,63.06.06,Simpur,115.38
+HSS-KAB-063,hss-county-063,063,61,063,exact_normalized,Jl. Padang Palas,63.06.05,Kandangan,678.28
+HSS-KAB-064,hss-county-064,064,63,064,exact_normalized,Tibung Dalam - Teratai,63.06.01,Sungai Raya,511.26
+HSS-KAB-065,hss-county-065,065,77,065,exact_normalized,Jl. Kalaka Indah - Perumnas Tibung,63.06.01,Sungai Raya,408.85
+HSS-KAB-066,hss-county-066,066,100,066,exact_normalized,Jl. Teratai Menuju Komplek Perumnas Hamalau,63.06.01,Sungai Raya,401.97
+HSS-KAB-067,hss-county-067,067,85,067,exact_normalized,Teluk Pinang - Baluti,63.06.05,Kandangan,1640.37
+HSS-KAB-068,hss-county-068,068,92,068,exact_normalized,Tibung Raya - Hamalau Dalam,63.06.01,Sungai Raya,329.69
+HSS-KAB-068,hss-county-068,068,92,068,exact_normalized,Tibung Raya - Hamalau Dalam,63.06.05,Kandangan,571.31
+HSS-KAB-069,hss-county-069,069,330,,unresolved,Jl. Baiturrahim,63.06.05,Kandangan,1419.04
+HSS-KAB-070,hss-county-070,070,331,070,exact_normalized,Jl. Newangsekarti - Ds. Gambah Luar Muka,63.06.05,Kandangan,293.12
+HSS-KAB-071,hss-county-071,071,332,,unresolved,Jl. Tembok Baru (Asam Cangkok,63.06.05,Kandangan,502.48
+HSS-KAB-072,hss-county-072,072,179,072,exact_normalized,Sungai Paring - Toba,63.06.06,Simpur,821.92
+HSS-KAB-073,hss-county-073,073,333,,unresolved,Jl. Tembok Baru - Baluti,63.06.05,Kandangan,131.24
+HSS-KAB-074,hss-county-074,074,334,,unresolved,Jl. H. Jarkasi,63.06.05,Kandangan,123.84
+HSS-KAB-075,hss-county-075,075,335,075,exact_normalized,Jl. Bariang - Patigan,63.06.05,Kandangan,1626.7
+HSS-KAB-076,hss-county-076,076,339,076,exact_normalized,Gambah Dalam Barat - Mahulung,63.06.04,Angkinang,787.52
+HSS-KAB-076,hss-county-076,076,339,076,exact_normalized,Gambah Dalam Barat - Mahulung,63.06.05,Kandangan,1136.12
+HSS-KAB-077,hss-county-077,077,338,,unresolved,Jl. Suriangpati,63.06.05,Kandangan,2823.11
+HSS-KAB-078,hss-county-078,078,0,078,exact_normalized,Jl. Menuju SMP 7 - Ds. Gambah Dalam,63.06.05,Kandangan,996.16
+HSS-KAB-079,hss-county-079,079,336,079,exact_normalized,Jl. Telaga Banta - Patigan,63.06.05,Kandangan,639.51
+HSS-KAB-080,hss-county-080,080,49,080,exact_normalized,Jl. Nomura,63.06.05,Kandangan,409.11
+HSS-KAB-081,hss-county-081,081,43,081,exact_normalized,Jl. Lorong Bupati,63.06.05,Kandangan,388.43
+HSS-KAB-082,hss-county-082,082,0,082,exact_normalized,Jl. Biti - Sungai Kupang (Karya Bakti TNI),63.06.05,Kandangan,1816.46
+HSS-KAB-083,hss-county-083,083,83,083,exact_normalized,Jl. Palajau - Ds. Baluti,63.06.01,Sungai Raya,143.7
+HSS-KAB-083,hss-county-083,083,83,083,exact_normalized,Jl. Palajau - Ds. Baluti,63.06.02,Padang Batung,865.45
+HSS-KAB-083,hss-county-083,083,83,083,exact_normalized,Jl. Palajau - Ds. Baluti,63.06.05,Kandangan,269.29
+HSS-KAB-084,hss-county-084,084,58,084,exact_normalized,Jl. RS. Hasan Basry II,63.06.01,Sungai Raya,95.52
+HSS-KAB-085,hss-county-085,085,64,085,exact_normalized,Tajun - SP.3 Muara Paring Agung,63.06.01,Sungai Raya,4957.69
+HSS-KAB-086,hss-county-086,086,65,086,exact_normalized,Hamalau - Anjiran,63.06.01,Sungai Raya,905.75
+HSS-KAB-087,hss-county-087,087,66,087,exact_normalized,Tanjungan - SP.10 Batang Kulur - Sungai Kali,63.06.01,Sungai Raya,7289.56
+HSS-KAB-088,hss-county-088,088,67,088,exact_normalized,Sungai Raya Selatan - Sarang Halang,63.06.01,Sungai Raya,2620.51
+HSS-KAB-089,hss-county-089,089,68,089,exact_normalized,SP. Batang Kulur Kiri - Tatas,63.06.01,Sungai Raya,2371.31
+HSS-KAB-090,hss-county-090,090,69,090,treatment_engine_alias,Taal Batang Kulur - SP.3 Muara Paring Agung,63.06.01,Sungai Raya,4116.93
+HSS-KAB-091,hss-county-091,091,71,091,exact_normalized,Batang Kulur Kanan - Sarangan,63.06.01,Sungai Raya,2178.12
+HSS-KAB-092,hss-county-092,092,72,092,exact_normalized,Bumi Berkat - Mungkur Galah,63.06.01,Sungai Raya,1513.02
+HSS-KAB-093,hss-county-093,093,73,093,exact_normalized,Taal Jarau - SP. Baru/Tampang,63.06.01,Sungai Raya,5639.21
+HSS-KAB-094,hss-county-094,094,74,094,exact_normalized,Sungai Raya - Jambu Hulu/Paku,63.06.01,Sungai Raya,2309.21
+HSS-KAB-094,hss-county-094,094,74,094,exact_normalized,Sungai Raya - Jambu Hulu/Paku,63.06.02,Padang Batung,2872.07
+HSS-KAB-095,hss-county-095,095,75,095,exact_normalized,Sungai Raya Selatan - Malutu - Goa Berangin,63.06.01,Sungai Raya,2695.53
+HSS-KAB-095,hss-county-095,095,75,095,exact_normalized,Sungai Raya Selatan - Malutu - Goa Berangin,63.06.02,Padang Batung,3658.52
+HSS-KAB-096,hss-county-096,096,76,096,treatment_engine_alias,SP.4 Baru/Tampang - SP. Biluy Pamujaan,63.06.01,Sungai Raya,3750.65
+HSS-KAB-096,hss-county-096,096,76,096,treatment_engine_alias,SP.4 Baru/Tampang - SP. Biluy Pamujaan,63.06.06,Simpur,5.84
+HSS-KAB-097,hss-county-097,097,78,097,exact_normalized,Asam Cangkuk - Telaga Bidadari,63.06.01,Sungai Raya,411.89
+HSS-KAB-097,hss-county-097,097,78,097,exact_normalized,Asam Cangkuk - Telaga Bidadari,63.06.05,Kandangan,373.28
+HSS-KAB-097,hss-county-097,097,78,097,exact_normalized,Asam Cangkuk - Telaga Bidadari,63.06.06,Simpur,43.78
+HSS-KAB-098,hss-county-098,098,83,098,exact_normalized,Hamalau - Pahampangan,63.06.01,Sungai Raya,782.03
+HSS-KAB-099,hss-county-099,099,82,099,exact_normalized,Ida Manggala - Padang Makmur,63.06.01,Sungai Raya,2830.83
+HSS-KAB-099,hss-county-099,099,82,099,exact_normalized,Ida Manggala - Padang Makmur,63.06.02,Padang Batung,252.06
+HSS-KAB-100,hss-county-100,100,79,100,exact_normalized,Simpang Hamalau - Teluk Pinang,63.06.01,Sungai Raya,684.24
+HSS-KAB-101,hss-county-101,101,79,101,exact_normalized,Teluk Pinang - Pahampangan Utara,63.06.01,Sungai Raya,920.74
+HSS-KAB-101,hss-county-101,101,79,101,exact_normalized,Teluk Pinang - Pahampangan Utara,63.06.02,Padang Batung,1296.63
+HSS-KAB-102,hss-county-102,102,174,102,exact_normalized,Hamalau - Telaga Bidadari - Wasah Hilir,63.06.01,Sungai Raya,1527.01
+HSS-KAB-102,hss-county-102,102,174,102,exact_normalized,Hamalau - Telaga Bidadari - Wasah Hilir,63.06.06,Simpur,3417.36
+HSS-KAB-103,hss-county-103,103,89,103,exact_normalized,Karasikan - Sarang Halang,63.06.01,Sungai Raya,1893.27
+HSS-KAB-104,hss-county-104,104,90,104,exact_normalized,Tanjungan - SP.3 Sakijang,63.06.01,Sungai Raya,1594.81
+HSS-KAB-105,hss-county-105,105,91,105,exact_normalized,Sarang Halang Padang - SP Batang Kulur,63.06.01,Sungai Raya,2108.8
+HSS-KAB-106,hss-county-106,106,93,106,exact_normalized,Jl. Hamalau - Ganda,63.06.01,Sungai Raya,766.99
+HSS-KAB-106,hss-county-106,106,93,106,exact_normalized,Jl. Hamalau - Ganda,63.06.02,Padang Batung,24.91
+HSS-KAB-106,hss-county-106,106,93,106,exact_normalized,Jl. Hamalau - Ganda,63.06.05,Kandangan,375.48
+HSS-KAB-107,hss-county-107,107,2465,107,exact_normalized,Jl. Tamiyang - Ds. Tamiyang (Eks TMMD),63.06.01,Sungai Raya,2031.77
+HSS-KAB-108,hss-county-108,108,96,108,exact_normalized,Jl. Tanah Bangkang Menuju Balai Benih Ikan,63.06.02,Padang Batung,658.12
+HSS-KAB-109,hss-county-109,109,98,119,exact_normalized,Jl. Karang Intan - Tanah Bangkang,63.06.01,Sungai Raya,1115.26
+HSS-KAB-110,hss-county-110,110,99,110,exact_normalized,Jl. Haritas (PT. Pertani),63.06.01,Sungai Raya,651.3
+HSS-KAB-111,hss-county-111,111,101,111,exact_normalized,Paharuangan - Sungai Raya Selatan,63.06.01,Sungai Raya,1954.58
+HSS-KAB-112,hss-county-112,112,102,112,exact_normalized,Jl. Bangga TMMD,63.06.01,Sungai Raya,789.44
+HSS-KAB-113,hss-county-113,113,1004,113,exact_normalized,Jl. Batang Kulur Kiri - Durian Landung,63.06.01,Sungai Raya,547.15
+HSS-KAB-114,hss-county-114,114,104,114,exact_normalized,Jl. Taminung,63.06.01,Sungai Raya,2026.52
+HSS-KAB-115,hss-county-115,115,55,115,exact_normalized,Jl. Matang Gadung - Halalang,63.06.01,Sungai Raya,412.6
+HSS-KAB-116,hss-county-116,116,325,116,exact_normalized,Jl. Sungai Raya Utara-Teluk Pinang,63.06.01,Sungai Raya,1701.2
+HSS-KAB-117,hss-county-117,117,341,,unresolved,Jl. Mangunang,63.06.01,Sungai Raya,700.31
+HSS-KAB-118,hss-county-118,118,340,118,exact_normalized,Hamalau - Asam Cangkok,63.06.01,Sungai Raya,870.72
+HSS-KAB-118,hss-county-118,118,340,118,exact_normalized,Hamalau - Asam Cangkok,63.06.05,Kandangan,561.05
+HSS-KAB-119,hss-county-119,119,97,119,exact_normalized,Jl. Hariti - Sungai Raya Selatan,63.06.01,Sungai Raya,2650.54
+HSS-KAB-120,hss-county-120,120,651,120,exact_normalized,Mangaris - Limau Manis,63.06.01,Sungai Raya,4101.66
+HSS-KAB-121,hss-county-121,121,99,121,exact_normalized,Jl. Munggu Raya - Ds. Hariti,63.06.01,Sungai Raya,462.08
+HSS-KAB-122,hss-county-122,122,0,122,exact_normalized,Paharuangan - Asam Dua,63.06.01,Sungai Raya,898.15
+HSS-KAB-123,hss-county-123,123,2465,123,exact_normalized,Asam Seranggan - Asam Tamiyang,63.06.01,Sungai Raya,1021.48
+HSS-KAB-124,hss-county-124,124,99,124,exact_normalized,Jl. Papancan - Ds. Tanah Bangkang,63.06.01,Sungai Raya,791.24
+HSS-KAB-124,hss-county-124,124,99,124,exact_normalized,Jl. Papancan - Ds. Tanah Bangkang,63.06.02,Padang Batung,672.95
+HSS-KAB-125,hss-county-125,125,2458,,unresolved,Jl. Baru - Asam Desa Baru/Asam,63.06.01,Sungai Raya,1317.9
+HSS-KAB-126,hss-county-126,126,99,126,exact_normalized,Jl. Sungai Namang - Ds. Tanah Bangkang,63.06.01,Sungai Raya,731.16
+HSS-KAB-127,hss-county-127,127,99,127,exact_normalized,Jl. Jarau - Parandakan,63.06.01,Sungai Raya,700.85
+HSS-KAB-128,hss-county-128,128,99,128,exact_normalized,Jl. Mungkur Galah - Lokpaikat,63.06.01,Sungai Raya,709.63
+HSS-KAB-129,hss-county-129,129,0,129,exact_normalized,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),63.06.01,Sungai Raya,1608.42
+HSS-KAB-130,hss-county-130,130,99,130,exact_normalized,Batang Kulur Kanan - Batang Kulur Kiri,63.06.01,Sungai Raya,810.76
+HSS-KAB-131,hss-county-131,131,0,,unresolved,Jl. Manggis,63.06.01,Sungai Raya,1282.42
+HSS-KAB-132,hss-county-132,132,0,,unresolved,Jl. TPA Sungai Raya Selatan,63.06.01,Sungai Raya,862.75
+HSS-KAB-133,hss-county-133,133,341,133,exact_normalized,Jl. Pembangunan - Ds. Sungai Raya Utara,63.06.01,Sungai Raya,947.76
+HSS-KAB-134,hss-county-134,134,341,134,exact_normalized,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara,63.06.01,Sungai Raya,431.55
+HSS-KAB-135,hss-county-135,135,88,135,exact_normalized,Teluk Pinang - Padang Rasau,63.06.02,Padang Batung,46.56
+HSS-KAB-135,hss-county-135,135,88,135,exact_normalized,Teluk Pinang - Padang Rasau,63.06.05,Kandangan,2130.6
+HSS-KAB-136,hss-county-136,136,105,136,treatment_engine_alias,Tanayung - Simpang Ambarai,63.06.02,Padang Batung,1607.1
+HSS-KAB-137,hss-county-137,137,106,137,exact_normalized,Tabihi - Telaga Langsat,63.06.02,Padang Batung,5107.98
+HSS-KAB-137,hss-county-137,137,106,137,exact_normalized,Tabihi - Telaga Langsat,63.06.03,Telaga Langsat,3543.23
+HSS-KAB-138,hss-county-138,138,108,138,exact_normalized,Karang Jawa - Ambarai - Sungai Bungur,63.06.02,Padang Batung,4038.37
+HSS-KAB-139,hss-county-139,139,109,149,exact_normalized,Ambarai - Madang,63.06.02,Padang Batung,1738.62
+HSS-KAB-140,hss-county-140,140,133,140,treatment_engine_alias,Padang Batung - Batu Laki - Malilingin,63.06.02,Padang Batung,8845.33
+HSS-KAB-141,hss-county-141,141,133,141,exact_normalized,Malilingin - Lokbahan - Paniungan,63.06.02,Padang Batung,10650.71
+HSS-KAB-142,hss-county-142,142,164,142,exact_normalized,Mawangi - Bukuanin - Telaga Langsat,63.06.02,Padang Batung,5718.81
+HSS-KAB-142,hss-county-142,142,164,142,exact_normalized,Mawangi - Bukuanin - Telaga Langsat,63.06.03,Telaga Langsat,8505.53
+HSS-KAB-143,hss-county-143,143,113,143,exact_normalized,Mandapai - Madang,63.06.02,Padang Batung,5813.18
+HSS-KAB-144,hss-county-144,144,114,144,exact_normalized,Kaliring - SP. Padang Batung,63.06.02,Padang Batung,4520.86
+HSS-KAB-145,hss-county-145,145,81,145,exact_normalized,Pagar Haur - Malutu,63.06.02,Padang Batung,216.89
+HSS-KAB-146,hss-county-146,146,400,146,exact_normalized,Simpang Malutu - Pahampangan,63.06.01,Sungai Raya,1010.08
+HSS-KAB-146,hss-county-146,146,400,146,exact_normalized,Simpang Malutu - Pahampangan,63.06.02,Padang Batung,4302.1
+HSS-KAB-147,hss-county-147,147,118,147,exact_normalized,Simpang Malutu - Tambak,63.06.02,Padang Batung,2859.08
+HSS-KAB-148,hss-county-148,148,119,148,exact_normalized,Pagat Batu - Muara Hariang,63.06.02,Padang Batung,3266.66
+HSS-KAB-149,hss-county-149,149,121,159,exact_normalized,Paku (Jambu Hulu) - Ganda,63.06.02,Padang Batung,451.58
+HSS-KAB-149,hss-county-149,149,121,159,exact_normalized,Paku (Jambu Hulu) - Ganda,63.06.05,Kandangan,1427.02
+HSS-KAB-150,hss-county-150,150,123,150,exact_normalized,SP.3 Bukuanin - Riam Talo,63.06.02,Padang Batung,2459.39
+HSS-KAB-150,hss-county-150,150,123,150,exact_normalized,SP.3 Bukuanin - Riam Talo,63.06.10,Loksado,655.84
+HSS-KAB-151,hss-county-151,151,167,151,exact_normalized,SP.3 Bukuanin - Tayub,63.06.02,Padang Batung,3376.77
+HSS-KAB-152,hss-county-152,152,122,152,exact_normalized,Madang - Ambutun,63.06.02,Padang Batung,2519.15
+HSS-KAB-152,hss-county-152,152,122,152,exact_normalized,Madang - Ambutun,63.06.03,Telaga Langsat,413.41
+HSS-KAB-153,hss-county-153,153,125,153,exact_normalized,Jl. Monumen 17 Mei - Mandapai,63.06.02,Padang Batung,60.6
+HSS-KAB-154,hss-county-154,154,126,154,treatment_engine_alias,Batulaki - Muara Pipii,63.06.02,Padang Batung,4256.72
+HSS-KAB-155,hss-county-155,155,127,155,exact_normalized,Muara Pipii - Tambak Pipii,63.06.02,Padang Batung,4646.05
+HSS-KAB-156,hss-county-156,156,128,156,exact_normalized,Tambak Pipii - Malilingin,63.06.02,Padang Batung,4883.39
+HSS-KAB-157,hss-county-157,157,129,157,exact_normalized,Malilingin - Muara Hariang,63.06.02,Padang Batung,4744.78
+HSS-KAB-158,hss-county-158,158,132,158,exact_normalized,Mawangi - Pariangan,63.06.02,Padang Batung,2352.39
+HSS-KAB-159,hss-county-159,159,342,169,exact_normalized,Jambu Hulu - Paku Pantai,63.06.02,Padang Batung,1619.78
+HSS-KAB-160,hss-county-160,160,99,160,exact_normalized,Jl. Sungai Minting - Ds. Malutu,63.06.02,Padang Batung,470.49
+HSS-KAB-161,hss-county-161,161,100,161,exact_normalized,Jl. Padang Rasau (Tambak Tamiang) - Paku Pantai,63.06.02,Padang Batung,1957.25
+HSS-KAB-161,hss-county-161,161,100,161,exact_normalized,Jl. Padang Rasau (Tambak Tamiang) - Paku Pantai,63.06.05,Kandangan,273.28
+HSS-KAB-162,hss-county-162,162,167,162,exact_normalized,Jl. Galuntang Tayub - Ds. Madang,63.06.02,Padang Batung,2342.85
+HSS-KAB-163,hss-county-163,163,99,163,exact_normalized,Jl. Menuju SMPN Malilingin,63.06.02,Padang Batung,446.73
+HSS-KAB-164,hss-county-164,164,125,164,exact_normalized,Jl. Samping Mesjid Mandapai,63.06.02,Padang Batung,241.86
+HSS-KAB-165,hss-county-165,165,938,165,exact_normalized,Muara Hariang - Bayumbung,63.06.02,Padang Batung,1875.99
+HSS-KAB-165,hss-county-165,165,938,165,exact_normalized,Muara Hariang - Bayumbung,63.06.10,Loksado,2571.11
+HSS-KAB-166,hss-county-166,166,344,166,exact_normalized,Tambak Pipii - Batu Ampar,63.06.02,Padang Batung,1179.23
+HSS-KAB-167,hss-county-167,167,56,167,exact_normalized,Bakarung - Rantauan,63.06.04,Angkinang,837.91
+HSS-KAB-167,hss-county-167,167,56,167,exact_normalized,Bakarung - Rantauan,63.06.05,Kandangan,2188.6
+HSS-KAB-168,hss-county-168,168,135,168,exact_normalized,Taniran Selatan - Rantauan,63.06.04,Angkinang,1090.93
+HSS-KAB-168,hss-county-168,168,135,168,exact_normalized,Taniran Selatan - Rantauan,63.06.05,Kandangan,23.72
+HSS-KAB-169,hss-county-169,169,107,179,exact_normalized,Bakarung - Tabihi -Karang Jawa,63.06.02,Padang Batung,3893.26
+HSS-KAB-169,hss-county-169,169,107,179,exact_normalized,Bakarung - Tabihi -Karang Jawa,63.06.04,Angkinang,681.39
+HSS-KAB-170,hss-county-170,170,137,170,exact_normalized,Pandulangan - Kalinduku,63.06.02,Padang Batung,367.91
+HSS-KAB-170,hss-county-170,170,137,170,exact_normalized,Pandulangan - Kalinduku,63.06.04,Angkinang,707.99
+HSS-KAB-171,hss-county-171,171,138,171,exact_normalized,Taniran Selatan Kubah - Buntut Taniran/Wawaran,63.06.04,Angkinang,6152.19
+HSS-KAB-171,hss-county-171,171,138,171,exact_normalized,Taniran Selatan Kubah - Buntut Taniran/Wawaran,63.06.05,Kandangan,597.24
+HSS-KAB-172,hss-county-172,172,139,172,exact_normalized,Angkinang Selatan - Tawia - Wawaran,63.06.04,Angkinang,5876.6
+HSS-KAB-173,hss-county-173,173,140,173,exact_normalized,Tawia - Kayu Abang,63.06.04,Angkinang,1478.65
+HSS-KAB-174,hss-county-174,174,142,174,treatment_engine_alias,Bamban Selatan - Tangang - Panggang Hijau,63.06.04,Angkinang,3580.56
+HSS-KAB-175,hss-county-175,175,143,175,exact_normalized,Angkinang - Telaga Langsat,63.06.03,Telaga Langsat,3935.22
+HSS-KAB-175,hss-county-175,175,143,175,exact_normalized,Angkinang - Telaga Langsat,63.06.04,Angkinang,1654.47
+HSS-KAB-176,hss-county-176,176,144,176,exact_normalized,Bamban Selatan - Pakuan,63.06.03,Telaga Langsat,683.37
+HSS-KAB-176,hss-county-176,176,144,176,exact_normalized,Bamban Selatan - Pakuan,63.06.04,Angkinang,1412.37
+HSS-KAB-177,hss-county-177,177,145,177,exact_normalized,Bamban Utara - Longawang,63.06.03,Telaga Langsat,1617.84
+HSS-KAB-177,hss-county-177,177,145,177,exact_normalized,Bamban Utara - Longawang,63.06.04,Angkinang,500.31
+HSS-KAB-178,hss-county-178,178,141,178,exact_normalized,Angkinang - Kayu Abang - Panggang Hijau,63.06.04,Angkinang,6998.73
+HSS-KAB-179,hss-county-179,179,147,,unresolved,SP. Mandampa Telaga Sili-Sili - SP. Sungai Bungur,63.06.02,Padang Batung,279.07
+HSS-KAB-179,hss-county-179,179,147,,unresolved,SP. Mandampa Telaga Sili-Sili - SP. Sungai Bungur,63.06.04,Angkinang,4615.72
+HSS-KAB-180,hss-county-180,180,148,180,exact_normalized,Sungai Kudung - Kalinduku,63.06.04,Angkinang,2953.48
+HSS-KAB-181,hss-county-181,181,150,181,exact_normalized,Bamban Tengah - Lok Nyiur,63.06.04,Angkinang,1240.75
+HSS-KAB-182,hss-county-182,182,47,182,treatment_engine_alias,Simp. Bakarung Selatan - Sungai Kudung,63.06.02,Padang Batung,121.67
+HSS-KAB-182,hss-county-182,182,47,182,treatment_engine_alias,Simp. Bakarung Selatan - Sungai Kudung,63.06.05,Kandangan,431.78
+HSS-KAB-183,hss-county-183,183,153,183,exact_normalized,Jl.Panggang Hijau - DsTawar,63.06.04,Angkinang,2113.71
+HSS-KAB-183,hss-county-183,183,153,183,exact_normalized,Jl.Panggang Hijau - DsTawar,63.06.05,Kandangan,1531.65
+HSS-KAB-184,hss-county-184,184,154,184,exact_normalized,Taniran Tengah - Taniran Selatan,63.06.04,Angkinang,2256.31
+HSS-KAB-185,hss-county-185,185,1214,185,exact_normalized,Jl. Kayu Abang - Ds. Anjiran,63.06.04,Angkinang,975.89
+HSS-KAB-186,hss-county-186,186,158,186,exact_normalized,Jl. Rel Angkinang - TMMD Angkinang,63.06.04,Angkinang,3629.77
+HSS-KAB-187,hss-county-187,187,143,187,exact_normalized,Jl. AMD - Ds. Lok Binuang,63.06.03,Telaga Langsat,1558.35
+HSS-KAB-188,hss-county-188,188,159,,unresolved,Jl. Pandan Sari,63.06.04,Angkinang,447.26
+HSS-KAB-189,hss-county-189,189,347,199,exact_normalized,Jl. Bamban Selatan - Pakuan Balunan,63.06.04,Angkinang,1704.04
+HSS-KAB-190,hss-county-190,190,346,190,exact_normalized,Jl. Kayu Abang - Paya,63.06.04,Angkinang,705.72
+HSS-KAB-191,hss-county-191,191,347,191,exact_normalized,Jl. Bamban (Tibung) - Martajiwa,63.06.04,Angkinang,658.98
+HSS-KAB-192,hss-county-192,192,0,192,exact_normalized,Jl. Rantauan - Sungai Baru (Jl. Pulau),63.06.04,Angkinang,1151.25
+HSS-KAB-192,hss-county-192,192,0,192,exact_normalized,Jl. Rantauan - Sungai Baru (Jl. Pulau),63.06.05,Kandangan,36.66
+HSS-KAB-193,hss-county-193,193,160,193,exact_normalized,Telaga Langsat - Pakuan Timur,63.06.03,Telaga Langsat,2823.09
+HSS-KAB-194,hss-county-194,194,161,194,exact_normalized,Longawang - Gumbil,63.06.03,Telaga Langsat,1663.79
+HSS-KAB-195,hss-county-195,195,149,195,exact_normalized,Mandampa - Longawang,63.06.03,Telaga Langsat,2863.55
+HSS-KAB-196,hss-county-196,196,162,196,exact_normalized,Gumbil - Masimpan,63.06.03,Telaga Langsat,4994.6
+HSS-KAB-197,hss-county-197,197,166,197,exact_normalized,Hamak Timur - Umpaya,63.06.03,Telaga Langsat,4187.01
+HSS-KAB-198,hss-county-198,198,169,198,exact_normalized,Jl. Hamak - Umbai,63.06.03,Telaga Langsat,973.42
+HSS-KAB-199,hss-county-199,199,169,199,exact_normalized,Jl. Hamak Utara - Samaragi,63.06.03,Telaga Langsat,298.53
+HSS-KAB-200,hss-county-200,200,350,200,exact_normalized,Jl. Umpaya - Tumarin,63.06.03,Telaga Langsat,530.03
+HSS-KAB-201,hss-county-201,201,0,201,exact_normalized,Jl. Sungai Durian - Ds. Gumbil,63.06.03,Telaga Langsat,884.53
+HSS-KAB-202,hss-county-202,202,349,202,exact_normalized,Jl. Pantai Langsat - Umpaya,63.06.03,Telaga Langsat,4238.33
+HSS-KAB-202,hss-county-202,202,349,202,exact_normalized,Jl. Pantai Langsat - Umpaya,63.06.10,Loksado,21.57
+HSS-KAB-203,hss-county-203,203,171,203,exact_normalized,Jl. Halayung - Hantarukung,63.06.06,Simpur,1913.67
+HSS-KAB-204,hss-county-204,204,182,204,exact_normalized,Wasah Hulu - Amparaya - Simpur,63.06.06,Simpur,6360.53
+HSS-KAB-205,hss-county-205,205,175,205,exact_normalized,Wasah Hilir - Sarang Halang,63.06.01,Sungai Raya,1472.06
+HSS-KAB-205,hss-county-205,205,175,205,exact_normalized,Wasah Hilir - Sarang Halang,63.06.06,Simpur,1657.52
+HSS-KAB-206,hss-county-206,206,176,206,treatment_engine_alias,Simpur - Simpang Bilui,63.06.06,Simpur,1031.38
+HSS-KAB-207,hss-county-207,207,177,207,exact_normalized,Simpur - SP.3 Muara Paring Agung,63.06.01,Sungai Raya,1264.16
+HSS-KAB-207,hss-county-207,207,177,207,exact_normalized,Simpur - SP.3 Muara Paring Agung,63.06.06,Simpur,1464.94
+HSS-KAB-208,hss-county-208,208,178,208,exact_normalized,Wasah Tengah - Sungai Tarap,63.06.01,Sungai Raya,272.38
+HSS-KAB-208,hss-county-208,208,178,208,exact_normalized,Wasah Tengah - Sungai Tarap,63.06.06,Simpur,3068.77
+HSS-KAB-209,hss-county-209,209,180,209,exact_normalized,Wasah Hilir - Amparaya,63.06.06,Simpur,2933.77
+HSS-KAB-210,hss-county-210,210,181,210,exact_normalized,Panjampang Bahagia - Bayur,63.06.06,Simpur,1555.29
+HSS-KAB-211,hss-county-211,211,183,211,exact_normalized,Ulin - Tanggul (Balai Mas),63.06.06,Simpur,3910.73
+HSS-KAB-212,hss-county-212,212,184,212,exact_normalized,Panjampang Bahagia - Hanau,63.06.06,Simpur,4772.92
+HSS-KAB-213,hss-county-213,213,185,213,exact_normalized,Jl. Halaban,63.06.06,Simpur,2123.24
+HSS-KAB-214,hss-county-214,214,186,214,exact_normalized,Jl. Amparaya-Karangan - Hanau,63.06.06,Simpur,4360.23
+HSS-KAB-215,hss-county-215,215,674,215,exact_normalized,Jl. Kalimput Ds. Wasah Hilir,63.06.06,Simpur,905.53
+HSS-KAB-216,hss-county-216,216,191,216,exact_normalized,Jl. Sungai Kacil I - Kapuh Padang,63.06.06,Simpur,1312.08
+HSS-KAB-217,hss-county-217,217,191,217,exact_normalized,Jl. Sungai Kacil II,63.06.06,Simpur,390.43
+HSS-KAB-218,hss-county-218,218,1927,218,exact_normalized,Jl. Papagaran - Ds. Amawang Kanan,63.06.05,Kandangan,537.47
+HSS-KAB-219,hss-county-219,219,193,219,exact_normalized,Jl. Balaimas - Hanau,63.06.06,Simpur,2331.98
+HSS-KAB-220,hss-county-220,220,194,220,exact_normalized,Garunggang - Hantamangu,63.06.06,Simpur,1156.44
+HSS-KAB-221,hss-county-221,221,195,,unresolved,Jl. KH. Ramli,63.06.06,Simpur,333.07
+HSS-KAB-222,hss-county-222,222,196,,unresolved,Jl. Tungkaran,63.06.06,Simpur,1244.01
+HSS-KAB-223,hss-county-223,223,197,,unresolved,Jl. Mondar (Ulin - Pantai Ulin),63.06.06,Simpur,1852.54
+HSS-KAB-224,hss-county-224,224,198,224,exact_normalized,Jl. Pendawa - Ds. Tebing Tinggi,63.06.06,Simpur,819.19
+HSS-KAB-225,hss-county-225,225,199,,unresolved,Jl. Mangamol,63.06.06,Simpur,686.24
+HSS-KAB-226,hss-county-226,226,200,,unresolved,Jl. Guru H. Izim,63.06.06,Simpur,617.35
+HSS-KAB-227,hss-county-227,227,351,,unresolved,Jl. Rawati,63.06.06,Simpur,1206.28
+HSS-KAB-228,hss-county-228,228,352,228,exact_normalized,Jl. Pianggu,63.06.06,Simpur,812.75
+HSS-KAB-229,hss-county-229,229,353,229,exact_normalized,Jl. Buluh Ds. Tebing Tinggi,63.06.06,Simpur,1278.5
+HSS-KAB-230,hss-county-230,230,354,,unresolved,Jl. H. Saim/Garunggang,63.06.06,Simpur,706.36
+HSS-KAB-231,hss-county-231,231,0,231,exact_normalized,Jl. Padang Haur - Ds. Wasah Tengah,63.06.06,Simpur,1230.06
+HSS-KAB-232,hss-county-232,232,0,232,exact_normalized,Jl. Gerilya Ds. Simpur,63.06.06,Simpur,525.72
+HSS-KAB-233,hss-county-233,233,0,233,exact_normalized,Jl. Jangkang - Ds. Wasah Hilir,63.06.06,Simpur,344.38
+HSS-KAB-234,hss-county-234,234,0,,unresolved,Jl. Air Miris,63.06.06,Simpur,1057.71
+HSS-KAB-235,hss-county-235,235,0,,unresolved,Tandik - Wasah Hilir,63.06.06,Simpur,501.38
+HSS-KAB-236,hss-county-236,236,0,236,exact_normalized,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Taklim),63.06.06,Simpur,599.76
+HSS-KAB-237,hss-county-237,237,0,,unresolved,Jl. Karampaci,63.06.06,Simpur,516.94
+HSS-KAB-238,hss-county-238,238,0,,unresolved,Jl. At-Taubah,63.06.06,Simpur,470.91
+HSS-KAB-239,hss-county-239,239,0,,unresolved,Jl. Firdaus,63.06.06,Simpur,294.9
+HSS-KAB-240,hss-county-240,240,0,240,exact_normalized,Jl. Slasa Garih - Ds. Kapuh,63.06.01,Sungai Raya,35.43
+HSS-KAB-240,hss-county-240,240,0,240,exact_normalized,Jl. Slasa Garih - Ds. Kapuh,63.06.06,Simpur,458.61
+HSS-KAB-241,hss-county-241,241,0,241,exact_normalized,Jl. Palas - Ds. Wasah Tengah,63.06.06,Simpur,828.9
+HSS-KAB-242,hss-county-242,242,176,242,exact_normalized,Jl. Tanah Habang - Ds. Simpur,63.06.06,Simpur,1059.15
+HSS-KAB-243,hss-county-243,243,0,,unresolved,Jl. Banua Kambang,63.06.06,Simpur,1390.02
+HSS-KAB-244,hss-county-244,244,0,,unresolved,Jl. Pajah Api,63.06.06,Simpur,339.15
+HSS-KAB-245,hss-county-245,245,0,,unresolved,Jl. Telapak Manuk,63.06.06,Simpur,753.38
+HSS-KAB-246,hss-county-246,246,201,246,exact_normalized,Sirih - Taro,63.06.09,Kalumpang,1260.97
+HSS-KAB-247,hss-county-247,247,202,247,exact_normalized,Kalumpang - Balimau,63.06.09,Kalumpang,5217.18
+HSS-KAB-248,hss-county-248,248,205,248,treatment_engine_alias,Kalumpang (Ds. Belanti) - Teratai,63.06.09,Kalumpang,5692.37
+HSS-KAB-249,hss-county-249,249,212,249,exact_normalized,Jl. Bago Tanggul - Katilang - Teratai,63.06.09,Kalumpang,9711.28
+HSS-KAB-250,hss-county-250,250,208,250,exact_normalized,Jl. Binjai (Sirih Hulu) - Ds. Seranggan,63.06.01,Sungai Raya,1851.6
+HSS-KAB-250,hss-county-250,250,208,250,exact_normalized,Jl. Binjai (Sirih Hulu) - Ds. Seranggan,63.06.09,Kalumpang,2484.75
+HSS-KAB-251,hss-county-251,251,204,251,exact_normalized,Jl. Balanti - (Ex. P3DT),63.06.09,Kalumpang,1660.42
+HSS-KAB-252,hss-county-252,252,213,252,exact_normalized,Kalumpang - Baruh,63.06.09,Kalumpang,2713.63
+HSS-KAB-253,hss-county-253,253,215,253,exact_normalized,Sirih - Pacakan,63.06.09,Kalumpang,644.55
+HSS-KAB-254,hss-county-254,254,94,254,exact_normalized,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,63.06.01,Sungai Raya,3073.19
+HSS-KAB-254,hss-county-254,254,94,254,exact_normalized,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,63.06.09,Kalumpang,3026.09
+HSS-KAB-255,hss-county-255,255,2465,255,exact_normalized,Jl. Kalumpang Selatan - Ds. Asam Tamiyang,63.06.01,Sungai Raya,820.44
+HSS-KAB-256,hss-county-256,256,614,256,exact_normalized,Jl. Balimau - Murung Dalam,63.06.09,Kalumpang,1464.92
+HSS-KAB-257,hss-county-257,257,614,,unresolved,Jl. Karya Bakti TNI - Ds. Balimau,63.06.09,Kalumpang,855.45
+HSS-KAB-258,hss-county-258,258,222,258,exact_normalized,Tanuhi - Ulang,63.06.10,Loksado,7648.53
+HSS-KAB-259,hss-county-259,259,223,259,exact_normalized,Loksado - Loklahung,63.06.10,Loksado,1290.69
+HSS-KAB-260,hss-county-260,260,224,260,exact_normalized,Loksado - Haratai,63.06.10,Loksado,7216.9
+HSS-KAB-261,hss-county-261,261,225,261,exact_normalized,Loklahung - Kamawakan,63.06.10,Loksado,6816.52
+HSS-KAB-262,hss-county-262,262,227,262,exact_normalized,Jl. Niagara (Ds. Halunuk) - Ayan,63.06.10,Loksado,2045.5
+HSS-KAB-263,hss-county-263,263,228,263,exact_normalized,Malinau - Katingin - Kamawakan,63.06.10,Loksado,9457.53
+HSS-KAB-264,hss-county-264,264,230,264,exact_normalized,Loklahung - Malaris,63.06.10,Loksado,808.65
+HSS-KAB-265,hss-county-265,265,234,265,treatment_engine_alias,Jl. Bubuih (Ds. Halunuk),63.06.10,Loksado,744.49
+HSS-KAB-266,hss-county-266,266,165,266,exact_normalized,Halunuk - Riam Tajam/Talo - Hamak Umpaya,63.06.03,Telaga Langsat,3017.21
+HSS-KAB-266,hss-county-266,266,165,266,exact_normalized,Halunuk - Riam Tajam/Talo - Hamak Umpaya,63.06.10,Loksado,4753.82
+HSS-KAB-267,hss-county-267,267,237,267,exact_normalized,Jl. Muara Kitar - Ds. Lumpangi,63.06.10,Loksado,451.89
+HSS-KAB-268,hss-county-268,268,349,268,exact_normalized,Jl. Hulu Banyu - Pantai Langsat,63.06.10,Loksado,1780.69
+HSS-KAB-269,hss-county-269,269,244,269,exact_normalized,Jl. Bayampah - Tanuhi - Tugu Niih,63.06.10,Loksado,607.34
+HSS-KAB-270,hss-county-270,270,261,270,exact_normalized,Jl. Kantor Camat Loksado II,63.06.10,Loksado,120.8
+HSS-KAB-271,hss-county-271,271,356,,unresolved,Jl. Buntu Muara Hatib,63.06.10,Loksado,1142.49
+HSS-KAB-272,hss-county-272,272,947,272,exact_normalized,Jl. Tanuhi - Hulu Banyu,63.06.10,Loksado,662.41
+HSS-KAB-273,hss-county-273,273,226,273,exact_normalized,Hulu Banyu - Datar Mangkung -Tumingki,63.06.10,Loksado,7560.57
+HSS-KAB-274,hss-county-274,274,221,274,exact_normalized,Lambuk - Ds. Tumingki,63.06.10,Loksado,604.46
+HSS-KAB-275,hss-county-275,275,230,275,exact_normalized,Malaris - Loapanggang,63.06.10,Loksado,1582.57
+HSS-KAB-276,hss-county-276,276,255,276,exact_normalized,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3,63.06.10,Loksado,5251.3
+HSS-KAB-277,hss-county-277,277,233,,unresolved,Jl. Haratai 2 (SDN Haratai2),63.06.10,Loksado,2697.8
+HSS-KAB-278,hss-county-278,278,234,,unresolved,Jl. Bubuih - Kandihin,63.06.10,Loksado,2924.54
+HSS-KAB-279,hss-county-279,279,238,279,exact_normalized,Jl. Makam Habib Ds. Lumpangi,63.06.10,Loksado,388.01
+HSS-KAB-280,hss-county-280,280,237,280,exact_normalized,Jl. Datar Belimbing - Muara Kitar,63.06.10,Loksado,4369.71
+HSS-KAB-281,hss-county-281,281,779,281,exact_normalized,Jl. Tanginau - Balai Haruyan,63.06.10,Loksado,1165.65
+HSS-KAB-282,hss-county-282,282,357,282,exact_normalized,Jl. Tataian - (Ds. Ulang) - Loksado,63.06.10,Loksado,395.87
+HSS-KAB-283,hss-county-283,283,357,283,exact_normalized,Jl. Ulang - Kacang Parang,63.06.10,Loksado,1746.22
+HSS-KAB-284,hss-county-284,284,357,284,exact_normalized,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias,63.06.10,Loksado,2050.99
+HSS-KAB-285,hss-county-285,285,357,285,exact_normalized,Jl. Kacang Parang (Ulang) - Balai Wariung,63.06.10,Loksado,830.96
+HSS-KAB-286,hss-county-286,286,261,286,exact_normalized,Jl. Loksado - Pantai Dusin,63.06.10,Loksado,2213.66
+HSS-KAB-287,hss-county-287,287,254,287,exact_normalized,Jl. Malinau - Kandihin,63.06.10,Loksado,4661.24
+HSS-KAB-288,hss-county-288,288,222,288,exact_normalized,Ulang - Bangkaun,63.06.10,Loksado,3324.33
+HSS-KAB-289,hss-county-289,289,262,289,exact_normalized,Bayanan - Habirau Tengah,63.06.07,Daha Selatan,2867.13
+HSS-KAB-290,hss-county-290,290,263,290,exact_normalized,Tumbukan Banyu - Banua Hanyar,63.06.07,Daha Selatan,5007.25
+HSS-KAB-291,hss-county-291,291,276,291,exact_normalized,Jl. Satria,63.06.07,Daha Selatan,367.92
+HSS-KAB-292,hss-county-292,292,265,,unresolved,Musyawarah (Nagara),63.06.07,Daha Selatan,410.15
+HSS-KAB-293,hss-county-293,293,266,,unresolved,Sekolah Islam (Sungai Pinang),63.06.07,Daha Selatan,401.31
+HSS-KAB-294,hss-county-294,294,277,294,exact_normalized,Jl. Habib,63.06.07,Daha Selatan,320.19
+HSS-KAB-295,hss-county-295,295,267,,unresolved,Mawar (Daha Selatan),63.06.07,Daha Selatan,272.03
+HSS-KAB-296,hss-county-296,296,278,,unresolved,Jl. Instalasi PDAM Negara,63.06.07,Daha Selatan,262.93
+HSS-KAB-297,hss-county-297,297,284,297,exact_normalized,Jl. Gerilya / (Depan Pustu Habirau),63.06.07,Daha Selatan,235.2
+HSS-KAB-298,hss-county-298,298,283,298,exact_normalized,Jl. Harapan (SDN Habirau II)/Sei. Palangan,63.06.07,Daha Selatan,207.59
+HSS-KAB-299,hss-county-299,299,268,299,exact_normalized,Samuda - Bajayau,63.06.07,Daha Selatan,3523.8
+HSS-KAB-299,hss-county-299,299,268,299,exact_normalized,Samuda - Bajayau,63.06.11,Daha Barat,4918.71
+HSS-KAB-300,hss-county-300,300,361,300,exact_normalized,Jl. Tambangan - Ds. Baruh Jaya,63.06.07,Daha Selatan,2228.52
+HSS-KAB-301,hss-county-301,301,273,301,exact_normalized,Jl. Muning Tengah - Batang Alai (Pihanin Raya),63.06.07,Daha Selatan,5257.05
+HSS-KAB-302,hss-county-302,302,272,,unresolved,Jl. Muning Tengah - Muning Dalam,63.06.07,Daha Selatan,17112.19
+HSS-KAB-303,hss-county-303,303,281,303,exact_normalized,SP.4 Banjarbaru - Pasar Negara,63.06.07,Daha Selatan,656.14
+HSS-KAB-304,hss-county-304,304,281,304,exact_normalized,Negara - Tumbukan Banyu,63.06.07,Daha Selatan,529.47
+HSS-KAB-305,hss-county-305,305,282,305,exact_normalized,SP.4. Banjarbaru - Pihanin Raya,63.06.07,Daha Selatan,929.7
+HSS-KAB-305,hss-county-305,305,282,305,exact_normalized,SP.4. Banjarbaru - Pihanin Raya,63.06.08,Daha Utara,104.22
+HSS-KAB-306,hss-county-306,306,289,306,exact_normalized,Bayanan - Pihanin,63.06.07,Daha Selatan,2208.88
+HSS-KAB-307,hss-county-307,307,286,307,exact_normalized,Jl. Kantor Camat Daha Selatan II,63.06.07,Daha Selatan,321.94
+HSS-KAB-308,hss-county-308,308,363,308,exact_normalized,Jl. Sungai Bugundi,63.06.07,Daha Selatan,306.68
+HSS-KAB-309,hss-county-309,309,362,309,exact_normalized,Jl. Tukang Garit,63.06.07,Daha Selatan,482.87
+HSS-KAB-310,hss-county-310,310,288,310,exact_normalized,Pandak Daun - Baruh Jaya - Samuda,63.06.07,Daha Selatan,2599.06
+HSS-KAB-310,hss-county-310,310,288,310,exact_normalized,Pandak Daun - Baruh Jaya - Samuda,63.06.08,Daha Utara,4728.36
+HSS-KAB-311,hss-county-311,311,291,311,exact_normalized,Sei. Mandala - Murung Raya,63.06.08,Daha Utara,2101.74
+HSS-KAB-312,hss-county-312,312,297,312,exact_normalized,Teluk haur I,63.06.08,Daha Utara,177.49
+HSS-KAB-313,hss-county-313,313,298,313,exact_normalized,Teluk Haur II,63.06.08,Daha Utara,203.81
+HSS-KAB-314,hss-county-314,314,365,314,treatment_engine_alias,Jl. HM. Thaib,63.06.08,Daha Utara,346.44
+HSS-KAB-315,hss-county-315,315,311,315,exact_normalized,Jl. Kenanga - Ds. Baruh Kambang,63.06.08,Daha Utara,308.38
+HSS-KAB-316,hss-county-316,316,303,316,exact_normalized,Jl. SMAN Negara (KH. Abdullah),63.06.08,Daha Utara,337.78
+HSS-KAB-317,hss-county-317,317,311,317,exact_normalized,Jl. Pertukangan,63.06.08,Daha Utara,316.61
+HSS-KAB-318,hss-county-318,318,311,318,treatment_engine_alias,Jl. Silaturahim,63.06.08,Daha Utara,279.52
+HSS-KAB-319,hss-county-319,319,369,,unresolved,Jl. Habib Iberahim,63.06.08,Daha Utara,170.78
+HSS-KAB-320,hss-county-320,320,303,320,exact_normalized,Jl. Sukaramai - Keramat,63.06.08,Daha Utara,728.87
+HSS-KAB-321,hss-county-321,321,292,321,exact_normalized,Pakan Dalam I,63.06.08,Daha Utara,321.38
+HSS-KAB-322,hss-county-322,322,293,322,exact_normalized,Pakan Dalam II,63.06.08,Daha Utara,294.82
+HSS-KAB-323,hss-county-323,323,294,323,exact_normalized,Pakan Dalam III,63.06.08,Daha Utara,281.72
+HSS-KAB-324,hss-county-324,324,309,324,exact_normalized,Jl. Paramaian,63.06.08,Daha Utara,301.98
+HSS-KAB-325,hss-county-325,325,358,325,exact_normalized,Jl. MIN Pandak Daun,63.06.08,Daha Utara,296.3
+HSS-KAB-326,hss-county-326,326,310,326,exact_normalized,Jl. Pesantren Muradiyah,63.06.08,Daha Utara,271.97
+HSS-KAB-327,hss-county-327,327,360,327,exact_normalized,Jl. Pandak Daun (Buntut Muradiyah) - Pakan Dalam,63.06.08,Daha Utara,1651.18
+HSS-KAB-328,hss-county-328,328,299,328,treatment_engine_alias,Pakan Dalam - Keminting Batu,63.06.07,Daha Selatan,84.05
+HSS-KAB-328,hss-county-328,328,299,328,treatment_engine_alias,Pakan Dalam - Keminting Batu,63.06.08,Daha Utara,1739.01
+HSS-KAB-329,hss-county-329,329,359,329,exact_normalized,Jl. Samping Kantor Camat Daha Utara,63.06.08,Daha Utara,149.42
+HSS-KAB-330,hss-county-330,330,369,330,exact_normalized,Jl. Gang Bidan (Ds. Tambak Bitin),63.06.08,Daha Utara,578.0
+HSS-KAB-331,hss-county-331,331,308,331,treatment_engine_alias,Jl. Cakingan Herman,63.06.08,Daha Utara,318.21
+HSS-KAB-332,hss-county-332,332,307,332,exact_normalized,Jl. Kampung Kawat,63.06.08,Daha Utara,324.74
+HSS-KAB-333,hss-county-333,333,306,333,treatment_engine_alias,Jl. Keminting Batu,63.06.07,Daha Selatan,351.69
+HSS-KAB-334,hss-county-334,334,301,,unresolved,Jl. Hamayung - Ds. Hakurung Dalam,63.06.08,Daha Utara,4104.21
+HSS-KAB-335,hss-county-335,335,285,335,exact_normalized,Simpang Jadi Makmur Ds. Samuda,63.06.07,Daha Selatan,662.04
+HSS-KAB-336,hss-county-336,336,370,336,treatment_engine_alias,Jl. Sakincung Ds. Hakurun Dalam,63.06.08,Daha Utara,1343.42
+HSS-KAB-337,hss-county-337,337,302,337,exact_normalized,Hakurung Dalam - Ds. Sungai haji,63.06.08,Daha Utara,298.92
+HSS-KAB-338,hss-county-338,338,318,338,exact_normalized,Jl. Siang Gantung - Ds. Baru,63.06.11,Daha Barat,6924.9
+HSS-KAB-339,hss-county-339,339,319,339,exact_normalized,Jl. Baru - Ds. Bajayau,63.06.11,Daha Barat,2326.09
+HSS-KAB-340,hss-county-340,340,268,,unresolved,Bajayau - Bajayau Tengah,63.06.11,Daha Barat,7475.53
+HSS-KAB-341,hss-county-341,341,322,,unresolved,Jl. Banua Hanyar - Tanjung Selor,63.06.07,Daha Selatan,5563.12
+HSS-KAB-341,hss-county-341,341,322,,unresolved,Jl. Banua Hanyar - Tanjung Selor,63.06.11,Daha Barat,38.89
+HSS-KAB-342,hss-county-342,342,323,342,exact_normalized,Jl. Tanjung Selor - Ds. Badaun,63.06.11,Daha Barat,8031.15
+HSS-KAB-343,hss-county-343,343,324,343,treatment_engine_alias,Jl. Badaun - Ds. Bajayau Lama,63.06.11,Daha Barat,3097.17
+HSS-KAB-344,hss-county-344,344,26,344,exact_normalized,Jl. Goha - Ds. Amawang Kanan,63.06.05,Kandangan,703.36
+HSS-KAB-345,hss-county-345,345,333,345,exact_normalized,Jl. Al - Ikhlas - Ds. Baluti,63.06.05,Kandangan,383.17
+HSS-KAB-346,hss-county-346,346,57,346,exact_normalized,Jl. Angkakai - Ds. Amawang Kiri,63.06.05,Kandangan,396.69
+HSS-KAB-347,hss-county-347,347,0,347,exact_normalized,Jl. Anjiran Rantauan - Ds. Taniran Tengah,63.06.04,Angkinang,1210.95
+HSS-KAB-348,hss-county-348,348,61,348,exact_normalized,Jl. Asam Duhat - Ds. Pantai Ulin,63.06.06,Simpur,1107.93
+HSS-KAB-349,hss-county-349,349,0,349,exact_normalized,Jl. Pertanian - Ds. Wasah Tengah,63.06.06,Simpur,361.06
+HSS-KAB-350,hss-county-350,350,198,350,exact_normalized,Jl. Keramat Sakti - Ds. Tebing Tinggi,63.06.06,Simpur,687.97

@@ -1,0 +1,36 @@
+{
+  "status": "AUTHORITATIVE_V1",
+  "identity": {
+    "internal_id": "road_id",
+    "canonical_key": "road_key",
+    "canonical_key_format": "HSS-KAB-NNN",
+    "official_number": "nomor_ruas",
+    "display_field": "display_name",
+    "rule": "Never join road data by name when road_key is available."
+  },
+  "naming": {
+    "canonical_name_source": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik",
+    "display_name_rule": "Canonical name without leading 'Jl.' for UI; duplicate base names use explicit location qualifier.",
+    "duplicate_overrides": {
+      "HSS-KAB-013": "Mawar (Kandangan Utara)",
+      "HSS-KAB-295": "Mawar (Daha Selatan)",
+      "HSS-KAB-020": "Musyawarah (Kandangan)",
+      "HSS-KAB-292": "Musyawarah (Nagara)",
+      "HSS-KAB-021": "Sekolah Islam (Kandangan Barat)",
+      "HSS-KAB-293": "Sekolah Islam (Sungai Pinang)"
+    }
+  },
+  "source_authority": {
+    "road_identity_and_official_number": "Dashboard 2025 NO RUAS + QGIS Kd_Inf, verified 350/350",
+    "road_geometry": "ruas_jalan_kabupaten.gpkg",
+    "road_condition_2025": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik",
+    "normative_17_variable_baseline": "dataset_ml_clean.csv mapped through exact historical source names to canonical registry",
+    "historical_context": "data_historis_skenario15April_ready_for_ML_new_features_FINAL(5).xlsx"
+  },
+  "matching_policy": {
+    "fuzzy_matching_allowed": false,
+    "silent_fallback_allowed": false,
+    "unresolved_policy": "Reject import and require explicit crosswalk entry.",
+    "aliases": "Allowed only for import/search. Aliases never become identity keys."
+  }
+}

@@ -1,0 +1,149 @@
+village_id,village_name,admin_type,district_id,district_name,regency_code,regency_name,province_name,area_ha_source,boundary_basis,metadata_source
+63.06.05.2016,Amawang Kanan,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,155.082451344,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2014,Amawang Kiri,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,559.655753805,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2015,Amawang Kiri Muka,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,133.549590457,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2004,Ambutun,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,574.490886873,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2004,Amparaya,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1140.15171647,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2005,Angkinang,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,385.226606402,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2007,Angkinang Selatan,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,146.959056356,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2014,Asam,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,330.314384616,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2004,Badaun,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,372.327558456,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2003,Bago Tanggul,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2446.44686054,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2005,Bajayau,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2539.96088877,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2007,Bajayau Lama,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2994.24784959,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2006,Bajayau Tengah,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1729.94408663,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2011,Bakarung,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,421.525834838,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2008,Balah Paikat,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,55.6814588323,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2005,Balanti,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1221.75707398,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2001,Balimau,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3007.85957619,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2018,Baluti,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,232.644867149,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2002,Bamban,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,285.245935028,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2003,Bamban Selatan,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,199.43270166,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2001,Bamban Utara,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,157.820292395,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2010,Bangkau,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2727.94254405,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2004,Banjarbaru,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,167.540278896,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2013,Banua Hanyar,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,781.533180923,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2013,Bariang,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,176.416631764,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2012,Baru,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,173.315786413,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2002,Baru,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3181.22433862,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2015,Baruh Jaya,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4863.25753249,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2012,Baruh Kembang,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,130.966632901,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2011,Batang Kulur Kanan,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,190.415709128,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2009,Batang Kulur Kiri,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,610.752389854,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2010,Batang Kulur Tengah,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,167.846110166,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2010,Batu Bini,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2056.30598736,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2015,Batu Laki,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4271.94082158,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2005,Bayanan,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,298.351098972,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2008,Bumi Berkat,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,673.08783327,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2013,Durian Rabung,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,184.979000076,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2007,Gambah Dalam,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,202.310333416,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2008,Gambah Dalam Barat,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,163.014286728,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2005,Gambah Luar,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,175.489617474,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2006,Gambah Luar Muka,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,166.920313002,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2003,Garunggang,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1588.22505458,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2009,Gumbil,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,785.479321866,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2010,Habirau,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,382.418976017,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2011,Habirau Tengah,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,577.103227716,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2019,Hakurung,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2633.92275205,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2001,Halunuk,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2290.49105455,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2005,Hamak,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1298.61813731,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2006,Hamak Timur,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,601.874931094,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2007,Hamak Utara,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1393.83071958,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2001,Hamalau,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,164.454174943,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2016,Hamayung,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,702.80425147,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2017,Hamayung Utara,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,410.776476668,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2010,Haratai,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4647.48539573,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2006,Hariti,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,392.86044134,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2005,Hulu Banyu,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2137.18155799,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2007,Ida Manggala,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,724.453200092,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.1004,Jambu Hilir,Kelurahan,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,322.060363657,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2006,Jambu Hulu,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,553.726132013,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2014,Jelatang,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,485.75758402,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2009,Jembatan Merah,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,125.543853472,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2005,Kaliring,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,521.455929371,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2006,Kalumpang,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1492.07481225,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2007,Kamawakan,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3806.60165873,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.1003,Kandangan Barat,Kelurahan,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,328.775714412,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.1001,Kandangan Kota,Kelurahan,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,156.53282849,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.1002,Kandangan Utara,Kelurahan,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,159.961432516,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2011,Kapuh,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,244.279238136,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2004,Karang Bulan,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1465.80252856,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2002,Karang Jawa,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,361.099977774,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2001,Karang Jawa Muka,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,140.630416735,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2002,Karang Paci,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,375.388134905,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2003,Karasikan,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,166.095423894,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2004,Kayu Abang,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1148.27998976,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2001,Lok Binuang,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,177.410696711,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2008,Lok Lahung,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3574.06718228,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2009,Loksado,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1647.20076421,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2010,Longawang,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,163.174283666,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2003,Lumpangi,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1952.2534133,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2011,Lungau,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1828.49900716,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2012,Madang,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1704.53184969,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2017,Malilingin,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4559.60323166,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2004,Malinau,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4105.6077264,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2016,Malutu,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2777.5801703,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2003,Mandala,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,414.088873902,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2011,Mdl. Murung Mesjid,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,14.0955347979,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2011,Mawangi,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1608.1562285,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2001,Muning Baru,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4995.39990167,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2002,Muning Dalam,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,5144.79627393,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2003,Muning Tengah,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1556.35505528,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2007,Murung Raya,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,838.642332398,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2008,Padang Batung,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,217.164233899,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2007,Pahampangan,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,337.295575269,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2018,Paharangan,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1082.22054807,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2004,Pakan Dalam,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,5428.84210402,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2001,Pakapuran Kecil,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,92.7801269516,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2008,Pakuan Timur,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,251.90229993,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2006,Pandak Daun,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,5934.24793013,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2006,Pandan Sari,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,11.3632255799,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2004,Pandulangan,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,581.618129229,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2011,Pandulangan,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,194.870950218,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2002,Panggandingan,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,46.6221989576,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2002,Panggungan,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1014.40149847,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2005,Panjampang Bahagia,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,820.11206828,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2007,Pantai Ulin,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3587.74527246,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2005,Paramaian,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,7092.60507151,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2012,Parigi,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,468.705990259,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2017,Paring Agung,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,361.631337523,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2014,Pasungkan,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,97.6815426562,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2007,Pihanin Raya,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1659.87140871,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2016,Samuda,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4055.1462773,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2016,Sarang Halang,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,364.863614948,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2001,Siang Gantung,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,4854.47079086,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2002,Simpur,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,206.83798585,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2008,Sirih,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,653.587220146,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2009,Sirih Hulu,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,261.340052928,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2009,Sungai Garuda,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,17.3384709289,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2015,Sungai Kali,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,216.517210496,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2009,Sungai Kupang,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1715.79034275,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2010,Sungai Mandala,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,20.4287784206,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2012,Sungai Paring,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,273.865736347,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2009,Sungai Pinang,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,192.316008155,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2005,Sungai Raya Selatan,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,653.535756093,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2004,Sungai Raya Utara,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,196.181380134,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.02.2003,Tabihi,Desa,63.06.02,Padang Batung,63.06,Hulu Sungai Selatan,Kalimantan Selatan,297.29097815,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2003,Tambak Bitin,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,26.757389257,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2014,Tambangan,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,104.627523317,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.09.2007,Tambingkar,Desa,63.06.09,Kalumpang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,650.051377062,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2013,Tamiyang,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,359.005808049,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2018,Tanah Bangkang,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,358.61323403,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2009,Taniran Kubah,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,451.575705358,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2010,Taniran Selatan,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,590.734298605,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.11.2003,Tanjung Selor,Desa,63.06.11,Daha Barat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2361.25527893,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2008,Tawia,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,1325.08542486,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2001,Tebing Tinggi,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,457.386812904,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.01.2002,Telaga Bidadari,Desa,63.06.01,Sungai Raya,63.06,Hulu Sungai Selatan,Kalimantan Selatan,252.806108484,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.03.2002,Telaga Langsat,Desa,63.06.03,Telaga Langsat,63.06,Hulu Sungai Selatan,Kalimantan Selatan,365.485169153,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.04.2006,Telaga Sili-Sili,Desa,63.06.04,Angkinang,63.06,Hulu Sungai Selatan,Kalimantan Selatan,521.107536428,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2013,Teluk Haur,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,519.001087437,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.08.2015,Teluk Kabak,Desa,63.06.08,Daha Utara,63.06,Hulu Sungai Selatan,Kalimantan Selatan,294.246680067,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.05.2017,Tibung Raya,Desa,63.06.05,Kandangan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,127.560204609,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.07.2008,Tumbukan Banyu,Desa,63.06.07,Daha Selatan,63.06,Hulu Sungai Selatan,Kalimantan Selatan,201.006845016,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2006,Tumingki,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,2611.75476506,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.10.2011,Ulang,Desa,63.06.10,Loksado,63.06,Hulu Sungai Selatan,Kalimantan Selatan,3588.11174572,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2006,Ulin,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,350.472917302,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2010,Wasah Hilir,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,388.840767619,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2008,Wasah Hulu,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,262.611049839,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN
+63.06.06.2009,Wasah Tengah,Desa,63.06.06,Simpur,63.06,Hulu Sungai Selatan,Kalimantan Selatan,191.699890033,Hasil Delineasi Batas Desa 2018,TASWIL1000020230928_DATA_BATAS_DESAKELURAHAN

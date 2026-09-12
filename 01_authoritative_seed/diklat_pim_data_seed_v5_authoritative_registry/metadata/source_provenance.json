@@ -1,0 +1,53 @@
+{
+  "package": "diklat_pim_data_seed_v4",
+  "purpose": "Clean seed data for the first Diklat PIM road-priority web app implementation.",
+  "authority_rules": {
+    "road_condition": "NOT INCLUDED from Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx or other current sources. Await explicit final road-condition dataset from user.",
+    "spatial_plan": "Latest RTRW GDB supplied in this chat",
+    "road_identity": "Use canonical Treatment Engine road_key when available; nomor_ruas is retained as provisional business key; never join solely by road name.",
+    "network_connector": "jembatan_penghubung is a synthetic topology connector for network analysis, not a bridge-asset inventory.",
+    "network_analysis": "network_jalan_jembatan_terbaru.gpkg is the network-analysis source; jembatan features are synthetic topology connectors, not bridge assets.",
+    "administrative_boundaries": "Village/kelurahan boundary source supplied in chat; CRS EPSG:4326 recovered from Layer Snap.qgz because .prj was not supplied.",
+    "county_road_source_identity": "Use source_road_code/Kd_Inf for source-geometry uniqueness (350/350) or generated road_geometry_id. Do NOT use OBJECTID: only 277 unique values across 350 features.",
+    "canonical_road_identity": "Canonical v1 is built from Dashboard 2025 NO RUAS matched 350/350 to GIS Kd_Inf. road_key = HSS-KAB-NNN; names are attributes/aliases only.",
+    "road_condition_2025": "FINAL authority: Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik.",
+    "treatment_engine_identity": "Legacy Treatment Engine road_key/name matching is not canonical for this new app. It may be mapped later as a source alias to the new canonical road master."
+  },
+  "not_included_yet": [
+    "QGIS external SHP/GPKG records referenced by Layer Snap.qgz (source files were not uploaded)",
+    "Treatment Engine runtime JSON files such as road-geometries.json, dd2_road_features.json, dd2_damage_segments.json, treatment_history_by_road_key.json",
+    "village boundary geometry source data",
+    "public facility source records",
+    "synthetic bridge/network connector geometry"
+  ],
+  "new_sources_v2": [
+    "ruas_jalan_kabupaten.gpkg",
+    "ruas_jalan_provinsi.gpkg",
+    "ruas_jalan_nasional.gpkg",
+    "network_jalan_jembatan_terbaru.gpkg",
+    "jembatan_penghubung.gpkg",
+    "sebaran_sd_smp.gpkg",
+    "sebaran_pasar.gpkg",
+    "sebaran_rsud.gpkg",
+    "data_historis_skenario15April_ready_for_ML_new_features_FINAL(5).xlsx"
+  ],
+  "still_missing": [
+    "Mapping of normative 17-variable source rows to the new canonical road master (can be reconciled separately by name/context).",
+    "Final priority model configuration: category weights, variable weights, normalization/direction rules."
+  ],
+  "new_sources_v3": [
+    "ADMINISTRASI_AR_DESAKEL_HSS.shp/.shx/.dbf",
+    "Sebaran_Puskesmas.gpkg"
+  ],
+  "held_sources": [
+    {
+      "source": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx",
+      "status": "held",
+      "reason": "Do not ingest road-condition/mantap values until user designates a final canonical dataset."
+    }
+  ],
+  "source_semantics_corrections_v4": [
+    "dataset_ml_clean.csv field nomor_ruas is retained only as source_ml_road_id, not official road number.",
+    "historical ML workbook field nomor_ruas is retained only as source_ml_road_id, not official road number."
+  ]
+}

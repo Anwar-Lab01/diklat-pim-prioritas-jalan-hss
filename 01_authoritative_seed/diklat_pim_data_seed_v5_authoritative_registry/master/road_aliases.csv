@@ -1,0 +1,1051 @@
+road_key,source_system,source_name
+HSS-KAB-001,dashboard_2025,Jl. Pangeran Antasari - Loklua
+HSS-KAB-001,qgis_county_roads,Jl. Pangeran Antasari - SP. Loklua
+HSS-KAB-001,display,Pangeran Antasari - Loklua
+HSS-KAB-002,dashboard_2025,Jl. Soeprapto - Jl. H.M Rusli
+HSS-KAB-002,qgis_county_roads,Jl. Soeprapto - Jl. HM. Rusli
+HSS-KAB-002,display,Soeprapto - Jl. H.M Rusli
+HSS-KAB-003,dashboard_2025,Jl. Pasar Kandangan - Oprit Jembt. Loklua
+HSS-KAB-003,qgis_county_roads,Jl. Pasar Kandangan - Oprit Jembatan Loklua
+HSS-KAB-003,display,Pasar Kandangan - Oprit Jembt. Loklua
+HSS-KAB-004,dashboard_2025,Jl. Soetoyo - Teluk Mesjid
+HSS-KAB-004,qgis_county_roads,Jl. Soetoyo - Teluk Mesjid
+HSS-KAB-004,display,Soetoyo - Teluk Mesjid
+HSS-KAB-005,dashboard_2025,Jl. Teluk Mesjid - Sp. 4 Muara Banta
+HSS-KAB-005,qgis_county_roads,Jl. Teluk Mesjid - SP.4 Muara Banta
+HSS-KAB-005,display,Teluk Mesjid - Sp. 4 Muara Banta
+HSS-KAB-006,dashboard_2025,Jl. Merah Johansyah - Jl. Melati
+HSS-KAB-006,qgis_county_roads,Jl. Merah Johansyah - Jl. Melati
+HSS-KAB-006,display,Merah Johansyah - Jl. Melati
+HSS-KAB-007,dashboard_2025,Jl. Menuju Stadion 2 Desember
+HSS-KAB-007,qgis_county_roads,Jl. Menuju Stadion 2 Desember
+HSS-KAB-007,display,Menuju Stadion 2 Desember
+HSS-KAB-008,dashboard_2025,Jl. Aluh Idut
+HSS-KAB-008,qgis_county_roads,Jl. Aluh Idut
+HSS-KAB-008,display,Aluh Idut
+HSS-KAB-009,dashboard_2025,Jl. Panglima Batur
+HSS-KAB-009,qgis_county_roads,Jl. Panglima Batur
+HSS-KAB-009,display,Panglima Batur
+HSS-KAB-010,dashboard_2025,Jl. Nusa Indah
+HSS-KAB-010,qgis_county_roads,Jl. Nusa Indah
+HSS-KAB-010,display,Nusa Indah
+HSS-KAB-011,dashboard_2025,Jl. Anggrek
+HSS-KAB-011,qgis_county_roads,Jl. Anggrek
+HSS-KAB-011,display,Anggrek
+HSS-KAB-012,dashboard_2025,Jl. Kenanga
+HSS-KAB-012,qgis_county_roads,Jl. Kenanga
+HSS-KAB-012,display,Kenanga
+HSS-KAB-013,dashboard_2025,Jl. Mawar
+HSS-KAB-013,qgis_county_roads,Jl. Mawar
+HSS-KAB-013,display,Mawar (Kandangan Utara)
+HSS-KAB-014,dashboard_2025,Jl. Kamboja
+HSS-KAB-014,qgis_county_roads,Jl. Kamboja
+HSS-KAB-014,display,Kamboja
+HSS-KAB-015,dashboard_2025,Jl. Dahlia
+HSS-KAB-015,qgis_county_roads,Jl. Dahlia
+HSS-KAB-015,display,Dahlia
+HSS-KAB-016,dashboard_2025,Jl. KS. Tubun
+HSS-KAB-016,qgis_county_roads,Jl. KS. Tubun
+HSS-KAB-016,display,KS. Tubun
+HSS-KAB-017,dashboard_2025,Jl. Pemuda
+HSS-KAB-017,qgis_county_roads,Jl. Pemuda
+HSS-KAB-017,display,Pemuda
+HSS-KAB-018,dashboard_2025,Jl. Parindra
+HSS-KAB-018,qgis_county_roads,Jl. Parindra
+HSS-KAB-018,display,Parindra
+HSS-KAB-019,dashboard_2025,Jl. Wahab Syahrani
+HSS-KAB-019,qgis_county_roads,Jl. Wahab Syahrani
+HSS-KAB-019,display,Wahab Syahrani
+HSS-KAB-020,dashboard_2025,Jl. Musyawarah
+HSS-KAB-020,qgis_county_roads,Jl. Musyawarah
+HSS-KAB-020,display,Musyawarah (Kandangan Kota)
+HSS-KAB-021,dashboard_2025,Jl. Sekolah Islam
+HSS-KAB-021,qgis_county_roads,Jl. Sekolah Islam
+HSS-KAB-021,display,Sekolah Islam (Kandangan Barat)
+HSS-KAB-022,dashboard_2025,Jl. Rahmah Bahran
+HSS-KAB-022,qgis_county_roads,Jl. Rahma Bahran
+HSS-KAB-022,display,Rahmah Bahran
+HSS-KAB-023,dashboard_2025,Jl. Brigjen Katamso
+HSS-KAB-023,qgis_county_roads,Jl. Brigjend. Katamso
+HSS-KAB-023,display,Brigjen Katamso
+HSS-KAB-024,dashboard_2025,Jl. Kolonel Sugiono
+HSS-KAB-024,qgis_county_roads,JL. Kolonel Sugiono
+HSS-KAB-024,display,Kolonel Sugiono
+HSS-KAB-025,dashboard_2025,Singakarsa - Palas
+HSS-KAB-025,qgis_county_roads,Singakarsa - Palas
+HSS-KAB-025,display,Singakarsa - Palas
+HSS-KAB-026,dashboard_2025,Singakarsa - Getek
+HSS-KAB-026,qgis_county_roads,Singakarsa - Getek
+HSS-KAB-026,display,Singakarsa - Getek
+HSS-KAB-027,dashboard_2025,Parincahan - Singakarsa (Jl. Harapan)
+HSS-KAB-027,qgis_county_roads,Parincahan - Singakarsa (Jl. Harapan)
+HSS-KAB-027,display,Parincahan - Singakarsa (Jl. Harapan)
+HSS-KAB-028,dashboard_2025,Budi Bakti - Tiga Desember
+HSS-KAB-028,qgis_county_roads,Jl. Budi Bakti - Tiga Desember
+HSS-KAB-028,display,Budi Bakti - Tiga Desember
+HSS-KAB-029,dashboard_2025,Jl. Jafri Zamzam
+HSS-KAB-029,qgis_county_roads,Jl. Jafri Zamzam
+HSS-KAB-029,display,Jafri Zamzam
+HSS-KAB-030,dashboard_2025,Sungai Damang - Amawang Kiri
+HSS-KAB-030,qgis_county_roads,Sungai Damang - Amawang Kiri
+HSS-KAB-030,display,Sungai Damang - Amawang Kiri
+HSS-KAB-031,dashboard_2025,Amawang Muka - Getek
+HSS-KAB-031,qgis_county_roads,Amawang Muka - Getek
+HSS-KAB-031,display,Amawang Muka - Getek
+HSS-KAB-032,dashboard_2025,Amawang Kanan - Wasah Hulu
+HSS-KAB-032,qgis_county_roads,Jl. Amawang Kanan - Wasah Hulu
+HSS-KAB-032,display,Amawang Kanan - Wasah Hulu
+HSS-KAB-033,dashboard_2025,Jl. DI. Panjaitan - Loklua
+HSS-KAB-033,qgis_county_roads,Jl. DI. Panjaitan - Loklua
+HSS-KAB-033,display,DI. Panjaitan - Loklua
+HSS-KAB-034,dashboard_2025,Jl. Jend. Sudirman
+HSS-KAB-034,qgis_county_roads,Jl. Jend. Sudirman
+HSS-KAB-034,display,Jend. Sudirman
+HSS-KAB-035,dashboard_2025,Jl. AES Nasution
+HSS-KAB-035,qgis_county_roads,Jl. AES. Nasution
+HSS-KAB-035,display,AES Nasution
+HSS-KAB-036,dashboard_2025,Tembok Lama - Loklua
+HSS-KAB-036,qgis_county_roads,Tembok Lama - Loklua
+HSS-KAB-036,display,Tembok Lama - Loklua
+HSS-KAB-037,dashboard_2025,Jl. Kesehatan - Komp. Rmh Dokter
+HSS-KAB-037,qgis_county_roads,Jl. Kesehatan - Komp. Rumah Dokter
+HSS-KAB-037,display,Kesehatan - Komp. Rmh Dokter
+HSS-KAB-038,dashboard_2025,Jl. Samping Bappeda - Mesjid Darul Halik
+HSS-KAB-038,qgis_county_roads,Jl. Samping Bappeda - Mesjid Darul Halik
+HSS-KAB-038,display,Samping Bappeda - Mesjid Darul Halik
+HSS-KAB-039,dashboard_2025,Jl. Bina Bakat
+HSS-KAB-039,qgis_county_roads,Jl. Bina Bakat
+HSS-KAB-039,display,Bina Bakat
+HSS-KAB-040,dashboard_2025,Baluti - Jambu Hulu (Paku)
+HSS-KAB-040,qgis_county_roads,Baluti - Jambu Hulu/Paku
+HSS-KAB-040,display,Baluti - Jambu Hulu (Paku)
+HSS-KAB-041,dashboard_2025,Sp. 3 Baluti - Amawang
+HSS-KAB-041,qgis_county_roads,SP.3 Baluti - Amawang
+HSS-KAB-041,display,Sp. 3 Baluti - Amawang
+HSS-KAB-042,dashboard_2025,Sei Kupang Utara - Simp. Empat Lungau
+HSS-KAB-042,qgis_county_roads,Sei. Kupang Utara - SP.4 Lungau
+HSS-KAB-042,display,Sei Kupang Utara - Simp. Empat Lungau
+HSS-KAB-043,dashboard_2025,Sp. Empat Lungau - Bangkau
+HSS-KAB-043,qgis_county_roads,SP.4 Lungau - Bangkau
+HSS-KAB-043,display,Sp. Empat Lungau - Bangkau
+HSS-KAB-044,dashboard_2025,Sp. Empat Lungau - Garis
+HSS-KAB-044,qgis_county_roads,Sp.4 Lungau - Garis
+HSS-KAB-044,display,Sp. Empat Lungau - Garis
+HSS-KAB-045,dashboard_2025,Gambir - Sp. Empat Lungau
+HSS-KAB-045,qgis_county_roads,Gambir -SP. Empat Lungau
+HSS-KAB-045,display,Gambir - Sp. Empat Lungau
+HSS-KAB-046,dashboard_2025,Bariang - Getek
+HSS-KAB-046,qgis_county_roads,Bariang - Getek
+HSS-KAB-046,display,Bariang - Getek
+HSS-KAB-047,dashboard_2025,Muara Banta - Karang Jawa
+HSS-KAB-047,qgis_county_roads,Muara Banta - Karang Jawa
+HSS-KAB-047,display,Muara Banta - Karang Jawa
+HSS-KAB-048,dashboard_2025,Sungai Paring - Sei Hanyar Pantai Ulin
+HSS-KAB-048,qgis_county_roads,Sungai Paring - Sei Hanyar Pantai Ulin
+HSS-KAB-048,display,Sungai Paring - Sei Hanyar Pantai Ulin
+HSS-KAB-049,dashboard_2025,Kandangan Hulu - Sp. Tabihi
+HSS-KAB-049,qgis_county_roads,Kandangan Hulu - SP. Tabihi
+HSS-KAB-049,display,Kandangan Hulu - Sp. Tabihi
+HSS-KAB-050,dashboard_2025,Banyu Barau - Sei Kalang
+HSS-KAB-050,qgis_county_roads,Banyu Barau - Sungai Kalang
+HSS-KAB-050,display,Banyu Barau - Sei Kalang
+HSS-KAB-051,dashboard_2025,Tibung Raya - Asam Cangkuk
+HSS-KAB-051,qgis_county_roads,Tibung Raya - Asam Cangkok
+HSS-KAB-051,display,Tibung Raya - Asam Cangkuk
+HSS-KAB-052,dashboard_2025,Gambah Dalam - Rantauan
+HSS-KAB-052,qgis_county_roads,Gambah Dalam - Rantauan
+HSS-KAB-052,display,Gambah Dalam - Rantauan
+HSS-KAB-053,dashboard_2025,Gambah Luar - Gambah Dalam
+HSS-KAB-053,qgis_county_roads,Gambah Luar - Gambah Dalam
+HSS-KAB-053,display,Gambah Luar - Gambah Dalam
+HSS-KAB-054,dashboard_2025,Pegangsaan Timur - Teluk Aman
+HSS-KAB-054,qgis_county_roads,Pegangsaan Timur - Teluk Aman
+HSS-KAB-054,display,Pegangsaan Timur - Teluk Aman
+HSS-KAB-055,dashboard_2025,Gambah Luar - Sungai Kudung
+HSS-KAB-055,qgis_county_roads,Gambah Luar - Sungai Kudung
+HSS-KAB-055,display,Gambah Luar - Sungai Kudung
+HSS-KAB-056,dashboard_2025,Bakarung Tengah - Karang Jawa
+HSS-KAB-056,qgis_county_roads,Bakarung Tengah - Karang Jawa
+HSS-KAB-056,display,Bakarung Tengah - Karang Jawa
+HSS-KAB-057,dashboard_2025,Jl. Papagaran/Palangsatan
+HSS-KAB-057,qgis_county_roads,Jl. Papagaran/Pelangsatan
+HSS-KAB-057,display,Papagaran/Palangsatan
+HSS-KAB-058,dashboard_2025,Jl. Tembok Kacil. Sei. Kudung
+HSS-KAB-058,qgis_county_roads,Jl. Tembok Kacil. Sei. Kudung
+HSS-KAB-058,display,Tembok Kacil. Sei. Kudung
+HSS-KAB-059,dashboard_2025,Jl. Mesjid Quba
+HSS-KAB-059,qgis_county_roads,Jl. Mesjid Kuba
+HSS-KAB-059,display,Mesjid Quba
+HSS-KAB-060,dashboard_2025,Jl. Sungai Karuh
+HSS-KAB-060,qgis_county_roads,Jl. Sungai Karuh Tembus Tawar
+HSS-KAB-060,display,Sungai Karuh
+HSS-KAB-061,dashboard_2025,Rambai - Bariang
+HSS-KAB-061,qgis_county_roads,Jl. Rambai - Bariang
+HSS-KAB-061,display,Rambai - Bariang
+HSS-KAB-062,dashboard_2025,Jangkang - Pantai Ulin
+HSS-KAB-062,qgis_county_roads,Jl. Jangkang - Pantai Ulin
+HSS-KAB-062,display,Jangkang - Pantai Ulin
+HSS-KAB-063,dashboard_2025,Jl. Padang Palas
+HSS-KAB-063,qgis_county_roads,Jl. Padang Palas
+HSS-KAB-063,display,Padang Palas
+HSS-KAB-064,dashboard_2025,Tibung Dalam - Teratai
+HSS-KAB-064,qgis_county_roads,Tibung Dalam - Teratai
+HSS-KAB-064,display,Tibung Dalam - Teratai
+HSS-KAB-065,dashboard_2025,Jl. Kalaka Indah - Perumnas Tibung
+HSS-KAB-065,qgis_county_roads,Jl. Kalaka Indah - Perumnas Tibung
+HSS-KAB-065,display,Kalaka Indah - Perumnas Tibung
+HSS-KAB-066,dashboard_2025,Jl. Teratai Menuju Komplek Perumnas Hamalau
+HSS-KAB-066,qgis_county_roads,Jl. Teratai Menuju Komplek Perumnas Hamalau
+HSS-KAB-066,display,Teratai Menuju Komplek Perumnas Hamalau
+HSS-KAB-067,dashboard_2025,Teluk Pinang - Baluti
+HSS-KAB-067,qgis_county_roads,Teluk Pinang - Baluti
+HSS-KAB-067,display,Teluk Pinang - Baluti
+HSS-KAB-068,dashboard_2025,Tibung Raya - Hamalau Dalam
+HSS-KAB-068,qgis_county_roads,Tibung Raya - Hamalau Dalam
+HSS-KAB-068,display,Tibung Raya - Hamalau Dalam
+HSS-KAB-069,dashboard_2025,Jl. Baiturrahim Parincahan
+HSS-KAB-069,qgis_county_roads,Jl. Baiturrahim
+HSS-KAB-069,display,Baiturrahim Parincahan
+HSS-KAB-070,dashboard_2025,Jl. Newangsekarti - Ds. Gambah Luar Muka
+HSS-KAB-070,qgis_county_roads,Jl. Newangsekarti - Ds. Gambah Luar Muka
+HSS-KAB-070,display,Newangsekarti - Ds. Gambah Luar Muka
+HSS-KAB-071,dashboard_2025,Jl. Tembok Baru (Asam Cangkok)
+HSS-KAB-071,qgis_county_roads,Jl. Tembok Baru (Asam Cangkok
+HSS-KAB-071,display,Tembok Baru (Asam Cangkok)
+HSS-KAB-072,dashboard_2025,Sungai Paring - Toba
+HSS-KAB-072,qgis_county_roads,Sungai Paring - Toba
+HSS-KAB-072,display,Sungai Paring - Toba
+HSS-KAB-073,dashboard_2025,Jl. Tembok Baru - Ds. Baluti
+HSS-KAB-073,qgis_county_roads,Jl. Tembok Baru - Baluti
+HSS-KAB-073,display,Tembok Baru - Ds. Baluti
+HSS-KAB-074,dashboard_2025,Jl. H. Jarkasi - Ds. Sungai Paring
+HSS-KAB-074,qgis_county_roads,Jl. H. Jarkasi
+HSS-KAB-074,display,H. Jarkasi - Ds. Sungai Paring
+HSS-KAB-075,dashboard_2025,Bariang - Patigan
+HSS-KAB-075,qgis_county_roads,Jl. Bariang - Patigan
+HSS-KAB-075,display,Bariang - Patigan
+HSS-KAB-076,dashboard_2025,Gambah Dalam Barat - Mahulung
+HSS-KAB-076,qgis_county_roads,Gambah Dalam Barat - Mahulung
+HSS-KAB-076,display,Gambah Dalam Barat - Mahulung
+HSS-KAB-077,dashboard_2025,Jl. Suriangpati - Gambah Dalam Barat
+HSS-KAB-077,qgis_county_roads,Jl. Suriangpati
+HSS-KAB-077,display,Suriangpati - Gambah Dalam Barat
+HSS-KAB-078,dashboard_2025,Jl. Menuju SMP 7 - Ds. Gambah Dalam
+HSS-KAB-078,qgis_county_roads,Jl. Menuju SMP 7 - Ds. Gambah Dalam
+HSS-KAB-078,display,Menuju SMP 7 - Ds. Gambah Dalam
+HSS-KAB-079,dashboard_2025,Telaga Banta - Patigan
+HSS-KAB-079,qgis_county_roads,Jl. Telaga Banta - Patigan
+HSS-KAB-079,display,Telaga Banta - Patigan
+HSS-KAB-080,dashboard_2025,Jl. Nomura
+HSS-KAB-080,qgis_county_roads,Jl. Nomura
+HSS-KAB-080,display,Nomura
+HSS-KAB-081,dashboard_2025,Jl. Lorong Bupati
+HSS-KAB-081,qgis_county_roads,Jl. Lorong Bupati
+HSS-KAB-081,display,Lorong Bupati
+HSS-KAB-082,dashboard_2025,Jl. Biti - Sungai Kupang (Karya Bakti TNI)
+HSS-KAB-082,qgis_county_roads,Jl. Biti - Sungai Kupang (Karya Bakti TNI)
+HSS-KAB-082,display,Biti - Sungai Kupang (Karya Bakti TNI)
+HSS-KAB-083,dashboard_2025,Jl. Palajau - Ds. Baluti
+HSS-KAB-083,qgis_county_roads,Jl. Palajau - Ds. Baluti
+HSS-KAB-083,display,Palajau - Ds. Baluti
+HSS-KAB-084,dashboard_2025,Jl. RS. Hasan Basry II
+HSS-KAB-084,qgis_county_roads,Jl. RS. Hasan Basry II
+HSS-KAB-084,display,RS. Hasan Basry II
+HSS-KAB-085,dashboard_2025,Tajun - Sp.3 Muara Paring Agung
+HSS-KAB-085,qgis_county_roads,Tajun - SP.3 Muara Paring Agung
+HSS-KAB-085,display,Tajun - Sp.3 Muara Paring Agung
+HSS-KAB-086,dashboard_2025,Hamalau - Anjiran
+HSS-KAB-086,qgis_county_roads,Hamalau - Anjiran
+HSS-KAB-086,display,Hamalau - Anjiran
+HSS-KAB-087,dashboard_2025,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali
+HSS-KAB-087,qgis_county_roads,Tanjungan - SP.10 Batang Kulur - Sungai Kali
+HSS-KAB-087,display,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali
+HSS-KAB-088,dashboard_2025,Sungai Raya Selatan - Sarang Halang
+HSS-KAB-088,qgis_county_roads,Sungai Raya Selatan - Sarang Halang
+HSS-KAB-088,display,Sungai Raya Selatan - Sarang Halang
+HSS-KAB-089,dashboard_2025,Sp. Batang Kulur Kiri - Tatas
+HSS-KAB-089,qgis_county_roads,SP. Batang Kulur Kiri - Tatas
+HSS-KAB-089,display,Sp. Batang Kulur Kiri - Tatas
+HSS-KAB-090,dashboard_2025,Taal Batang Kulur - Sp. 3 Muara Prg Agung
+HSS-KAB-090,qgis_county_roads,Taal Batang Kulur - SP.3 Muara Paring Agung
+HSS-KAB-090,display,Taal Batang Kulur - Sp. 3 Muara Prg Agung
+HSS-KAB-091,dashboard_2025,Batang Kulur Kanan - Sarangan
+HSS-KAB-091,qgis_county_roads,Batang Kulur Kanan - Sarangan
+HSS-KAB-091,display,Batang Kulur Kanan - Sarangan
+HSS-KAB-092,dashboard_2025,Bumi Berkat - Mungkur Galah
+HSS-KAB-092,qgis_county_roads,Bumi Berkat - Mungkur Galah
+HSS-KAB-092,display,Bumi Berkat - Mungkur Galah
+HSS-KAB-093,dashboard_2025,Taal Jarau - Sp. Baru/Tampang
+HSS-KAB-093,qgis_county_roads,Taal Jarau - SP. Baru/Tampang
+HSS-KAB-093,display,Taal Jarau - Sp. Baru/Tampang
+HSS-KAB-094,dashboard_2025,Sungai Raya - Jambu Hulu/Paku
+HSS-KAB-094,qgis_county_roads,Sungai Raya - Jambu Hulu/Paku
+HSS-KAB-094,display,Sungai Raya - Jambu Hulu/Paku
+HSS-KAB-095,dashboard_2025,Sungai Raya Selatan - Malutu - Goa Berangin
+HSS-KAB-095,qgis_county_roads,Sungai Raya Selatan - Malutu - Goa Berangin
+HSS-KAB-095,display,Sungai Raya Selatan - Malutu - Goa Berangin
+HSS-KAB-096,dashboard_2025,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan
+HSS-KAB-096,qgis_county_roads,SP.4 Baru/Tampang - SP. Biluy Pamujaan
+HSS-KAB-096,display,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan
+HSS-KAB-097,dashboard_2025,Asam Cangkuk - Telaga Bidadari
+HSS-KAB-097,qgis_county_roads,Asam Cangkuk - Telaga Bidadari
+HSS-KAB-097,display,Asam Cangkuk - Telaga Bidadari
+HSS-KAB-098,dashboard_2025,Hamalau - Pahampangan
+HSS-KAB-098,qgis_county_roads,Hamalau - Pahampangan
+HSS-KAB-098,display,Hamalau - Pahampangan
+HSS-KAB-099,dashboard_2025,Ida Manggala - Padang Makmur
+HSS-KAB-099,qgis_county_roads,Ida Manggala - Padang Makmur
+HSS-KAB-099,display,Ida Manggala - Padang Makmur
+HSS-KAB-100,dashboard_2025,Simpang Hamalau - Teluk Pinang
+HSS-KAB-100,qgis_county_roads,Simpang Hamalau - Teluk Pinang
+HSS-KAB-100,display,Simpang Hamalau - Teluk Pinang
+HSS-KAB-101,dashboard_2025,Teluk Pinang - Pahampangan Utara
+HSS-KAB-101,qgis_county_roads,Teluk Pinang - Pahampangan Utara
+HSS-KAB-101,display,Teluk Pinang - Pahampangan Utara
+HSS-KAB-102,dashboard_2025,Hamalau - Telaga Bidadari - Wasah Hilir
+HSS-KAB-102,qgis_county_roads,Hamalau - Telaga Bidadari - Wasah Hilir
+HSS-KAB-102,display,Hamalau - Telaga Bidadari - Wasah Hilir
+HSS-KAB-103,dashboard_2025,Karasikan - Sarang Halang
+HSS-KAB-103,qgis_county_roads,Karasikan - Sarang Halang
+HSS-KAB-103,display,Karasikan - Sarang Halang
+HSS-KAB-104,dashboard_2025,Tanjungan - Sp. 3 Sakijang
+HSS-KAB-104,qgis_county_roads,Tanjungan - SP.3 Sakijang
+HSS-KAB-104,display,Tanjungan - Sp. 3 Sakijang
+HSS-KAB-105,dashboard_2025,Sarang Halang Padang - Sp. Batang Kulur
+HSS-KAB-105,qgis_county_roads,Sarang Halang Padang - SP Batang Kulur
+HSS-KAB-105,display,Sarang Halang Padang - Sp. Batang Kulur
+HSS-KAB-106,dashboard_2025,Hamalau - Ganda
+HSS-KAB-106,qgis_county_roads,Jl. Hamalau - Ganda
+HSS-KAB-106,display,Hamalau - Ganda
+HSS-KAB-107,dashboard_2025,Tamiyang - Ds. Tamiyang (Eks TMMD)
+HSS-KAB-107,qgis_county_roads,Jl. Tamiyang - Ds. Tamiyang (Eks TMMD)
+HSS-KAB-107,display,Tamiyang - Ds. Tamiyang (Eks TMMD)
+HSS-KAB-108,dashboard_2025,Tanah Bangkang Menuju Balai Benih Ikan
+HSS-KAB-108,qgis_county_roads,Jl. Tanah Bangkang Menuju Balai Benih Ikan
+HSS-KAB-108,display,Tanah Bangkang Menuju Balai Benih Ikan
+HSS-KAB-109,dashboard_2025,Karang Intan - Tanah Bangkang
+HSS-KAB-109,qgis_county_roads,Jl. Karang Intan - Tanah Bangkang
+HSS-KAB-109,display,Karang Intan - Tanah Bangkang
+HSS-KAB-110,dashboard_2025,Jl. Haritas (PT. Pertani)
+HSS-KAB-110,qgis_county_roads,Jl. Haritas (PT. Pertani)
+HSS-KAB-110,display,Haritas (PT. Pertani)
+HSS-KAB-111,dashboard_2025,Paharuangan - Sei. Raya Selatan
+HSS-KAB-111,qgis_county_roads,Paharuangan - Sungai Raya Selatan
+HSS-KAB-111,display,Paharuangan - Sei. Raya Selatan
+HSS-KAB-112,dashboard_2025,Jl. Bangga TMMD
+HSS-KAB-112,qgis_county_roads,Jl. Bangga TMMD
+HSS-KAB-112,display,Bangga TMMD
+HSS-KAB-113,dashboard_2025,Batang Kulur Kiri - Durian Landung
+HSS-KAB-113,qgis_county_roads,Jl. Batang Kulur Kiri - Durian Landung
+HSS-KAB-113,display,Batang Kulur Kiri - Durian Landung
+HSS-KAB-114,dashboard_2025,Jl. Taminung
+HSS-KAB-114,qgis_county_roads,Jl. Taminung
+HSS-KAB-114,display,Taminung
+HSS-KAB-115,dashboard_2025,Matang Gadung - Halalang
+HSS-KAB-115,qgis_county_roads,Jl. Matang Gadung - Halalang
+HSS-KAB-115,display,Matang Gadung - Halalang
+HSS-KAB-116,dashboard_2025,Sungai Raya Utara - Teluk Pinang _x000D_
+HSS-KAB-116,qgis_county_roads,Jl. Sungai Raya Utara-Teluk Pinang
+HSS-KAB-116,display,Sungai Raya Utara - Teluk Pinang _x000D_
+HSS-KAB-117,dashboard_2025,Jl. Mangunang - Ds. Sungai Raya Utara
+HSS-KAB-117,qgis_county_roads,Jl. Mangunang
+HSS-KAB-117,display,Mangunang - Ds. Sungai Raya Utara
+HSS-KAB-118,dashboard_2025,Hamalau - Asam Cangkok
+HSS-KAB-118,qgis_county_roads,Hamalau - Asam Cangkok
+HSS-KAB-118,display,Hamalau - Asam Cangkok
+HSS-KAB-119,dashboard_2025,Hariti - Sungai Raya Selatan
+HSS-KAB-119,qgis_county_roads,Jl. Hariti - Sungai Raya Selatan
+HSS-KAB-119,display,Hariti - Sungai Raya Selatan
+HSS-KAB-120,dashboard_2025,Mangaris - Limau Manis
+HSS-KAB-120,qgis_county_roads,Mangaris - Limau Manis
+HSS-KAB-120,display,Mangaris - Limau Manis
+HSS-KAB-121,dashboard_2025,Jl. Munggu Raya - Ds. Hariti
+HSS-KAB-121,qgis_county_roads,Jl. Munggu Raya - Ds. Hariti
+HSS-KAB-121,display,Munggu Raya - Ds. Hariti
+HSS-KAB-122,dashboard_2025,Paharuangan - Asam Dua
+HSS-KAB-122,qgis_county_roads,Paharuangan - Asam Dua
+HSS-KAB-122,display,Paharuangan - Asam Dua
+HSS-KAB-123,dashboard_2025,Asam Seranggan - Asam Tamiyang
+HSS-KAB-123,qgis_county_roads,Asam Seranggan - Asam Tamiyang
+HSS-KAB-123,display,Asam Seranggan - Asam Tamiyang
+HSS-KAB-124,dashboard_2025,Jl. Papancan - Ds. Tanah Bangkang
+HSS-KAB-124,qgis_county_roads,Jl. Papancan - Ds. Tanah Bangkang
+HSS-KAB-124,display,Papancan - Ds. Tanah Bangkang
+HSS-KAB-125,dashboard_2025,Jl. Baru - Asam Desa Baru
+HSS-KAB-125,qgis_county_roads,Jl. Baru - Asam Desa Baru/Asam
+HSS-KAB-125,display,Baru - Asam Desa Baru
+HSS-KAB-126,dashboard_2025,Jl. Sungai Namang - Ds. Tanah Bangkang
+HSS-KAB-126,qgis_county_roads,Jl. Sungai Namang - Ds. Tanah Bangkang
+HSS-KAB-126,display,Sungai Namang - Ds. Tanah Bangkang
+HSS-KAB-127,dashboard_2025,Jarau - Parandakan
+HSS-KAB-127,qgis_county_roads,Jl. Jarau - Parandakan
+HSS-KAB-127,display,Jarau - Parandakan
+HSS-KAB-128,dashboard_2025,Mungkur Galah - Lokpaikat
+HSS-KAB-128,qgis_county_roads,Jl. Mungkur Galah - Lokpaikat
+HSS-KAB-128,display,Mungkur Galah - Lokpaikat
+HSS-KAB-129,dashboard_2025,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung)
+HSS-KAB-129,qgis_county_roads,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung)
+HSS-KAB-129,display,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung)
+HSS-KAB-130,dashboard_2025,Batang Kulur Kanan - Batang Kulur Kiri
+HSS-KAB-130,qgis_county_roads,Batang Kulur Kanan - Batang Kulur Kiri
+HSS-KAB-130,display,Batang Kulur Kanan - Batang Kulur Kiri
+HSS-KAB-131,dashboard_2025,Jl. Manggis - Ds. Baru
+HSS-KAB-131,qgis_county_roads,Jl. Manggis
+HSS-KAB-131,display,Manggis - Ds. Baru
+HSS-KAB-132,dashboard_2025,Jl. TPA - Ds. Sungai Raya Selatan
+HSS-KAB-132,qgis_county_roads,Jl. TPA Sungai Raya Selatan
+HSS-KAB-132,display,TPA - Ds. Sungai Raya Selatan
+HSS-KAB-133,dashboard_2025,Jl. Pembangunan - Ds. Sungai Raya Utara
+HSS-KAB-133,qgis_county_roads,Jl. Pembangunan - Ds. Sungai Raya Utara
+HSS-KAB-133,display,Pembangunan - Ds. Sungai Raya Utara
+HSS-KAB-134,dashboard_2025,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara
+HSS-KAB-134,qgis_county_roads,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara
+HSS-KAB-134,display,Kalaka Dayuh - Ds. Sungai Raya Utara
+HSS-KAB-135,dashboard_2025,Teluk Pinang - Padang Rasau
+HSS-KAB-135,qgis_county_roads,Teluk Pinang - Padang Rasau
+HSS-KAB-135,display,Teluk Pinang - Padang Rasau
+HSS-KAB-136,dashboard_2025,Tanayung - Simp. Ambarai
+HSS-KAB-136,qgis_county_roads,Tanayung - Simpang Ambarai
+HSS-KAB-136,display,Tanayung - Simp. Ambarai
+HSS-KAB-137,dashboard_2025,Tabihi - Telaga Langsat
+HSS-KAB-137,qgis_county_roads,Tabihi - Telaga Langsat
+HSS-KAB-137,display,Tabihi - Telaga Langsat
+HSS-KAB-138,dashboard_2025,Karang Jawa -Ambarai - Sungai Bungur
+HSS-KAB-138,qgis_county_roads,Karang Jawa - Ambarai - Sungai Bungur
+HSS-KAB-138,display,Karang Jawa -Ambarai - Sungai Bungur
+HSS-KAB-139,dashboard_2025,Ambarai - Madang
+HSS-KAB-139,qgis_county_roads,Ambarai - Madang
+HSS-KAB-139,display,Ambarai - Madang
+HSS-KAB-140,dashboard_2025,Padang Batung - Batulaki - Malilingin
+HSS-KAB-140,qgis_county_roads,Padang Batung - Batu Laki - Malilingin
+HSS-KAB-140,display,Padang Batung - Batulaki - Malilingin
+HSS-KAB-141,dashboard_2025,Malilingin - Lokbahan - Paniungan
+HSS-KAB-141,qgis_county_roads,Malilingin - Lokbahan - Paniungan
+HSS-KAB-141,display,Malilingin - Lokbahan - Paniungan
+HSS-KAB-142,dashboard_2025,Mawangi - Bukuanin - Telaga Langsat
+HSS-KAB-142,qgis_county_roads,Mawangi - Bukuanin - Telaga Langsat
+HSS-KAB-142,display,Mawangi - Bukuanin - Telaga Langsat
+HSS-KAB-143,dashboard_2025,Mandapai - Madang
+HSS-KAB-143,qgis_county_roads,Mandapai - Madang
+HSS-KAB-143,display,Mandapai - Madang
+HSS-KAB-144,dashboard_2025,Kaliring - Sp. Padang Batung
+HSS-KAB-144,qgis_county_roads,Kaliring - SP. Padang Batung
+HSS-KAB-144,display,Kaliring - Sp. Padang Batung
+HSS-KAB-145,dashboard_2025,Pagar Haur - Malutu
+HSS-KAB-145,qgis_county_roads,Pagar Haur - Malutu
+HSS-KAB-145,display,Pagar Haur - Malutu
+HSS-KAB-146,dashboard_2025,Simpang Malutu - Pahampangan
+HSS-KAB-146,qgis_county_roads,Simpang Malutu - Pahampangan
+HSS-KAB-146,display,Simpang Malutu - Pahampangan
+HSS-KAB-147,dashboard_2025,Simpang Malutu - Tambak
+HSS-KAB-147,qgis_county_roads,Simpang Malutu - Tambak
+HSS-KAB-147,display,Simpang Malutu - Tambak
+HSS-KAB-148,dashboard_2025,Pagat Batu - Muara Hariang
+HSS-KAB-148,qgis_county_roads,Pagat Batu - Muara Hariang
+HSS-KAB-148,display,Pagat Batu - Muara Hariang
+HSS-KAB-149,dashboard_2025,Paku (Jambu Hulu) - Ganda
+HSS-KAB-149,qgis_county_roads,Paku (Jambu Hulu) - Ganda
+HSS-KAB-149,display,Paku (Jambu Hulu) - Ganda
+HSS-KAB-150,dashboard_2025,Sp.3 Bukuanin - Riam Talo
+HSS-KAB-150,qgis_county_roads,SP.3 Bukuanin - Riam Talo
+HSS-KAB-150,display,Sp.3 Bukuanin - Riam Talo
+HSS-KAB-151,dashboard_2025,Sp.3 Bukuanin - Tayub
+HSS-KAB-151,qgis_county_roads,SP.3 Bukuanin - Tayub
+HSS-KAB-151,display,Sp.3 Bukuanin - Tayub
+HSS-KAB-152,dashboard_2025,Madang - Ambutun
+HSS-KAB-152,qgis_county_roads,Madang - Ambutun
+HSS-KAB-152,display,Madang - Ambutun
+HSS-KAB-153,dashboard_2025,Jl. Monumen 17 Mei - Mandapai
+HSS-KAB-153,qgis_county_roads,Jl. Monumen 17 Mei - Mandapai
+HSS-KAB-153,display,Monumen 17 Mei - Mandapai
+HSS-KAB-154,dashboard_2025,Batu Laki - Muara Pipii
+HSS-KAB-154,qgis_county_roads,Batulaki - Muara Pipii
+HSS-KAB-154,display,Batu Laki - Muara Pipii
+HSS-KAB-155,dashboard_2025,Muara Pipii - Tambak Pipii
+HSS-KAB-155,qgis_county_roads,Muara Pipii - Tambak Pipii
+HSS-KAB-155,display,Muara Pipii - Tambak Pipii
+HSS-KAB-156,dashboard_2025,Tambak Pipii - Malilingin
+HSS-KAB-156,qgis_county_roads,Tambak Pipii - Malilingin
+HSS-KAB-156,display,Tambak Pipii - Malilingin
+HSS-KAB-157,dashboard_2025,Malilingin - Muara Hariang
+HSS-KAB-157,qgis_county_roads,Malilingin - Muara Hariang
+HSS-KAB-157,display,Malilingin - Muara Hariang
+HSS-KAB-158,dashboard_2025,Mawangi - Pariangan
+HSS-KAB-158,qgis_county_roads,Mawangi - Pariangan
+HSS-KAB-158,display,Mawangi - Pariangan
+HSS-KAB-159,dashboard_2025,Jambu Hulu - Paku Pantai
+HSS-KAB-159,qgis_county_roads,Jambu Hulu - Paku Pantai
+HSS-KAB-159,display,Jambu Hulu - Paku Pantai
+HSS-KAB-160,dashboard_2025,Sungai Minting - Ds. Malutu
+HSS-KAB-160,qgis_county_roads,Jl. Sungai Minting - Ds. Malutu
+HSS-KAB-160,display,Sungai Minting - Ds. Malutu
+HSS-KAB-161,dashboard_2025,Padang Rasau (Tambak Tamiang) - Paku Pantai
+HSS-KAB-161,qgis_county_roads,Jl. Padang Rasau (Tambak Tamiang) - Paku Pantai
+HSS-KAB-161,display,Padang Rasau (Tambak Tamiang) - Paku Pantai
+HSS-KAB-162,dashboard_2025,Jl. Galuntang Tayub - Ds. Madang
+HSS-KAB-162,qgis_county_roads,Jl. Galuntang Tayub - Ds. Madang
+HSS-KAB-162,display,Galuntang Tayub - Ds. Madang
+HSS-KAB-163,dashboard_2025,Jl. Menuju SMPN Malilingin
+HSS-KAB-163,qgis_county_roads,Jl. Menuju SMPN Malilingin
+HSS-KAB-163,display,Menuju SMPN Malilingin
+HSS-KAB-164,dashboard_2025,Jl. Samping Mesjid Mandapai
+HSS-KAB-164,qgis_county_roads,Jl. Samping Mesjid Mandapai
+HSS-KAB-164,display,Samping Mesjid Mandapai
+HSS-KAB-165,dashboard_2025,Muara Hariang - Bayumbung
+HSS-KAB-165,qgis_county_roads,Muara Hariang - Bayumbung
+HSS-KAB-165,display,Muara Hariang - Bayumbung
+HSS-KAB-166,dashboard_2025,Tambak Pipii - Batu Ampar
+HSS-KAB-166,qgis_county_roads,Tambak Pipii - Batu Ampar
+HSS-KAB-166,display,Tambak Pipii - Batu Ampar
+HSS-KAB-167,dashboard_2025,Bakarung - Rantauan
+HSS-KAB-167,qgis_county_roads,Bakarung - Rantauan
+HSS-KAB-167,display,Bakarung - Rantauan
+HSS-KAB-168,dashboard_2025,Taniran Selatan - Rantauan
+HSS-KAB-168,qgis_county_roads,Taniran Selatan - Rantauan
+HSS-KAB-168,display,Taniran Selatan - Rantauan
+HSS-KAB-169,dashboard_2025,Bakarung -Tabihi - Karang Jawa
+HSS-KAB-169,qgis_county_roads,Bakarung - Tabihi -Karang Jawa
+HSS-KAB-169,display,Bakarung -Tabihi - Karang Jawa
+HSS-KAB-170,dashboard_2025,Pandulangan - Kalinduku
+HSS-KAB-170,qgis_county_roads,Pandulangan - Kalinduku
+HSS-KAB-170,display,Pandulangan - Kalinduku
+HSS-KAB-171,dashboard_2025,Taniran Selatan Kubah - Buntut Taniran / Wawaran
+HSS-KAB-171,qgis_county_roads,Taniran Selatan Kubah - Buntut Taniran/Wawaran
+HSS-KAB-171,display,Taniran Selatan Kubah - Buntut Taniran / Wawaran
+HSS-KAB-172,dashboard_2025,Angkinang Selatan - Tawia - Wawaran
+HSS-KAB-172,qgis_county_roads,Angkinang Selatan - Tawia - Wawaran
+HSS-KAB-172,display,Angkinang Selatan - Tawia - Wawaran
+HSS-KAB-173,dashboard_2025,Tawia - Kayu Abang
+HSS-KAB-173,qgis_county_roads,Tawia - Kayu Abang
+HSS-KAB-173,display,Tawia - Kayu Abang
+HSS-KAB-174,dashboard_2025,Bamban Selatan - Tanggang - Panggang Hijau
+HSS-KAB-174,qgis_county_roads,Bamban Selatan - Tangang - Panggang Hijau
+HSS-KAB-174,display,Bamban Selatan - Tanggang - Panggang Hijau
+HSS-KAB-175,dashboard_2025,Angkinang - Telaga Langsat
+HSS-KAB-175,qgis_county_roads,Angkinang - Telaga Langsat
+HSS-KAB-175,display,Angkinang - Telaga Langsat
+HSS-KAB-176,dashboard_2025,Bamban Selatan - Pakuan
+HSS-KAB-176,qgis_county_roads,Bamban Selatan - Pakuan
+HSS-KAB-176,display,Bamban Selatan - Pakuan
+HSS-KAB-177,dashboard_2025,Bamban Utara - Longawang
+HSS-KAB-177,qgis_county_roads,Bamban Utara - Longawang
+HSS-KAB-177,display,Bamban Utara - Longawang
+HSS-KAB-178,dashboard_2025,Angkinang - Kayu Abang - Panggang Hijau
+HSS-KAB-178,qgis_county_roads,Angkinang - Kayu Abang - Panggang Hijau
+HSS-KAB-178,display,Angkinang - Kayu Abang - Panggang Hijau
+HSS-KAB-179,dashboard_2025,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur
+HSS-KAB-179,qgis_county_roads,SP. Mandampa Telaga Sili-Sili - SP. Sungai Bungur
+HSS-KAB-179,display,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur
+HSS-KAB-180,dashboard_2025,Sungai Kudung - Kalinduku
+HSS-KAB-180,qgis_county_roads,Sungai Kudung - Kalinduku
+HSS-KAB-180,display,Sungai Kudung - Kalinduku
+HSS-KAB-181,dashboard_2025,Bamban Tengah - Lok Nyiur
+HSS-KAB-181,qgis_county_roads,Bamban Tengah - Lok Nyiur
+HSS-KAB-181,display,Bamban Tengah - Lok Nyiur
+HSS-KAB-182,dashboard_2025,Sp. Bakarung Selatan - Sungai Kudung
+HSS-KAB-182,qgis_county_roads,Simp. Bakarung Selatan - Sungai Kudung
+HSS-KAB-182,display,Sp. Bakarung Selatan - Sungai Kudung
+HSS-KAB-183,dashboard_2025,Panggang Hijau - Ds. Tawar
+HSS-KAB-183,qgis_county_roads,Jl.Panggang Hijau - DsTawar
+HSS-KAB-183,display,Panggang Hijau - Ds. Tawar
+HSS-KAB-184,dashboard_2025,Taniran Tengah - Taniran Selatan
+HSS-KAB-184,qgis_county_roads,Taniran Tengah - Taniran Selatan
+HSS-KAB-184,display,Taniran Tengah - Taniran Selatan
+HSS-KAB-185,dashboard_2025,Jl. Kayu Abang - Ds. Anjiran
+HSS-KAB-185,qgis_county_roads,Jl. Kayu Abang - Ds. Anjiran
+HSS-KAB-185,display,Kayu Abang - Ds. Anjiran
+HSS-KAB-186,dashboard_2025,Jl. Rel Angkinang - TMMD Angkinang
+HSS-KAB-186,qgis_county_roads,Jl. Rel Angkinang - TMMD Angkinang
+HSS-KAB-186,display,Rel Angkinang - TMMD Angkinang
+HSS-KAB-187,dashboard_2025,Jl. AMD - Ds. Lok Binuang
+HSS-KAB-187,qgis_county_roads,Jl. AMD - Ds. Lok Binuang
+HSS-KAB-187,display,AMD - Ds. Lok Binuang
+HSS-KAB-188,dashboard_2025,Jl. Pandan Sari - Ds. Angkinang
+HSS-KAB-188,qgis_county_roads,Jl. Pandan Sari
+HSS-KAB-188,display,Pandan Sari - Ds. Angkinang
+HSS-KAB-189,dashboard_2025,Bamban Selatan - Pakuan Balunan
+HSS-KAB-189,qgis_county_roads,Jl. Bamban Selatan - Pakuan Balunan
+HSS-KAB-189,display,Bamban Selatan - Pakuan Balunan
+HSS-KAB-190,dashboard_2025,Kayu Abang - Paya
+HSS-KAB-190,qgis_county_roads,Jl. Kayu Abang - Paya
+HSS-KAB-190,display,Kayu Abang - Paya
+HSS-KAB-191,dashboard_2025,Bamban (Tibung) - Martajiwa
+HSS-KAB-191,qgis_county_roads,Jl. Bamban (Tibung) - Martajiwa
+HSS-KAB-191,display,Bamban (Tibung) - Martajiwa
+HSS-KAB-192,dashboard_2025,Rantauan - Sungai Baru (Jl. Pulau)
+HSS-KAB-192,qgis_county_roads,Jl. Rantauan - Sungai Baru (Jl. Pulau)
+HSS-KAB-192,display,Rantauan - Sungai Baru (Jl. Pulau)
+HSS-KAB-193,dashboard_2025,Telaga Langsat - Pakuan Timur
+HSS-KAB-193,qgis_county_roads,Telaga Langsat - Pakuan Timur
+HSS-KAB-193,display,Telaga Langsat - Pakuan Timur
+HSS-KAB-194,dashboard_2025,Longawang - Gumbil
+HSS-KAB-194,qgis_county_roads,Longawang - Gumbil
+HSS-KAB-194,display,Longawang - Gumbil
+HSS-KAB-195,dashboard_2025,Mandampa - Longawang
+HSS-KAB-195,qgis_county_roads,Mandampa - Longawang
+HSS-KAB-195,display,Mandampa - Longawang
+HSS-KAB-196,dashboard_2025,Gumbil - Masimpan
+HSS-KAB-196,qgis_county_roads,Gumbil - Masimpan
+HSS-KAB-196,display,Gumbil - Masimpan
+HSS-KAB-197,dashboard_2025,Hamak Timur - Umpaya
+HSS-KAB-197,qgis_county_roads,Hamak Timur - Umpaya
+HSS-KAB-197,display,Hamak Timur - Umpaya
+HSS-KAB-198,dashboard_2025,Hamak - Umbai
+HSS-KAB-198,qgis_county_roads,Jl. Hamak - Umbai
+HSS-KAB-198,display,Hamak - Umbai
+HSS-KAB-199,dashboard_2025,Hamak Utara - Samaragi
+HSS-KAB-199,qgis_county_roads,Jl. Hamak Utara - Samaragi
+HSS-KAB-199,display,Hamak Utara - Samaragi
+HSS-KAB-200,dashboard_2025,Umpaya - Tumarin
+HSS-KAB-200,qgis_county_roads,Jl. Umpaya - Tumarin
+HSS-KAB-200,display,Umpaya - Tumarin
+HSS-KAB-201,dashboard_2025,Jl. Sungai Durian - Ds. Gumbil
+HSS-KAB-201,qgis_county_roads,Jl. Sungai Durian - Ds. Gumbil
+HSS-KAB-201,display,Sungai Durian - Ds. Gumbil
+HSS-KAB-202,dashboard_2025,Pantai Langsat - Umpaya
+HSS-KAB-202,qgis_county_roads,Jl. Pantai Langsat - Umpaya
+HSS-KAB-202,display,Pantai Langsat - Umpaya
+HSS-KAB-203,dashboard_2025,Halayung - Hantarukung
+HSS-KAB-203,qgis_county_roads,Jl. Halayung - Hantarukung
+HSS-KAB-203,display,Halayung - Hantarukung
+HSS-KAB-204,dashboard_2025,Wasah Hulu - Amparaya - Simpur
+HSS-KAB-204,qgis_county_roads,Wasah Hulu - Amparaya - Simpur
+HSS-KAB-204,display,Wasah Hulu - Amparaya - Simpur
+HSS-KAB-205,dashboard_2025,Wasah Hilir - Sarang Halang
+HSS-KAB-205,qgis_county_roads,Wasah Hilir - Sarang Halang
+HSS-KAB-205,display,Wasah Hilir - Sarang Halang
+HSS-KAB-206,dashboard_2025,Simpur - Simp. Bilui
+HSS-KAB-206,qgis_county_roads,Simpur - Simpang Bilui
+HSS-KAB-206,display,Simpur - Simp. Bilui
+HSS-KAB-207,dashboard_2025,Simpur - Sp. 3 Muara Paring Agung
+HSS-KAB-207,qgis_county_roads,Simpur - SP.3 Muara Paring Agung
+HSS-KAB-207,display,Simpur - Sp. 3 Muara Paring Agung
+HSS-KAB-208,dashboard_2025,Wasah Tengah - Sungai Tarap
+HSS-KAB-208,qgis_county_roads,Wasah Tengah - Sungai Tarap
+HSS-KAB-208,display,Wasah Tengah - Sungai Tarap
+HSS-KAB-209,dashboard_2025,Wasah Hilir - Amparaya
+HSS-KAB-209,qgis_county_roads,Wasah Hilir - Amparaya
+HSS-KAB-209,display,Wasah Hilir - Amparaya
+HSS-KAB-210,dashboard_2025,Panjampang Bahagia - Bayur
+HSS-KAB-210,qgis_county_roads,Panjampang Bahagia - Bayur
+HSS-KAB-210,display,Panjampang Bahagia - Bayur
+HSS-KAB-211,dashboard_2025,Ulin - Tanggul (Balai Mas)
+HSS-KAB-211,qgis_county_roads,Ulin - Tanggul (Balai Mas)
+HSS-KAB-211,display,Ulin - Tanggul (Balai Mas)
+HSS-KAB-212,dashboard_2025,Panjampang Bahagia - Hanau
+HSS-KAB-212,qgis_county_roads,Panjampang Bahagia - Hanau
+HSS-KAB-212,display,Panjampang Bahagia - Hanau
+HSS-KAB-213,dashboard_2025,Jl. Halaban
+HSS-KAB-213,qgis_county_roads,Jl. Halaban
+HSS-KAB-213,display,Halaban
+HSS-KAB-214,dashboard_2025,Amparaya - Karangan - Hanau
+HSS-KAB-214,qgis_county_roads,Jl. Amparaya-Karangan - Hanau
+HSS-KAB-214,display,Amparaya - Karangan - Hanau
+HSS-KAB-215,dashboard_2025,Jl. Kalimput Desa Wasah Hilir
+HSS-KAB-215,qgis_county_roads,Jl. Kalimput Ds. Wasah Hilir
+HSS-KAB-215,display,Kalimput Desa Wasah Hilir
+HSS-KAB-216,dashboard_2025,Jl. Sungai Kacil I - Kapuh Padang
+HSS-KAB-216,qgis_county_roads,Jl. Sungai Kacil I - Kapuh Padang
+HSS-KAB-216,display,Sungai Kacil I - Kapuh Padang
+HSS-KAB-217,dashboard_2025,Jl. Sungai Kacil II
+HSS-KAB-217,qgis_county_roads,Jl. Sungai Kacil II
+HSS-KAB-217,display,Sungai Kacil II
+HSS-KAB-218,dashboard_2025,Jl. Papagaran - Ds. Amawang Kanan
+HSS-KAB-218,qgis_county_roads,Jl. Papagaran - Ds. Amawang Kanan
+HSS-KAB-218,display,Papagaran - Ds. Amawang Kanan
+HSS-KAB-219,dashboard_2025,Balaimas - Hanau
+HSS-KAB-219,qgis_county_roads,Jl. Balaimas - Hanau
+HSS-KAB-219,display,Balaimas - Hanau
+HSS-KAB-220,dashboard_2025,Garunggang - Hantamangu
+HSS-KAB-220,qgis_county_roads,Garunggang - Hantamangu
+HSS-KAB-220,display,Garunggang - Hantamangu
+HSS-KAB-221,dashboard_2025,Jl. KH. Ramli - DS. Amparaya
+HSS-KAB-221,qgis_county_roads,Jl. KH. Ramli
+HSS-KAB-221,display,KH. Ramli - DS. Amparaya
+HSS-KAB-222,dashboard_2025,Jl. Tungkaran - Ds. Ulin
+HSS-KAB-222,qgis_county_roads,Jl. Tungkaran
+HSS-KAB-222,display,Tungkaran - Ds. Ulin
+HSS-KAB-223,dashboard_2025,Jl. Mondar (Ulin-Pantai Ulin) - Ds. Ulin
+HSS-KAB-223,qgis_county_roads,Jl. Mondar (Ulin - Pantai Ulin)
+HSS-KAB-223,display,Mondar (Ulin-Pantai Ulin) - Ds. Ulin
+HSS-KAB-224,dashboard_2025,Jl. Pendawa - Ds. Tebing Tinggi
+HSS-KAB-224,qgis_county_roads,Jl. Pendawa - Ds. Tebing Tinggi
+HSS-KAB-224,display,Pendawa - Ds. Tebing Tinggi
+HSS-KAB-225,dashboard_2025,Jl. Mangamol - Ds. Pantai Ulin
+HSS-KAB-225,qgis_county_roads,Jl. Mangamol
+HSS-KAB-225,display,Mangamol - Ds. Pantai Ulin
+HSS-KAB-226,dashboard_2025,Jl. Guru H. Izim - Ds. Pantai Ulin
+HSS-KAB-226,qgis_county_roads,Jl. Guru H. Izim
+HSS-KAB-226,display,Guru H. Izim - Ds. Pantai Ulin
+HSS-KAB-227,dashboard_2025,Jl. Rawati - Ds. Panjampang Bahagia
+HSS-KAB-227,qgis_county_roads,Jl. Rawati
+HSS-KAB-227,display,Rawati - Ds. Panjampang Bahagia
+HSS-KAB-228,dashboard_2025,Jl. Pianggu
+HSS-KAB-228,qgis_county_roads,Jl. Pianggu
+HSS-KAB-228,display,Pianggu
+HSS-KAB-229,dashboard_2025,Jl. Buluh - Ds. Tebing Tinggi
+HSS-KAB-229,qgis_county_roads,Jl. Buluh Ds. Tebing Tinggi
+HSS-KAB-229,display,Buluh - Ds. Tebing Tinggi
+HSS-KAB-230,dashboard_2025,Jl. H. Saim Garunggang - Kalimput
+HSS-KAB-230,qgis_county_roads,Jl. H. Saim/Garunggang
+HSS-KAB-230,display,H. Saim Garunggang - Kalimput
+HSS-KAB-231,dashboard_2025,Jl. Padang Haur - Ds. Wasah Tengah
+HSS-KAB-231,qgis_county_roads,Jl. Padang Haur - Ds. Wasah Tengah
+HSS-KAB-231,display,Padang Haur - Ds. Wasah Tengah
+HSS-KAB-232,dashboard_2025,Jl. Gerilya - Ds. Simpur
+HSS-KAB-232,qgis_county_roads,Jl. Gerilya Ds. Simpur
+HSS-KAB-232,display,Gerilya - Ds. Simpur
+HSS-KAB-233,dashboard_2025,Jl. Jangkang - Ds. Wasah Hilir
+HSS-KAB-233,qgis_county_roads,Jl. Jangkang - Ds. Wasah Hilir
+HSS-KAB-233,display,Jangkang - Ds. Wasah Hilir
+HSS-KAB-234,dashboard_2025,Jl. Air Miris - Ds. Wasah Hilir
+HSS-KAB-234,qgis_county_roads,Jl. Air Miris
+HSS-KAB-234,display,Air Miris - Ds. Wasah Hilir
+HSS-KAB-235,dashboard_2025,Jl. Tandik - Ds. Wasah Hilir
+HSS-KAB-235,qgis_county_roads,Tandik - Wasah Hilir
+HSS-KAB-235,display,Tandik - Ds. Wasah Hilir
+HSS-KAB-236,dashboard_2025,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Talim)
+HSS-KAB-236,qgis_county_roads,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Taklim)
+HSS-KAB-236,display,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim)
+HSS-KAB-237,dashboard_2025,Jl. Karampaci - Ds. Kapuh
+HSS-KAB-237,qgis_county_roads,Jl. Karampaci
+HSS-KAB-237,display,Karampaci - Ds. Kapuh
+HSS-KAB-238,dashboard_2025,Jl. At-Taubah - Ds. Kapuh
+HSS-KAB-238,qgis_county_roads,Jl. At-Taubah
+HSS-KAB-238,display,At-Taubah - Ds. Kapuh
+HSS-KAB-239,dashboard_2025,Jl. Firdaus - Ds. Kapuh
+HSS-KAB-239,qgis_county_roads,Jl. Firdaus
+HSS-KAB-239,display,Firdaus - Ds. Kapuh
+HSS-KAB-240,dashboard_2025,Jl. Slasa Garih - Ds. Kapuh
+HSS-KAB-240,qgis_county_roads,Jl. Slasa Garih - Ds. Kapuh
+HSS-KAB-240,display,Slasa Garih - Ds. Kapuh
+HSS-KAB-241,dashboard_2025,Jl. Palas - Ds. Wasah Tengah
+HSS-KAB-241,qgis_county_roads,Jl. Palas - Ds. Wasah Tengah
+HSS-KAB-241,display,Palas - Ds. Wasah Tengah
+HSS-KAB-242,dashboard_2025,Jl. Tanah Habang - Ds. Simpur
+HSS-KAB-242,qgis_county_roads,Jl. Tanah Habang - Ds. Simpur
+HSS-KAB-242,display,Tanah Habang - Ds. Simpur
+HSS-KAB-243,dashboard_2025,Jl. Banua Kambang - Ds. Wasah Tengah
+HSS-KAB-243,qgis_county_roads,Jl. Banua Kambang
+HSS-KAB-243,display,Banua Kambang - Ds. Wasah Tengah
+HSS-KAB-244,dashboard_2025,Jl. Pajah Api - Ds. Kapuh
+HSS-KAB-244,qgis_county_roads,Jl. Pajah Api
+HSS-KAB-244,display,Pajah Api - Ds. Kapuh
+HSS-KAB-245,dashboard_2025,Jl. Talapak Manuk - Ds. Kapuh
+HSS-KAB-245,qgis_county_roads,Jl. Telapak Manuk
+HSS-KAB-245,display,Talapak Manuk - Ds. Kapuh
+HSS-KAB-246,dashboard_2025,Sirih - Taro
+HSS-KAB-246,qgis_county_roads,Sirih - Taro
+HSS-KAB-246,display,Sirih - Taro
+HSS-KAB-247,dashboard_2025,Kalumpang - Balimau
+HSS-KAB-247,qgis_county_roads,Kalumpang - Balimau
+HSS-KAB-247,display,Kalumpang - Balimau
+HSS-KAB-248,dashboard_2025,Kalumpang (Ds. Balanti) - Teratai
+HSS-KAB-248,qgis_county_roads,Kalumpang (Ds. Belanti) - Teratai
+HSS-KAB-248,display,Kalumpang (Ds. Balanti) - Teratai
+HSS-KAB-249,dashboard_2025,Bago Tanggul - Katilang - Teratai
+HSS-KAB-249,qgis_county_roads,Jl. Bago Tanggul - Katilang - Teratai
+HSS-KAB-249,display,Bago Tanggul - Katilang - Teratai
+HSS-KAB-250,dashboard_2025,Binjai (Sirih Hulu) - Ds. Seranggan
+HSS-KAB-250,qgis_county_roads,Jl. Binjai (Sirih Hulu) - Ds. Seranggan
+HSS-KAB-250,display,Binjai (Sirih Hulu) - Ds. Seranggan
+HSS-KAB-251,dashboard_2025,Balanti - (Ex. P3DT)
+HSS-KAB-251,qgis_county_roads,Jl. Balanti - (Ex. P3DT)
+HSS-KAB-251,display,Balanti - (Ex. P3DT)
+HSS-KAB-252,dashboard_2025,Kalumpang - Baruh
+HSS-KAB-252,qgis_county_roads,Kalumpang - Baruh
+HSS-KAB-252,display,Kalumpang - Baruh
+HSS-KAB-253,dashboard_2025,Sirih - Pacakan
+HSS-KAB-253,qgis_county_roads,Sirih - Pacakan
+HSS-KAB-253,display,Sirih - Pacakan
+HSS-KAB-254,dashboard_2025,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang
+HSS-KAB-254,qgis_county_roads,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang
+HSS-KAB-254,display,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang
+HSS-KAB-255,dashboard_2025,Kalumpang Selatan - Ds. Asam Tamiyang
+HSS-KAB-255,qgis_county_roads,Jl. Kalumpang Selatan - Ds. Asam Tamiyang
+HSS-KAB-255,display,Kalumpang Selatan - Ds. Asam Tamiyang
+HSS-KAB-256,dashboard_2025,Balimau - Murung Dalam
+HSS-KAB-256,qgis_county_roads,Jl. Balimau - Murung Dalam
+HSS-KAB-256,display,Balimau - Murung Dalam
+HSS-KAB-257,dashboard_2025,Jl. Karya Bakti - Ds. Balimau
+HSS-KAB-257,qgis_county_roads,Jl. Karya Bakti TNI - Ds. Balimau
+HSS-KAB-257,display,Karya Bakti - Ds. Balimau
+HSS-KAB-258,dashboard_2025,Tanuhi - Ulang
+HSS-KAB-258,qgis_county_roads,Tanuhi - Ulang
+HSS-KAB-258,display,Tanuhi - Ulang
+HSS-KAB-259,dashboard_2025,Loksado - Loklahung
+HSS-KAB-259,qgis_county_roads,Loksado - Loklahung
+HSS-KAB-259,display,Loksado - Loklahung
+HSS-KAB-260,dashboard_2025,Loksado - Haratai
+HSS-KAB-260,qgis_county_roads,Loksado - Haratai
+HSS-KAB-260,display,Loksado - Haratai
+HSS-KAB-261,dashboard_2025,Loklahung - Kamawakan
+HSS-KAB-261,qgis_county_roads,Loklahung - Kamawakan
+HSS-KAB-261,display,Loklahung - Kamawakan
+HSS-KAB-262,dashboard_2025,Jl. Niagara (Ds. Halunuk) - Ayan
+HSS-KAB-262,qgis_county_roads,Jl. Niagara (Ds. Halunuk) - Ayan
+HSS-KAB-262,display,Niagara (Ds. Halunuk) - Ayan
+HSS-KAB-263,dashboard_2025,Malinau - Katingin - Kamawakan
+HSS-KAB-263,qgis_county_roads,Malinau - Katingin - Kamawakan
+HSS-KAB-263,display,Malinau - Katingin - Kamawakan
+HSS-KAB-264,dashboard_2025,Loklahung - Malaris
+HSS-KAB-264,qgis_county_roads,Loklahung - Malaris
+HSS-KAB-264,display,Loklahung - Malaris
+HSS-KAB-265,dashboard_2025,Jl. Bubuih - Ds. Halunuk
+HSS-KAB-265,qgis_county_roads,Jl. Bubuih (Ds. Halunuk)
+HSS-KAB-265,display,Bubuih - Ds. Halunuk
+HSS-KAB-266,dashboard_2025,Halunuk - Riam Tajam/Talo - Hamak Umpaya
+HSS-KAB-266,qgis_county_roads,Halunuk - Riam Tajam/Talo - Hamak Umpaya
+HSS-KAB-266,display,Halunuk - Riam Tajam/Talo - Hamak Umpaya
+HSS-KAB-267,dashboard_2025,Jl. Muara Kitar - Desa Lumpangi
+HSS-KAB-267,qgis_county_roads,Jl. Muara Kitar - Ds. Lumpangi
+HSS-KAB-267,display,Muara Kitar - Desa Lumpangi
+HSS-KAB-268,dashboard_2025,Jl. Hulu Banyu - Pantai Langsat
+HSS-KAB-268,qgis_county_roads,Jl. Hulu Banyu - Pantai Langsat
+HSS-KAB-268,display,Hulu Banyu - Pantai Langsat
+HSS-KAB-269,dashboard_2025,Jl. Bayampah - Tanuhi - Tugu Niih
+HSS-KAB-269,qgis_county_roads,Jl. Bayampah - Tanuhi - Tugu Niih
+HSS-KAB-269,display,Bayampah - Tanuhi - Tugu Niih
+HSS-KAB-270,dashboard_2025,Jl. Kantor Camat Loksado II
+HSS-KAB-270,qgis_county_roads,Jl. Kantor Camat Loksado II
+HSS-KAB-270,display,Kantor Camat Loksado II
+HSS-KAB-271,dashboard_2025,Jl. Buntu Muara Hatib - Bts. Kab. HST
+HSS-KAB-271,qgis_county_roads,Jl. Buntu Muara Hatib
+HSS-KAB-271,display,Buntu Muara Hatib - Bts. Kab. HST
+HSS-KAB-272,dashboard_2025,Tanuhi - Hulu Banyu
+HSS-KAB-272,qgis_county_roads,Jl. Tanuhi - Hulu Banyu
+HSS-KAB-272,display,Tanuhi - Hulu Banyu
+HSS-KAB-273,dashboard_2025,Hulu Banyu - Datar Mangkung - Tumingki
+HSS-KAB-273,qgis_county_roads,Hulu Banyu - Datar Mangkung -Tumingki
+HSS-KAB-273,display,Hulu Banyu - Datar Mangkung - Tumingki
+HSS-KAB-274,dashboard_2025,Lambuk - Ds. Tumingki
+HSS-KAB-274,qgis_county_roads,Lambuk - Ds. Tumingki
+HSS-KAB-274,display,Lambuk - Ds. Tumingki
+HSS-KAB-275,dashboard_2025,Malaris - Loapanggang
+HSS-KAB-275,qgis_county_roads,Malaris - Loapanggang
+HSS-KAB-275,display,Malaris - Loapanggang
+HSS-KAB-276,dashboard_2025,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3
+HSS-KAB-276,qgis_county_roads,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3
+HSS-KAB-276,display,Haratai 3 (Balai Kedayang) / SDN Haratai 3
+HSS-KAB-277,dashboard_2025,Jl. Haratai 2 (Balai Ujung Atas) SDN Haratai2
+HSS-KAB-277,qgis_county_roads,Jl. Haratai 2 (SDN Haratai2)
+HSS-KAB-277,display,Haratai 2 (Balai Ujung Atas) SDN Haratai2
+HSS-KAB-278,dashboard_2025,Jl. Bubuih (Ds. Halunuk) - Kandihin
+HSS-KAB-278,qgis_county_roads,Jl. Bubuih - Kandihin
+HSS-KAB-278,display,Bubuih (Ds. Halunuk) - Kandihin
+HSS-KAB-279,dashboard_2025,Jl. Makam Habib - Desa Lumpangi
+HSS-KAB-279,qgis_county_roads,Jl. Makam Habib Ds. Lumpangi
+HSS-KAB-279,display,Makam Habib - Desa Lumpangi
+HSS-KAB-280,dashboard_2025,Jl. Datar Belimbing - Muara Kitar
+HSS-KAB-280,qgis_county_roads,Jl. Datar Belimbing - Muara Kitar
+HSS-KAB-280,display,Datar Belimbing - Muara Kitar
+HSS-KAB-281,dashboard_2025,Jl. Tanginau - Balai Haruyan
+HSS-KAB-281,qgis_county_roads,Jl. Tanginau - Balai Haruyan
+HSS-KAB-281,display,Tanginau - Balai Haruyan
+HSS-KAB-282,dashboard_2025,Jl. Tataian - (Ds. Ulang) - Loksado
+HSS-KAB-282,qgis_county_roads,Jl. Tataian - (Ds. Ulang) - Loksado
+HSS-KAB-282,display,Tataian - (Ds. Ulang) - Loksado
+HSS-KAB-283,dashboard_2025,Jl. Ulang - Kacang Parang
+HSS-KAB-283,qgis_county_roads,Jl. Ulang - Kacang Parang
+HSS-KAB-283,display,Ulang - Kacang Parang
+HSS-KAB-284,dashboard_2025,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias
+HSS-KAB-284,qgis_county_roads,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias
+HSS-KAB-284,display,Kacang Parang (Ulang) - Balai Mawak-Kias
+HSS-KAB-285,dashboard_2025,Jl. Kacang Parang (Ulang) - Balai Wariung
+HSS-KAB-285,qgis_county_roads,Jl. Kacang Parang (Ulang) - Balai Wariung
+HSS-KAB-285,display,Kacang Parang (Ulang) - Balai Wariung
+HSS-KAB-286,dashboard_2025,Jl. Loksado - Pantai Dusin
+HSS-KAB-286,qgis_county_roads,Jl. Loksado - Pantai Dusin
+HSS-KAB-286,display,Loksado - Pantai Dusin
+HSS-KAB-287,dashboard_2025,Jl. Malinau - Kandihin
+HSS-KAB-287,qgis_county_roads,Jl. Malinau - Kandihin
+HSS-KAB-287,display,Malinau - Kandihin
+HSS-KAB-288,dashboard_2025,Jl. Ulang - Bangkaun
+HSS-KAB-288,qgis_county_roads,Ulang - Bangkaun
+HSS-KAB-288,display,Ulang - Bangkaun
+HSS-KAB-289,dashboard_2025,Bayanan - Habirau Tengah
+HSS-KAB-289,qgis_county_roads,Bayanan - Habirau Tengah
+HSS-KAB-289,display,Bayanan - Habirau Tengah
+HSS-KAB-290,dashboard_2025,Tumbukan Banyu - Banua Hanyar
+HSS-KAB-290,qgis_county_roads,Tumbukan Banyu - Banua Hanyar
+HSS-KAB-290,display,Tumbukan Banyu - Banua Hanyar
+HSS-KAB-291,dashboard_2025,Jl. Satria
+HSS-KAB-291,qgis_county_roads,Jl. Satria
+HSS-KAB-291,display,Satria
+HSS-KAB-292,dashboard_2025,Jl. Musyawarah
+HSS-KAB-292,qgis_county_roads,Jl. Musyawarah
+HSS-KAB-292,display,Musyawarah (Tumbukan Banyu)
+HSS-KAB-293,dashboard_2025,Jl. Sekolah Islam
+HSS-KAB-293,qgis_county_roads,Jl. Sekolah Islam
+HSS-KAB-293,display,Sekolah Islam (Sungai Pinang)
+HSS-KAB-294,dashboard_2025,Jl. Habib
+HSS-KAB-294,qgis_county_roads,Jl. Habib
+HSS-KAB-294,display,Habib
+HSS-KAB-295,dashboard_2025,Jl. Mawar
+HSS-KAB-295,qgis_county_roads,Jl. Mawar
+HSS-KAB-295,display,Mawar (Sungai Pinang)
+HSS-KAB-296,dashboard_2025,Jl. Inst. PDAM Negara
+HSS-KAB-296,qgis_county_roads,Jl. Instalasi PDAM Negara
+HSS-KAB-296,display,Inst. PDAM Negara
+HSS-KAB-297,dashboard_2025,Jl. Gerilya / (Depan PUSTU Habirau)
+HSS-KAB-297,qgis_county_roads,Jl. Gerilya / (Depan Pustu Habirau)
+HSS-KAB-297,display,Gerilya / (Depan PUSTU Habirau)
+HSS-KAB-298,dashboard_2025,Jl. Harapan (SDN Habirau II)/ Sei. Palangan
+HSS-KAB-298,qgis_county_roads,Jl. Harapan (SDN Habirau II)/Sei. Palangan
+HSS-KAB-298,display,Harapan (SDN Habirau II)/ Sei. Palangan
+HSS-KAB-299,dashboard_2025,Samuda - Bajayau
+HSS-KAB-299,qgis_county_roads,Samuda - Bajayau
+HSS-KAB-299,display,Samuda - Bajayau
+HSS-KAB-300,dashboard_2025,Jl. Tambangan - Ds. Baruh Jaya
+HSS-KAB-300,qgis_county_roads,Jl. Tambangan - Ds. Baruh Jaya
+HSS-KAB-300,display,Tambangan - Ds. Baruh Jaya
+HSS-KAB-301,dashboard_2025,Muning Tengah - Batang Alai (Pihanin Raya)
+HSS-KAB-301,qgis_county_roads,Jl. Muning Tengah - Batang Alai (Pihanin Raya)
+HSS-KAB-301,display,Muning Tengah - Batang Alai (Pihanin Raya)
+HSS-KAB-302,dashboard_2025,Muning Tengah - Ds. Muning Dalam
+HSS-KAB-302,qgis_county_roads,Jl. Muning Tengah - Muning Dalam
+HSS-KAB-302,display,Muning Tengah - Ds. Muning Dalam
+HSS-KAB-303,dashboard_2025,SP.4 Banjarbaru - Pasar Negara
+HSS-KAB-303,qgis_county_roads,SP.4 Banjarbaru - Pasar Negara
+HSS-KAB-303,display,SP.4 Banjarbaru - Pasar Negara
+HSS-KAB-304,dashboard_2025,Negara - Tumbukan Banyu
+HSS-KAB-304,qgis_county_roads,Negara - Tumbukan Banyu
+HSS-KAB-304,display,Negara - Tumbukan Banyu
+HSS-KAB-305,dashboard_2025,SP.4. Banjarbaru - Pihanin Raya
+HSS-KAB-305,qgis_county_roads,SP.4. Banjarbaru - Pihanin Raya
+HSS-KAB-305,display,SP.4. Banjarbaru - Pihanin Raya
+HSS-KAB-306,dashboard_2025,Bayanan - Pihanin
+HSS-KAB-306,qgis_county_roads,Bayanan - Pihanin
+HSS-KAB-306,display,Bayanan - Pihanin
+HSS-KAB-307,dashboard_2025,Jl. Kantor Camat Daha Selatan II
+HSS-KAB-307,qgis_county_roads,Jl. Kantor Camat Daha Selatan II
+HSS-KAB-307,display,Kantor Camat Daha Selatan II
+HSS-KAB-308,dashboard_2025,Jl. Sungai Bugundi
+HSS-KAB-308,qgis_county_roads,Jl. Sungai Bugundi
+HSS-KAB-308,display,Sungai Bugundi
+HSS-KAB-309,dashboard_2025,Jl. Tukang Garit (Tambangan)
+HSS-KAB-309,qgis_county_roads,Jl. Tukang Garit
+HSS-KAB-309,display,Tukang Garit (Tambangan)
+HSS-KAB-310,dashboard_2025,Pandak Daun - Baruh Jaya - Samuda
+HSS-KAB-310,qgis_county_roads,Pandak Daun - Baruh Jaya - Samuda
+HSS-KAB-310,display,Pandak Daun - Baruh Jaya - Samuda
+HSS-KAB-311,dashboard_2025,Sei. Mandala Murung Raya
+HSS-KAB-311,qgis_county_roads,Sei. Mandala - Murung Raya
+HSS-KAB-311,display,Sei. Mandala Murung Raya
+HSS-KAB-312,dashboard_2025,Jl. Teluk Haur I
+HSS-KAB-312,qgis_county_roads,Teluk haur I
+HSS-KAB-312,display,Teluk Haur I
+HSS-KAB-313,dashboard_2025,Jl. Teluk Haur II
+HSS-KAB-313,qgis_county_roads,Teluk Haur II
+HSS-KAB-313,display,Teluk Haur II
+HSS-KAB-314,dashboard_2025,Jl. H.M. Thaib
+HSS-KAB-314,qgis_county_roads,Jl. HM. Thaib
+HSS-KAB-314,display,H.M. Thaib
+HSS-KAB-315,dashboard_2025,Jl. Kenanga - Ds. Baruh Kambang
+HSS-KAB-315,qgis_county_roads,Jl. Kenanga - Ds. Baruh Kambang
+HSS-KAB-315,display,Kenanga - Ds. Baruh Kambang
+HSS-KAB-316,dashboard_2025,Jl. SMAN Negara (KH. Abdullah)
+HSS-KAB-316,qgis_county_roads,Jl. SMAN Negara (KH. Abdullah)
+HSS-KAB-316,display,SMAN Negara (KH. Abdullah)
+HSS-KAB-317,dashboard_2025,Jl. Pertukangan
+HSS-KAB-317,qgis_county_roads,Jl. Pertukangan
+HSS-KAB-317,display,Pertukangan
+HSS-KAB-318,dashboard_2025,Jl. Silaturrahim
+HSS-KAB-318,qgis_county_roads,Jl. Silaturahim
+HSS-KAB-318,display,Silaturrahim
+HSS-KAB-319,dashboard_2025,Jl. Habib Ibrahim - Ds. Sei Mandala
+HSS-KAB-319,qgis_county_roads,Jl. Habib Iberahim
+HSS-KAB-319,display,Habib Ibrahim - Ds. Sei Mandala
+HSS-KAB-320,dashboard_2025,Jl. Sukaramai - Keramat
+HSS-KAB-320,qgis_county_roads,Jl. Sukaramai - Keramat
+HSS-KAB-320,display,Sukaramai - Keramat
+HSS-KAB-321,dashboard_2025,Jl. Pakan Dalam I
+HSS-KAB-321,qgis_county_roads,Pakan Dalam I
+HSS-KAB-321,display,Pakan Dalam I
+HSS-KAB-322,dashboard_2025,Jl. Pakan Dalam II
+HSS-KAB-322,qgis_county_roads,Pakan Dalam II
+HSS-KAB-322,display,Pakan Dalam II
+HSS-KAB-323,dashboard_2025,Jl. Pakan Dalam III
+HSS-KAB-323,qgis_county_roads,Pakan Dalam III
+HSS-KAB-323,display,Pakan Dalam III
+HSS-KAB-324,dashboard_2025,Jl. Paramaian
+HSS-KAB-324,qgis_county_roads,Jl. Paramaian
+HSS-KAB-324,display,Paramaian
+HSS-KAB-325,dashboard_2025,Jl. MIN Pandak Daun
+HSS-KAB-325,qgis_county_roads,Jl. MIN Pandak Daun
+HSS-KAB-325,display,MIN Pandak Daun
+HSS-KAB-326,dashboard_2025,Jl. Pesantren Muradiyah
+HSS-KAB-326,qgis_county_roads,Jl. Pesantren Muradiyah
+HSS-KAB-326,display,Pesantren Muradiyah
+HSS-KAB-327,dashboard_2025,Pandak Daun (Buntut Muradiyah) - Pakan Dalam
+HSS-KAB-327,qgis_county_roads,Jl. Pandak Daun (Buntut Muradiyah) - Pakan Dalam
+HSS-KAB-327,display,Pandak Daun (Buntut Muradiyah) - Pakan Dalam
+HSS-KAB-328,dashboard_2025,Pakan Dalam - Kaminting Batu
+HSS-KAB-328,qgis_county_roads,Pakan Dalam - Keminting Batu
+HSS-KAB-328,display,Pakan Dalam - Kaminting Batu
+HSS-KAB-329,dashboard_2025,Jl. Samping Kantor Camat Daha Utara
+HSS-KAB-329,qgis_county_roads,Jl. Samping Kantor Camat Daha Utara
+HSS-KAB-329,display,Samping Kantor Camat Daha Utara
+HSS-KAB-330,dashboard_2025,Jl. Gang Bidan (Ds. Tambak Bitin)
+HSS-KAB-330,qgis_county_roads,Jl. Gang Bidan (Ds. Tambak Bitin)
+HSS-KAB-330,display,Gang Bidan (Ds. Tambak Bitin)
+HSS-KAB-331,dashboard_2025,Jl. Cangkingan Herman
+HSS-KAB-331,qgis_county_roads,Jl. Cakingan Herman
+HSS-KAB-331,display,Cangkingan Herman
+HSS-KAB-332,dashboard_2025,Jl. Kampung Kawat
+HSS-KAB-332,qgis_county_roads,Jl. Kampung Kawat
+HSS-KAB-332,display,Kampung Kawat
+HSS-KAB-333,dashboard_2025,Jl. Kaminting Batu
+HSS-KAB-333,qgis_county_roads,Jl. Keminting Batu
+HSS-KAB-333,display,Kaminting Batu
+HSS-KAB-334,dashboard_2025,Jl. Hamayung - Hakurung Dalam
+HSS-KAB-334,qgis_county_roads,Jl. Hamayung - Ds. Hakurung Dalam
+HSS-KAB-334,display,Hamayung - Hakurung Dalam
+HSS-KAB-335,dashboard_2025,Simpang Jadi Makmur - Ds. Samuda
+HSS-KAB-335,qgis_county_roads,Simpang Jadi Makmur Ds. Samuda
+HSS-KAB-335,display,Simpang Jadi Makmur - Ds. Samuda
+HSS-KAB-336,dashboard_2025,Jl. Sakincung - Ds. Hakurung Dalam
+HSS-KAB-336,qgis_county_roads,Jl. Sakincung Ds. Hakurun Dalam
+HSS-KAB-336,display,Sakincung - Ds. Hakurung Dalam
+HSS-KAB-337,dashboard_2025,Jl. Hakurung Dalam - Ds. Sungai Haji
+HSS-KAB-337,qgis_county_roads,Hakurung Dalam - Ds. Sungai haji
+HSS-KAB-337,display,Hakurung Dalam - Ds. Sungai Haji
+HSS-KAB-338,dashboard_2025,Jl. Siang Gantung - Ds. Baru
+HSS-KAB-338,qgis_county_roads,Jl. Siang Gantung - Ds. Baru
+HSS-KAB-338,display,Siang Gantung - Ds. Baru
+HSS-KAB-339,dashboard_2025,Jl. Baru - Ds. Bajayau
+HSS-KAB-339,qgis_county_roads,Jl. Baru - Ds. Bajayau
+HSS-KAB-339,display,Baru - Ds. Bajayau
+HSS-KAB-340,dashboard_2025,Jl. Bajayau - Ds. Bajayau Tengah
+HSS-KAB-340,qgis_county_roads,Bajayau - Bajayau Tengah
+HSS-KAB-340,display,Bajayau - Ds. Bajayau Tengah
+HSS-KAB-341,dashboard_2025,Jl. Banua Hanyar - Ds. Tanjung Selor
+HSS-KAB-341,qgis_county_roads,Jl. Banua Hanyar - Tanjung Selor
+HSS-KAB-341,display,Banua Hanyar - Ds. Tanjung Selor
+HSS-KAB-342,dashboard_2025,Jl. Tanjung Selor - Ds. Badaun
+HSS-KAB-342,qgis_county_roads,Jl. Tanjung Selor - Ds. Badaun
+HSS-KAB-342,display,Tanjung Selor - Ds. Badaun
+HSS-KAB-343,dashboard_2025,Jl. Badaun - Ds. Bjayau Lama
+HSS-KAB-343,qgis_county_roads,Jl. Badaun - Ds. Bajayau Lama
+HSS-KAB-343,display,Badaun - Ds. Bjayau Lama
+HSS-KAB-344,dashboard_2025,Jl. Goha - Ds. Amawang Kanan
+HSS-KAB-344,qgis_county_roads,Jl. Goha - Ds. Amawang Kanan
+HSS-KAB-344,display,Goha - Ds. Amawang Kanan
+HSS-KAB-345,dashboard_2025,Jl. Al - Ikhlas - Ds. Baluti
+HSS-KAB-345,qgis_county_roads,Jl. Al - Ikhlas - Ds. Baluti
+HSS-KAB-345,display,Al - Ikhlas - Ds. Baluti
+HSS-KAB-346,dashboard_2025,Jl. Angkakai - Ds. Amawang Kiri
+HSS-KAB-346,qgis_county_roads,Jl. Angkakai - Ds. Amawang Kiri
+HSS-KAB-346,display,Angkakai - Ds. Amawang Kiri
+HSS-KAB-347,dashboard_2025,Jl. Anjiran Rantauan - Ds. Taniran Tengah
+HSS-KAB-347,qgis_county_roads,Jl. Anjiran Rantauan - Ds. Taniran Tengah
+HSS-KAB-347,display,Anjiran Rantauan - Ds. Taniran Tengah
+HSS-KAB-348,dashboard_2025,Jl. Asam Duhat - Ds. Pantai Ulin
+HSS-KAB-348,qgis_county_roads,Jl. Asam Duhat - Ds. Pantai Ulin
+HSS-KAB-348,display,Asam Duhat - Ds. Pantai Ulin
+HSS-KAB-349,dashboard_2025,Jl. Pertanian - Ds. Wasah Tengah
+HSS-KAB-349,qgis_county_roads,Jl. Pertanian - Ds. Wasah Tengah
+HSS-KAB-349,display,Pertanian - Ds. Wasah Tengah
+HSS-KAB-350,dashboard_2025,Jl. Keramat Sakti - Ds. Tebing Tinggi
+HSS-KAB-350,qgis_county_roads,Jl. Keramat Sakti - Ds. Tebing Tinggi
+HSS-KAB-350,display,Keramat Sakti - Ds. Tebing Tinggi

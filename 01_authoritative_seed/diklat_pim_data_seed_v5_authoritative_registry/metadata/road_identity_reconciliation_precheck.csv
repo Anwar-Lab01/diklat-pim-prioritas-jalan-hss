@@ -1,0 +1,351 @@
+road_geometry_id,source_road_code,source_object_id_nonunique,qgis_name,qgis_district,qgis_village,match_status,candidate_nomor_ruas,candidate_display_name,note
+hss-county-110,110,99,Jl. Haritas (PT. Pertani),Sungai Raya,Ds. Hariti - Ds. Bataang Kulur Tengah,exact_normalized,110,Haritas (PT. Pertani),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-090,090,69,Taal Batang Kulur - SP.3 Muara Paring Agung,Sungai Raya,Ds. Hariti - Ds. Sungai Kali,treatment_engine_alias,090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-141,141,133,Malilingin - Lokbahan - Paniungan,Padang Batung,Ds. Malilingin,exact_normalized,141,Malilingin - Lokbahan - Paniungan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-155,155,127,Muara Pipii - Tambak Pipii,Padang Batung,Ds. Batulaki,exact_normalized,155,Muara Pipii - Tambak Pipii,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-119,119,97,Jl. Hariti - Sungai Raya Selatan,Sungai Raya,Ds. Hariti - Ds. Sungai Raya Selatan,exact_normalized,119,Hariti - Sungai Raya Selatan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-154,154,126,Batulaki - Muara Pipii,Padang Batung,Ds. Batulaki,treatment_engine_alias,154,Batu Laki - Muara Pipii,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-147,147,118,Simpang Malutu - Tambak,Padang Batung,Ds. Malutu - Ds. Jalatang,exact_normalized,147,Simpang Malutu - Tambak,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-099,099,82,Ida Manggala - Padang Makmur,Sungai Raya,Ds. Ida Manggala,exact_normalized,099,Ida Manggala - Padang Makmur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-095,095,75,Sungai Raya Selatan - Malutu - Goa Berangin,Sungai Raya,Ds. Sungai Raya Selatan - Ds. Malutu,exact_normalized,095,Sungai Raya Selatan - Malutu - Goa Berangin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-093,093,73,Taal Jarau - SP. Baru/Tampang,Sungai Raya,Ds. Ida Manggala - Ds. Btng Kulur Kanan,exact_normalized,093,Taal Jarau - Sp. Baru/Tampang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-254,254,94,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,Kalumpang,Ds. Sirih - Ds. Tamiyang,exact_normalized,254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-096,096,76,SP.4 Baru/Tampang - SP. Biluy Pamujaan,Sungai Raya,Ds. Batang Kulur Kanan - Ds. Simpur,treatment_engine_alias,096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-156,156,128,Tambak Pipii - Malilingin,Padang Batung,Ds. Batulaki - Ds. Malilingin,exact_normalized,156,Tambak Pipii - Malilingin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-091,091,71,Batang Kulur Kanan - Sarangan,Sungai Raya,Ds. Btng Kulur Kanan - Ds. Ida Manggala,exact_normalized,091,Batang Kulur Kanan - Sarangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-170,170,137,Pandulangan - Kalinduku,Angkinang,Ds. Pandulangan - Ds. Telaga Sili-Sili,exact_normalized,170,Pandulangan - Kalinduku,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-152,152,122,Madang - Ambutun,Padang Batung,Ds. Madang - Ds. Ambutun,exact_normalized,152,Madang - Ambutun,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-116,116,325,Jl. Sungai Raya Utara-Teluk Pinang,Sungai Raya,Ds. Sungai Raya Utara - Ds. Karasikan,exact_normalized,116,Sungai Raya Utara - Teluk Pinang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-226,226,200,Jl. Guru H. Izim,Simpur,Ds. Pantai Ulin,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-180,180,148,Sungai Kudung - Kalinduku,Angkinang,Ds. Bakarung - Ds. Telaga Sili-Sili,exact_normalized,180,Sungai Kudung - Kalinduku,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-179,179,147,SP. Mandampa Telaga Sili-Sili - SP. Sungai Bungur,Angkinang,Ds. Angkinang - Ds. Pandulangan,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-060,060,57,Jl. Sungai Karuh Tembus Tawar,Kandangan,Ds. Amawang Kiri - Ds. Lungau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-216,216,191,Jl. Sungai Kacil I - Kapuh Padang,Simpur,Ds. Wasah Hilir - Ds. Kapuh,exact_normalized,216,Sungai Kacil I - Kapuh Padang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-209,209,180,Wasah Hilir - Amparaya,Simpur,Ds. Wasah Hilir - Ds. Panjampang Bahagia,exact_normalized,209,Wasah Hilir - Amparaya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-068,068,92,Tibung Raya - Hamalau Dalam,Sungai Raya,Ds. Tibung Raya - Ds. Hamalau,exact_normalized,068,Tibung Raya - Hamalau Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-223,223,197,Jl. Mondar (Ulin - Pantai Ulin),Simpur,Ds. Ulin - Ds. Pantai Ulin,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-023,023,16,Jl. Brigjend. Katamso,Kandangan,Kandangan Barat,treatment_engine_alias,023,Brigjen Katamso,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-012,012,11,Jl. Kenanga,Kandangan,Kandangan Utara,exact_normalized,012,Kenanga,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-046,046,29,Bariang - Getek,Kandangan,Ds. Bariang - Ds. Amawang Kiri Muka,exact_normalized,046,Bariang - Getek,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-018,018,8,Jl. Parindra,Kandangan,Kandangan Utara,exact_normalized,018,Parindra,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-212,212,184,Panjampang Bahagia - Hanau,Simpur,Ds. Panjampang Bahagia,exact_normalized,212,Panjampang Bahagia - Hanau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-215,215,674,Jl. Kalimput Ds. Wasah Hilir,Simpur,Ds. Wasah Hilir - Ds. Garunggang,exact_normalized,215,Kalimput Desa Wasah Hilir,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-104,104,90,Tanjungan - SP.3 Sakijang,Sungai Raya,Ds. Sarang Halang - Ds. Sei Raya Selatan,exact_normalized,104,Tanjungan - Sp. 3 Sakijang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-005,005,5,Jl. Teluk Mesjid - SP.4 Muara Banta,Kandangan,Kandangan Kota,exact_normalized,005,Teluk Mesjid - Sp. 4 Muara Banta,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-251,251,204,Jl. Balanti - (Ex. P3DT),Kalumpang,Ds. Balanti,exact_normalized,251,Balanti - (Ex. P3DT),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-013,013,54,Jl. Mawar,Kandangan,Kandangan Utara,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-009,009,18,Jl. Panglima Batur,Kandangan,Kandangan Kota - Kandangan Utara,exact_normalized,009,Panglima Batur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-114,114,104,Jl. Taminung,Sungai Raya,Ds. Telaga Bidadari,exact_normalized,114,Taminung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-020,020,7,Jl. Musyawarah,Kandangan,Kandangan Kota,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-214,214,186,Jl. Amparaya-Karangan - Hanau,Simpur,Ds. Amparaya - Ds. Panjampang Bahagia,exact_normalized,214,Amparaya - Karangan - Hanau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-149,149,121,Paku (Jambu Hulu) - Ganda,Padang Batung,Ds. Jambu Hulu - Ds. Baluti,exact_normalized,159,Paku (Jambu Hulu) - Ganda,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-247,247,202,Kalumpang - Balimau,Kalumpang,Ds. Kalumpang - Ds. Balimau,exact_normalized,247,Kalumpang - Balimau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-030,030,709,Sungai Damang - Amawang Kiri,Kandangan,Ds. Sungai Paring - Ds. Bariang,exact_normalized,030,Sungai Damang - Amawang Kiri,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-219,219,193,Jl. Balaimas - Hanau,Simpur,Ds. Pantai Ulin - Ds.Panjampang Bahagia,exact_normalized,219,Balaimas - Hanau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-038,038,51,Jl. Samping Bappeda - Mesjid Darul Halik,Kandangan,Ds. Tibung Raya,exact_normalized,038,Samping Bappeda - Mesjid Darul Halik,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-086,086,65,Hamalau - Anjiran,Sungai Raya,Ds. Hamalau - Ds. Telaga Bidadari,exact_normalized,086,Hamalau - Anjiran,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-088,088,67,Sungai Raya Selatan - Sarang Halang,Sungai Raya,Ds. Sei Raya Selatan - Ds. Paring Agung,exact_normalized,088,Sungai Raya Selatan - Sarang Halang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-252,252,213,Kalumpang - Baruh,Kalumpang,Ds. Kalumpang - Ds. Sirih,exact_normalized,252,Kalumpang - Baruh,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-246,246,201,Sirih - Taro,Kalumpang,Ds. Sirih,exact_normalized,246,Sirih - Taro,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-011,011,10,Jl. Anggrek,Kandangan,Kandangan Utara,exact_normalized,011,Anggrek,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-105,105,91,Sarang Halang Padang - SP Batang Kulur,Sungai Raya,Ds. Paring Agung - Ds. Sungai Kali,exact_normalized,105,Sarang Halang Padang - Sp. Batang Kulur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-213,213,185,Jl. Halaban,Simpur,Ds. Amparaya - Ds. Garunggang,exact_normalized,213,Halaban,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-085,085,64,Tajun - SP.3 Muara Paring Agung,Sungai Raya,Ds. Sungai Raya Utara - Ds.Sungai Kali,exact_normalized,085,Tajun - Sp.3 Muara Paring Agung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-150,150,123,SP.3 Bukuanin - Riam Talo,Padang Batung,Ds. Mawangi - Ds. Halunuk,exact_normalized,150,Sp.3 Bukuanin - Riam Talo,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-205,205,175,Wasah Hilir - Sarang Halang,Simpur,Ds. Wasah Hilir - Ds. Sarang Halang,exact_normalized,205,Wasah Hilir - Sarang Halang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-066,066,100,Jl. Teratai Menuju Komplek Perumnas Hamalau,Kandangan,Ds. Hamalau,exact_normalized,066,Teratai Menuju Komplek Perumnas Hamalau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-248,248,205,Kalumpang (Ds. Belanti) - Teratai,Kalumpang,Ds. Kalumpang,treatment_engine_alias,248,Kalumpang (Ds. Balanti) - Teratai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-138,138,108,Karang Jawa - Ambarai - Sungai Bungur,Padang Batung,Ds. Karang Jawa - Ds. Pandulangan,exact_normalized,138,Karang Jawa -Ambarai - Sungai Bungur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-024,024,17,JL. Kolonel Sugiono,Kandangan,Kandangan Barat,exact_normalized,024,Kolonel Sugiono,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-087,087,66,Tanjungan - SP.10 Batang Kulur - Sungai Kali,Sungai Raya,Ds. Sei Raya Selatan - Ds. Sungai Kali,exact_normalized,087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-063,063,61,Jl. Padang Palas,Kandangan,Ds. Amawang Kiri,exact_normalized,063,Padang Palas,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-222,222,196,Jl. Tungkaran,Simpur,Ds. Wasah Hulu - Ds. Ulin,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-102,102,174,Hamalau - Telaga Bidadari - Wasah Hilir,Sungai Raya,Ds. Hamalau - Ds. Wasah Hilir,exact_normalized,102,Hamalau - Telaga Bidadari - Wasah Hilir,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-028,028,19,Jl. Budi Bakti - Tiga Desember,Kandangan,Tibung Raya - Kandangan Barat,exact_normalized,028,Budi Bakti - Tiga Desember,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-250,250,208,Jl. Binjai (Sirih Hulu) - Ds. Seranggan,Kalumpang,Ds. Sirih Hulu - Ds. Asam,exact_normalized,250,Binjai (Sirih Hulu) - Ds. Seranggan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-002,002,2,Jl. Soeprapto - Jl. HM. Rusli,Kandangan,Kandangan Kota,treatment_engine_alias,002,Soeprapto - H.M Rusli,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-207,207,177,Simpur - SP.3 Muara Paring Agung,Simpur,Ds. Simpur - Ds.Paring Agung,exact_normalized,207,Simpur - Sp. 3 Muara Paring Agung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-036,036,45,Tembok Lama - Loklua,Kandangan,Ds. Jambu Hilir,exact_normalized,036,Tembok Lama - Loklua,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-054,054,42,Pegangsaan Timur - Teluk Aman,Kandangan,Ds. Gambah Dalam - Ds. Sungai Kupang,exact_normalized,054,Pegangsaan Timur - Teluk Aman,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-302,302,272,Jl. Muning Tengah - Muning Dalam,Daha Selatan,Ds. Muning Tengah - Muning Dalam,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-210,210,181,Panjampang Bahagia - Bayur,Simpur,Ds. Panjampang Bahagia - Ds. Pantai Ulin,exact_normalized,210,Panjampang  Bahagia - Bayur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-287,287,254,Jl. Malinau - Kandihin,Loksado,Ds. Malinau - Ds. Halunuk,exact_normalized,287,Malinau - Kandihin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-094,094,74,Sungai Raya - Jambu Hulu/Paku,Sungai Raya,Ds. Sungai Raya Utara - Ds. Jambu Hulu,exact_normalized,094,Sungai Raya - Jambu Hulu/Paku,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-135,135,88,Teluk Pinang - Padang Rasau,Sungai Raya,Ds. Baluti - Ds. Jembatan Merah,exact_normalized,135,Teluk Pinang - Padang Rasau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-057,057,50,Jl. Papagaran/Pelangsatan,Kandangan,Ds. Sungai Paring - Ds. Amawang Kanan,treatment_engine_alias,057,Papagaran/Palangsatan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-136,136,105,Tanayung - Simpang Ambarai,Padang Batung,Ds. Pandulangan - Ds. Karang Jawa,treatment_engine_alias,136,Tanayung - Simp. Ambarai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-137,137,106,Tabihi - Telaga Langsat,Padang Batung,Ds. Tabihi - Ds. Mandala,exact_normalized,137,Tabihi - Telaga Langsat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-061,061,59,Jl. Rambai - Bariang,Kandangan,Ds. Amawang Kiri Muka - Ds. Bariang,exact_normalized,061,Rambai - Bariang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-025,025,27,Singakarsa - Palas,Kandangan,Kandangan Kota - Ds. Sungai Kupang,exact_normalized,025,Singakarsa - Palas,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-103,103,89,Karasikan - Sarang Halang,Sungai Raya,Ds. Karasikan - Ds. Sarang Halang,exact_normalized,103,Karasikan - Sarang Halang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-106,106,93,Jl. Hamalau - Ganda,Sungai Raya,Ds. Hamalau - Ds. Baluti,exact_normalized,106,Hamalau - Ganda,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-211,211,183,Ulin - Tanggul (Balai Mas),Simpur,Ds. Ulin - Ds. Pantai Ulin,exact_normalized,211,Ulin - Tanggul (Balai Mas),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-272,272,947,Jl. Tanuhi - Hulu Banyu,Loksado,Ds. Hulu Banyu,exact_normalized,272,Tanuhi - Hulu Banyu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-021,021,43,Jl. Sekolah Islam,Kandangan,Kandangan Barat,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-052,052,958,Gambah Dalam - Rantauan,Kandangan,Ds. Gambah Dalam - Ds. Gambah Luar,exact_normalized,052,Gambah Dalam - Rantauan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-206,206,176,Simpur - Simpang Bilui,Simpur,Ds. Simpur,treatment_engine_alias,206,Simpur - Simp. Bilui,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-225,225,199,Jl. Mangamol,Simpur,Ds. Pantai Ulin,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-113,113,1004,Jl. Batang Kulur Kiri - Durian Landung,Sungai Raya,Ds. Batang Kulur Kiri - Ds. Paring Agung,exact_normalized,113,Batang Kulur Kiri - Durian Landung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-062,062,60,Jl. Jangkang - Pantai Ulin,Kandangan,Ds. Amawang Kiri - Ds. Pantai Ulin,exact_normalized,062,Jangkang - Pantai Ulin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-008,008,13,Jl. Aluh Idut,Kandangan,Kandangan Kota - Kandangan Utara,exact_normalized,008,Aluh Idut,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-040,040,25,Baluti - Jambu Hulu/Paku,Kandangan,Ds. Baluti - Ds. Jambu Hulu,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-049,049,33,Kandangan Hulu - SP. Tabihi,Kandangan,Kandangan Kota - Ds. Karang Jawa Muka,exact_normalized,049,Kandangan Hulu - Sp. Tabihi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-017,017,6,Jl. Pemuda,Kandangan,Kandangan Kota,exact_normalized,017,Pemuda,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-148,148,119,Pagat Batu - Muara Hariang,Padang Batung,Ds. Batubini,exact_normalized,148,Pagat Batu - Muara Hariang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-203,203,171,Jl. Halayung - Hantarukung,Simpur,Ds. Ulin - Ds. Wasah Hilir,exact_normalized,203,Halayung - Hantarukung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-053,053,41,Gambah Luar - Gambah Dalam,Kandangan,Ds. Gambah Luar Muka - Ds. Gambah Dalam,exact_normalized,053,Gambah Luar - Gambah Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-067,067,85,Teluk Pinang - Baluti,Sungai Raya,Ds. Baluti,exact_normalized,067,Teluk Pinang - Baluti,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-001,001,1,Jl. Pangeran Antasari - SP. Loklua,Kandangan,Kandangan Kota - Ds. Baluti,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-056,056,151,Bakarung Tengah - Karang Jawa,Angkinang,Ds. Gambah Luar - Ds. Karang Jawa Muka,exact_normalized,056,Bakarung Tengah - Karang Jawa,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-027,027,48,Parincahan - Singakarsa (Jl. Harapan),Kandangan,Kandangan Barat,exact_normalized,027,Parincahan - Singakarsa (Harapan),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-260,260,224,Loksado - Haratai,Loksado,Ds. Loksado - Ds. Haratai,exact_normalized,260,Loksado - Haratai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-208,208,178,Wasah Tengah - Sungai Tarap,Simpur,Ds. Wasah Tengah - Ds. Sarang Halang,exact_normalized,208,Wasah Tengah - Sungai Tarap,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-169,169,107,Bakarung - Tabihi -Karang Jawa,Angkinang,Ds. Bakarung - Ds. Karang Jawa,exact_normalized,179,Bakarung -Tabihi - Karang Jawa,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-065,065,77,Jl. Kalaka Indah - Perumnas Tibung,Sungai Raya,Ds. Hamalau,exact_normalized,065,Kalaka Indah - Perumnas Tibung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-101,101,79,Teluk Pinang - Pahampangan Utara,Sungai Raya,Ds. Karasikan - Ds. Pahampangan,exact_normalized,101,Teluk Pinang - Pahampangan Utara,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-305,305,282,SP.4. Banjarbaru - Pihanin Raya,Daha Selatan,Ds. Banjarbaru - Ds. Balah Paikat,exact_normalized,305,SP.4. Banjarbaru - Pihanin Raya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-172,172,139,Angkinang Selatan - Tawia - Wawaran,Angkinang,Ds. Angkinang Selatan - Ds Taniran Kubah,exact_normalized,172,Angkinang Selatan - Tawia - Wawaran,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-176,176,144,Bamban Selatan - Pakuan,Angkinang,Ds. Bamban Selatan - Ds. Pakuan Timur,exact_normalized,176,Bamban Selatan - Pakuan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-306,306,289,Bayanan - Pihanin,Daha Selatan,Ds. Bayanan - Ds. Pihanin Raya,exact_normalized,306,Bayanan - Pihanin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-042,042,28,Sei. Kupang Utara - SP.4 Lungau,Kandangan,Ds. Sei Kupang - Ds. Lungau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-311,311,291,Sei. Mandala - Murung Raya,Daha Utara,Ds. Sungai Mandala - Ds. Murung Raya,exact_normalized,311,Sei. Mandala Murung Raya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-177,177,145,Bamban Utara - Longawang,Angkinang,Ds. Bamban Utara - Ds. Longawang,exact_normalized,177,Bamban Utara - Longawang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-044,044,37,Sp.4 Lungau - Garis,Kandangan,Ds. Lungau - Ds. Bangkau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-332,332,307,Jl. Kampung Kawat,Daha Utara,Ds. Pekapuran,exact_normalized,332,Kampung Kawat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-195,195,149,Mandampa - Longawang,Angkinang,Ds. Lok Binuang - Ds. Longawang,exact_normalized,195,Mandampa - Longawang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-185,185,1214,Jl. Kayu Abang - Ds. Anjiran,Angkinang,Ds. Kayu Abang - Ds. Bamban,exact_normalized,185,Kayu Abang - Ds. Anjiran,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-196,196,162,Gumbil - Masimpan,Telaga Langsat,Ds. Gumbil - Ds. Mandala,exact_normalized,196,Gumbil - Masimpan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-331,331,308,Jl. Cakingan Herman,Daha Utara,Ds. Panggandingan,treatment_engine_alias,331,Cangkingan Herman,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-300,300,361,Jl. Tambangan - Ds. Baruh Jaya,Daha Selatan,Ds. Tambangan - Ds. Baruh Jaya,exact_normalized,300,Tambangan - Ds. Baruh Jaya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-310,310,288,Pandak Daun - Baruh Jaya - Samuda,Daha Utara,Ds. Pandak Daun - Ds. Samuda,exact_normalized,310,Pandak Daun - Baruh Jaya - Samuda,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-322,322,293,Pakan Dalam II,Daha Utara,Ds. Pakan Dalam,exact_normalized,322,Pakan Dalam II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-328,328,299,Pakan Dalam - Keminting Batu,Daha Utara,Ds. Pakan Dalam - Ds. Tambangan,treatment_engine_alias,328,Pakan Dalam - Kaminting Batu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-291,291,276,Jl. Satria,Daha Selatan,Ds. Tumbukan Banyu,exact_normalized,291,Satria,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-043,043,36,SP.4 Lungau - Bangkau,Kandangan,Ds. Lungau - Ds. Bangkau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-323,323,294,Pakan Dalam III,Daha Utara,Ds. Pakan Dalam,exact_normalized,323,Pakan Dalam III,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-327,327,360,Jl. Pandak Daun (Buntut Muradiyah) - Pakan Dalam,Daha Utara,Ds. Pandak Daun - Ds. Pakan Dalam,exact_normalized,327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-178,178,141,Angkinang - Kayu Abang - Panggang Hijau,Angkinang,Ds. Angkinang - Ds. Kayu Abang,exact_normalized,178,Angkinang - Kayu Abang - Panggang Hijau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-290,290,263,Tumbukan Banyu - Banua Hanyar,Daha Selatan,Ds. Tumbukan Banyu - Ds. Banua Hanyar,exact_normalized,290,Tumbukan Banyu - Banua Hanyar,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-194,194,161,Longawang - Gumbil,Telaga Langsat,Ds. Longawang - Ds. Gumbil,exact_normalized,194,Longawang - Gumbil,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-295,295,267,Jl. Mawar,Daha Selatan,Ds. Sungai Pinang,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-175,175,143,Angkinang - Telaga Langsat,Angkinang,Ds. Angkinang - Ds. Mandala,exact_normalized,175,Angkinang - Telaga Langsat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-337,337,302,Hakurung Dalam - Ds. Sungai haji,Daha Utara,Ds. Hakurung,exact_normalized,337,Hakurung Dalam - Ds. Sungai Haji,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-338,338,318,Jl. Siang Gantung - Ds. Baru,Daha Barat,Ds. Siang Gantung - Ds. Baru,exact_normalized,338,Siang Gantung - Ds. Baru,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-309,309,362,Jl. Tukang Garit,Daha Utara,Ds. Tambangan,exact_normalized,309,Tukang Garit (Tambangan),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-333,333,306,Jl. Keminting Batu,Daha Utara,Ds. Tambangan,treatment_engine_alias,333,Kaminting Batu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-339,339,319,Jl. Baru - Ds. Bajayau,Daha Barat,Ds. Baru,exact_normalized,339,Baru - Ds. Bajayau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-296,296,278,Jl. Instalasi PDAM Negara,Daha Selatan,Ds. Habirau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-303,303,281,SP.4 Banjarbaru - Pasar Negara,Daha Selatan,Ds. Banjarbaru - Ds. Bayanan,exact_normalized,303,SP.4 Banjarbaru - Pasar Negara,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-321,321,292,Pakan Dalam I,Daha Utara,Ds. Tambak Bitin,exact_normalized,321,Pakan Dalam I,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-293,293,266,Jl. Sekolah Islam,Daha Selatan,Ds. Sungai Pinang,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-193,193,160,Telaga Langsat - Pakuan Timur,Telaga Langsat,Ds. Mandala - Ds. Pakuan Timur,exact_normalized,193,Telaga Langsat - Pakuan Timur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-334,334,301,Jl. Hamayung - Ds. Hakurung Dalam,Daha Utara,Ds. Hamayung - Ds. Hakurung,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-181,181,150,Bamban Tengah - Lok Nyiur,Angkinang,Ds. Bamban,exact_normalized,181,Bamban Tengah - Lok Nyiur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-158,158,132,Mawangi - Pariangan,Padang Batung,Ds. Mawangi - Ds. Batubini,exact_normalized,158,Mawangi - Pariangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-204,204,182,Wasah Hulu - Amparaya - Simpur,Simpur,Ds. Wasah Hulu - Ds. Simpur,exact_normalized,204,Wasah Hulu - Amparaya - Simpur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-050,050,34,Banyu Barau - Sungai Kalang,Kandangan,Kandangan Barat,exact_normalized,050,Banyu Barau - Sei Kalang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-032,032,23,Jl. Amawang Kanan - Wasah Hulu,Kandangan,DS. Amawang Kanan - Ds. Wasah Hulu,exact_normalized,032,Amawang Kanan - Wasah Hulu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-048,048,31,Sungai Paring - Sei Hanyar Pantai Ulin,Kandangan,Ds. Sungai Paring - Ds. Pantai Ulin,exact_normalized,048,Sungai Paring - Sei Hanyar Pantai Ulin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-041,041,26,SP.3 Baluti - Amawang,Kandangan,Ds. Baluti - Ds. Amawang Kanan,exact_normalized,041,Sp. 3 Baluti - Amawang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-010,010,15,Jl. Nusa Indah,Kandangan,Kandangan Utara,exact_normalized,010,Nusa Indah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-197,197,166,Hamak Timur - Umpaya,Telaga Langsat,Ds. Hamak Timur - Ds. Hamak Utara,exact_normalized,197,Hamak Timur - Umpaya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-029,029,20,Jl. Jafri Zamzam,Kandangan,Ds. Amawang Kiri Muka,exact_normalized,029,Jafri Zamzam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-249,249,212,Jl. Bago Tanggul - Katilang - Teratai,Kalumpang,Ds. Bago Tanggul - Ds. Kalumpang,exact_normalized,249,Bago Tanggul - Katilang - Teratai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-055,055,47,Gambah Luar - Sungai Kudung,Kandangan,Ds. Gambah Luar Muka,exact_normalized,055,Gambah Luar - Sungai Kudung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-142,142,164,Mawangi - Bukuanin - Telaga Langsat,Padang Batung,Ds. Mawangi - Ds. Mandala,exact_normalized,142,Mawangi - Bukuanin - Telaga Langsat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-109,109,98,Jl. Karang Intan - Tanah Bangkang,Sungai Raya,Ds. Sei Raya Selatan - Ds. Tnh Bangkang,exact_normalized,119,Karang Intan - Tanah Bangkang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-259,259,223,Loksado - Loklahung,Loksado,Ds. Loksado - Ds. Loklahung,exact_normalized,259,Loksado - Loklahung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-031,031,22,Amawang Muka - Getek,Kandangan,Ds. Amawang Kiri Muka - Ds. Bariang,exact_normalized,031,Amawang Muka - Getek,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-143,143,113,Mandapai - Madang,Padang Batung,Ds. Batubini - Ds. Madang,exact_normalized,143,Mandapai - Madang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-139,139,109,Ambarai - Madang,Padang Batung,Ds. Karang Jawa - Ds. Madang,exact_normalized,149,Ambarai - Madang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-033,033,24,Jl. DI. Panjaitan - Loklua,Kandangan,Ds. Baluti,exact_normalized,033,DI. Panjaitan - Loklua,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-262,262,227,Jl. Niagara (Ds. Halunuk) - Ayan,Loksado,Ds. Halunuk,exact_normalized,262,Niagara (Ds. Halunuk) - Ayan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-004,004,4,Jl. Soetoyo - Teluk Mesjid,Kandangan,Kandangan Kota,exact_normalized,004,Soetoyo - Teluk Mesjid,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-111,111,101,Paharuangan - Sungai Raya Selatan,Sungai Raya,Ds. Sungai Raya Selatan,exact_normalized,111,Paharuangan - Sei. Raya Selatan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-089,089,68,SP. Batang Kulur Kiri - Tatas,Sungai Raya,Ds. Btng Klr Kiri - Ds. Btng Klr Tengah,exact_normalized,089,Sp. Batang Kulur Kiri - Tatas,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-022,022,44,Jl. Rahma Bahran,Kandangan,Kandangan Barat,treatment_engine_alias,022,Rahmah Bahran,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-014,014,38,Jl. Kamboja,Kandangan,Kandangan Utara,exact_normalized,014,Kamboja,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-015,015,14,Jl. Dahlia,Kandangan,Kandangan Utara,exact_normalized,015,Dahlia,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-016,016,9,Jl. KS. Tubun,Kandangan,Kandangan Utara,exact_normalized,016,KS. Tubun,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-003,003,3,Jl. Pasar Kandangan - Oprit Jembatan Loklua,Kandangan,Kandangan Kota,treatment_engine_alias,003,Pasar Kandangan - Oprit Jembt. Loklua,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-037,037,46,Jl. Kesehatan - Komp. Rumah Dokter,Kandangan,Ds. Baluti,treatment_engine_alias,037,Kesehatan - Komp. Rmh Dokter,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-039,039,62,Jl. Bina Bakat,Kandangan,Ds. Tibung Raya,exact_normalized,039,Bina Bakat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-035,035,40,Jl. AES. Nasution,Kandangan,Ds. Baluti,exact_normalized,035,AES Nasution,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-072,072,179,Sungai Paring - Toba,Kandangan,Ds. Sungai Paring - Ds. Wasah Hulu,exact_normalized,072,Sungai Paring - Toba,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-051,051,35,Tibung Raya - Asam Cangkok,Kandangan,Ds. Tibung Raya - Ds. Telaga Bidadari,treatment_engine_alias,051,Tibung Raya - Asam Cangkuk,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-047,047,30,Muara Banta - Karang Jawa,Kandangan,Kandangan Kota - Ds. Karang Jawa Muka,exact_normalized,047,Muara Banta - Karang Jawa,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-059,059,53,Jl. Mesjid Kuba,Kandangan,Ds. Amawang Kanan - Ds. Amawang Kr Muka,treatment_engine_alias,059,Mesjid Quba,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-084,084,58,Jl. RS. Hasan Basry II,Kandangan,Ds. Hamalau,exact_normalized,084,RS. Hasan Basry II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-092,092,72,Bumi Berkat - Mungkur Galah,Sungai Raya,Ds. Bumi Berkat,exact_normalized,092,Bumi Berkat - Mungkur Galah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-115,115,55,Jl. Matang Gadung - Halalang,Sungai Raya,Ds. Telaga Bidadari,exact_normalized,115,Matang Gadung - Halalang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-097,097,78,Asam Cangkuk - Telaga Bidadari,Sungai Raya,Ds. Amawang Kanan - Ds. Telaga Bidadari,exact_normalized,097,Asam Cangkuk - Telaga Bidadari,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-098,098,83,Hamalau - Pahampangan,Sungai Raya,Ds. Hamalau - Ds. Karasikan,exact_normalized,098,Hamalau - Pahampangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-153,153,125,Jl. Monumen 17 Mei - Mandapai,Padang Batung,Ds. Batubini,exact_normalized,153,Monumen 17 Mei - Mandapai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-266,266,165,Halunuk - Riam Tajam/Talo - Hamak Umpaya,Loksado,Ds. Halunuk - Ds. Hamak Utara,exact_normalized,266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-173,173,140,Tawia - Kayu Abang,Angkinang,Ds. Tawia - Ds. Kayu Abang,exact_normalized,173,Tawia - Kayu Abang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-183,183,153,Jl.Panggang Hijau - DsTawar,Angkinang,Ds. Tawia - Ds. Sungai Kupang,exact_normalized,183,Panggang Hijau - Ds. Tawar,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-174,174,142,Bamban Selatan - Tangang - Panggang Hijau,Angkinang,Ds. Bamban - Ds. Kayu Abang,treatment_engine_alias,174,Bamban Selatan - Tanggang - Panggang Hijau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-058,058,152,Jl. Tembok Kacil. Sei. Kudung,Kandangan,Ds. Gambah Luar - Ds. Tabihi,exact_normalized,058,Tembok Kacil. Sei. Kudung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-202,202,349,Jl. Pantai Langsat - Umpaya,Telaga Langsat,Ds. Hamak Utara,exact_normalized,202,Pantai Langsat - Umpaya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-220,220,194,Garunggang - Hantamangu,Simpur,Ds. Garunggang,exact_normalized,220,Garunggang - Hantamangu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-221,221,195,Jl. KH. Ramli,Simpur,Ds. Amparaya,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-294,294,277,Jl. Habib,Daha Selatan,Ds. Sungai Pinang,exact_normalized,294,Habib,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-297,297,284,Jl. Gerilya / (Depan Pustu Habirau),Daha Selatan,Ds. Habirau,exact_normalized,297,Gerilya / (Depan PUSTU Habirau),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-307,307,286,Jl. Kantor Camat Daha Selatan II,Daha Selatan,Ds. Tumbukan Banyu,exact_normalized,307,Kantor Camat Daha Selatan II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-341,341,322,Jl. Banua Hanyar - Tanjung Selor,Daha Barat,Ds. Banua Hanyar - Ds. Tanjung Selor,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-342,342,323,Jl. Tanjung Selor - Ds. Badaun,Daha Barat,Ds. Tanjung Selor - Ds. Badaun,exact_normalized,342,Tanjung Selor - Ds. Badaun,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-292,292,265,Jl. Musyawarah,Daha Selatan,Ds. Tumbukan Banyu,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-301,301,273,Jl. Muning Tengah - Batang Alai (Pihanin Raya),Daha Selatan,Ds. Muning Tengah - Ds. Pihanin Raya,exact_normalized,301,Muning Tengah - Batang Alai (Pihanin Raya),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-326,326,310,Jl. Pesantren Muradiyah,Daha Utara,Ds. Pandak Daun,exact_normalized,326,Pesantren Muradiyah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-324,324,309,Jl. Paramaian,Daha Utara,Ds. Paramaian,exact_normalized,324,Paramaian,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-312,312,297,Teluk haur I,Daha Utara,Ds. Teluk haur,exact_normalized,312,Teluk Haur I,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-313,313,298,Teluk Haur II,Daha Utara,Ds. Teluk haur,exact_normalized,313,Teluk Haur II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-315,315,311,Jl. Kenanga - Ds. Baruh Kambang,Daha Utara,Ds. Baruh Kambang,exact_normalized,315,Kenanga - Ds. Baruh Kambang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-316,316,303,Jl. SMAN Negara (KH. Abdullah),Daha Utara,Ds. Baruh Kambang,exact_normalized,316,SMAN Negara (KH. Abdullah),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-269,269,244,Jl. Bayampah - Tanuhi - Tugu Niih,Loksado,Ds. Hulu Banyu - Ds. Tumingki,exact_normalized,269,Bayampah - Tanuhi - Tugu Niih,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-270,270,261,Jl. Kantor Camat Loksado II,Loksado,Ds. Loksado,exact_normalized,270,Kantor Camat Loksado II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-261,261,225,Loklahung - Kamawakan,Loksado,Ds. Loklahung - Ds. Kamawakan,exact_normalized,261,Loklahung - Kamawakan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-263,263,228,Malinau - Katingin - Kamawakan,Loksado,Ds. Malinau - Ds. Kamawakan,exact_normalized,263,Malinau - Katingin - Kamawakan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-064,064,63,Tibung Dalam - Teratai,Kandangan,Ds. Hamalau,exact_normalized,064,Tibung Dalam - Teratai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-157,157,129,Malilingin - Muara Hariang,Padang Batung,Ds. Malilingin - Ds. Batubini,exact_normalized,157,Malilingin - Muara Hariang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-275,275,230,Malaris - Loapanggang,Loksado,Ds. Lok Lahung,exact_normalized,275,Malaris - Loapanggang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-108,108,96,Jl. Tanah Bangkang Menuju Balai Benih Ikan,Sungai Raya,Ds. Pahampangan,exact_normalized,108,Tanah Bangkang Menuju Balai Benih Ikan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-188,188,159,Jl. Pandan Sari,Angkinang,Ds. Angkinang,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-171,171,138,Taniran Selatan Kubah - Buntut Taniran/Wawaran,Angkinang,Ds. Taniran Selatan - Ds. Sungai Kupang,exact_normalized,171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-100,100,79,Simpang Hamalau - Teluk Pinang,Sungai Raya,Ds. Hamalau - Ds. Karasikan,exact_normalized,100,Simpang Hamalau - Teluk Pinang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-182,182,47,Simp. Bakarung Selatan - Sungai Kudung,Kandangan,Ds. Gambah Luar Muka - Ds. Tabihi,treatment_engine_alias,182,Sp. Bakarung Selatan - Sungai Kudung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-112,112,102,Jl. Bangga TMMD,Sungai Raya,Ds. Telaga Bidadari,exact_normalized,112,Bangga TMMD,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-253,253,215,Sirih - Pacakan,Kalumpang,Ds. Sirih,exact_normalized,253,Sirih - Pacakan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-255,255,2465,Jl. Kalumpang Selatan - Ds. Asam Tamiyang,Kalumpang,Ds. Asam,exact_normalized,255,Kalumpang Selatan - Ds. Asam Tamiyang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-146,146,400,Simpang Malutu - Pahampangan,Padang Batung,Ds. Malutu - Ds. Pahampangan,exact_normalized,146,Simpang Malutu - Pahampangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-224,224,198,Jl. Pendawa - Ds. Tebing Tinggi,Simpur,Ds. Tebing Tinggi,exact_normalized,224,Pendawa - Ds. Tebing Tinggi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-281,281,779,Jl. Tanginau - Balai Haruyan,Loksado,Ds. Tumingki - Ds. Kamawakan,exact_normalized,281,Tanginau - Balai Haruyan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-330,330,369,Jl. Gang Bidan (Ds. Tambak Bitin),Daha Utara,Ds. Tambak Bitin,exact_normalized,330,Gang Bidan (Ds. Tambak Bitin),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-320,320,303,Jl. Sukaramai - Keramat,Daha Utara,Ds. Sungai Mandala - Ds. Baruh Kambang,exact_normalized,320,Sukaramai - Keramat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-289,289,262,Bayanan - Habirau Tengah,Daha Selatan,Ds. Bayanan - Ds. Habirau Tengah,exact_normalized,289,Bayanan - Habirau Tengah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-273,273,226,Hulu Banyu - Datar Mangkung -Tumingki,Loksado,Ds. Tumingki,exact_normalized,273,Hulu Banyu - Datar Mangkung - Tumingki,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-279,279,238,Jl. Makam Habib Ds. Lumpangi,Loksado,Ds. Lumpangi,exact_normalized,279,Makam Habib - Desa Lumpangi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-118,118,340,Hamalau - Asam Cangkok,Sungai Raya,Ds. Telaga Bidadari - Ds. Amawang Kanan,exact_normalized,118,Hamalau - Asam Cangkok,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-286,286,261,Jl. Loksado - Pantai Dusin,Loksado,Ds. Loksado,exact_normalized,286,Loksado - Pantai Dusin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-276,276,255,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3,Loksado,Ds. Haratai,exact_normalized,276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-277,277,233,Jl. Haratai 2 (SDN Haratai2),Loksado,Ds. Haratai,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-264,264,230,Loklahung - Malaris,Loksado,Ds. Loklahung,exact_normalized,264,Loklahung - Malaris,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-278,278,234,Jl. Bubuih - Kandihin,Loksado,Ds. Halunuk,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-318,318,311,Jl. Silaturahim,Daha Utara,Ds. Mandala Murung Mesjid,treatment_engine_alias,318,Silaturrahim,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-317,317,311,Jl. Pertukangan,Daha Utara,Ds. Baruh Kambang,exact_normalized,317,Pertukangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-329,329,359,Jl. Samping Kantor Camat Daha Utara,Daha Utara,Ds. Tambak Bitin,exact_normalized,329,Samping Kantor Camat Daha Utara,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-308,308,363,Jl. Sungai Bugundi,Daha Utara,Ds. Baruh Jaya,exact_normalized,308,Sungai Bugundi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-191,191,347,Jl. Bamban (Tibung) - Martajiwa,Angkinang,Ds. Bamban,exact_normalized,191,Bamban (Tibung) - Martajiwa,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-218,218,1927,Jl. Papagaran - Ds. Amawang Kanan,Simpur,Ds. Amawang Kanan,exact_normalized,218,Papagaran - Ds. Amawang Kanan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-285,285,357,Jl. Kacang Parang (Ulang) - Balai Wariung,Loksado,Ds. Ulang,exact_normalized,285,Kacang Parang (Ulang) - Balai Wariung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-283,283,357,Jl. Ulang - Kacang Parang,Loksado,Ds. Ulang,exact_normalized,283,Ulang - Kacang Parang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-284,284,357,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias,Loksado,Ds. Ulang,exact_normalized,284,Kacang Parang (Ulang) - Balai Mawak-Kias,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-280,280,237,Jl. Datar Belimbing - Muara Kitar,Loksado,Ds. Hulu Banyu - Ds. Lumpangi,exact_normalized,280,Datar Belimbing - Muara Kitar,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-120,120,651,Mangaris - Limau Manis,Sungai Raya,Ds. Hariti - Ds. Ida Manggala,exact_normalized,120,Mangaris - Limau Manis,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-165,165,938,Muara Hariang - Bayumbung,Padang Batung,Ds. Batubini - Ds. Halunuk,exact_normalized,165,Muara Hariang - Bayumbung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-198,198,169,Jl. Hamak - Umbai,Telaga Langsat,Ds. Hamak,exact_normalized,198,Hamak - Umbai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-298,298,283,Jl. Harapan (SDN Habirau II)/Sei. Palangan,Daha Selatan,Ds. Habirau Tengah,exact_normalized,298,Harapan (SDN Habirau II)/ Sei. Palangan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-167,167,56,Bakarung - Rantauan,Angkinang,Ds. Bakarung - Ds. Gambah Dalam Barat,exact_normalized,167,Bakarung - Rantauan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-168,168,135,Taniran Selatan - Rantauan,Angkinang,Ds. Bakarung - Ds. Taniran Selatan,exact_normalized,168,Taniran Selatan - Rantauan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-258,258,222,Tanuhi - Ulang,Loksado,Ds. Hulu Banyu - Ds. Muara Ulang,exact_normalized,258,Tanuhi - Ulang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-256,256,614,Jl. Balimau - Murung Dalam,Kalumpang,Ds. Balimau,exact_normalized,256,Balimau - Murung Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-299,299,268,Samuda - Bajayau,Daha Selatan,Ds. Samuda - Ds. Bajayau,exact_normalized,299,Samuda - Bajayau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-006,006,326,Jl. Merah Johansyah - Jl. Melati,Kandangan,Kandangan Kota,exact_normalized,006,Merah Johansyah - Melati,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-026,026,338,Singakarsa - Getek,Kandangan,Kandangan Barat - Ds. Amawang Kiri Muka,exact_normalized,026,Singakarsa - Getek,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-034,034,0,Jl. Jend. Sudirman,Kandangan,Ds. Tibung Raya - Ds. Hamalau,exact_normalized,034,Jend. Sudirman,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-069,069,330,Jl. Baiturrahim,Kandangan,Kandangan Barat - Ds. Gambah Dalam,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-070,070,331,Jl. Newangsekarti - Ds. Gambah Luar Muka,Kandangan,Ds. Gambah Luar Muka,exact_normalized,070,Newangsekarti - Ds. Gambah Luar Muka,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-071,071,332,Jl. Tembok Baru (Asam Cangkok,Kandangan,Ds. Sungai Paring - Ds. Amawang Kanan,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-073,073,333,Jl. Tembok Baru - Baluti,Kandangan,Ds. Baluti - Ds. Tibung Raya,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-075,075,335,Jl. Bariang - Patigan,Kandangan,Ds. Bariang - Ds. Amawang Kiri,exact_normalized,075,Bariang - Patigan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-076,076,339,Gambah Dalam Barat - Mahulung,Kandangan,Ds. Gambah Dlm Brt - Ds. Taniran Seltan,exact_normalized,076,Gambah Dalam Barat - Mahulung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-078,078,0,Jl. Menuju SMP 7 - Ds. Gambah Dalam,Kandangan,Ds. Gambah Dalam - Ds. Gambah Dlm Brt,exact_normalized,078,Menuju SMP 7 - Ds. Gambah Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-079,079,336,Jl. Telaga Banta - Patigan,Kandangan,Ds. Amawang Kiri - Ds. Lungau,exact_normalized,079,Telaga Banta - Patigan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-080,080,49,Jl. Nomura,Kandangan,Kandangan Kota - Ds. Jambu Hilir,exact_normalized,080,Nomura,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-240,240,0,Jl. Slasa Garih - Ds. Kapuh,Simpur,Ds. Kapuh,exact_normalized,240,Slasa Garih - Ds. Kapuh,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-122,122,0,Paharuangan - Asam Dua,Sungai Raya,Ds. Sungai Raya Selatan,exact_normalized,122,Paharuangan - Asam Dua,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-274,274,221,Lambuk - Ds. Tumingki,Loksado,Ds. Tumingki,exact_normalized,274,Lambuk - Ds. Tumingki,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-081,081,43,Jl. Lorong Bupati,Kandangan,Kandangan Kota,exact_normalized,081,Lorong Bupati,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-123,123,2465,Asam Seranggan - Asam Tamiyang,Sungai Raya,Ds. Asam - Ds. Tamiyang,exact_normalized,123,Asam Seranggan - Asam Tamiyang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-125,125,2458,Jl. Baru - Asam Desa Baru/Asam,Sungai Raya,Ds. Baru - Ds. Asam,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-161,161,100,Jl. Padang Rasau (Tambak Tamiang) - Paku Pantai,Padang Batung,Ds. Jambu Hulu - Ds. Baluti,exact_normalized,161,Padang Rasau (Tambak Tamiang) - Paku Pantai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-124,124,99,Jl. Papancan - Ds. Tanah Bangkang,Sungai Raya,Ds. Pahampangan - Ds. Tanah Bangkang,exact_normalized,124,Papancan - Ds. Tanah Bangkang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-126,126,99,Jl. Sungai Namang - Ds. Tanah Bangkang,Sungai Raya,Ds. Tanah Bangkang,exact_normalized,126,Sungai Namang - Ds. Tanah Bangkang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-127,127,99,Jl. Jarau - Parandakan,Sungai Raya,Ds. Ida Manggala,exact_normalized,127,Jarau - Parandakan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-128,128,99,Jl. Mungkur Galah - Lokpaikat,Sungai Raya,Ds. Bumi Berkat,exact_normalized,128,Mungkur Galah - Lokpaikat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-107,107,2465,Jl. Tamiyang - Ds. Tamiyang (Eks TMMD),Sungai Raya,Ds. Tamiyang,exact_normalized,107,Tamiyang - Ds. Tamiyang (Eks TMMD),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-159,159,342,Jambu Hulu - Paku Pantai,Padang Batung,Ds. Jambu Hulu,exact_normalized,169,Jambu Hulu - Paku Pantai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-160,160,99,Jl. Sungai Minting - Ds. Malutu,Padang Batung,Ds. Malutu,exact_normalized,160,Sungai Minting - Ds. Malutu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-163,163,99,Jl. Menuju SMPN Malilingin,Padang Batung,Ds. Malilingin,exact_normalized,163,Menuju SMPN Malilingin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-189,189,347,Jl. Bamban Selatan - Pakuan Balunan,Angkinang,Ds. Bamban Selatan,exact_normalized,199,Bamban Selatan - Pakuan Balunan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-190,190,346,Jl. Kayu Abang - Paya,Angkinang,Ds. Kayu Abang,exact_normalized,190,Kayu Abang - Paya,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-192,192,0,Jl. Rantauan - Sungai Baru (Jl. Pulau),Angkinang,Ds. Bakarung - Ds. Taniran Selatan,exact_normalized,192,Rantauan - Sungai Baru (Pulau),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-200,200,350,Jl. Umpaya - Tumarin,Telaga Langsat,Ds. Hamak Utara,exact_normalized,200,Umpaya - Tumarin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-268,268,349,Jl. Hulu Banyu - Pantai Langsat,Loksado,Ds. Hulu Banyu,exact_normalized,268,Hulu Banyu - Pantai Langsat,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-227,227,351,Jl. Rawati,Simpur,Ds. Ulin - Ds. Pantai Ulin,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-228,228,352,Jl. Pianggu,Simpur,Ds. Wasah Hilir - Ds. Amparaya,exact_normalized,228,Pianggu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-229,229,353,Jl. Buluh Ds. Tebing Tinggi,Simpur,Ds. Tebing Tinggi - Ds. Garunggang,exact_normalized,229,Buluh - Ds. Tebing Tinggi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-230,230,354,Jl. H. Saim/Garunggang,Simpur,Ds. Garunggang,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-234,234,0,Jl. Air Miris,Simpur,Ds. Wasah Tengah,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-235,235,0,Tandik - Wasah Hilir,Simpur,Ds. Kapuh - Ds. Wasah Tengah,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-237,237,0,Jl. Karampaci,Simpur,Ds. Kapuh - Ds. Wasah Tengah,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-238,238,0,Jl. At-Taubah,Simpur,Ds. Kapuh,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-314,314,365,Jl. HM. Thaib,Daha Utara,Ds. Baruh Kambang,treatment_engine_alias,314,H.M. Thaib,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-319,319,369,Jl. Habib Iberahim,Daha Utara,Ds. Sungai Mandala,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-325,325,358,Jl. MIN Pandak Daun,Daha Utara,Ds. Paramaian,exact_normalized,325,MIN Pandak Daun,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-077,077,338,Jl. Suriangpati,Kandangan,Ds. Gambah Dalam Barat,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-288,288,222,Ulang - Bangkaun,Loksado,Ds. Ulang,exact_normalized,288,Ulang - Bangkaun,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-336,336,370,Jl. Sakincung Ds. Hakurun Dalam,Daha Utara,Ds. Hakurung,treatment_engine_alias,336,Sakincung - Ds. Hakurung Dalam,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-166,166,344,Tambak Pipii - Batu Ampar,Padang Batung,Ds. Batulaki,exact_normalized,166,Tambak Pipii - Batu Ampar,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-241,241,0,Jl. Palas - Ds. Wasah Tengah,Simpur,Ds. Wasah Tengah - Ds. Kapuh,exact_normalized,241,Palas - Ds. Wasah Tengah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-217,217,191,Jl. Sungai Kacil II,Simpur,Ds. Wasah Hilir,exact_normalized,217,Sungai Kacil II,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-236,236,0,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Taklim),Simpur,Ds. Kapuh,exact_normalized,236,Ds. Kapuh Tengah (Menuju Majelis Talim),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-007,007,58,Jl. Menuju Stadion 2 Desember,Kandangan,Ds. Baluti,exact_normalized,007,Menuju Stadion 2 Desember,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-232,232,0,Jl. Gerilya Ds. Simpur,Simpur,Ds. Tebing Tinggi - Ds. Simpur,exact_normalized,232,Gerilya - Ds. Simpur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-233,233,0,Jl. Jangkang - Ds. Wasah Hilir,Simpur,Ds. Wasah Hilir - Ds. Garunggang,exact_normalized,233,Jangkang - Ds. Wasah Hilir,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-349,349,0,Jl. Pertanian - Ds. Wasah Tengah,Simpur,Ds. Wasah Tengah - Ds. Wasah Hulu,exact_normalized,349,Pertanian - Ds. Wasah Tengah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-121,121,99,Jl. Munggu Raya - Ds. Hariti,Sungai Raya,Ds. Hariti,exact_normalized,121,Munggu Raya - Ds. Hariti,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-131,131,0,Jl. Manggis,Sungai Raya,Ds. Baru - Ds. Asam,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-129,129,0,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),Sungai Raya,Ds. Batang Kulur Kanan - Ds. Bumi Berkat,exact_normalized,129,Batang Kulur Kanan - Bumi Berkat (Kisung),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-082,082,0,Jl. Biti - Sungai Kupang (Karya Bakti TNI),Kandangan,Ds. Sungai Kupang - Ds. Lungau,exact_normalized,082,Biti - Sungai Kupang (Karya Bakti TNI),Precheck only; canonical Treatment Engine road_key still required.
+hss-county-074,074,334,Jl. H. Jarkasi,Kandangan,Ds. Bariang - Ds. Sungai Paring,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-117,117,341,Jl. Mangunang,Sungai Raya,Ds. Sungai Raya Utara,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-265,265,234,Jl. Bubuih (Ds. Halunuk),Loksado,Ds. Halunuk,treatment_engine_alias,265,Bubuih - Ds. Halunuk,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-267,267,237,Jl. Muara Kitar - Ds. Lumpangi,Loksado,Ds. Lumpangi,exact_normalized,267,Muara Kitar - Desa Lumpangi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-019,019,7,Jl. Wahab Syahrani,Kandangan,Kandangan Barat,exact_normalized,019,Wahab Syahrani,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-184,184,154,Taniran Tengah - Taniran Selatan,Angkinang,Ds. Taniran Selatan - Ds. Taniran Kubah,exact_normalized,184,Taniran Tengah - Taniran Selatan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-186,186,158,Jl. Rel Angkinang - TMMD Angkinang,Angkinang,Ds. Angkinang Selatan,exact_normalized,186,Rel Angkinang - TMMD Angkinang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-199,199,169,Jl. Hamak Utara - Samaragi,Telaga Langsat,Ds. Hamak Timur,exact_normalized,199,Hamak Utara - Samaragi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-271,271,356,Jl. Buntu Muara Hatib,Loksado,Ds. Hulu Banyu,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-164,164,125,Jl. Samping Mesjid Mandapai,Padang Batung,Ds. Batubini,exact_normalized,164,Samping Mesjid Mandapai,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-282,282,357,Jl. Tataian - (Ds. Ulang) - Loksado,Loksado,Ds. Ulang,exact_normalized,282,Tataian - (Ds. Ulang) - Loksado,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-145,145,81,Pagar Haur - Malutu,Padang Batung,Ds. Jalatang,exact_normalized,145,Pagar  Haur - Malutu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-133,133,341,Jl. Pembangunan - Ds. Sungai Raya Utara,Sungai Raya,Ds. Sei Raya Utara - Ds. Sarang Halang,exact_normalized,133,Pembangunan - Ds. Sungai Raya Utara,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-239,239,0,Jl. Firdaus,Simpur,Ds. Kapuh,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-244,244,0,Jl. Pajah Api,Simpur,Ds. Wasah Tengah - Ds. Kapuh,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-243,243,0,Jl. Banua Kambang,Simpur,Ds. Wasah Tengah - Ds. Wasah Hulu,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-132,132,0,Jl. TPA Sungai Raya Selatan,Sungai Raya,Ds. Sungai Raya Selatan,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-242,242,176,Jl. Tanah Habang - Ds. Simpur,Simpur,Ds. Simpur - Ds. Wasah Hilir,exact_normalized,242,Tanah Habang - Ds. Simpur,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-083,083,83,Jl. Palajau - Ds. Baluti,Sungai raya,Ds. Baluti - Ds. Karasikan,exact_normalized,083,Palajau - Ds. Baluti,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-134,134,341,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara,Sungai Raya,Ds. Sungai Raya Utara,exact_normalized,134,Kalaka Dayuh - Ds. Sungai Raya Utara,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-257,257,614,Jl. Karya Bakti TNI - Ds. Balimau,Kalumpang,Ds. Balimau,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-130,130,99,Batang Kulur Kanan - Batang Kulur Kiri,Sungai Raya,Ds. Batang Kulur Kiri,exact_normalized,130,Batang Kulur Kanan - Batang Kulur Kiri,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-140,140,133,Padang Batung - Batu Laki - Malilingin,Padang Batung,Ds. Padang Batung - Ds. Malilingin,treatment_engine_alias,140,Padang Batung - Batulaki - Malilingin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-045,045,337,Gambir -SP. Empat Lungau,Kandangan,Ds. Amawang Kiri - Ds. Lungau,exact_normalized,045,Gambir - Sp. Empat Lungau,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-144,144,114,Kaliring - SP. Padang Batung,Padang Batung,Ds. Kaliring - Ds. Jembatan Merah,exact_normalized,144,Kaliring - Sp. Padang Batung,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-245,245,0,Jl. Telapak Manuk,Simpur,Ds. Kapuh,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-340,340,268,Bajayau - Bajayau Tengah,Daha Barat,Ds. Bajayau - Ds. Bajayau Tengah,unresolved,,,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-343,343,324,Jl. Badaun - Ds. Bajayau Lama,Daha Barat,Ds. Bajayau Lama,treatment_engine_alias,343,Badaun - Ds. Bjayau Lama,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-304,304,281,Negara - Tumbukan Banyu,Daha Selatan,Ds. Bayanan - Ds. Tumbukan Banyu,exact_normalized,304,Negara - Tumbukan Banyu,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-335,335,285,Simpang Jadi Makmur Ds. Samuda,Daha Utara,Ds. Samuda,exact_normalized,335,Simpang Jadi Makmur - Ds. Samuda,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-231,231,0,Jl. Padang Haur - Ds. Wasah Tengah,Simpur,Ds. Wasah Tengah - Ds. Ulin,exact_normalized,231,Padang Haur - Ds. Wasah Tengah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-344,344,26,Jl. Goha - Ds. Amawang Kanan,Kandangan,Ds. Amawang Kanan,exact_normalized,344,Goha - Ds. Amawang Kanan,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-201,201,0,Jl. Sungai Durian - Ds. Gumbil,Telaga Langsat,Ds. Gumbil,exact_normalized,201,Sungai Durian - Ds. Gumbil,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-345,345,333,Jl. Al - Ikhlas - Ds. Baluti,Kandangan,Ds. Baluti - Ds. Tibung Raya,exact_normalized,345,Al - Ikhlas - Ds. Baluti,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-347,347,0,Jl. Anjiran Rantauan - Ds. Taniran Tengah,Angkinang,Ds. Taniran Selatan,exact_normalized,347,Anjiran Rantauan - Ds. Taniran Tengah,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-346,346,57,Jl. Angkakai - Ds. Amawang Kiri,Kandangan,Ds. Amawang Kiri,exact_normalized,346,Angkakai - Ds. Amawang Kiri,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-350,350,198,Jl. Keramat Sakti - Ds. Tebing Tinggi,Simpur,Ds. Tebing Tinggi,exact_normalized,350,Keramat Sakti - Ds. Tebing Tinggi,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-348,348,61,Jl. Asam Duhat - Ds. Pantai Ulin,Simpur,Ds. Pantai Ulin,exact_normalized,348,Asam Duhat - Ds. Pantai Ulin,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-151,151,167,SP.3 Bukuanin - Tayub,Padang Batung,Ds. Mawangi - Ds. Madang,exact_normalized,151,Sp.3 Bukuanin - Tayub,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-162,162,167,Jl. Galuntang Tayub - Ds. Madang,Padang Batung,Ds. Madang,exact_normalized,162,Galuntang Tayub - Ds. Madang,Precheck only; canonical Treatment Engine road_key still required.
+hss-county-187,187,143,Jl. AMD - Ds. Lok Binuang,Angkinang,Ds. Lok Binuang - Ds. Telaga Langsat,exact_normalized,187,AMD - Ds. Lok Binuang,Precheck only; canonical Treatment Engine road_key still required.

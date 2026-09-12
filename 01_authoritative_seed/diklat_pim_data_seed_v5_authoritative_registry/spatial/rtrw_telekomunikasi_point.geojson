@@ -1,0 +1,9 @@
+{
+"type": "FeatureCollection",
+"name": "rtrw_telekomunikasi_point",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "source_feature_id": 1, "nama_objek": "Infrastruktur Jaringan Tetap", "orde_01": 14010000, "orde_02": 14010000, "orde_03": 14010000, "orde_04": 14010000, "jenis_sistem": 44000000, "status_jaringan": 2, "provinsi": "Provinsi Kalimantan Selatan", "kabupaten": "Kabupaten Hulu Sungai Selatan", "keterangan": "STO Kandangan", "sumber_data": "Perda RTRW Provinsi Kalimantan Selatan No. 9 Tahun 2015 Pemerintah Provinsi Kalimantan Selatan, 2015", "source_layer": "_6306_50KB_PT_SR_TELEKOMUNIKASI_KABUPATEN_HULUSUNGAISELATAN_2024", "source_dataset": "_6306_50KB_RTRW_KABUPATEN_HULUSUNGAISELATAN_2025.gdb.zip" }, "geometry": { "type": "Point", "coordinates": [ 115.27152184800002, -2.782852274 ] } },
+{ "type": "Feature", "properties": { "source_feature_id": 2, "nama_objek": "Infrastruktur Jaringan Tetap", "orde_01": 14010000, "orde_02": 14010000, "orde_03": 14010000, "orde_04": 14010000, "jenis_sistem": 44000000, "status_jaringan": 2, "provinsi": "Provinsi Kalimantan Selatan", "kabupaten": "Kabupaten Hulu Sungai Selatan", "keterangan": "STO Negara", "sumber_data": "Perda RTRW Provinsi Kalimantan Selatan No. 9 Tahun 2015 Pemerintah Provinsi Kalimantan Selatan, 2015", "source_layer": "_6306_50KB_PT_SR_TELEKOMUNIKASI_KABUPATEN_HULUSUNGAISELATAN_2024", "source_dataset": "_6306_50KB_RTRW_KABUPATEN_HULUSUNGAISELATAN_2025.gdb.zip" }, "geometry": { "type": "Point", "coordinates": [ 115.109600707000027, -2.632440853999981 ] } }
+]
+}

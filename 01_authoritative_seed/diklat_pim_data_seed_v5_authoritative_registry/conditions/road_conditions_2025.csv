@@ -1,0 +1,351 @@
+road_key,nomor_ruas,year,baik_km,baik_pct,sedang_km,sedang_pct,rusak_ringan_km,rusak_ringan_pct,rusak_berat_km,rusak_berat_pct,mantap_km,mantap_pct,tidak_mantap_km,tidak_mantap_pct,source_category,source_file,source_sheet,authority_status
+HSS-KAB-001,001,2025,0,0,0.36,64.285717,0.2,35.714286,0,0,0.36,64.285717,0.2,35.714286,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-002,002,2025,0,0,0.52,99.999996,0,0,0,0,0.52,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-003,003,2025,0.28,100.0,0,0,0,0,0,0,0.28,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-004,004,2025,0.26,99.999996,0,0,0,0,0,0,0.26,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-005,005,2025,0,0,1.23,86.013987,0.2,13.986014,0,0,1.23,86.013987,0.2,13.986014,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-006,006,2025,0.82,99.999999,0,0,0,0,0,0,0.82,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-007,007,2025,0,0,0.29,99.999997,0,0,0,0,0.29,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-008,008,2025,0.5,37.313433,0.84,62.686565,0,0,0,0,1.34,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-009,009,2025,0.8,73.394497,0.29,26.605504,0,0,0,0,1.09,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-010,010,2025,0.2,52.63158,0.18,47.368423,0,0,0,0,0.38,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-011,011,2025,0.23,100.000002,0,0,0,0,0,0,0.23,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-012,012,2025,0.23,100.000002,0,0,0,0,0,0,0.23,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-013,013,2025,0,0,0.23,100.000002,0,0,0,0,0.23,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-014,014,2025,0,0,0.21,99.999997,0,0,0,0,0.21,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-015,015,2025,0,0,0,0,0.1,55.555556,0.08,44.444443,0,0,0.18,100.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-016,016,2025,0.16,16.666666,0.3,31.250001,0.5,52.083333,0,0,0.46,47.916668,0.5,52.083333,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-017,017,2025,0.26,99.999996,0,0,0,0,0,0,0.26,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-018,018,2025,0.18,64.285717,0.1,35.714286,0,0,0,0,0.28,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-019,019,2025,0,0,0.12,99.999998,0,0,0,0,0.12,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-020,020,2025,0.1,31.25,0.22,68.75,0,0,0,0,0.32,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-021,021,2025,0.2,100.000001,0,0,0,0,0,0,0.2,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-022,022,2025,0,0,0.22,99.999999,0,0,0,0,0.22,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-023,023,2025,0,0,0.35,99.999998,0,0,0,0,0.35,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-024,024,2025,0.22,99.999999,0,0,0,0,0,0,0.22,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-025,025,2025,1.1,20.676692,1.7,31.954888,1.32,24.812031,1.2,22.556392,2.8,52.63158,2.52,47.368423,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-026,026,2025,0,0,0.2,100.000001,0,0,0,0,0.2,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-027,027,2025,0,0,0.66,100.000004,0,0,0,0,0.66,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-028,028,2025,0,0,0.81,100.0,0,0,0,0,0.81,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-029,029,2025,0,0,0.67,62.616824,0.2,18.691589,0.2,18.691589,0.67,62.616824,0.4,37.383178,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-030,030,2025,0.6,23.904383,1.71,68.127492,0.2,7.968128,0,0,2.31,92.031875,0.2,7.968128,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-031,031,2025,4.5,83.179298,0.41,7.578558,0.5,9.242144,0,0,4.91,90.757856,0.5,9.242144,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-032,032,2025,0,0,2.47,77.917982,0.7,22.082019,0,0,2.47,77.917982,0.7,22.082019,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-033,033,2025,0,0,0.41,99.999999,0,0,0,0,0.41,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-034,034,2025,0,0,2.44,100.000002,0,0,0,0,2.44,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-035,035,2025,0.24,99.999998,0,0,0,0,0,0,0.24,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-036,036,2025,0,0,0.44,52.380952,0.3,35.714287,0.1,11.904762,0.44,52.380952,0.4,47.619049,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-037,037,2025,0.28,100.0,0,0,0,0,0,0,0.28,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-038,038,2025,0,0,0,0,0.19,99.999999,0,0,0,0,0.19,99.999999,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-039,039,2025,0.24,99.999998,0,0,0,0,0,0,0.24,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-040,040,2025,0.5,12.285012,1.8,44.226043,1.27,31.203931,0.5,12.285012,2.3,56.511055,1.77,43.488943,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-041,041,2025,0.4,25.477707,1.07,68.15287,0.1,6.369427,0,0,1.47,93.630577,0.1,6.369427,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-042,042,2025,1.5,63.559322,0.86,36.440679,0,0,0,0,2.36,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-043,043,2025,0,0,2.2,27.160494,0,0,5.9,72.839507,2.2,27.160494,5.9,72.839507,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-044,044,2025,0,0,1.6,19.53602,0,0,6.59,80.463982,1.6,19.53602,6.59,80.463982,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-045,045,2025,0,0,1.5,50.847458,0,0,1.45,49.152544,1.5,50.847458,1.45,49.152544,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-046,046,2025,0,0,0.4,32.258065,0.84,67.741933,0,0,0.4,32.258065,0.84,67.741933,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-047,047,2025,0,0,1.59,100.000002,0,0,0,0,1.59,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-048,048,2025,0,0,1.4,23.931624,2.3,39.316239,2.15,36.752137,1.4,23.931624,4.45,76.068376,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-049,049,2025,0.35,28.0,0.9,71.999998,0,0,0,0,1.25,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-050,050,2025,0.9,42.857142,1.2,57.142859,0,0,0,0,2.1,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-051,051,2025,0.86,100.000002,0,0,0,0,0,0,0.86,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-052,052,2025,0,0,1.02,67.105262,0.5,32.894737,0,0,1.02,67.105262,0.5,32.894737,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-053,053,2025,0,0,0.99,76.744187,0.3,23.255815,0,0,0.99,76.744187,0.3,23.255815,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-054,054,2025,0,0,0.75,71.428571,0.3,28.57143,0,0,0.75,71.428571,0.3,28.57143,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-055,055,2025,0,0,0.39,43.820223,0.4,44.943821,0.1,11.235955,0.39,43.820223,0.5,56.179776,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-056,056,2025,0,0,3.07,81.432359,0.7,18.567639,0,0,3.07,81.432359,0.7,18.567639,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-057,057,2025,0,0,0.3,30.000001,0.7,69.999999,0,0,0.3,30.000001,0.7,69.999999,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-058,058,2025,0,0,0.3,81.081084,0.07,18.918919,0,0,0.3,81.081084,0.07,18.918919,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-059,059,2025,0,0,0.21,99.999997,0,0,0,0,0.21,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-060,060,2025,0,0,1.96,100.000002,0,0,0,0,1.96,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-061,061,2025,0,0,0.6,49.586779,0.2,16.528926,0.41,33.884297,0.6,49.586779,0.61,50.413223,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-062,062,2025,1.0,59.171598,0,0,0.1,5.91716,0.59,34.911241,1.0,59.171598,0.69,40.828401,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-063,063,2025,0,0,0.48,70.588234,0.2,29.411765,0,0,0.48,70.588234,0.2,29.411765,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-064,064,2025,0,0,0.42,80.769228,0.1,19.23077,0,0,0.42,80.769228,0.1,19.23077,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-065,065,2025,0,0,0.41,99.999999,0,0,0,0,0.41,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-066,066,2025,0.1,24.390244,0.31,75.609757,0,0,0,0,0.41,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-067,067,2025,0,0,1.64,99.999999,0,0,0,0,1.64,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-068,068,2025,0.2,21.978022,0.6,65.934069,0.11,12.087912,0,0,0.8,87.912091,0.11,12.087912,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-069,069,2025,0,0,0.3,21.126761,0.3,21.126761,0.82,57.74648,0.3,21.126761,1.12,78.873242,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-070,070,2025,0.29,99.999997,0,0,0,0,0,0,0.29,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-071,071,2025,0,0,0.4,80.000001,0.1,20.0,0,0,0.4,80.000001,0.1,20.0,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-072,072,2025,0,0,0.3,35.714287,0.54,64.285717,0,0,0.3,35.714287,0.54,64.285717,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-073,073,2025,0,0,0.04,28.571428,0.1,71.428572,0,0,0.04,28.571428,0.1,71.428572,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-074,074,2025,0,0,0.1,83.333335,0.02,16.666666,0,0,0.1,83.333335,0.02,16.666666,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-075,075,2025,0.6,36.809817,1.03,63.190182,0,0,0,0,1.63,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-076,076,2025,0.12,6.25,1.8,93.749998,0,0,0,0,1.92,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-077,077,2025,0.1,3.546099,0.1,3.546099,0.5,17.730496,2.12,75.177304,0.2,7.092199,2.62,92.907801,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-078,078,2025,0,0,0.4,40.000001,0.6,60.000002,0,0,0.4,40.000001,0.6,60.000002,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-079,079,2025,0.64,99.999998,0,0,0,0,0,0,0.64,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-080,080,2025,0,0,0.41,99.999999,0,0,0,0,0.41,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-081,081,2025,0.1,25.641026,0.29,74.358972,0,0,0,0,0.39,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-082,082,2025,0.5,27.472527,0.3,16.483517,0.62,34.065934,0.4,21.978022,0.8,43.956045,1.02,56.043957,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-083,083,2025,0.4,31.25,0,0,0,0,0.88,68.75,0.4,31.25,0.88,68.75,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-084,084,2025,0,0,0.1,100.000001,0,0,0,0,0.1,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-085,085,2025,4.47,89.939634,0.5,10.060362,0,0,0,0,4.97,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-086,086,2025,0,0,0.8,88.88889,0.1,11.111111,0,0,0.8,88.88889,0.1,11.111111,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-087,087,2025,0,0,7.0,95.890411,0.3,4.109589,0,0,7.0,95.890411,0.3,4.109589,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-088,088,2025,0,0,0.32,12.21374,0.7,26.717557,1.6,61.068703,0.32,12.21374,2.3,87.78626,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-089,089,2025,0,0,0.57,24.050633,1.8,75.949365,0,0,0.57,24.050633,1.8,75.949365,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-090,090,2025,0.2,4.854369,2.1,50.970871,1.02,24.757281,0.8,19.417476,2.3,55.82524,1.82,44.174757,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-091,091,2025,0,0,1.68,77.064218,0.5,22.93578,0,0,1.68,77.064218,0.5,22.93578,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-092,092,2025,0,0,1.2,79.470202,0.31,20.529801,0,0,1.2,79.470202,0.31,20.529801,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-093,093,2025,2.85,50.442476,2.8,49.557521,0,0,0,0,5.65,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-094,094,2025,5.17,100.000001,0,0,0,0,0,0,5.17,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-095,095,2025,0.6,9.448819,3.3,51.968503,0.4,6.299213,2.05,32.283464,3.9,61.417322,2.45,38.582677,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-096,096,2025,0,0,2.57,68.16976,1.1,29.177719,0.1,2.65252,2.57,68.16976,1.2,31.830239,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-097,097,2025,0.2,24.096386,0.03,3.614458,0,0,0.6,72.289159,0.23,27.710844,0.6,72.289159,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-098,098,2025,0.78,99.999996,0,0,0,0,0,0,0.78,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-099,099,2025,0,0,0.9,24.390243,1.5,40.650407,1.29,34.95935,0.9,24.390243,2.79,75.609757,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-100,100,2025,0.08,11.764706,0.4,58.82353,0.1,14.705883,0.1,14.705883,0.48,70.588236,0.2,29.411765,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-101,101,2025,1.6,72.072073,0.62,27.927928,0,0,0,0,2.22,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-102,102,2025,0.14,2.834008,1.9,38.461538,2.6,52.631577,0.3,6.072875,2.04,41.295546,2.9,58.704452,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-103,103,2025,0,0,0.9,47.36842,0.3,15.789474,0.7,36.842105,0.9,47.36842,1.0,52.631579,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-104,104,2025,0,0,0.1,6.289308,0.5,31.446541,0.99,62.264152,0.1,6.289308,1.49,93.710692,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-105,105,2025,0.5,23.696682,1.11,52.606636,0.2,9.478673,0.3,14.21801,1.61,76.303318,0.5,23.696683,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-106,106,2025,0,0,0.5,42.735043,0.67,57.264959,0,0,0.5,42.735043,0.67,57.264959,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-107,107,2025,0,0,0,0,0,0,2.04,99.999998,0,0,2.04,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-108,108,2025,0,0,0.2,30.303031,0.1,15.151515,0.36,54.545457,0.2,30.303031,0.46,69.696972,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-109,109,2025,0,0,1.11,100.000001,0,0,0,0,1.11,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-110,110,2025,0.2,31.25,0.44,68.75,0,0,0,0,0.64,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-111,111,2025,0.6,30.612246,0.8,40.816327,0.46,23.469388,0.1,5.102041,1.4,71.428573,0.56,28.571429,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-112,112,2025,0,0,0,0,0.79,100.000003,0,0,0,0,0.79,100.000003,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-113,113,2025,0.45,81.81818,0.1,18.181818,0,0,0,0,0.55,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-114,114,2025,0,0,2.0,99.009901,0,0,0.02,0.990099,2.0,99.009901,0.02,0.990099,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-115,115,2025,0.42,99.999997,0,0,0,0,0,0,0.42,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-116,116,2025,0,0,1.5,88.235294,0.2,11.764706,0,0,1.5,88.235294,0.2,11.764706,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-117,117,2025,0,0,0.7,99.999998,0,0,0,0,0.7,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-118,118,2025,0.93,65.034966,0.5,34.965035,0,0,0,0,1.43,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-119,119,2025,0,0,0.4,15.037594,0.3,11.278196,1.96,73.684211,0.4,15.037594,2.26,84.962407,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-120,120,2025,0,0,0,0,0,0,4.1,99.999998,0,0,4.1,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-121,121,2025,0.1,21.739131,0.36,78.260873,0,0,0,0,0.46,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-122,122,2025,0,0,0.2,21.978022,0,0,0.71,78.021976,0.2,21.978022,0.71,78.021976,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-123,123,2025,1.02,99.999998,0,0,0,0,0,0,1.02,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-124,124,2025,1.46,100.000003,0,0,0,0,0,0,1.46,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-125,125,2025,0.2,15.151515,0.92,69.696971,0.2,15.151515,0,0,1.12,84.848486,0.2,15.151515,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-126,126,2025,0,0,0,0,0,0,0.73,100.000003,0,0,0.73,100.000003,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-127,127,2025,0,0,0,0,0.2,28.571429,0.5,71.428571,0,0,0.7,100.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-128,128,2025,0,0,0.2,28.169015,0.51,71.830985,0,0,0.2,28.169015,0.51,71.830985,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-129,129,2025,0,0,0,0,0,0,1.61,100.000001,0,0,1.61,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-130,130,2025,0,0,0,0,0,0,0.82,99.999999,0,0,0.82,99.999999,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-131,131,2025,0,0,0,0,0,0,1.28,99.999998,0,0,1.28,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-132,132,2025,0.65,76.470585,0.2,23.529412,0,0,0,0,0.85,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-133,133,2025,0,0,0.35,36.842105,0.4,42.105264,0.2,21.052632,0.35,36.842105,0.6,63.157896,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-134,134,2025,0,0,0,0,0,0,0.43,100.000002,0,0,0.43,100.000002,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-135,135,2025,0,0,1.2,55.045874,0.98,44.954129,0,0,1.2,55.045874,0.98,44.954129,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-136,136,2025,0,0,1.21,75.155282,0.3,18.633541,0.1,6.21118,1.21,75.155282,0.4,24.844721,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-137,137,2025,2.75,31.791908,5.6,64.739883,0.3,3.468208,0,0,8.35,96.531791,0.3,3.468208,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-138,138,2025,0,0,1.84,45.544555,1.4,34.653465,0.8,19.80198,1.84,45.544555,2.2,54.455445,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-139,139,2025,1.34,77.011496,0.4,22.988506,0,0,0,0,1.74,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-140,140,2025,0,0,2.48,27.927928,1.9,21.396396,4.5,50.675676,2.48,27.927928,6.4,72.072072,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-141,141,2025,6.4,60.037524,1.9,17.82364,0.2,1.876173,2.16,20.262665,8.3,77.861164,2.36,22.138837,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-142,142,2025,0,0,8.12,57.102671,4.6,32.348804,1.5,10.548523,8.12,57.102671,6.1,42.897327,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-143,143,2025,0,0,2.92,50.171823,1.8,30.927834,1.1,18.900344,2.92,50.171823,2.9,49.828178,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-144,144,2025,0,0,2.4,53.333335,1.4,31.111111,0.7,15.555555,2.4,53.333335,2.1,46.666666,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-145,145,2025,0.22,99.999999,0,0,0,0,0,0,0.22,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-146,146,2025,0,0,0,0,0,0,4.51,100.000005,0,0,4.51,100.000005,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-147,147,2025,0.8,27.874565,1.0,34.843206,0.77,26.829268,0.3,10.452962,1.8,62.71777,1.07,37.28223,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-148,148,2025,0,0,2.57,78.59327,0.3,9.174312,0.4,12.232416,2.57,78.59327,0.7,21.406729,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-149,149,2025,0,0,0,0,1.58,84.042555,0.3,15.957447,0,0,1.88,100.000003,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-150,150,2025,0,0,1.0,32.051282,0.92,29.48718,1.2,38.461539,1.0,32.051282,2.12,67.948719,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-151,151,2025,0,0,0.6,17.699116,0,0,2.79,82.300884,0.6,17.699116,2.79,82.300884,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-152,152,2025,0,0,2.04,69.387754,0.8,27.210885,0.1,3.401361,2.04,69.387754,0.9,30.612245,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-153,153,2025,0.06,99.999998,0,0,0,0,0,0,0.06,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-154,154,2025,0.6,14.051523,0.3,7.025761,0.4,9.367682,2.97,69.555036,0.9,21.077284,3.37,78.922717,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-155,155,2025,0,0,0,0,0.4,8.602151,4.25,91.397852,0,0,4.65,100.000003,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-156,156,2025,0,0,0.98,20.081968,0,0,3.9,79.918035,0.98,20.081968,3.9,79.918035,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-157,157,2025,0,0,0,0,0,0,4.57,100.000004,0,0,4.57,100.000004,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-158,158,2025,0.1,4.255319,1.15,48.936169,1.0,42.553191,0.1,4.255319,1.25,53.191488,1.1,46.808511,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-159,159,2025,0,0,1.5,92.592593,0.12,7.407407,0,0,1.5,92.592593,0.12,7.407407,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-160,160,2025,0,0,0.47,100.0,0,0,0,0,0.47,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-161,161,2025,0,0,1.93,86.547083,0.3,13.452915,0,0,1.93,86.547083,0.3,13.452915,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-162,162,2025,2.06,87.288133,0.3,12.711865,0,0,0,0,2.36,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-163,163,2025,0,0,0.35,77.777776,0.1,22.222223,0,0,0.35,77.777776,0.1,22.222223,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-164,164,2025,0,0,0.14,58.333334,0.1,41.666667,0,0,0.14,58.333334,0.1,41.666667,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-165,165,2025,0,0,0.3,7.5,0,0,3.7,92.499999,0.3,7.5,3.7,92.499999,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-166,166,2025,0,0,0,0,0,0,1.98,100.000001,0,0,1.98,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-167,167,2025,1.0,33.0033,1.13,37.293729,0.9,29.70297,0,0,2.13,70.29703,0.9,29.70297,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-168,168,2025,0.91,81.981984,0.2,18.018018,0,0,0,0,1.11,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-169,169,2025,0,0,2.57,56.236322,2.0,43.763676,0,0,2.57,56.236322,2.0,43.763676,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-170,170,2025,0,0,0.07,6.542056,0.5,46.728972,0.5,46.728972,0.07,6.542056,1.0,93.457944,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-171,171,2025,0.9,13.353115,2.14,31.750743,2.0,29.673591,1.7,25.222553,3.04,45.103859,3.7,54.896143,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-172,172,2025,1.7,28.911565,3.28,55.782312,0.9,15.306122,0,0,4.98,84.693878,0.9,15.306122,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-173,173,2025,1.49,100.000001,0,0,0,0,0,0,1.49,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-174,174,2025,0,0,1.0,27.932961,0.1,2.793296,2.48,69.273744,1.0,27.932961,2.58,72.06704,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-175,175,2025,0.4,7.168459,3.98,71.326165,1.2,21.505377,0,0,4.38,78.494624,1.2,21.505377,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-176,176,2025,0,0,1.89,90.430621,0.2,9.569378,0,0,1.89,90.430621,0.2,9.569378,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-177,177,2025,0,0,2.01,95.260663,0.1,4.739337,0,0,2.01,95.260663,0.1,4.739337,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-178,178,2025,1.4,20.0,1.1,15.714286,1.3,18.571428,3.2,45.714286,2.5,35.714286,4.5,64.285714,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-179,179,2025,0,0,3.0,61.22449,1.9,38.77551,0,0,3.0,61.22449,1.9,38.77551,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-180,180,2025,0,0,1.05,35.593219,1.6,54.237289,0.3,10.169492,1.05,35.593219,1.9,64.406781,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-181,181,2025,0,0,0.7,55.555555,0.3,23.809525,0.26,20.63492,0.7,55.555555,0.56,44.444445,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-182,182,2025,0.1,18.181818,0.2,36.363637,0.1,18.181818,0.15,27.272728,0.3,54.545455,0.25,45.454547,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-183,183,2025,0,0,0,0,0,0,3.67,100.000002,0,0,3.67,100.000002,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-184,184,2025,1.2,53.097347,1.06,46.902652,0,0,0,0,2.26,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-185,185,2025,0,0,0.58,59.183672,0.1,10.204082,0.3,30.612246,0.58,59.183672,0.4,40.816328,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-186,186,2025,0,0,0.2,5.509642,1.1,30.303031,2.33,64.187328,0.2,5.509642,3.43,94.490359,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-187,187,2025,0,0,0,0,0,0,1.57,100.0,0,0,1.57,100.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-188,188,2025,0.3,68.181821,0.04,9.090909,0,0,0.1,22.727273,0.34,77.27273,0.1,22.727273,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-189,189,2025,0.5,29.239766,1.21,70.760236,0,0,0,0,1.71,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-190,190,2025,0.1,14.285714,0.3,42.857145,0.2,28.571429,0.1,14.285714,0.4,57.142859,0.3,42.857143,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-191,191,2025,0,0,0,0,0.1,15.151515,0.56,84.848485,0,0,0.66,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-192,192,2025,0.98,83.050849,0.1,8.474576,0.1,8.474576,0,0,1.08,91.525425,0.1,8.474576,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-193,193,2025,0,0,0.9,31.914893,1.02,36.170212,0.9,31.914893,0.9,31.914893,1.92,68.085105,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-194,194,2025,0.1,6.024096,1.56,93.9759,0,0,0,0,1.66,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-195,195,2025,0,0,2.6,90.909088,0.26,9.090909,0,0,2.6,90.909088,0.26,9.090909,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-196,196,2025,0,0,3.8,75.999999,1.1,22.0,0.1,2.0,3.8,75.999999,1.2,24.000001,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-197,197,2025,0.7,16.706444,2.49,59.427208,1.0,23.866348,0,0,3.19,76.133651,1.0,23.866348,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-198,198,2025,0,0,0.1,10.309279,0.3,30.927836,0.57,58.762886,0.1,10.309279,0.87,89.690722,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-199,199,2025,0,0,0,0,0.2,66.666668,0.1,33.333334,0,0,0.3,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-200,200,2025,0.36,64.285717,0.2,35.714286,0,0,0,0,0.56,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-201,201,2025,0,0,0.9,94.73684,0,0,0.05,5.263158,0.9,94.73684,0.05,5.263158,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-202,202,2025,0,0,4.45,99.999996,0,0,0,0,4.45,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-203,203,2025,1.81,94.764395,0.1,5.235602,0,0,0,0,1.91,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-204,204,2025,0.4,6.289308,0.8,12.578617,2.1,33.018866,3.06,48.113207,1.2,18.867925,5.16,81.132073,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-205,205,2025,1.13,36.102236,1.4,44.728434,0.6,19.16933,0,0,2.53,80.83067,0.6,19.16933,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-206,206,2025,0.23,22.330097,0.6,58.252429,0.2,19.417476,0,0,0.83,80.582527,0.2,19.417476,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-207,207,2025,1.03,37.728937,1.5,54.945055,0.2,7.326007,0,0,2.53,92.673992,0.2,7.326007,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-208,208,2025,3.35,99.999997,0,0,0,0,0,0,3.35,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-209,209,2025,1.0,34.129693,0.1,3.412969,0.53,18.088736,1.3,44.368599,1.1,37.542662,1.83,62.457335,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-210,210,2025,0.1,6.410257,1.16,74.358972,0.3,19.23077,0,0,1.26,80.769229,0.3,19.23077,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-211,211,2025,0,0,1.7,43.478262,0.9,23.017902,1.31,33.503835,1.7,43.478262,2.21,56.521737,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-212,212,2025,0,0,2.3,48.117154,0.3,6.276151,2.18,45.606693,2.3,48.117154,2.48,51.882844,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-213,213,2025,0,0,0.1,4.716981,0.3,14.150944,1.72,81.132077,0.1,4.716981,2.02,95.283021,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-214,214,2025,2.0,45.87156,2.16,49.541286,0.2,4.587156,0,0,4.16,95.412846,0.2,4.587156,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-215,215,2025,0,0,0.4,44.444445,0.5,55.555556,0,0,0.4,44.444445,0.5,55.555556,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-216,216,2025,1.32,100.000004,0,0,0,0,0,0,1.32,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-217,217,2025,0.29,74.358972,0.1,25.641026,0,0,0,0,0.39,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-218,218,2025,0,0,0.54,100.000004,0,0,0,0,0.54,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-219,219,2025,0,0,2.33,99.999997,0,0,0,0,2.33,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-220,220,2025,0,0,0.8,68.965518,0.2,17.24138,0.16,13.793103,0.8,68.965518,0.36,31.034483,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-221,221,2025,0.14,41.176471,0.2,58.82353,0,0,0,0,0.34,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-222,222,2025,0,0,0.64,51.612902,0,0,0.6,48.387099,0.64,51.612902,0.6,48.387099,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-223,223,2025,0,0,1.86,100.000001,0,0,0,0,1.86,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-224,224,2025,0.2,24.390244,0.5,60.97561,0,0,0.12,14.634146,0.7,85.365854,0.12,14.634146,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-225,225,2025,0.69,100.0,0,0,0,0,0,0,0.69,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-226,226,2025,0,0,0,0,0,0,0.62,100.000001,0,0,0.62,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-227,227,2025,1.21,100.000003,0,0,0,0,0,0,1.21,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-228,228,2025,0.82,99.999999,0,0,0,0,0,0,0.82,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-229,229,2025,0.5,39.0625,0.1,7.8125,0,0,0.68,53.125001,0.6,46.875,0.68,53.125001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-230,230,2025,0.61,85.915495,0.1,14.084507,0,0,0,0,0.71,100.000002,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-231,231,2025,0,0,0.23,18.699187,0.5,40.650407,0.5,40.650407,0.23,18.699187,1.0,81.300813,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-232,232,2025,0.42,80.769228,0.1,19.23077,0,0,0,0,0.52,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-233,233,2025,0.34,100.000001,0,0,0,0,0,0,0.34,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-234,234,2025,0.26,24.528301,0.8,75.471699,0,0,0,0,1.06,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-235,235,2025,0.2,40.000001,0.3,60.000002,0,0,0,0,0.5,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-236,236,2025,0.6,100.000004,0,0,0,0,0,0,0.6,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-237,237,2025,0.42,80.769228,0.1,19.23077,0,0,0,0,0.52,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-238,238,2025,0.1,21.276596,0.37,78.723405,0,0,0,0,0.47,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-239,239,2025,0,0,0.1,33.333334,0.2,66.666668,0,0,0.1,33.333334,0.2,66.666668,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-240,240,2025,0,0,0.5,100.0,0,0,0,0,0.5,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-241,241,2025,0,0,0,0,0,0,0.83,99.999998,0,0,0.83,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-242,242,2025,0,0,0,0,0,0,1.05,99.999995,0,0,1.05,99.999995,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-243,243,2025,0.4,28.776979,0.49,35.251799,0.5,35.971223,0,0,0.89,64.028778,0.5,35.971223,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-244,244,2025,0.24,70.588234,0.1,29.411765,0,0,0,0,0.34,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-245,245,2025,0,0,0.16,21.052631,0,0,0.6,78.947372,0.16,21.052631,0.6,78.947372,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-246,246,2025,0,0,1.16,92.063489,0.1,7.936508,0,0,1.16,92.063489,0.1,7.936508,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-247,247,2025,1.31,25.143953,3.6,69.097887,0.3,5.758158,0,0,4.91,94.24184,0.3,5.758158,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-248,248,2025,0,0,0,0,0,0,5.69,100.000001,0,0,5.69,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-249,249,2025,6.6,67.971163,0.7,7.209063,0,0,2.41,24.819774,7.3,75.180225,2.41,24.819774,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-250,250,2025,1.54,35.48387,1.4,32.258064,1.4,32.258064,0,0,2.94,67.741934,1.4,32.258064,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-251,251,2025,1.06,63.855418,0.6,36.14458,0,0,0,0,1.66,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-252,252,2025,0.7,25.735294,2.02,74.264705,0,0,0,0,2.72,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-253,253,2025,0,0,0.4,62.500001,0,0,0.24,37.5,0.4,62.500001,0.24,37.5,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-254,254,2025,1.6,26.229509,2.3,37.704917,1.4,22.950819,0.8,13.114754,3.9,63.934426,2.2,36.065573,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-255,255,2025,0,0,0,0,0,0,0.82,99.999999,0,0,0.82,99.999999,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-256,256,2025,0,0,0,0,0,0,1.46,100.000003,0,0,1.46,100.000003,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-257,257,2025,0.5,58.139535,0.1,11.627907,0,0,0.26,30.232558,0.6,69.767442,0.26,30.232558,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-258,258,2025,2.2,28.758171,3.05,39.86928,2.0,26.143791,0.4,5.228758,5.25,68.627451,2.4,31.372549,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-259,259,2025,0.9,70.312498,0.18,14.062501,0,0,0.2,15.625,1.08,84.374999,0.2,15.625,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-260,260,2025,0,0,0.57,7.949791,6.6,92.050208,0,0,0.57,7.949791,6.6,92.050208,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-261,261,2025,0.3,4.398827,2.22,32.55132,0,0,4.3,63.049856,2.52,36.950147,4.3,63.049856,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-262,262,2025,0.56,27.184466,0,0,0,0,1.5,72.815534,0.56,27.184466,1.5,72.815534,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-263,263,2025,3.0,31.712474,0.3,3.171247,0.5,5.285412,5.66,59.830868,3.3,34.883721,6.16,65.11628,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-264,264,2025,0,0,0.21,25.925925,0.3,37.037039,0.3,37.037039,0.21,25.925925,0.6,74.074077,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-265,265,2025,0,0,0.1,13.513514,0.14,18.918919,0.5,67.567568,0.1,13.513514,0.64,86.486487,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-266,266,2025,0,0,4.18,53.727504,0.9,11.568123,2.7,34.70437,4.18,53.727504,3.6,46.272493,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-267,267,2025,0,0,0.23,53.488373,0.2,46.511629,0,0,0.23,53.488373,0.2,46.511629,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-268,268,2025,0.89,49.72067,0.9,50.279328,0,0,0,0,1.79,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-269,269,2025,0,0,0.21,34.426228,0,0,0.4,65.573771,0.21,34.426228,0.4,65.573771,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-270,270,2025,0.12,99.999998,0,0,0,0,0,0,0.12,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-271,271,2025,0,0,1.06,91.379305,0.1,8.62069,0,0,1.06,91.379305,0.1,8.62069,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-272,272,2025,0,0,0.2,30.303031,0.4,60.606062,0.06,9.090909,0.2,30.303031,0.46,69.69697,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-273,273,2025,0,0,4.7,67.142854,1.9,27.142857,0.4,5.714286,4.7,67.142854,2.3,32.857143,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-274,274,2025,0,0,0,0,0.67,100.000002,0,0,0,0,0.67,100.000002,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-275,275,2025,0,0,0.1,6.329114,1.48,93.670887,0,0,0.1,6.329114,1.48,93.670887,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-276,276,2025,1.05,19.999999,1.8,34.285713,1.7,32.380953,0.7,13.333333,2.85,54.285712,2.4,45.714286,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-277,277,2025,0,0,2.1,77.777774,0.2,7.407408,0.4,14.814815,2.1,77.777774,0.6,22.222223,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-278,278,2025,0,0,0,0,2.23,76.109216,0.7,23.890785,0,0,2.93,100.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-279,279,2025,0,0,0.38,99.999999,0,0,0,0,0.38,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-280,280,2025,0,0,2.76,56.790123,0.3,6.17284,1.8,37.037036,2.76,56.790123,2.1,43.209876,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-281,281,2025,0,0,0.36,31.034484,0.8,68.965518,0,0,0.36,31.034484,0.8,68.965518,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-282,282,2025,0,0,0.3,75.000003,0,0,0.1,25.0,0.3,75.000003,0.1,25.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-283,283,2025,0,0,0.7,39.999999,0.8,45.714286,0.25,14.285714,0.7,39.999999,1.05,60.000001,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-284,284,2025,0,0,1.18,56.730767,0.8,38.461539,0.1,4.807692,1.18,56.730767,0.9,43.269231,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-285,285,2025,0,0,0.83,99.999998,0,0,0,0,0.83,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-286,286,2025,0,0,2.27,99.999999,0,0,0,0,2.27,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-287,287,2025,0,0,0.2,4.807692,0.7,16.826923,3.26,78.365386,0.2,4.807692,3.96,95.192309,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-288,288,2025,0,0,1.36,38.202248,0,0,2.2,61.797754,1.36,38.202248,2.2,61.797754,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-289,289,2025,0.2,6.993007,1.3,45.454544,0.3,10.489511,1.06,37.062935,1.5,52.447551,1.36,47.552446,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-290,290,2025,5.0,100.0,0,0,0,0,0,0,5.0,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-291,291,2025,0.37,100.000001,0,0,0,0,0,0,0.37,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-292,292,2025,0.41,99.999999,0,0,0,0,0,0,0.41,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-293,293,2025,0.4,100.000001,0,0,0,0,0,0,0.4,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-294,294,2025,0.32,99.999998,0,0,0,0,0,0,0.32,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-295,295,2025,0,0,0,0,0.27,100.000004,0,0,0,0,0.27,100.000004,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-296,296,2025,0,0,0.16,61.53846,0.1,38.461539,0,0,0.16,61.53846,0.1,38.461539,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-297,297,2025,0,0,0,0,0,0,0.24,99.999998,0,0,0.24,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-298,298,2025,0,0,0,0,0.21,99.999997,0,0,0,0,0.21,99.999997,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-299,299,2025,5.0,58.823529,0.7,8.235294,0.7,8.235294,2.1,24.705881,5.7,67.058823,2.8,32.941175,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-300,300,2025,0,0,0,0,0.63,28.251121,1.6,71.74888,0,0,2.23,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-301,301,2025,0,0,0,0,0,0,5.26,100.000004,0,0,5.26,100.000004,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-302,302,2025,0,0,0,0,0,0,17.110001,100.000004,0,0,17.110001,100.000004,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-303,303,2025,0,0,0.56,84.848485,0.1,15.151515,0,0,0.56,84.848485,0.1,15.151515,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-304,304,2025,0.13,24.528301,0.3,56.603776,0.1,18.867925,0,0,0.43,81.132077,0.1,18.867925,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-305,305,2025,1.04,99.999996,0,0,0,0,0,0,1.04,99.999996,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-306,306,2025,0.6,27.149322,0.4,18.099548,0.6,27.149322,0.61,27.60181,1.0,45.24887,1.21,54.751132,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-307,307,2025,0,0,0.32,99.999998,0,0,0,0,0.32,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-308,308,2025,0,0,0,0,0.31,100.000001,0,0,0,0,0.31,100.000001,Tidak Mantap Tinggi,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-309,309,2025,0,0,0,0,0,0,0.48,99.999998,0,0,0.48,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-310,310,2025,0.2,2.728513,5.1,69.577079,1.53,20.873124,0.5,6.821282,5.3,72.305592,2.03,27.694406,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-311,311,2025,0.1,4.761905,0.3,14.285715,1.0,47.619048,0.7,33.333333,0.4,19.04762,1.7,80.95238,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-312,312,2025,0,0,0,0,0,0,0.18,100.000004,0,0,0.18,100.000004,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-313,313,2025,0,0,0,0,0,0,0.21,100.0,0,0,0.21,100.0,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-314,314,2025,0,0,0.15,42.857145,0.1,28.571429,0.1,28.571429,0.15,42.857145,0.2,57.142858,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-315,315,2025,0.2,64.51613,0,0,0,0,0.11,35.483871,0.2,64.51613,0.11,35.483871,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-316,316,2025,0.34,100.000001,0,0,0,0,0,0,0.34,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-317,317,2025,0.32,99.999998,0,0,0,0,0,0,0.32,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-318,318,2025,0.28,100.0,0,0,0,0,0,0,0.28,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-319,319,2025,0.17,100.000001,0,0,0,0,0,0,0.17,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-320,320,2025,0.73,100.000003,0,0,0,0,0,0,0.73,100.000003,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-321,321,2025,0,0,0.32,99.999998,0,0,0,0,0.32,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-322,322,2025,0,0,0.29,99.999997,0,0,0,0,0.29,99.999997,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-323,323,2025,0,0,0.28,100.0,0,0,0,0,0.28,100.0,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-324,324,2025,0,0,0,0,0,0,0.3,100.000001,0,0,0.3,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-325,325,2025,0,0,0.1,33.333334,0,0,0.2,66.666668,0.1,33.333334,0.2,66.666668,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-326,326,2025,0,0,0.27,100.000004,0,0,0,0,0.27,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-327,327,2025,0,0,0,0,0,0,1.65,99.999999,0,0,1.65,99.999999,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-328,328,2025,0.2,10.989011,0.8,43.956045,0.22,12.087912,0.6,32.967034,1.0,54.945056,0.82,45.054946,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-329,329,2025,0,0,0.15,100.000004,0,0,0,0,0.15,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-330,330,2025,0.57,99.999999,0,0,0,0,0,0,0.57,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-331,331,2025,0,0,0.2,62.500001,0.1,31.25,0.02,6.25,0.2,62.500001,0.12,37.5,Tidak Mantap Sedang,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-332,332,2025,0,0,0,0,0,0,0.33,100.000004,0,0,0.33,100.000004,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-333,333,2025,0,0,0,0,0,0,0.35,99.999998,0,0,0.35,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-334,334,2025,0,0,0.1,2.439024,1.4,34.146341,2.6,63.414635,0.1,2.439024,4.0,97.560976,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-335,335,2025,0,0,0.66,100.000004,0,0,0,0,0.66,100.000004,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-336,336,2025,0,0,0.34,25.373135,0.6,44.776121,0.4,29.850747,0.34,25.373135,1.0,74.626868,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-337,337,2025,0,0,0.27,47.368423,0.1,17.54386,0.2,35.08772,0.27,47.368423,0.3,52.63158,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-338,338,2025,0,0,1.93,27.849927,0.6,8.658009,4.4,63.492063,1.93,27.849927,5.0,72.150072,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-339,339,2025,0,0,0,0,0,0,2.33,99.999997,0,0,2.33,99.999997,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-340,340,2025,2.1,27.704484,0.4,5.277045,0.1,1.319261,4.98,65.699208,2.5,32.981529,5.08,67.018469,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-341,341,2025,0,0,0,0,0,0,5.61,100.000002,0,0,5.61,100.000002,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-342,342,2025,0,0,0,0,0,0,8.03,99.999997,0,0,8.03,99.999997,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-343,343,2025,0,0,0,0,0,0,3.1,99.999997,0,0,3.1,99.999997,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-344,344,2025,0.7,99.999998,0,0,0,0,0,0,0.7,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-345,345,2025,0.38,99.999999,0,0,0,0,0,0,0.38,99.999999,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-346,346,2025,0.4,100.000001,0,0,0,0,0,0,0.4,100.000001,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-347,347,2025,0,0,0,0,0,0,1.21,99.999998,0,0,1.21,99.999998,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-348,348,2025,0,0,0,0,0,0,1.11,100.000001,0,0,1.11,100.000001,Rusak Berat Dominan,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-349,349,2025,0.1,27.777778,0.26,72.22222,0,0,0,0,0.36,99.999998,0,0,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025
+HSS-KAB-350,350,2025,0.2,28.985508,0.4,57.971015,0,0,0.09,13.043479,0.6,86.956523,0.09,13.043479,Relatif Mantap,Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx,Data_Analitik,FINAL_2025

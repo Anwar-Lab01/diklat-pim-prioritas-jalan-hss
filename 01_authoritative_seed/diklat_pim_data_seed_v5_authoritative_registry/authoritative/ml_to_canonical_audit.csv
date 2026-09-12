@@ -1,0 +1,351 @@
+source_system,source_record_id,source_name,bridge_source,road_key,canonical_display_name,match_method,match_status
+dataset_ml_clean,325,AES Nasution,historical_normative_workbook.nama_ruas,HSS-KAB-035,AES Nasution,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,189,Air Miris - Ds. Wasah Hilir,historical_normative_workbook.nama_ruas,HSS-KAB-234,Air Miris - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,285,Al - Ikhlas - Ds. Baluti,historical_normative_workbook.nama_ruas,HSS-KAB-345,Al - Ikhlas - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,160,Aluh Idut,historical_normative_workbook.nama_ruas,HSS-KAB-008,Aluh Idut,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,75,Amawang Kanan - Wasah Hulu,historical_normative_workbook.nama_ruas,HSS-KAB-032,Amawang Kanan - Wasah Hulu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,33,Amawang Muka - Getek,historical_normative_workbook.nama_ruas,HSS-KAB-031,Amawang Muka - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,133,Ambarai - Madang,historical_normative_workbook.nama_ruas,HSS-KAB-139,Ambarai - Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,148,AMD - Ds. Lok Binuang,historical_normative_workbook.nama_ruas,HSS-KAB-187,AMD - Ds. Lok Binuang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,53,Amparaya - Karangan - Hanau,historical_normative_workbook.nama_ruas,HSS-KAB-214,Amparaya - Karangan - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,328,Anggrek,historical_normative_workbook.nama_ruas,HSS-KAB-011,Anggrek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,280,Angkakai - Ds. Amawang Kiri,historical_normative_workbook.nama_ruas,HSS-KAB-346,Angkakai - Ds. Amawang Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,18,Angkinang - Kayu Abang - Panggang Hijau,historical_normative_workbook.nama_ruas,HSS-KAB-178,Angkinang - Kayu Abang - Panggang Hijau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,32,Angkinang - Telaga Langsat,historical_normative_workbook.nama_ruas,HSS-KAB-175,Angkinang - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,26,Angkinang Selatan - Tawia - Wawaran,historical_normative_workbook.nama_ruas,HSS-KAB-172,Angkinang Selatan - Tawia - Wawaran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,175,Anjiran Rantauan - Ds. Taniran Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-347,Anjiran Rantauan - Ds. Taniran Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,212,Asam Cangkuk - Telaga Bidadari,historical_normative_workbook.nama_ruas,HSS-KAB-097,Asam Cangkuk - Telaga Bidadari,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,183,Asam Duhat - Ds. Pantai Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-348,Asam Duhat - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,194,Asam Seranggan - Asam Tamiyang,historical_normative_workbook.nama_ruas,HSS-KAB-123,Asam Seranggan - Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,267,At-Taubah - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-238,At-Taubah - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,78,Badaun - Ds. Bjayau Lama,historical_normative_workbook.nama_ruas,HSS-KAB-343,Badaun - Ds. Bjayau Lama,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,4,Bago Tanggul - Katilang - Teratai,historical_normative_workbook.nama_ruas,HSS-KAB-249,Bago Tanggul - Katilang - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,158,Baiturrahim Parincahan,historical_normative_workbook.nama_ruas,HSS-KAB-069,Baiturrahim Parincahan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,14,Bajayau - Ds. Bajayau Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-340,Bajayau - Ds. Bajayau Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,79,Bakarung - Rantauan,historical_normative_workbook.nama_ruas,HSS-KAB-167,Bakarung - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,48,Bakarung -Tabihi - Karang Jawa,historical_normative_workbook.nama_ruas,HSS-KAB-169,Bakarung -Tabihi - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,65,Bakarung Tengah - Karang Jawa,historical_normative_workbook.nama_ruas,HSS-KAB-056,Bakarung Tengah - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,101,Balaimas - Hanau,historical_normative_workbook.nama_ruas,HSS-KAB-219,Balaimas - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,137,Balanti - (Ex. P3DT),historical_normative_workbook.nama_ruas,HSS-KAB-251,Balanti - (Ex. P3DT),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,154,Balimau - Murung Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-256,Balimau - Murung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,61,Baluti - Jambu Hulu (Paku),historical_normative_workbook.nama_ruas,HSS-KAB-040,Baluti - Jambu Hulu (Paku),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,239,Bamban (Tibung) - Martajiwa,historical_normative_workbook.nama_ruas,HSS-KAB-191,Bamban (Tibung) - Martajiwa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,116,Bamban Selatan - Pakuan,historical_normative_workbook.nama_ruas,HSS-KAB-176,Bamban Selatan - Pakuan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,134,Bamban Selatan - Pakuan Balunan,historical_normative_workbook.nama_ruas,HSS-KAB-189,Bamban Selatan - Pakuan Balunan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,70,Bamban Selatan - Tanggang - Panggang Hijau,historical_normative_workbook.nama_ruas,HSS-KAB-174,Bamban Selatan - Tanggang - Panggang Hijau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,169,Bamban Tengah - Lok Nyiur,historical_normative_workbook.nama_ruas,HSS-KAB-181,Bamban Tengah - Lok Nyiur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,112,Bamban Utara - Longawang,historical_normative_workbook.nama_ruas,HSS-KAB-177,Bamban Utara - Longawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,222,Bangga TMMD,historical_normative_workbook.nama_ruas,HSS-KAB-112,Bangga TMMD,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,31,Banua Hanyar - Ds. Tanjung Selor,historical_normative_workbook.nama_ruas,HSS-KAB-341,Banua Hanyar - Ds. Tanjung Selor,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,159,Banua Kambang - Ds. Wasah Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-243,Banua Kambang - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,114,Banyu Barau - Sei Kalang,historical_normative_workbook.nama_ruas,HSS-KAB-050,Banyu Barau - Sei Kalang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,172,Bariang - Getek,historical_normative_workbook.nama_ruas,HSS-KAB-046,Bariang - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,141,Bariang - Patigan,historical_normative_workbook.nama_ruas,HSS-KAB-075,Bariang - Patigan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,162,Baru - Asam Desa Baru,historical_normative_workbook.nama_ruas,HSS-KAB-125,Baru - Asam Desa Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,102,Baru - Ds. Bajayau,historical_normative_workbook.nama_ruas,HSS-KAB-339,Baru - Ds. Bajayau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,215,Batang Kulur Kanan - Batang Kulur Kiri,historical_normative_workbook.nama_ruas,HSS-KAB-130,Batang Kulur Kanan - Batang Kulur Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,143,Batang Kulur Kanan - Bumi Berkat (Kisung),historical_normative_workbook.nama_ruas,HSS-KAB-129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,109,Batang Kulur Kanan - Sarangan,historical_normative_workbook.nama_ruas,HSS-KAB-091,Batang Kulur Kanan - Sarangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,255,Batang Kulur Kiri - Durian Landung,historical_normative_workbook.nama_ruas,HSS-KAB-113,Batang Kulur Kiri - Durian Landung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,55,Batu Laki - Muara Pipii,historical_normative_workbook.nama_ruas,HSS-KAB-154,Batu Laki - Muara Pipii,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,249,Bayampah - Tanuhi - Tugu Niih,historical_normative_workbook.nama_ruas,HSS-KAB-269,Bayampah - Tanuhi - Tugu Niih,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,86,Bayanan - Habirau Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-289,Bayanan - Habirau Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,108,Bayanan - Pihanin,historical_normative_workbook.nama_ruas,HSS-KAB-306,Bayanan - Pihanin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,324,Bina Bakat,historical_normative_workbook.nama_ruas,HSS-KAB-039,Bina Bakat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,54,Binjai (Sirih Hulu) - Ds. Seranggan,historical_normative_workbook.nama_ruas,HSS-KAB-250,Binjai (Sirih Hulu) - Ds. Seranggan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,129,Biti - Sungai Kupang (Karya Bakti TNI),historical_normative_workbook.nama_ruas,HSS-KAB-082,Biti - Sungai Kupang (Karya Bakti TNI),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,291,Brigjen Katamso,historical_normative_workbook.nama_ruas,HSS-KAB-023,Brigjen Katamso,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,225,Bubuih - Ds. Halunuk,historical_normative_workbook.nama_ruas,HSS-KAB-265,Bubuih - Ds. Halunuk,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,83,Bubuih (Ds. Halunuk) - Kandihin,historical_normative_workbook.nama_ruas,HSS-KAB-278,Bubuih (Ds. Halunuk) - Kandihin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,220,Budi Bakti - Tiga Desember,historical_normative_workbook.nama_ruas,HSS-KAB-028,Budi Bakti - Tiga Desember,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,165,Buluh - Ds. Tebing Tinggi,historical_normative_workbook.nama_ruas,HSS-KAB-229,Buluh - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,152,Bumi Berkat - Mungkur Galah,historical_normative_workbook.nama_ruas,HSS-KAB-092,Bumi Berkat - Mungkur Galah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,181,Buntu Muara Hatib - Bts. Kab. HST,historical_normative_workbook.nama_ruas,HSS-KAB-271,Buntu Muara Hatib - Bts. Kab. HST,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,299,Cangkingan Herman,historical_normative_workbook.nama_ruas,HSS-KAB-331,Cangkingan Herman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,341,Dahlia,historical_normative_workbook.nama_ruas,HSS-KAB-015,Dahlia,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,45,Datar Belimbing - Muara Kitar,historical_normative_workbook.nama_ruas,HSS-KAB-280,Datar Belimbing - Muara Kitar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,275,DI. Panjaitan - Loklua,historical_normative_workbook.nama_ruas,HSS-KAB-033,DI. Panjaitan - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,250,Ds. Kapuh Tengah (Menuju Majelis Talim),historical_normative_workbook.nama_ruas,HSS-KAB-236,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,308,Firdaus - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-239,Firdaus - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,98,Galuntang Tayub - Ds. Madang,historical_normative_workbook.nama_ruas,HSS-KAB-162,Galuntang Tayub - Ds. Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,151,Gambah Dalam - Rantauan,historical_normative_workbook.nama_ruas,HSS-KAB-052,Gambah Dalam - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,124,Gambah Dalam Barat - Mahulung,historical_normative_workbook.nama_ruas,HSS-KAB-076,Gambah Dalam Barat - Mahulung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,164,Gambah Luar - Gambah Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-053,Gambah Luar - Gambah Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,206,Gambah Luar - Sungai Kudung,historical_normative_workbook.nama_ruas,HSS-KAB-055,Gambah Luar - Sungai Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,80,Gambir - Sp. Empat Lungau,historical_normative_workbook.nama_ruas,HSS-KAB-045,Gambir - Sp. Empat Lungau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,251,Gang Bidan (Ds. Tambak Bitin),historical_normative_workbook.nama_ruas,HSS-KAB-330,Gang Bidan (Ds. Tambak Bitin),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,180,Garunggang - Hantamangu,historical_normative_workbook.nama_ruas,HSS-KAB-220,Garunggang - Hantamangu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,259,Gerilya - Ds. Simpur,historical_normative_workbook.nama_ruas,HSS-KAB-232,Gerilya - Ds. Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,326,Gerilya / (Depan PUSTU Habirau),historical_normative_workbook.nama_ruas,HSS-KAB-297,Gerilya / (Depan PUSTU Habirau),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,231,Goha - Ds. Amawang Kanan,historical_normative_workbook.nama_ruas,HSS-KAB-344,Goha - Ds. Amawang Kanan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,39,Gumbil - Masimpan,historical_normative_workbook.nama_ruas,HSS-KAB-196,Gumbil - Masimpan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,248,Guru H. Izim - Ds. Pantai Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-226,Guru H. Izim - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,346,H. Jarkasi - Ds. Sungai Paring,historical_normative_workbook.nama_ruas,HSS-KAB-074,H. Jarkasi - Ds. Sungai Paring,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,228,H. Saim Garunggang - Kalimput,historical_normative_workbook.nama_ruas,HSS-KAB-230,H. Saim Garunggang - Kalimput,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,292,H.M. Thaib,historical_normative_workbook.nama_ruas,HSS-KAB-314,H.M. Thaib,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,300,Habib,historical_normative_workbook.nama_ruas,HSS-KAB-294,Habib,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,343,Habib Ibrahim - Ds. Sei Mandala,historical_normative_workbook.nama_ruas,HSS-KAB-319,Habib Ibrahim - Ds. Sei Mandala,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,252,Hakurung Dalam - Ds. Sungai Haji,historical_normative_workbook.nama_ruas,HSS-KAB-337,Hakurung Dalam - Ds. Sungai Haji,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,111,Halaban,historical_normative_workbook.nama_ruas,HSS-KAB-213,Halaban,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,125,Halayung - Hantarukung,historical_normative_workbook.nama_ruas,HSS-KAB-203,Halayung - Hantarukung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,12,Halunuk - Riam Tajam/Talo - Hamak Umpaya,historical_normative_workbook.nama_ruas,HSS-KAB-266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,198,Hamak - Umbai,historical_normative_workbook.nama_ruas,HSS-KAB-198,Hamak - Umbai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,56,Hamak Timur - Umpaya,historical_normative_workbook.nama_ruas,HSS-KAB-197,Hamak Timur - Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,307,Hamak Utara - Samaragi,historical_normative_workbook.nama_ruas,HSS-KAB-199,Hamak Utara - Samaragi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,204,Hamalau - Anjiran,historical_normative_workbook.nama_ruas,HSS-KAB-086,Hamalau - Anjiran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,156,Hamalau - Asam Cangkok,historical_normative_workbook.nama_ruas,HSS-KAB-118,Hamalau - Asam Cangkok,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,179,Hamalau - Ganda,historical_normative_workbook.nama_ruas,HSS-KAB-106,Hamalau - Ganda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,223,Hamalau - Pahampangan,historical_normative_workbook.nama_ruas,HSS-KAB-098,Hamalau - Pahampangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,42,Hamalau - Telaga Bidadari - Wasah Hilir,historical_normative_workbook.nama_ruas,HSS-KAB-102,Hamalau - Telaga Bidadari - Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,59,Hamayung - Hakurung Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-334,Hamayung - Hakurung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,334,Harapan (SDN Habirau II)/ Sei. Palangan,historical_normative_workbook.nama_ruas,HSS-KAB-298,Harapan (SDN Habirau II)/ Sei. Palangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,92,Haratai 2 (Balai Ujung Atas) SDN Haratai2,historical_normative_workbook.nama_ruas,HSS-KAB-277,Haratai 2 (Balai Ujung Atas) SDN Haratai2,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,36,Haratai 3 (Balai Kedayang) / SDN Haratai 3,historical_normative_workbook.nama_ruas,HSS-KAB-276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,245,Haritas (PT. Pertani),historical_normative_workbook.nama_ruas,HSS-KAB-110,Haritas (PT. Pertani),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,93,Hariti - Sungai Raya Selatan,historical_normative_workbook.nama_ruas,HSS-KAB-119,Hariti - Sungai Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,19,Hulu Banyu - Datar Mangkung - Tumingki,historical_normative_workbook.nama_ruas,HSS-KAB-273,Hulu Banyu - Datar Mangkung - Tumingki,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,131,Hulu Banyu - Pantai Langsat,historical_normative_workbook.nama_ruas,HSS-KAB-268,Hulu Banyu - Pantai Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,67,Ida Manggala - Padang Makmur,historical_normative_workbook.nama_ruas,HSS-KAB-099,Ida Manggala - Padang Makmur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,321,Inst. PDAM Negara,historical_normative_workbook.nama_ruas,HSS-KAB-296,Inst. PDAM Negara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,187,Jafri Zamzam,historical_normative_workbook.nama_ruas,HSS-KAB-029,Jafri Zamzam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,142,Jambu Hulu - Paku Pantai,historical_normative_workbook.nama_ruas,HSS-KAB-159,Jambu Hulu - Paku Pantai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,294,Jangkang - Ds. Wasah Hilir,historical_normative_workbook.nama_ruas,HSS-KAB-233,Jangkang - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,136,Jangkang - Pantai Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-062,Jangkang - Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,230,Jarau - Parandakan,historical_normative_workbook.nama_ruas,HSS-KAB-127,Jarau - Parandakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,96,Jend. Sudirman,historical_normative_workbook.nama_ruas,HSS-KAB-034,Jend. Sudirman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,117,Kacang Parang (Ulang) - Balai Mawak-Kias,historical_normative_workbook.nama_ruas,HSS-KAB-284,Kacang Parang (Ulang) - Balai Mawak-Kias,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,213,Kacang Parang (Ulang) - Balai Wariung,historical_normative_workbook.nama_ruas,HSS-KAB-285,Kacang Parang (Ulang) - Balai Wariung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,272,Kalaka Dayuh - Ds. Sungai Raya Utara,historical_normative_workbook.nama_ruas,HSS-KAB-134,Kalaka Dayuh - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,276,Kalaka Indah - Perumnas Tibung,historical_normative_workbook.nama_ruas,HSS-KAB-065,Kalaka Indah - Perumnas Tibung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,205,Kalimput Desa Wasah Hilir,historical_normative_workbook.nama_ruas,HSS-KAB-215,Kalimput Desa Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,51,Kaliring - Sp. Padang Batung,historical_normative_workbook.nama_ruas,HSS-KAB-144,Kaliring - Sp. Padang Batung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,37,Kalumpang - Balimau,historical_normative_workbook.nama_ruas,HSS-KAB-247,Kalumpang - Balimau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,91,Kalumpang - Baruh,historical_normative_workbook.nama_ruas,HSS-KAB-252,Kalumpang - Baruh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,29,Kalumpang (Ds. Balanti) - Teratai,historical_normative_workbook.nama_ruas,HSS-KAB-248,Kalumpang (Ds. Balanti) - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,219,Kalumpang Selatan - Ds. Asam Tamiyang,historical_normative_workbook.nama_ruas,HSS-KAB-255,Kalumpang Selatan - Ds. Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,335,Kamboja,historical_normative_workbook.nama_ruas,HSS-KAB-014,Kamboja,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,293,Kaminting Batu,historical_normative_workbook.nama_ruas,HSS-KAB-333,Kaminting Batu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,298,Kampung Kawat,historical_normative_workbook.nama_ruas,HSS-KAB-332,Kampung Kawat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,171,Kandangan Hulu - Sp. Tabihi,historical_normative_workbook.nama_ruas,HSS-KAB-049,Kandangan Hulu - Sp. Tabihi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,301,Kantor Camat Daha Selatan II,historical_normative_workbook.nama_ruas,HSS-KAB-307,Kantor Camat Daha Selatan II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,347,Kantor Camat Loksado II,historical_normative_workbook.nama_ruas,HSS-KAB-270,Kantor Camat Loksado II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,260,Karampaci - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-237,Karampaci - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,184,Karang Intan - Tanah Bangkang,historical_normative_workbook.nama_ruas,HSS-KAB-109,Karang Intan - Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,62,Karang Jawa -Ambarai - Sungai Bungur,historical_normative_workbook.nama_ruas,HSS-KAB-138,Karang Jawa -Ambarai - Sungai Bungur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,126,Karasikan - Sarang Halang,historical_normative_workbook.nama_ruas,HSS-KAB-103,Karasikan - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,207,Karya Bakti - Ds. Balimau,historical_normative_workbook.nama_ruas,HSS-KAB-257,Karya Bakti - Ds. Balimau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,197,Kayu Abang - Ds. Anjiran,historical_normative_workbook.nama_ruas,HSS-KAB-185,Kayu Abang - Ds. Anjiran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,233,Kayu Abang - Paya,historical_normative_workbook.nama_ruas,HSS-KAB-190,Kayu Abang - Paya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,329,Kenanga,historical_normative_workbook.nama_ruas,HSS-KAB-012,Kenanga,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,305,Kenanga - Ds. Baruh Kambang,historical_normative_workbook.nama_ruas,HSS-KAB-315,Kenanga - Ds. Baruh Kambang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,234,Keramat Sakti - Ds. Tebing Tinggi,historical_normative_workbook.nama_ruas,HSS-KAB-350,Keramat Sakti - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,314,Kesehatan - Komp. Rmh Dokter,historical_normative_workbook.nama_ruas,HSS-KAB-037,Kesehatan - Komp. Rmh Dokter,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,295,KH. Ramli - DS. Amparaya,historical_normative_workbook.nama_ruas,HSS-KAB-221,KH. Ramli - DS. Amparaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,331,Kolonel Sugiono,historical_normative_workbook.nama_ruas,HSS-KAB-024,Kolonel Sugiono,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,199,KS. Tubun,historical_normative_workbook.nama_ruas,HSS-KAB-016,KS. Tubun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,238,Lambuk - Ds. Tumingki,historical_normative_workbook.nama_ruas,HSS-KAB-274,Lambuk - Ds. Tumingki,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,21,Loklahung - Kamawakan,historical_normative_workbook.nama_ruas,HSS-KAB-261,Loklahung - Kamawakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,221,Loklahung - Malaris,historical_normative_workbook.nama_ruas,HSS-KAB-264,Loklahung - Malaris,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,17,Loksado - Haratai,historical_normative_workbook.nama_ruas,HSS-KAB-260,Loksado - Haratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,168,Loksado - Loklahung,historical_normative_workbook.nama_ruas,HSS-KAB-259,Loksado - Loklahung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,103,Loksado - Pantai Dusin,historical_normative_workbook.nama_ruas,HSS-KAB-286,Loksado - Pantai Dusin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,138,Longawang - Gumbil,historical_normative_workbook.nama_ruas,HSS-KAB-194,Longawang - Gumbil,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,283,Lorong Bupati,historical_normative_workbook.nama_ruas,HSS-KAB-081,Lorong Bupati,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,82,Madang - Ambutun,historical_normative_workbook.nama_ruas,HSS-KAB-152,Madang - Ambutun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,286,Makam Habib - Desa Lumpangi,historical_normative_workbook.nama_ruas,HSS-KAB-279,Makam Habib - Desa Lumpangi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,147,Malaris - Loapanggang,historical_normative_workbook.nama_ruas,HSS-KAB-275,Malaris - Loapanggang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,3,Malilingin - Lokbahan - Paniungan,historical_normative_workbook.nama_ruas,HSS-KAB-141,Malilingin - Lokbahan - Paniungan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,49,Malilingin - Muara Hariang,historical_normative_workbook.nama_ruas,HSS-KAB-157,Malilingin - Muara Hariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,57,Malinau - Kandihin,historical_normative_workbook.nama_ruas,HSS-KAB-287,Malinau - Kandihin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,5,Malinau - Katingin - Kamawakan,historical_normative_workbook.nama_ruas,HSS-KAB-263,Malinau - Katingin - Kamawakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,87,Mandampa - Longawang,historical_normative_workbook.nama_ruas,HSS-KAB-195,Mandampa - Longawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,28,Mandapai - Madang,historical_normative_workbook.nama_ruas,HSS-KAB-143,Mandapai - Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,235,Mangamol - Ds. Pantai Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-225,Mangamol - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,60,Mangaris - Limau Manis,historical_normative_workbook.nama_ruas,HSS-KAB-120,Mangaris - Limau Manis,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,166,Manggis - Ds. Baru,historical_normative_workbook.nama_ruas,HSS-KAB-131,Manggis - Ds. Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,232,Mangunang - Ds. Sungai Raya Utara,historical_normative_workbook.nama_ruas,HSS-KAB-117,Mangunang - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,274,Matang Gadung - Halalang,historical_normative_workbook.nama_ruas,HSS-KAB-115,Matang Gadung - Halalang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,2,Mawangi - Bukuanin - Telaga Langsat,historical_normative_workbook.nama_ruas,HSS-KAB-142,Mawangi - Bukuanin - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,100,Mawangi - Pariangan,historical_normative_workbook.nama_ruas,HSS-KAB-158,Mawangi - Pariangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,319,Mawar (Kandangan Utara),historical_normative_workbook.nama_ruas,HSS-KAB-013,Mawar (Kandangan Utara),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,330,Mawar (Daha Selatan),historical_normative_workbook.nama_ruas,HSS-KAB-295,Mawar (Daha Selatan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,195,Menuju SMP 7 - Ds. Gambah Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-078,Menuju SMP 7 - Ds. Gambah Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,270,Menuju SMPN Malilingin,historical_normative_workbook.nama_ruas,HSS-KAB-163,Menuju SMPN Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,311,Menuju Stadion 2 Desember,historical_normative_workbook.nama_ruas,HSS-KAB-007,Menuju Stadion 2 Desember,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,216,Merah Johansyah - Melati,historical_normative_workbook.nama_ruas,HSS-KAB-006,Merah Johansyah - Jl. Melati,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,336,Mesjid Quba,historical_normative_workbook.nama_ruas,HSS-KAB-059,Mesjid Quba,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,309,MIN Pandak Daun,historical_normative_workbook.nama_ruas,HSS-KAB-325,MIN Pandak Daun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,128,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-223,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,350,Monumen 17 Mei - Mandapai,historical_normative_workbook.nama_ruas,HSS-KAB-153,Monumen 17 Mei - Mandapai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,145,Muara Banta - Karang Jawa,historical_normative_workbook.nama_ruas,HSS-KAB-047,Muara Banta - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,63,Muara Hariang - Bayumbung,historical_normative_workbook.nama_ruas,HSS-KAB-165,Muara Hariang - Bayumbung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,273,Muara Kitar - Desa Lumpangi,historical_normative_workbook.nama_ruas,HSS-KAB-267,Muara Kitar - Desa Lumpangi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,47,Muara Pipii - Tambak Pipii,historical_normative_workbook.nama_ruas,HSS-KAB-155,Muara Pipii - Tambak Pipii,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,269,Munggu Raya - Ds. Hariti,historical_normative_workbook.nama_ruas,HSS-KAB-121,Munggu Raya - Ds. Hariti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,229,Mungkur Galah - Lokpaikat,historical_normative_workbook.nama_ruas,HSS-KAB-128,Mungkur Galah - Lokpaikat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,35,Muning Tengah - Batang Alai (Pihanin Raya),historical_normative_workbook.nama_ruas,HSS-KAB-301,Muning Tengah - Batang Alai (Pihanin Raya),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,1,Muning Tengah - Ds. Muning Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-302,Muning Tengah - Ds. Muning Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,277,Musyawarah (Kandangan),historical_normative_workbook.nama_ruas,HSS-KAB-020,Musyawarah (Kandangan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,302,Musyawarah (Nagara),historical_normative_workbook.nama_ruas,HSS-KAB-292,Musyawarah (Nagara),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,258,Negara - Tumbukan Banyu,historical_normative_workbook.nama_ruas,HSS-KAB-304,Negara - Tumbukan Banyu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,312,Newangsekarti - Ds. Gambah Luar Muka,historical_normative_workbook.nama_ruas,HSS-KAB-070,Newangsekarti - Ds. Gambah Luar Muka,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,118,Niagara (Ds. Halunuk) - Ayan,historical_normative_workbook.nama_ruas,HSS-KAB-262,Niagara (Ds. Halunuk) - Ayan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,278,Nomura,historical_normative_workbook.nama_ruas,HSS-KAB-080,Nomura,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,287,Nusa Indah,historical_normative_workbook.nama_ruas,HSS-KAB-010,Nusa Indah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,6,Padang Batung - Batulaki - Malilingin,historical_normative_workbook.nama_ruas,HSS-KAB-140,Padang Batung - Batulaki - Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,174,Padang Haur - Ds. Wasah Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-231,Padang Haur - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,236,Padang Palas,historical_normative_workbook.nama_ruas,HSS-KAB-063,Padang Palas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,106,Padang Rasau (Tambak Tamiang) - Paku Pantai,historical_normative_workbook.nama_ruas,HSS-KAB-161,Padang Rasau (Tambak Tamiang) - Paku Pantai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,333,Pagar Haur - Malutu,historical_normative_workbook.nama_ruas,HSS-KAB-145,Pagar Haur - Malutu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,74,Pagat Batu - Muara Hariang,historical_normative_workbook.nama_ruas,HSS-KAB-148,Pagat Batu - Muara Hariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,202,Paharuangan - Asam Dua,historical_normative_workbook.nama_ruas,HSS-KAB-122,Paharuangan - Asam Dua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,123,Paharuangan - Sei. Raya Selatan,historical_normative_workbook.nama_ruas,HSS-KAB-111,Paharuangan - Sei. Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,296,Pajah Api - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-244,Pajah Api - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,130,Pakan Dalam - Kaminting Batu,historical_normative_workbook.nama_ruas,HSS-KAB-328,Pakan Dalam - Kaminting Batu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,303,Pakan Dalam I,historical_normative_workbook.nama_ruas,HSS-KAB-321,Pakan Dalam I,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,313,Pakan Dalam II,historical_normative_workbook.nama_ruas,HSS-KAB-322,Pakan Dalam II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,315,Pakan Dalam III,historical_normative_workbook.nama_ruas,HSS-KAB-323,Pakan Dalam III,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,127,Paku (Jambu Hulu) - Ganda,historical_normative_workbook.nama_ruas,HSS-KAB-149,Paku (Jambu Hulu) - Ganda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,167,Palajau - Ds. Baluti,historical_normative_workbook.nama_ruas,HSS-KAB-083,Palajau - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,214,Palas - Ds. Wasah Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-241,Palas - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,15,Pandak Daun - Baruh Jaya - Samuda,historical_normative_workbook.nama_ruas,HSS-KAB-310,Pandak Daun - Baruh Jaya - Samuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,139,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,271,Pandan Sari - Ds. Angkinang,historical_normative_workbook.nama_ruas,HSS-KAB-188,Pandan Sari - Ds. Angkinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,188,Pandulangan - Kalinduku,historical_normative_workbook.nama_ruas,HSS-KAB-170,Pandulangan - Kalinduku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,253,Pangeran Antasari - Loklua,historical_normative_workbook.nama_ruas,HSS-KAB-001,Pangeran Antasari - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,68,Panggang Hijau - Ds. Tawar,historical_normative_workbook.nama_ruas,HSS-KAB-183,Panggang Hijau - Ds. Tawar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,186,Panglima Batur,historical_normative_workbook.nama_ruas,HSS-KAB-009,Panglima Batur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,150,Panjampang Bahagia - Bayur,historical_normative_workbook.nama_ruas,HSS-KAB-210,Panjampang Bahagia - Bayur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,46,Panjampang Bahagia - Hanau,historical_normative_workbook.nama_ruas,HSS-KAB-212,Panjampang Bahagia - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,52,Pantai Langsat - Umpaya,historical_normative_workbook.nama_ruas,HSS-KAB-202,Pantai Langsat - Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,257,Papagaran - Ds. Amawang Kanan,historical_normative_workbook.nama_ruas,HSS-KAB-218,Papagaran - Ds. Amawang Kanan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,196,Papagaran/Palangsatan,historical_normative_workbook.nama_ruas,HSS-KAB-057,Papagaran/Palangsatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,155,Papancan - Ds. Tanah Bangkang,historical_normative_workbook.nama_ruas,HSS-KAB-124,Papancan - Ds. Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,310,Paramaian,historical_normative_workbook.nama_ruas,HSS-KAB-324,Paramaian,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,240,Parincahan - Singakarsa (Harapan),historical_normative_workbook.nama_ruas,HSS-KAB-027,Parincahan - Singakarsa (Jl. Harapan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,316,Parindra,historical_normative_workbook.nama_ruas,HSS-KAB-018,Parindra,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,317,Pasar Kandangan - Oprit Jembt. Loklua,historical_normative_workbook.nama_ruas,HSS-KAB-003,Pasar Kandangan - Oprit Jembt. Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,191,Pegangsaan Timur - Teluk Aman,historical_normative_workbook.nama_ruas,HSS-KAB-054,Pegangsaan Timur - Teluk Aman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,200,Pembangunan - Ds. Sungai Raya Utara,historical_normative_workbook.nama_ruas,HSS-KAB-133,Pembangunan - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,322,Pemuda,historical_normative_workbook.nama_ruas,HSS-KAB-017,Pemuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,217,Pendawa - Ds. Tebing Tinggi,historical_normative_workbook.nama_ruas,HSS-KAB-224,Pendawa - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,290,Pertanian - Ds. Wasah Tengah,historical_normative_workbook.nama_ruas,HSS-KAB-349,Pertanian - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,304,Pertukangan,historical_normative_workbook.nama_ruas,HSS-KAB-317,Pertukangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,320,Pesantren Muradiyah,historical_normative_workbook.nama_ruas,HSS-KAB-326,Pesantren Muradiyah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,218,Pianggu,historical_normative_workbook.nama_ruas,HSS-KAB-228,Pianggu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,332,Rahmah Bahran,historical_normative_workbook.nama_ruas,HSS-KAB-022,Rahmah Bahran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,177,Rambai - Bariang,historical_normative_workbook.nama_ruas,HSS-KAB-061,Rambai - Bariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,178,Rantauan - Sungai Baru (Pulau),historical_normative_workbook.nama_ruas,HSS-KAB-192,Rantauan - Sungai Baru (Jl. Pulau),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,176,Rawati - Ds. Panjampang Bahagia,historical_normative_workbook.nama_ruas,HSS-KAB-227,Rawati - Ds. Panjampang Bahagia,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,69,Rel Angkinang - TMMD Angkinang,historical_normative_workbook.nama_ruas,HSS-KAB-186,Rel Angkinang - TMMD Angkinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,349,RS. Hasan Basry II,historical_normative_workbook.nama_ruas,HSS-KAB-084,RS. Hasan Basry II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,161,Sakincung - Ds. Hakurung Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-336,Sakincung - Ds. Hakurung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,340,Samping Bappeda - Mesjid Darul Halik,historical_normative_workbook.nama_ruas,HSS-KAB-038,Samping Bappeda - Mesjid Darul Halik,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,344,Samping Kantor Camat Daha Utara,historical_normative_workbook.nama_ruas,HSS-KAB-329,Samping Kantor Camat Daha Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,327,Samping Mesjid Mandapai,historical_normative_workbook.nama_ruas,HSS-KAB-164,Samping Mesjid Mandapai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,8,Samuda - Bajayau,historical_normative_workbook.nama_ruas,HSS-KAB-299,Samuda - Bajayau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,113,Sarang Halang Padang - Sp. Batang Kulur,historical_normative_workbook.nama_ruas,HSS-KAB-105,Sarang Halang Padang - Sp. Batang Kulur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,288,Satria,historical_normative_workbook.nama_ruas,HSS-KAB-291,Satria,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,99,Sei Kupang Utara - Simp. Empat Lungau,historical_normative_workbook.nama_ruas,HSS-KAB-042,Sei Kupang Utara - Simp. Empat Lungau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,115,Sei. Mandala Murung Raya,historical_normative_workbook.nama_ruas,HSS-KAB-311,Sei. Mandala Murung Raya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,281,Sekolah Islam (Kandangan Barat),historical_normative_workbook.nama_ruas,HSS-KAB-021,Sekolah Islam (Kandangan Barat),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,338,Sekolah Islam (Sungai Pinang),historical_normative_workbook.nama_ruas,HSS-KAB-293,Sekolah Islam (Sungai Pinang),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,20,Siang Gantung - Ds. Baru,historical_normative_workbook.nama_ruas,HSS-KAB-338,Siang Gantung - Ds. Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,318,Silaturrahim,historical_normative_workbook.nama_ruas,HSS-KAB-318,Silaturrahim,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,237,Simpang Hamalau - Teluk Pinang,historical_normative_workbook.nama_ruas,HSS-KAB-100,Simpang Hamalau - Teluk Pinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,241,Simpang Jadi Makmur - Ds. Samuda,historical_normative_workbook.nama_ruas,HSS-KAB-335,Simpang Jadi Makmur - Ds. Samuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,50,Simpang Malutu - Pahampangan,historical_normative_workbook.nama_ruas,HSS-KAB-146,Simpang Malutu - Pahampangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,85,Simpang Malutu - Tambak,historical_normative_workbook.nama_ruas,HSS-KAB-147,Simpang Malutu - Tambak,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,193,Simpur - Simp. Bilui,historical_normative_workbook.nama_ruas,HSS-KAB-206,Simpur - Simp. Bilui,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,90,Simpur - Sp. 3 Muara Paring Agung,historical_normative_workbook.nama_ruas,HSS-KAB-207,Simpur - Sp. 3 Muara Paring Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,339,Singakarsa - Getek,historical_normative_workbook.nama_ruas,HSS-KAB-026,Singakarsa - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,34,Singakarsa - Palas,historical_normative_workbook.nama_ruas,HSS-KAB-025,Singakarsa - Palas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,246,Sirih - Pacakan,historical_normative_workbook.nama_ruas,HSS-KAB-253,Sirih - Pacakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,170,Sirih - Taro,historical_normative_workbook.nama_ruas,HSS-KAB-246,Sirih - Taro,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,263,Slasa Garih - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-240,Slasa Garih - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,297,SMAN Negara (KH. Abdullah),historical_normative_workbook.nama_ruas,HSS-KAB-316,SMAN Negara (KH. Abdullah),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,261,Soeprapto - H.M Rusli,historical_normative_workbook.nama_ruas,HSS-KAB-002,Soeprapto - Jl. H.M Rusli,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,323,Soetoyo - Teluk Mesjid,historical_normative_workbook.nama_ruas,HSS-KAB-004,Soetoyo - Teluk Mesjid,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,149,Sp. 3 Baluti - Amawang,historical_normative_workbook.nama_ruas,HSS-KAB-041,Sp. 3 Baluti - Amawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,66,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,historical_normative_workbook.nama_ruas,HSS-KAB-096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,256,Sp. Bakarung Selatan - Sungai Kudung,historical_normative_workbook.nama_ruas,HSS-KAB-182,Sp. Bakarung Selatan - Sungai Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,97,Sp. Batang Kulur Kiri - Tatas,historical_normative_workbook.nama_ruas,HSS-KAB-089,Sp. Batang Kulur Kiri - Tatas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,10,Sp. Empat Lungau - Bangkau,historical_normative_workbook.nama_ruas,HSS-KAB-043,Sp. Empat Lungau - Bangkau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,9,Sp. Empat Lungau - Garis,historical_normative_workbook.nama_ruas,HSS-KAB-044,Sp. Empat Lungau - Garis,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,43,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,historical_normative_workbook.nama_ruas,HSS-KAB-179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,77,Sp.3 Bukuanin - Riam Talo,historical_normative_workbook.nama_ruas,HSS-KAB-150,Sp.3 Bukuanin - Riam Talo,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,72,Sp.3 Bukuanin - Tayub,historical_normative_workbook.nama_ruas,HSS-KAB-151,Sp.3 Bukuanin - Tayub,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,242,SP.4 Banjarbaru - Pasar Negara,historical_normative_workbook.nama_ruas,HSS-KAB-303,SP.4 Banjarbaru - Pasar Negara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,25,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,historical_normative_workbook.nama_ruas,HSS-KAB-254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,192,SP.4. Banjarbaru - Pihanin Raya,historical_normative_workbook.nama_ruas,HSS-KAB-305,SP.4. Banjarbaru - Pihanin Raya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,226,Sukaramai - Keramat,historical_normative_workbook.nama_ruas,HSS-KAB-320,Sukaramai - Keramat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,306,Sungai Bugundi,historical_normative_workbook.nama_ruas,HSS-KAB-308,Sungai Bugundi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,95,Sungai Damang - Amawang Kiri,historical_normative_workbook.nama_ruas,HSS-KAB-030,Sungai Damang - Amawang Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,201,Sungai Durian - Ds. Gumbil,historical_normative_workbook.nama_ruas,HSS-KAB-201,Sungai Durian - Ds. Gumbil,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,163,Sungai Kacil I - Kapuh Padang,historical_normative_workbook.nama_ruas,HSS-KAB-216,Sungai Kacil I - Kapuh Padang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,284,Sungai Kacil II,historical_normative_workbook.nama_ruas,HSS-KAB-217,Sungai Kacil II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,122,Sungai Karuh,historical_normative_workbook.nama_ruas,HSS-KAB-060,Sungai Karuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,81,Sungai Kudung - Kalinduku,historical_normative_workbook.nama_ruas,HSS-KAB-180,Sungai Kudung - Kalinduku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,268,Sungai Minting - Ds. Malutu,historical_normative_workbook.nama_ruas,HSS-KAB-160,Sungai Minting - Ds. Malutu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,227,Sungai Namang - Ds. Tanah Bangkang,historical_normative_workbook.nama_ruas,HSS-KAB-126,Sungai Namang - Ds. Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,27,Sungai Paring - Sei Hanyar Pantai Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-048,Sungai Paring - Sei Hanyar Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,210,Sungai Paring - Toba,historical_normative_workbook.nama_ruas,HSS-KAB-072,Sungai Paring - Toba,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,38,Sungai Raya - Jambu Hulu/Paku,historical_normative_workbook.nama_ruas,HSS-KAB-094,Sungai Raya - Jambu Hulu/Paku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,24,Sungai Raya Selatan - Malutu - Goa Berangin,historical_normative_workbook.nama_ruas,HSS-KAB-095,Sungai Raya Selatan - Malutu - Goa Berangin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,94,Sungai Raya Selatan - Sarang Halang,historical_normative_workbook.nama_ruas,HSS-KAB-088,Sungai Raya Selatan - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,135,Sungai Raya Utara - Teluk Pinang,historical_normative_workbook.nama_ruas,HSS-KAB-116,Sungai Raya Utara - Teluk Pinang _x000D_,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,88,Suriangpati - Gambah Dalam Barat,historical_normative_workbook.nama_ruas,HSS-KAB-077,Suriangpati - Gambah Dalam Barat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,58,Taal Batang Kulur - Sp. 3 Muara Prg Agung,historical_normative_workbook.nama_ruas,HSS-KAB-090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,30,Taal Jarau - Sp. Baru/Tampang,historical_normative_workbook.nama_ruas,HSS-KAB-093,Taal Jarau - Sp. Baru/Tampang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,7,Tabihi - Telaga Langsat,historical_normative_workbook.nama_ruas,HSS-KAB-137,Tabihi - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,41,Tajun - Sp.3 Muara Paring Agung,historical_normative_workbook.nama_ruas,HSS-KAB-085,Tajun - Sp.3 Muara Paring Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,224,Talapak Manuk - Ds. Kapuh,historical_normative_workbook.nama_ruas,HSS-KAB-245,Talapak Manuk - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,121,Tambak Pipii - Batu Ampar,historical_normative_workbook.nama_ruas,HSS-KAB-166,Tambak Pipii - Batu Ampar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,44,Tambak Pipii - Malilingin,historical_normative_workbook.nama_ruas,HSS-KAB-156,Tambak Pipii - Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,105,Tambangan - Ds. Baruh Jaya,historical_normative_workbook.nama_ruas,HSS-KAB-300,Tambangan - Ds. Baruh Jaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,120,Taminung,historical_normative_workbook.nama_ruas,HSS-KAB-114,Taminung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,119,Tamiyang - Ds. Tamiyang (Eks TMMD),historical_normative_workbook.nama_ruas,HSS-KAB-107,Tamiyang - Ds. Tamiyang (Eks TMMD),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,243,Tanah Bangkang Menuju Balai Benih Ikan,historical_normative_workbook.nama_ruas,HSS-KAB-108,Tanah Bangkang Menuju Balai Benih Ikan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,190,Tanah Habang - Ds. Simpur,historical_normative_workbook.nama_ruas,HSS-KAB-242,Tanah Habang - Ds. Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,144,Tanayung - Simp. Ambarai,historical_normative_workbook.nama_ruas,HSS-KAB-136,Tanayung - Simp. Ambarai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,264,Tandik - Ds. Wasah Hilir,historical_normative_workbook.nama_ruas,HSS-KAB-235,Tandik - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,182,Tanginau - Balai Haruyan,historical_normative_workbook.nama_ruas,HSS-KAB-281,Tanginau - Balai Haruyan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,185,Taniran Selatan - Rantauan,historical_normative_workbook.nama_ruas,HSS-KAB-168,Taniran Selatan - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,22,Taniran Selatan Kubah - Buntut Taniran / Wawaran,historical_normative_workbook.nama_ruas,HSS-KAB-171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,104,Taniran Tengah - Taniran Selatan,historical_normative_workbook.nama_ruas,HSS-KAB-184,Taniran Tengah - Taniran Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,11,Tanjung Selor - Ds. Badaun,historical_normative_workbook.nama_ruas,HSS-KAB-342,Tanjung Selor - Ds. Badaun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,16,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,historical_normative_workbook.nama_ruas,HSS-KAB-087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,146,Tanjungan - Sp. 3 Sakijang,historical_normative_workbook.nama_ruas,HSS-KAB-104,Tanjungan - Sp. 3 Sakijang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,244,Tanuhi - Hulu Banyu,historical_normative_workbook.nama_ruas,HSS-KAB-272,Tanuhi - Hulu Banyu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,13,Tanuhi - Ulang,historical_normative_workbook.nama_ruas,HSS-KAB-258,Tanuhi - Ulang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,282,Tataian - (Ds. Ulang) - Loksado,historical_normative_workbook.nama_ruas,HSS-KAB-282,Tataian - (Ds. Ulang) - Loksado,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,153,Tawia - Kayu Abang,historical_normative_workbook.nama_ruas,HSS-KAB-173,Tawia - Kayu Abang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,247,Telaga Banta - Patigan,historical_normative_workbook.nama_ruas,HSS-KAB-079,Telaga Banta - Patigan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,89,Telaga Langsat - Pakuan Timur,historical_normative_workbook.nama_ruas,HSS-KAB-193,Telaga Langsat - Pakuan Timur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,342,Teluk Haur I,historical_normative_workbook.nama_ruas,HSS-KAB-312,Teluk Haur I,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,337,Teluk Haur II,historical_normative_workbook.nama_ruas,HSS-KAB-313,Teluk Haur II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,157,Teluk Mesjid - Sp. 4 Muara Banta,historical_normative_workbook.nama_ruas,HSS-KAB-005,Teluk Mesjid - Sp. 4 Muara Banta,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,140,Teluk Pinang - Baluti,historical_normative_workbook.nama_ruas,HSS-KAB-067,Teluk Pinang - Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,110,Teluk Pinang - Padang Rasau,historical_normative_workbook.nama_ruas,HSS-KAB-135,Teluk Pinang - Padang Rasau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,107,Teluk Pinang - Pahampangan Utara,historical_normative_workbook.nama_ruas,HSS-KAB-101,Teluk Pinang - Pahampangan Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,345,Tembok Baru - Ds. Baluti,historical_normative_workbook.nama_ruas,HSS-KAB-073,Tembok Baru - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,265,Tembok Baru (Asam Cangkok),historical_normative_workbook.nama_ruas,HSS-KAB-071,Tembok Baru (Asam Cangkok),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,289,Tembok Kacil. Sei. Kudung,historical_normative_workbook.nama_ruas,HSS-KAB-058,Tembok Kacil. Sei. Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,211,Tembok Lama - Loklua,historical_normative_workbook.nama_ruas,HSS-KAB-036,Tembok Lama - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,279,Teratai Menuju Komplek Perumnas Hamalau,historical_normative_workbook.nama_ruas,HSS-KAB-066,Teratai Menuju Komplek Perumnas Hamalau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,262,Tibung Dalam - Teratai,historical_normative_workbook.nama_ruas,HSS-KAB-064,Tibung Dalam - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,208,Tibung Raya - Asam Cangkuk,historical_normative_workbook.nama_ruas,HSS-KAB-051,Tibung Raya - Asam Cangkuk,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,203,Tibung Raya - Hamalau Dalam,historical_normative_workbook.nama_ruas,HSS-KAB-068,Tibung Raya - Hamalau Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,209,TPA - Ds. Sungai Raya Selatan,historical_normative_workbook.nama_ruas,HSS-KAB-132,TPA - Ds. Sungai Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,266,Tukang Garit (Tambangan),historical_normative_workbook.nama_ruas,HSS-KAB-309,Tukang Garit (Tambangan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,40,Tumbukan Banyu - Banua Hanyar,historical_normative_workbook.nama_ruas,HSS-KAB-290,Tumbukan Banyu - Banua Hanyar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,173,Tungkaran - Ds. Ulin,historical_normative_workbook.nama_ruas,HSS-KAB-222,Tungkaran - Ds. Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,71,Ulang - Bangkaun,historical_normative_workbook.nama_ruas,HSS-KAB-288,Ulang - Bangkaun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,132,Ulang - Kacang Parang,historical_normative_workbook.nama_ruas,HSS-KAB-283,Ulang - Kacang Parang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,64,Ulin - Tanggul (Balai Mas),historical_normative_workbook.nama_ruas,HSS-KAB-211,Ulin - Tanggul (Balai Mas),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,254,Umpaya - Tumarin,historical_normative_workbook.nama_ruas,HSS-KAB-200,Umpaya - Tumarin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,348,Wahab Syahrani,historical_normative_workbook.nama_ruas,HSS-KAB-019,Wahab Syahrani,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,84,Wasah Hilir - Amparaya,historical_normative_workbook.nama_ruas,HSS-KAB-209,Wasah Hilir - Amparaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,76,Wasah Hilir - Sarang Halang,historical_normative_workbook.nama_ruas,HSS-KAB-205,Wasah Hilir - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,23,Wasah Hulu - Amparaya - Simpur,historical_normative_workbook.nama_ruas,HSS-KAB-204,Wasah Hulu - Amparaya - Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,73,Wasah Tengah - Sungai Tarap,historical_normative_workbook.nama_ruas,HSS-KAB-208,Wasah Tengah - Sungai Tarap,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED

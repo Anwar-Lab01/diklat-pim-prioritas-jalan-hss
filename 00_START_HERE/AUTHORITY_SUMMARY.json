@@ -1,0 +1,20 @@
+{
+  "bundle": "diklat_pim_working_bundle_v1",
+  "status": "READY_FOR_PRD_AND_IMPLEMENTATION",
+  "canonical_road_registry": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/road_registry_authoritative.csv",
+  "source_crosswalk": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/source_crosswalk.csv",
+  "authority_contract": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/AUTHORITY_CONTRACT.json",
+  "road_condition_2025": "02_raw_sources/identity_condition/Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx",
+  "road_geometry": "02_raw_sources/spatial_network/ruas_jalan_kabupaten.gpkg",
+  "spatial_plan": "02_raw_sources/spatial_network/_6306_50KB_RTRW_KABUPATEN_HULUSUNGAISELATAN_2025.gdb.zip",
+  "administrative_boundary": "02_raw_sources/facilities_admin/ADMINISTRASI_AR_DESAKEL_HSS.shp",
+  "network": "02_raw_sources/spatial_network/network_jalan_jembatan_terbaru.gpkg",
+  "synthetic_connector": "02_raw_sources/spatial_network/jembatan_penghubung.gpkg",
+  "normative_17_variable_canonical": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_baseline_normative_canonical.csv",
+  "identity_rules": {
+    "canonical_key": "road_key",
+    "fuzzy_matching": false,
+    "silent_fallback": false,
+    "join_by_name": false
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "bundle": "diklat_pim_working_bundle_v1",
+  "file_count": 81,
+  "files": [
+    {
+      "path": "00_START_HERE/AUTHORITY_SUMMARY.json",
+      "bytes": 1369,
+      "sha256": "292643f20f2fd5976fc7a1e77e278e45c42e6c30fa153ae62649d53e93861a17"
+    },
+    {
+      "path": "00_START_HERE/START_HERE.md",
+      "bytes": 2636,
+      "sha256": "da880454b332503c55d3bbd5d32a3c522d496bbcf1993e8e5350c7ca070d4ad7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/README.md",
+      "bytes": 1740,
+      "sha256": "59f68c5ef4861372a4c10a5ea3f8abd8c03dfeb6ad1224b31c9320072ec9c0e4"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/administration/district_master.csv",
+      "bytes": 953,
+      "sha256": "294422a21a0db2ed3dddf17e530e55801b0f255a2b9bce4d9bafdf2cc1dafa34"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/administration/districts.geojson",
+      "bytes": 241643,
+      "sha256": "c50405db1c023fef7f8295e513e8389bb23d8d73527c05726c732ed25edb60fe"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/administration/duplicate_village_names.csv",
+      "bytes": 211,
+      "sha256": "06fc86d478df6e86168b293448f9bfcfa841e4a0558535febdc0034df07b195b"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/administration/village_master.csv",
+      "bytes": 27944,
+      "sha256": "2ae6e75c5e4d65b5b422a6fc167a09bb72614c8e0b009b1e22e03dfba3707f28"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/administration/villages.geojson",
+      "bytes": 651963,
+      "sha256": "3a35b23c8d5edead1a9ec4023ef16f8a16c9675bcb6cac03104bfb220ddba2cc"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/AUTHORITY_CONTRACT.json",
+      "bytes": 1641,
+      "sha256": "def68c906367b3824258b3ee5ee4673d2019275e517b0b290a5ffdeb714e80af"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/historical_to_canonical_audit.csv",
+      "bytes": 83999,
+      "sha256": "873e469149525e05456201aacc0541c4e7cd0baa28ab8425baaea3887601d67a"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/ml_to_canonical_audit.csv",
+      "bytes": 66776,
+      "sha256": "4d8e63abee0f659bb5ed143fe3352179241e2bc7923372185d881111343b049a"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/qa_authoritative_registry.json",
+      "bytes": 723,
+      "sha256": "55f918666130efe08ec8bde536622eb4ec5badbfaf11105ee815b00dc5130732"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/road_aliases_authoritative.csv",
+      "bytes": 69237,
+      "sha256": "5ccae0f296b808175ba63769c8970494053e3bd42456e914d418d358df9eefd8"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/road_registry_authoritative.csv",
+      "bytes": 89444,
+      "sha256": "71c20b0d03cd685e7941085016dda48ad3eaac3cac2ac313e551204cabb26d09"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/road_registry_authoritative.json",
+      "bytes": 234786,
+      "sha256": "ef7da86f6f20a86eaa29879973b77a36d3a7dd5fe914770b8f314924788857f4"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/authoritative/source_crosswalk.csv",
+      "bytes": 186357,
+      "sha256": "4890f65bd1ca1e907a89d06181b416610192e45531b09d7ff4fa35687e9486df"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/conditions/condition_summary_2025.json",
+      "bytes": 505,
+      "sha256": "9c721ba567291eae12ae050764fec8370b9bb4bae1b97be6d5b4204567d6db12"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/conditions/road_conditions_2025.csv",
+      "bytes": 60584,
+      "sha256": "56a4ab3ad43acb394180fbda4f18d39d947c06208a93b0c293615c355d92b7c2"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/conditions/road_conditions_2025.json",
+      "bytes": 203846,
+      "sha256": "13fb478f91d269f590fb80cb58c68d39d5b60c36934fe28f47870ba05aef5733"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/excluded_condition_fields.json",
+      "bytes": 1282,
+      "sha256": "37683875db920fd4272894e10c30382609f4ba73d2892ec7a3d705c90278f4a0"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/road_admin_overlay_summary.csv",
+      "bytes": 43412,
+      "sha256": "df4aabb9a240443d9ea1169119ab7bb287ad59f3c2c293914297a73d31333ac1"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/road_context_history_noncondition_source.csv",
+      "bytes": 79392,
+      "sha256": "152ef28c3ba188a0966c2aea2ad7ec45e89950f75bc2de5e32f080df029e8018"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/road_context_history_noncondition_source.json",
+      "bytes": 634821,
+      "sha256": "7a4973fdc8957be1ef34e02e549c4dc6068e241dda762d48cfe06b6df3aee1bd"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/road_district_intersections.csv",
+      "bytes": 45445,
+      "sha256": "9923bd5d8a6470026ce431ad934953d2320a052723cc93c7068369a6fac987b0"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/context/road_village_intersections.csv",
+      "bytes": 94445,
+      "sha256": "9a40c6a59a9d56961d1b5d60cbf14805da5e869ddaa8763a5a36165a4e28d384"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/facilities/markets.geojson",
+      "bytes": 4613,
+      "sha256": "957276bdfa1cfa3b1f88d534eb080f201039766bc21a65d3fc0e825cae3294ee"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/facilities/public_facilities.geojson",
+      "bytes": 159747,
+      "sha256": "0d9189620eeaf82c2ba850e8a7751b6daf2649ba1c3fd9e8c2fef82dba6e5bb9"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/facilities/puskesmas.geojson",
+      "bytes": 10405,
+      "sha256": "4ec0748ac03b61bd1556813583dcddcede0cd43282580b580ccb940db13d1527"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/facilities/rsud.geojson",
+      "bytes": 978,
+      "sha256": "c00237cb94e8f6edf52ada7cc33944f2e00c5122c7df6303891351b147942656"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/facilities/schools.geojson",
+      "bytes": 110967,
+      "sha256": "e7005ceb945c80d7c3083695b2825abdf2e699514c9fafa94d4baef6ac53dff0"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/master/road_aliases.csv",
+      "bytes": 56167,
+      "sha256": "348201f07c9cdd3476bbc1d7cfe735b9f1449e643a441057b264d20e4d58422a"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/master/road_master.csv",
+      "bytes": 111411,
+      "sha256": "b60ebefef1f347ae8d39a353de22413cd08622c7c19987435340f5932ea95594"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/master/road_master.json",
+      "bytes": 248038,
+      "sha256": "4e44041a4e84676fb10eee6b9e5ca1207c1f432f667a44566deb12eeee4e60d7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/canonical_data_dictionary.json",
+      "bytes": 979,
+      "sha256": "dd8edc826ddcb256cc12d287cc80e2e925dbfb9c7a82ee87432d97e16557495f"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/manifest.json",
+      "bytes": 10049,
+      "sha256": "18d33f63d6ea19244c58541a6f83a1194d6c393e71b0d21cf593b0da40b06387"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/qa_report.json",
+      "bytes": 10562,
+      "sha256": "19e773549d0e60e6914b58247535eb906fb713421172c898d72e9af93d6fea87"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/road_identity_reconciliation_precheck.csv",
+      "bytes": 68235,
+      "sha256": "ff6b1c39de222f3dc7b18f3c74975b3ef6f7ed277379cfcacafab3fd48e79d8b"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/rtrw_layer_catalog.csv",
+      "bytes": 2583,
+      "sha256": "c8288f1707889d8456659add0e5b57df2139f0cf82a4573d1083773a45c610b1"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/metadata/source_provenance.json",
+      "bytes": 3353,
+      "sha256": "c2563ca4ff2bc8b72d5bae325529211a1b1ead426cb1dc6328e48f1f2ba79245"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/duplicate_road_names.csv",
+      "bytes": 368,
+      "sha256": "89bf4c2e0a186cff8ee51827a9cd05d14f9d33c04317dd02ceb58a8bdac78b2d"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_baseline_normative_canonical.csv",
+      "bytes": 122286,
+      "sha256": "2b70ef645b666deaa0e965a50a9c83e099192f75bfb115de88f8ce8bde7b0ec0"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_baseline_normative_canonical.json",
+      "bytes": 381502,
+      "sha256": "ac43fb0538cfc853a919c4f60159a222b67afb05cdc29f846695b30f93cc564d"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_baseline_normative_source.csv",
+      "bytes": 84939,
+      "sha256": "efabd68d66f5a0e433451bc66b48a41e17a8a5eee67b818fe4db28e018824d1d"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_baseline_normative_source.json",
+      "bytes": 293813,
+      "sha256": "6e03385ecee515d9a172837c648c62791da421897d1b9080fe5a3cef1a73a283"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/priority_data_dictionary.json",
+      "bytes": 2982,
+      "sha256": "3f19ebca0aba58b5d7247995c9397f1695fbbb832da063f968d86078343971d7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/priority/road_name_alias_seed.csv",
+      "bytes": 3900,
+      "sha256": "82f4f4ba120dc598b7563cbe9135a11cd7cfa250323df61ece64cc8164605158"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/network_analysis.geojson",
+      "bytes": 1409853,
+      "sha256": "1bf00c695336bce5b3378bdab4cab0f3cc80795ef788d095ebbb1952a47bf375"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/network_connectors.geojson",
+      "bytes": 2218,
+      "sha256": "431831d3cb38fc32d829310b23b434b188837f038388ea91771273c06ce89bc8"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/roads_county.geojson",
+      "bytes": 1475435,
+      "sha256": "c36bb65ec8cbe609061043098bad1e8c97779c445167962746b0aff8446d3ab7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/roads_national.geojson",
+      "bytes": 93989,
+      "sha256": "d161c1ab985ebdbbdc574e4073f26d60c81bc34951014680a1d4558110836048"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/roads_provincial.geojson",
+      "bytes": 99410,
+      "sha256": "3a5281af02d908a219971c36bf7cdb8e3f260ca06593dfc80568933fecc1c9f9"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_energi_line.geojson",
+      "bytes": 7173,
+      "sha256": "4c99441b54adeda37ed94599b0b38975f5b4a9eed3e34a83c3943cd9099cdd54"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_energi_point.geojson",
+      "bytes": 865,
+      "sha256": "7f34edce2e718cff304aaa49db4f303ed541f51328046495fde9cc2b3f4d9399"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_pola_ruang.geojson",
+      "bytes": 17484729,
+      "sha256": "dc1569f5b3dfc97b81cc9b088ef79c741f0d0f11e8d4b02f01eb06ea167c6f2d"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_pola_ruang_categories.csv",
+      "bytes": 368,
+      "sha256": "b01246732e44fd25500ab4a46d99cce07b7ca46a004609d90efa82e8adf7360c"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_pusat_permukiman.geojson",
+      "bytes": 7854,
+      "sha256": "c69865b80a96571d7f8b437512a59485ee2972f797741272ec3974340c6e11a7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_sda_line.geojson",
+      "bytes": 519720,
+      "sha256": "6fb9a5a337ffc2aa54408083cb4e3cb75ada2e2be6e7cc43b20b7718a9003295"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_sda_point.geojson",
+      "bytes": 4209,
+      "sha256": "0b4e8aeafe5cc208583bab00b06e34d0009598ac2b4a3185c5fe40743cc604f7"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_telekomunikasi_point.geojson",
+      "bytes": 1635,
+      "sha256": "7eabd257976a67ca2f4c84df5c376b2c873f88568b9e9fb4a8e9aad94a1459d6"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_transportasi_line.geojson",
+      "bytes": 906180,
+      "sha256": "645871c6a54de7b4c8feed1add95ba21482ca63f9c9e9688c8162d40e12ec866"
+    },
+    {
+      "path": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/rtrw_transportasi_point.geojson",
+      "bytes": 3599,
+      "sha256": "25a5225aa7393af94c079701a215a63d085617a5684d7746f1255b25def801bf"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/ADMINISTRASI_AR_DESAKEL_HSS.dbf",
+      "bytes": 250902,
+      "sha256": "7e9995b565547e751c5d03d1f670829a293381697a54a02f88d7529aed40c81a"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/ADMINISTRASI_AR_DESAKEL_HSS.shp",
+      "bytes": 432812,
+      "sha256": "ceb73e9588ad38756ffaebc7944f7572a9fd2778f48c7de774fc47cb5d212dff"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/ADMINISTRASI_AR_DESAKEL_HSS.shx",
+      "bytes": 1284,
+      "sha256": "8664b97cdafa1abbd4fad71f7bed5ae2b422a604504a7a8c0059918d347ce5bd"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/Sebaran_Puskesmas.gpkg",
+      "bytes": 110592,
+      "sha256": "29d41caa6ef5b9ae2e25cf9729384cb007db8527e67946e66435f441c5814c69"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/sebaran_pasar.gpkg",
+      "bytes": 110592,
+      "sha256": "dbcb2ace5304411ae476ff76a199c04dbfda8429d3840a1ba1edb0b112b11e4c"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/sebaran_rsud.gpkg",
+      "bytes": 106496,
+      "sha256": "7a37f41dbe85e1ac74fac144fbb2a87515fcd9bae55f7361dda71e43c1f6c524"
+    },
+    {
+      "path": "02_raw_sources/facilities_admin/sebaran_sd_smp.gpkg",
+      "bytes": 212992,
+      "sha256": "bbcd8a2e0456278f4ebcc495eea557943ccddb2fcf93541c1ec7ec95a1f13c18"
+    },
+    {
+      "path": "02_raw_sources/identity_condition/Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx",
+      "bytes": 376346,
+      "sha256": "8c957aea73554a0b4e2c8a7aee8f53f414029e15426bd725ec583cf77c612d11"
+    },
+    {
+      "path": "02_raw_sources/identity_condition/data_historis_skenario15April_ready_for_ML_new_features_FINAL(5).xlsx",
+      "bytes": 498271,
+      "sha256": "63d4b8a421b02db3d57bbb64762024b5be4b4c7b71bbd1250806b789107ab985"
+    },
+    {
+      "path": "02_raw_sources/identity_condition/dataset_ml_clean.csv",
+      "bytes": 86233,
+      "sha256": "1ec40ac349819daa200e55fefe48e33b8c87fe134135f2862661d8649aae2607"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/Layer Snap.qgz",
+      "bytes": 99049,
+      "sha256": "5f9b9ba2fdecae6e9e5cb5c2c86ae6470a98bd821837cea47e574ef76e8db6a2"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/_6306_50KB_RTRW_KABUPATEN_HULUSUNGAISELATAN_2025.gdb.zip",
+      "bytes": 3434992,
+      "sha256": "aa207efe6f1083ad2bacf08cf7d5250983e58f062b32cc7c2ae55064968c3bae"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/jembatan_penghubung.gpkg",
+      "bytes": 106496,
+      "sha256": "5eed7123c2cfbab7d889f72c55d3eac414252532ba4c8ba56f977b8c759cf433"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/network_jalan_jembatan_terbaru.gpkg",
+      "bytes": 696320,
+      "sha256": "ccd2dcf37ae2915f5b670875e225a9092e7e696f2686ada83d802af7f3d3a4d7"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/ruas_jalan_kabupaten.gpkg",
+      "bytes": 778240,
+      "sha256": "c54f8cf19593a0835fcaa8dadab90a25cdd7b592764bb4859e740a8b2b9c9627"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/ruas_jalan_nasional.gpkg",
+      "bytes": 159744,
+      "sha256": "5e80c00b8a918358ee0aed2497b3eb83948eebd951d1353fc65bc10a23084cc5"
+    },
+    {
+      "path": "02_raw_sources/spatial_network/ruas_jalan_provinsi.gpkg",
+      "bytes": 159744,
+      "sha256": "d45e419d99abb436055f90bcb5e572f79f959ef286f1815e9160ab0fee375c4e"
+    },
+    {
+      "path": "03_reference_code/TreatmentEnginePage(1).tsx",
+      "bytes": 99370,
+      "sha256": "115889432dbef5daa000b08c83d857b2c1db5606016e9f05f2e2d78a743b2271"
+    },
+    {
+      "path": "03_reference_code/TreatmentStatsCards(1).tsx",
+      "bytes": 4176,
+      "sha256": "d5a67f77ed4ab146ca13fd434aa02e26eef5ab70515ac68310257887e8543b7c"
+    },
+    {
+      "path": "04_product_concept/institutional_memory_concept_prd.md",
+      "bytes": 18297,
+      "sha256": "2248c58ba6316525e00d99c6347e6d04d2edad7de527b0350edf2352796eb37f"
+    }
+  ]
+}

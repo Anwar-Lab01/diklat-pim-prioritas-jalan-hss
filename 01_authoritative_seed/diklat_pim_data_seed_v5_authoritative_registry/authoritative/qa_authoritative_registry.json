@@ -1,0 +1,26 @@
+{
+  "canonical_roads": 350,
+  "unique_road_keys": 350,
+  "dashboard_to_qgis_identity": "350/350 via NO RUAS == Kd_Inf",
+  "dataset_ml_to_historical_exact_name": "350/350",
+  "historical_to_canonical": {
+    "verified": 350,
+    "unresolved": 0,
+    "methods": {
+      "EXACT_NORMALIZED_OR_APPROVED_ALIAS": 350
+    }
+  },
+  "normative_17_variable_rows": 350,
+  "normative_unique_road_keys": 350,
+  "normative_variable_count": 17,
+  "fuzzy_used": false,
+  "fallback_used": false,
+  "duplicate_display_names": {
+    "Mawar (Kandangan Utara)": 1,
+    "Mawar (Daha Selatan)": 1,
+    "Musyawarah (Kandangan)": 1,
+    "Musyawarah (Nagara)": 1,
+    "Sekolah Islam (Kandangan Barat)": 1,
+    "Sekolah Islam (Sungai Pinang)": 1
+  }
+}

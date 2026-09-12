@@ -1,0 +1,1401 @@
+source_system,source_id,source_name,road_key,canonical_display_name,match_method,match_status
+dashboard_2025,001,Jl. Pangeran Antasari - Loklua,HSS-KAB-001,Pangeran Antasari - Loklua,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,001,Jl. Pangeran Antasari - SP. Loklua,HSS-KAB-001,Pangeran Antasari - Loklua,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,002,Jl. Soeprapto - Jl. H.M Rusli,HSS-KAB-002,Soeprapto - Jl. H.M Rusli,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,002,Jl. Soeprapto - Jl. HM. Rusli,HSS-KAB-002,Soeprapto - Jl. H.M Rusli,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,003,Jl. Pasar Kandangan - Oprit Jembt. Loklua,HSS-KAB-003,Pasar Kandangan - Oprit Jembt. Loklua,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,003,Jl. Pasar Kandangan - Oprit Jembatan Loklua,HSS-KAB-003,Pasar Kandangan - Oprit Jembt. Loklua,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,004,Jl. Soetoyo - Teluk Mesjid,HSS-KAB-004,Soetoyo - Teluk Mesjid,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,004,Jl. Soetoyo - Teluk Mesjid,HSS-KAB-004,Soetoyo - Teluk Mesjid,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,005,Jl. Teluk Mesjid - Sp. 4 Muara Banta,HSS-KAB-005,Teluk Mesjid - Sp. 4 Muara Banta,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,005,Jl. Teluk Mesjid - SP.4 Muara Banta,HSS-KAB-005,Teluk Mesjid - Sp. 4 Muara Banta,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,006,Jl. Merah Johansyah - Jl. Melati,HSS-KAB-006,Merah Johansyah - Jl. Melati,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,006,Jl. Merah Johansyah - Jl. Melati,HSS-KAB-006,Merah Johansyah - Jl. Melati,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,007,Jl. Menuju Stadion 2 Desember,HSS-KAB-007,Menuju Stadion 2 Desember,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,007,Jl. Menuju Stadion 2 Desember,HSS-KAB-007,Menuju Stadion 2 Desember,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,008,Jl. Aluh Idut,HSS-KAB-008,Aluh Idut,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,008,Jl. Aluh Idut,HSS-KAB-008,Aluh Idut,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,009,Jl. Panglima Batur,HSS-KAB-009,Panglima Batur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,009,Jl. Panglima Batur,HSS-KAB-009,Panglima Batur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,010,Jl. Nusa Indah,HSS-KAB-010,Nusa Indah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,010,Jl. Nusa Indah,HSS-KAB-010,Nusa Indah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,011,Jl. Anggrek,HSS-KAB-011,Anggrek,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,011,Jl. Anggrek,HSS-KAB-011,Anggrek,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,012,Jl. Kenanga,HSS-KAB-012,Kenanga,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,012,Jl. Kenanga,HSS-KAB-012,Kenanga,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,013,Jl. Mawar,HSS-KAB-013,Mawar (Kandangan Utara),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,013,Jl. Mawar,HSS-KAB-013,Mawar (Kandangan Utara),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,014,Jl. Kamboja,HSS-KAB-014,Kamboja,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,014,Jl. Kamboja,HSS-KAB-014,Kamboja,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,015,Jl. Dahlia,HSS-KAB-015,Dahlia,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,015,Jl. Dahlia,HSS-KAB-015,Dahlia,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,016,Jl. KS. Tubun,HSS-KAB-016,KS. Tubun,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,016,Jl. KS. Tubun,HSS-KAB-016,KS. Tubun,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,017,Jl. Pemuda,HSS-KAB-017,Pemuda,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,017,Jl. Pemuda,HSS-KAB-017,Pemuda,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,018,Jl. Parindra,HSS-KAB-018,Parindra,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,018,Jl. Parindra,HSS-KAB-018,Parindra,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,019,Jl. Wahab Syahrani,HSS-KAB-019,Wahab Syahrani,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,019,Jl. Wahab Syahrani,HSS-KAB-019,Wahab Syahrani,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,020,Jl. Musyawarah,HSS-KAB-020,Musyawarah (Kandangan),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,020,Jl. Musyawarah,HSS-KAB-020,Musyawarah (Kandangan),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,021,Jl. Sekolah Islam,HSS-KAB-021,Sekolah Islam (Kandangan Barat),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,021,Jl. Sekolah Islam,HSS-KAB-021,Sekolah Islam (Kandangan Barat),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,022,Jl. Rahmah Bahran,HSS-KAB-022,Rahmah Bahran,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,022,Jl. Rahma Bahran,HSS-KAB-022,Rahmah Bahran,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,023,Jl. Brigjen Katamso,HSS-KAB-023,Brigjen Katamso,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,023,Jl. Brigjend. Katamso,HSS-KAB-023,Brigjen Katamso,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,024,Jl. Kolonel Sugiono,HSS-KAB-024,Kolonel Sugiono,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,024,JL. Kolonel Sugiono,HSS-KAB-024,Kolonel Sugiono,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,025,Singakarsa - Palas,HSS-KAB-025,Singakarsa - Palas,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,025,Singakarsa - Palas,HSS-KAB-025,Singakarsa - Palas,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,026,Singakarsa - Getek,HSS-KAB-026,Singakarsa - Getek,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,026,Singakarsa - Getek,HSS-KAB-026,Singakarsa - Getek,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,027,Parincahan - Singakarsa (Jl. Harapan),HSS-KAB-027,Parincahan - Singakarsa (Jl. Harapan),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,027,Parincahan - Singakarsa (Jl. Harapan),HSS-KAB-027,Parincahan - Singakarsa (Jl. Harapan),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,028,Budi Bakti - Tiga Desember,HSS-KAB-028,Budi Bakti - Tiga Desember,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,028,Jl. Budi Bakti - Tiga Desember,HSS-KAB-028,Budi Bakti - Tiga Desember,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,029,Jl. Jafri Zamzam,HSS-KAB-029,Jafri Zamzam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,029,Jl. Jafri Zamzam,HSS-KAB-029,Jafri Zamzam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,030,Sungai Damang - Amawang Kiri,HSS-KAB-030,Sungai Damang - Amawang Kiri,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,030,Sungai Damang - Amawang Kiri,HSS-KAB-030,Sungai Damang - Amawang Kiri,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,031,Amawang Muka - Getek,HSS-KAB-031,Amawang Muka - Getek,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,031,Amawang Muka - Getek,HSS-KAB-031,Amawang Muka - Getek,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,032,Amawang Kanan - Wasah Hulu,HSS-KAB-032,Amawang Kanan - Wasah Hulu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,032,Jl. Amawang Kanan - Wasah Hulu,HSS-KAB-032,Amawang Kanan - Wasah Hulu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,033,Jl. DI. Panjaitan - Loklua,HSS-KAB-033,DI. Panjaitan - Loklua,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,033,Jl. DI. Panjaitan - Loklua,HSS-KAB-033,DI. Panjaitan - Loklua,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,034,Jl. Jend. Sudirman,HSS-KAB-034,Jend. Sudirman,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,034,Jl. Jend. Sudirman,HSS-KAB-034,Jend. Sudirman,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,035,Jl. AES Nasution,HSS-KAB-035,AES Nasution,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,035,Jl. AES. Nasution,HSS-KAB-035,AES Nasution,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,036,Tembok Lama - Loklua,HSS-KAB-036,Tembok Lama - Loklua,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,036,Tembok Lama - Loklua,HSS-KAB-036,Tembok Lama - Loklua,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,037,Jl. Kesehatan - Komp. Rmh Dokter,HSS-KAB-037,Kesehatan - Komp. Rmh Dokter,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,037,Jl. Kesehatan - Komp. Rumah Dokter,HSS-KAB-037,Kesehatan - Komp. Rmh Dokter,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,038,Jl. Samping Bappeda - Mesjid Darul Halik,HSS-KAB-038,Samping Bappeda - Mesjid Darul Halik,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,038,Jl. Samping Bappeda - Mesjid Darul Halik,HSS-KAB-038,Samping Bappeda - Mesjid Darul Halik,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,039,Jl. Bina Bakat,HSS-KAB-039,Bina Bakat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,039,Jl. Bina Bakat,HSS-KAB-039,Bina Bakat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,040,Baluti - Jambu Hulu (Paku),HSS-KAB-040,Baluti - Jambu Hulu (Paku),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,040,Baluti - Jambu Hulu/Paku,HSS-KAB-040,Baluti - Jambu Hulu (Paku),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,041,Sp. 3 Baluti - Amawang,HSS-KAB-041,Sp. 3 Baluti - Amawang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,041,SP.3 Baluti - Amawang,HSS-KAB-041,Sp. 3 Baluti - Amawang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,042,Sei Kupang Utara - Simp. Empat Lungau,HSS-KAB-042,Sei Kupang Utara - Simp. Empat Lungau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,042,Sei. Kupang Utara - SP.4 Lungau,HSS-KAB-042,Sei Kupang Utara - Simp. Empat Lungau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,043,Sp. Empat Lungau - Bangkau,HSS-KAB-043,Sp. Empat Lungau - Bangkau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,043,SP.4 Lungau - Bangkau,HSS-KAB-043,Sp. Empat Lungau - Bangkau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,044,Sp. Empat Lungau - Garis,HSS-KAB-044,Sp. Empat Lungau - Garis,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,044,Sp.4 Lungau - Garis,HSS-KAB-044,Sp. Empat Lungau - Garis,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,045,Gambir - Sp. Empat Lungau,HSS-KAB-045,Gambir - Sp. Empat Lungau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,045,Gambir -SP. Empat Lungau,HSS-KAB-045,Gambir - Sp. Empat Lungau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,046,Bariang - Getek,HSS-KAB-046,Bariang - Getek,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,046,Bariang - Getek,HSS-KAB-046,Bariang - Getek,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,047,Muara Banta - Karang Jawa,HSS-KAB-047,Muara Banta - Karang Jawa,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,047,Muara Banta - Karang Jawa,HSS-KAB-047,Muara Banta - Karang Jawa,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,048,Sungai Paring - Sei Hanyar Pantai Ulin,HSS-KAB-048,Sungai Paring - Sei Hanyar Pantai Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,048,Sungai Paring - Sei Hanyar Pantai Ulin,HSS-KAB-048,Sungai Paring - Sei Hanyar Pantai Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,049,Kandangan Hulu - Sp. Tabihi,HSS-KAB-049,Kandangan Hulu - Sp. Tabihi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,049,Kandangan Hulu - SP. Tabihi,HSS-KAB-049,Kandangan Hulu - Sp. Tabihi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,050,Banyu Barau - Sei Kalang,HSS-KAB-050,Banyu Barau - Sei Kalang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,050,Banyu Barau - Sungai Kalang,HSS-KAB-050,Banyu Barau - Sei Kalang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,051,Tibung Raya - Asam Cangkuk,HSS-KAB-051,Tibung Raya - Asam Cangkuk,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,051,Tibung Raya - Asam Cangkok,HSS-KAB-051,Tibung Raya - Asam Cangkuk,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,052,Gambah Dalam - Rantauan,HSS-KAB-052,Gambah Dalam - Rantauan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,052,Gambah Dalam - Rantauan,HSS-KAB-052,Gambah Dalam - Rantauan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,053,Gambah Luar - Gambah Dalam,HSS-KAB-053,Gambah Luar - Gambah Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,053,Gambah Luar - Gambah Dalam,HSS-KAB-053,Gambah Luar - Gambah Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,054,Pegangsaan Timur - Teluk Aman,HSS-KAB-054,Pegangsaan Timur - Teluk Aman,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,054,Pegangsaan Timur - Teluk Aman,HSS-KAB-054,Pegangsaan Timur - Teluk Aman,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,055,Gambah Luar - Sungai Kudung,HSS-KAB-055,Gambah Luar - Sungai Kudung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,055,Gambah Luar - Sungai Kudung,HSS-KAB-055,Gambah Luar - Sungai Kudung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,056,Bakarung Tengah - Karang Jawa,HSS-KAB-056,Bakarung Tengah - Karang Jawa,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,056,Bakarung Tengah - Karang Jawa,HSS-KAB-056,Bakarung Tengah - Karang Jawa,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,057,Jl. Papagaran/Palangsatan,HSS-KAB-057,Papagaran/Palangsatan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,057,Jl. Papagaran/Pelangsatan,HSS-KAB-057,Papagaran/Palangsatan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,058,Jl. Tembok Kacil. Sei. Kudung,HSS-KAB-058,Tembok Kacil. Sei. Kudung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,058,Jl. Tembok Kacil. Sei. Kudung,HSS-KAB-058,Tembok Kacil. Sei. Kudung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,059,Jl. Mesjid Quba,HSS-KAB-059,Mesjid Quba,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,059,Jl. Mesjid Kuba,HSS-KAB-059,Mesjid Quba,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,060,Jl. Sungai Karuh,HSS-KAB-060,Sungai Karuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,060,Jl. Sungai Karuh Tembus Tawar,HSS-KAB-060,Sungai Karuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,061,Rambai - Bariang,HSS-KAB-061,Rambai - Bariang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,061,Jl. Rambai - Bariang,HSS-KAB-061,Rambai - Bariang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,062,Jangkang - Pantai Ulin,HSS-KAB-062,Jangkang - Pantai Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,062,Jl. Jangkang - Pantai Ulin,HSS-KAB-062,Jangkang - Pantai Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,063,Jl. Padang Palas,HSS-KAB-063,Padang Palas,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,063,Jl. Padang Palas,HSS-KAB-063,Padang Palas,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,064,Tibung Dalam - Teratai,HSS-KAB-064,Tibung Dalam - Teratai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,064,Tibung Dalam - Teratai,HSS-KAB-064,Tibung Dalam - Teratai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,065,Jl. Kalaka Indah - Perumnas Tibung,HSS-KAB-065,Kalaka Indah - Perumnas Tibung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,065,Jl. Kalaka Indah - Perumnas Tibung,HSS-KAB-065,Kalaka Indah - Perumnas Tibung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,066,Jl. Teratai Menuju Komplek Perumnas Hamalau,HSS-KAB-066,Teratai Menuju Komplek Perumnas Hamalau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,066,Jl. Teratai Menuju Komplek Perumnas Hamalau,HSS-KAB-066,Teratai Menuju Komplek Perumnas Hamalau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,067,Teluk Pinang - Baluti,HSS-KAB-067,Teluk Pinang - Baluti,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,067,Teluk Pinang - Baluti,HSS-KAB-067,Teluk Pinang - Baluti,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,068,Tibung Raya - Hamalau Dalam,HSS-KAB-068,Tibung Raya - Hamalau Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,068,Tibung Raya - Hamalau Dalam,HSS-KAB-068,Tibung Raya - Hamalau Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,069,Jl. Baiturrahim Parincahan,HSS-KAB-069,Baiturrahim Parincahan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,069,Jl. Baiturrahim,HSS-KAB-069,Baiturrahim Parincahan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,070,Jl. Newangsekarti - Ds. Gambah Luar Muka,HSS-KAB-070,Newangsekarti - Ds. Gambah Luar Muka,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,070,Jl. Newangsekarti - Ds. Gambah Luar Muka,HSS-KAB-070,Newangsekarti - Ds. Gambah Luar Muka,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,071,Jl. Tembok Baru (Asam Cangkok),HSS-KAB-071,Tembok Baru (Asam Cangkok),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,071,Jl. Tembok Baru (Asam Cangkok,HSS-KAB-071,Tembok Baru (Asam Cangkok),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,072,Sungai Paring - Toba,HSS-KAB-072,Sungai Paring - Toba,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,072,Sungai Paring - Toba,HSS-KAB-072,Sungai Paring - Toba,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,073,Jl. Tembok Baru - Ds. Baluti,HSS-KAB-073,Tembok Baru - Ds. Baluti,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,073,Jl. Tembok Baru - Baluti,HSS-KAB-073,Tembok Baru - Ds. Baluti,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,074,Jl. H. Jarkasi - Ds. Sungai Paring,HSS-KAB-074,H. Jarkasi - Ds. Sungai Paring,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,074,Jl. H. Jarkasi,HSS-KAB-074,H. Jarkasi - Ds. Sungai Paring,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,075,Bariang - Patigan,HSS-KAB-075,Bariang - Patigan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,075,Jl. Bariang - Patigan,HSS-KAB-075,Bariang - Patigan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,076,Gambah Dalam Barat - Mahulung,HSS-KAB-076,Gambah Dalam Barat - Mahulung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,076,Gambah Dalam Barat - Mahulung,HSS-KAB-076,Gambah Dalam Barat - Mahulung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,077,Jl. Suriangpati - Gambah Dalam Barat,HSS-KAB-077,Suriangpati - Gambah Dalam Barat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,077,Jl. Suriangpati,HSS-KAB-077,Suriangpati - Gambah Dalam Barat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,078,Jl. Menuju SMP 7 - Ds. Gambah Dalam,HSS-KAB-078,Menuju SMP 7 - Ds. Gambah Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,078,Jl. Menuju SMP 7 - Ds. Gambah Dalam,HSS-KAB-078,Menuju SMP 7 - Ds. Gambah Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,079,Telaga Banta - Patigan,HSS-KAB-079,Telaga Banta - Patigan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,079,Jl. Telaga Banta - Patigan,HSS-KAB-079,Telaga Banta - Patigan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,080,Jl. Nomura,HSS-KAB-080,Nomura,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,080,Jl. Nomura,HSS-KAB-080,Nomura,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,081,Jl. Lorong Bupati,HSS-KAB-081,Lorong Bupati,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,081,Jl. Lorong Bupati,HSS-KAB-081,Lorong Bupati,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,082,Jl. Biti - Sungai Kupang (Karya Bakti TNI),HSS-KAB-082,Biti - Sungai Kupang (Karya Bakti TNI),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,082,Jl. Biti - Sungai Kupang (Karya Bakti TNI),HSS-KAB-082,Biti - Sungai Kupang (Karya Bakti TNI),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,083,Jl. Palajau - Ds. Baluti,HSS-KAB-083,Palajau - Ds. Baluti,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,083,Jl. Palajau - Ds. Baluti,HSS-KAB-083,Palajau - Ds. Baluti,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,084,Jl. RS. Hasan Basry II,HSS-KAB-084,RS. Hasan Basry II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,084,Jl. RS. Hasan Basry II,HSS-KAB-084,RS. Hasan Basry II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,085,Tajun - Sp.3 Muara Paring Agung,HSS-KAB-085,Tajun - Sp.3 Muara Paring Agung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,085,Tajun - SP.3 Muara Paring Agung,HSS-KAB-085,Tajun - Sp.3 Muara Paring Agung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,086,Hamalau - Anjiran,HSS-KAB-086,Hamalau - Anjiran,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,086,Hamalau - Anjiran,HSS-KAB-086,Hamalau - Anjiran,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,HSS-KAB-087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,087,Tanjungan - SP.10 Batang Kulur - Sungai Kali,HSS-KAB-087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,088,Sungai Raya Selatan - Sarang Halang,HSS-KAB-088,Sungai Raya Selatan - Sarang Halang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,088,Sungai Raya Selatan - Sarang Halang,HSS-KAB-088,Sungai Raya Selatan - Sarang Halang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,089,Sp. Batang Kulur Kiri - Tatas,HSS-KAB-089,Sp. Batang Kulur Kiri - Tatas,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,089,SP. Batang Kulur Kiri - Tatas,HSS-KAB-089,Sp. Batang Kulur Kiri - Tatas,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,HSS-KAB-090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,090,Taal Batang Kulur - SP.3 Muara Paring Agung,HSS-KAB-090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,091,Batang Kulur Kanan - Sarangan,HSS-KAB-091,Batang Kulur Kanan - Sarangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,091,Batang Kulur Kanan - Sarangan,HSS-KAB-091,Batang Kulur Kanan - Sarangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,092,Bumi Berkat - Mungkur Galah,HSS-KAB-092,Bumi Berkat - Mungkur Galah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,092,Bumi Berkat - Mungkur Galah,HSS-KAB-092,Bumi Berkat - Mungkur Galah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,093,Taal Jarau - Sp. Baru/Tampang,HSS-KAB-093,Taal Jarau - Sp. Baru/Tampang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,093,Taal Jarau - SP. Baru/Tampang,HSS-KAB-093,Taal Jarau - Sp. Baru/Tampang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,094,Sungai Raya - Jambu Hulu/Paku,HSS-KAB-094,Sungai Raya - Jambu Hulu/Paku,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,094,Sungai Raya - Jambu Hulu/Paku,HSS-KAB-094,Sungai Raya - Jambu Hulu/Paku,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,095,Sungai Raya Selatan - Malutu - Goa Berangin,HSS-KAB-095,Sungai Raya Selatan - Malutu - Goa Berangin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,095,Sungai Raya Selatan - Malutu - Goa Berangin,HSS-KAB-095,Sungai Raya Selatan - Malutu - Goa Berangin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,HSS-KAB-096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,096,SP.4 Baru/Tampang - SP. Biluy Pamujaan,HSS-KAB-096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,097,Asam Cangkuk - Telaga Bidadari,HSS-KAB-097,Asam Cangkuk - Telaga Bidadari,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,097,Asam Cangkuk - Telaga Bidadari,HSS-KAB-097,Asam Cangkuk - Telaga Bidadari,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,098,Hamalau - Pahampangan,HSS-KAB-098,Hamalau - Pahampangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,098,Hamalau - Pahampangan,HSS-KAB-098,Hamalau - Pahampangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,099,Ida Manggala - Padang Makmur,HSS-KAB-099,Ida Manggala - Padang Makmur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,099,Ida Manggala - Padang Makmur,HSS-KAB-099,Ida Manggala - Padang Makmur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,100,Simpang Hamalau - Teluk Pinang,HSS-KAB-100,Simpang Hamalau - Teluk Pinang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,100,Simpang Hamalau - Teluk Pinang,HSS-KAB-100,Simpang Hamalau - Teluk Pinang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,101,Teluk Pinang - Pahampangan Utara,HSS-KAB-101,Teluk Pinang - Pahampangan Utara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,101,Teluk Pinang - Pahampangan Utara,HSS-KAB-101,Teluk Pinang - Pahampangan Utara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,102,Hamalau - Telaga Bidadari - Wasah Hilir,HSS-KAB-102,Hamalau - Telaga Bidadari - Wasah Hilir,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,102,Hamalau - Telaga Bidadari - Wasah Hilir,HSS-KAB-102,Hamalau - Telaga Bidadari - Wasah Hilir,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,103,Karasikan - Sarang Halang,HSS-KAB-103,Karasikan - Sarang Halang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,103,Karasikan - Sarang Halang,HSS-KAB-103,Karasikan - Sarang Halang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,104,Tanjungan - Sp. 3 Sakijang,HSS-KAB-104,Tanjungan - Sp. 3 Sakijang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,104,Tanjungan - SP.3 Sakijang,HSS-KAB-104,Tanjungan - Sp. 3 Sakijang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,105,Sarang Halang Padang - Sp. Batang Kulur,HSS-KAB-105,Sarang Halang Padang - Sp. Batang Kulur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,105,Sarang Halang Padang - SP Batang Kulur,HSS-KAB-105,Sarang Halang Padang - Sp. Batang Kulur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,106,Hamalau - Ganda,HSS-KAB-106,Hamalau - Ganda,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,106,Jl. Hamalau - Ganda,HSS-KAB-106,Hamalau - Ganda,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,107,Tamiyang - Ds. Tamiyang (Eks TMMD),HSS-KAB-107,Tamiyang - Ds. Tamiyang (Eks TMMD),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,107,Jl. Tamiyang - Ds. Tamiyang (Eks TMMD),HSS-KAB-107,Tamiyang - Ds. Tamiyang (Eks TMMD),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,108,Tanah Bangkang Menuju Balai Benih Ikan,HSS-KAB-108,Tanah Bangkang Menuju Balai Benih Ikan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,108,Jl. Tanah Bangkang Menuju Balai Benih Ikan,HSS-KAB-108,Tanah Bangkang Menuju Balai Benih Ikan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,109,Karang Intan - Tanah Bangkang,HSS-KAB-109,Karang Intan - Tanah Bangkang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,109,Jl. Karang Intan - Tanah Bangkang,HSS-KAB-109,Karang Intan - Tanah Bangkang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,110,Jl. Haritas (PT. Pertani),HSS-KAB-110,Haritas (PT. Pertani),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,110,Jl. Haritas (PT. Pertani),HSS-KAB-110,Haritas (PT. Pertani),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,111,Paharuangan - Sei. Raya Selatan,HSS-KAB-111,Paharuangan - Sei. Raya Selatan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,111,Paharuangan - Sungai Raya Selatan,HSS-KAB-111,Paharuangan - Sei. Raya Selatan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,112,Jl. Bangga TMMD,HSS-KAB-112,Bangga TMMD,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,112,Jl. Bangga TMMD,HSS-KAB-112,Bangga TMMD,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,113,Batang Kulur Kiri - Durian Landung,HSS-KAB-113,Batang Kulur Kiri - Durian Landung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,113,Jl. Batang Kulur Kiri - Durian Landung,HSS-KAB-113,Batang Kulur Kiri - Durian Landung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,114,Jl. Taminung,HSS-KAB-114,Taminung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,114,Jl. Taminung,HSS-KAB-114,Taminung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,115,Matang Gadung - Halalang,HSS-KAB-115,Matang Gadung - Halalang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,115,Jl. Matang Gadung - Halalang,HSS-KAB-115,Matang Gadung - Halalang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,116,Sungai Raya Utara - Teluk Pinang _x000D_,HSS-KAB-116,Sungai Raya Utara - Teluk Pinang _x000D_,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,116,Jl. Sungai Raya Utara-Teluk Pinang,HSS-KAB-116,Sungai Raya Utara - Teluk Pinang _x000D_,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,117,Jl. Mangunang - Ds. Sungai Raya Utara,HSS-KAB-117,Mangunang - Ds. Sungai Raya Utara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,117,Jl. Mangunang,HSS-KAB-117,Mangunang - Ds. Sungai Raya Utara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,118,Hamalau - Asam Cangkok,HSS-KAB-118,Hamalau - Asam Cangkok,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,118,Hamalau - Asam Cangkok,HSS-KAB-118,Hamalau - Asam Cangkok,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,119,Hariti - Sungai Raya Selatan,HSS-KAB-119,Hariti - Sungai Raya Selatan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,119,Jl. Hariti - Sungai Raya Selatan,HSS-KAB-119,Hariti - Sungai Raya Selatan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,120,Mangaris - Limau Manis,HSS-KAB-120,Mangaris - Limau Manis,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,120,Mangaris - Limau Manis,HSS-KAB-120,Mangaris - Limau Manis,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,121,Jl. Munggu Raya - Ds. Hariti,HSS-KAB-121,Munggu Raya - Ds. Hariti,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,121,Jl. Munggu Raya - Ds. Hariti,HSS-KAB-121,Munggu Raya - Ds. Hariti,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,122,Paharuangan - Asam Dua,HSS-KAB-122,Paharuangan - Asam Dua,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,122,Paharuangan - Asam Dua,HSS-KAB-122,Paharuangan - Asam Dua,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,123,Asam Seranggan - Asam Tamiyang,HSS-KAB-123,Asam Seranggan - Asam Tamiyang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,123,Asam Seranggan - Asam Tamiyang,HSS-KAB-123,Asam Seranggan - Asam Tamiyang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,124,Jl. Papancan - Ds. Tanah Bangkang,HSS-KAB-124,Papancan - Ds. Tanah Bangkang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,124,Jl. Papancan - Ds. Tanah Bangkang,HSS-KAB-124,Papancan - Ds. Tanah Bangkang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,125,Jl. Baru - Asam Desa Baru,HSS-KAB-125,Baru - Asam Desa Baru,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,125,Jl. Baru - Asam Desa Baru/Asam,HSS-KAB-125,Baru - Asam Desa Baru,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,126,Jl. Sungai Namang - Ds. Tanah Bangkang,HSS-KAB-126,Sungai Namang - Ds. Tanah Bangkang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,126,Jl. Sungai Namang - Ds. Tanah Bangkang,HSS-KAB-126,Sungai Namang - Ds. Tanah Bangkang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,127,Jarau - Parandakan,HSS-KAB-127,Jarau - Parandakan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,127,Jl. Jarau - Parandakan,HSS-KAB-127,Jarau - Parandakan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,128,Mungkur Galah - Lokpaikat,HSS-KAB-128,Mungkur Galah - Lokpaikat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,128,Jl. Mungkur Galah - Lokpaikat,HSS-KAB-128,Mungkur Galah - Lokpaikat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),HSS-KAB-129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),HSS-KAB-129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,130,Batang Kulur Kanan - Batang Kulur Kiri,HSS-KAB-130,Batang Kulur Kanan - Batang Kulur Kiri,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,130,Batang Kulur Kanan - Batang Kulur Kiri,HSS-KAB-130,Batang Kulur Kanan - Batang Kulur Kiri,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,131,Jl. Manggis - Ds. Baru,HSS-KAB-131,Manggis - Ds. Baru,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,131,Jl. Manggis,HSS-KAB-131,Manggis - Ds. Baru,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,132,Jl. TPA - Ds. Sungai Raya Selatan,HSS-KAB-132,TPA - Ds. Sungai Raya Selatan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,132,Jl. TPA Sungai Raya Selatan,HSS-KAB-132,TPA - Ds. Sungai Raya Selatan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,133,Jl. Pembangunan - Ds. Sungai Raya Utara,HSS-KAB-133,Pembangunan - Ds. Sungai Raya Utara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,133,Jl. Pembangunan - Ds. Sungai Raya Utara,HSS-KAB-133,Pembangunan - Ds. Sungai Raya Utara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,134,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara,HSS-KAB-134,Kalaka Dayuh - Ds. Sungai Raya Utara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,134,Jl. Kalaka Dayuh - Ds. Sungai Raya Utara,HSS-KAB-134,Kalaka Dayuh - Ds. Sungai Raya Utara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,135,Teluk Pinang - Padang Rasau,HSS-KAB-135,Teluk Pinang - Padang Rasau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,135,Teluk Pinang - Padang Rasau,HSS-KAB-135,Teluk Pinang - Padang Rasau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,136,Tanayung - Simp. Ambarai,HSS-KAB-136,Tanayung - Simp. Ambarai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,136,Tanayung - Simpang Ambarai,HSS-KAB-136,Tanayung - Simp. Ambarai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,137,Tabihi - Telaga Langsat,HSS-KAB-137,Tabihi - Telaga Langsat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,137,Tabihi - Telaga Langsat,HSS-KAB-137,Tabihi - Telaga Langsat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,138,Karang Jawa -Ambarai - Sungai Bungur,HSS-KAB-138,Karang Jawa -Ambarai - Sungai Bungur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,138,Karang Jawa - Ambarai - Sungai Bungur,HSS-KAB-138,Karang Jawa -Ambarai - Sungai Bungur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,139,Ambarai - Madang,HSS-KAB-139,Ambarai - Madang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,139,Ambarai - Madang,HSS-KAB-139,Ambarai - Madang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,140,Padang Batung - Batulaki - Malilingin,HSS-KAB-140,Padang Batung - Batulaki - Malilingin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,140,Padang Batung - Batu Laki - Malilingin,HSS-KAB-140,Padang Batung - Batulaki - Malilingin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,141,Malilingin - Lokbahan - Paniungan,HSS-KAB-141,Malilingin - Lokbahan - Paniungan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,141,Malilingin - Lokbahan - Paniungan,HSS-KAB-141,Malilingin - Lokbahan - Paniungan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,142,Mawangi - Bukuanin - Telaga Langsat,HSS-KAB-142,Mawangi - Bukuanin - Telaga Langsat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,142,Mawangi - Bukuanin - Telaga Langsat,HSS-KAB-142,Mawangi - Bukuanin - Telaga Langsat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,143,Mandapai - Madang,HSS-KAB-143,Mandapai - Madang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,143,Mandapai - Madang,HSS-KAB-143,Mandapai - Madang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,144,Kaliring - Sp. Padang Batung,HSS-KAB-144,Kaliring - Sp. Padang Batung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,144,Kaliring - SP. Padang Batung,HSS-KAB-144,Kaliring - Sp. Padang Batung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,145,Pagar Haur - Malutu,HSS-KAB-145,Pagar Haur - Malutu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,145,Pagar Haur - Malutu,HSS-KAB-145,Pagar Haur - Malutu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,146,Simpang Malutu - Pahampangan,HSS-KAB-146,Simpang Malutu - Pahampangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,146,Simpang Malutu - Pahampangan,HSS-KAB-146,Simpang Malutu - Pahampangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,147,Simpang Malutu - Tambak,HSS-KAB-147,Simpang Malutu - Tambak,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,147,Simpang Malutu - Tambak,HSS-KAB-147,Simpang Malutu - Tambak,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,148,Pagat Batu - Muara Hariang,HSS-KAB-148,Pagat Batu - Muara Hariang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,148,Pagat Batu - Muara Hariang,HSS-KAB-148,Pagat Batu - Muara Hariang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,149,Paku (Jambu Hulu) - Ganda,HSS-KAB-149,Paku (Jambu Hulu) - Ganda,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,149,Paku (Jambu Hulu) - Ganda,HSS-KAB-149,Paku (Jambu Hulu) - Ganda,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,150,Sp.3 Bukuanin - Riam Talo,HSS-KAB-150,Sp.3 Bukuanin - Riam Talo,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,150,SP.3 Bukuanin - Riam Talo,HSS-KAB-150,Sp.3 Bukuanin - Riam Talo,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,151,Sp.3 Bukuanin - Tayub,HSS-KAB-151,Sp.3 Bukuanin - Tayub,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,151,SP.3 Bukuanin - Tayub,HSS-KAB-151,Sp.3 Bukuanin - Tayub,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,152,Madang - Ambutun,HSS-KAB-152,Madang - Ambutun,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,152,Madang - Ambutun,HSS-KAB-152,Madang - Ambutun,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,153,Jl. Monumen 17 Mei - Mandapai,HSS-KAB-153,Monumen 17 Mei - Mandapai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,153,Jl. Monumen 17 Mei - Mandapai,HSS-KAB-153,Monumen 17 Mei - Mandapai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,154,Batu Laki - Muara Pipii,HSS-KAB-154,Batu Laki - Muara Pipii,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,154,Batulaki - Muara Pipii,HSS-KAB-154,Batu Laki - Muara Pipii,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,155,Muara Pipii - Tambak Pipii,HSS-KAB-155,Muara Pipii - Tambak Pipii,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,155,Muara Pipii - Tambak Pipii,HSS-KAB-155,Muara Pipii - Tambak Pipii,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,156,Tambak Pipii - Malilingin,HSS-KAB-156,Tambak Pipii - Malilingin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,156,Tambak Pipii - Malilingin,HSS-KAB-156,Tambak Pipii - Malilingin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,157,Malilingin - Muara Hariang,HSS-KAB-157,Malilingin - Muara Hariang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,157,Malilingin - Muara Hariang,HSS-KAB-157,Malilingin - Muara Hariang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,158,Mawangi - Pariangan,HSS-KAB-158,Mawangi - Pariangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,158,Mawangi - Pariangan,HSS-KAB-158,Mawangi - Pariangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,159,Jambu Hulu - Paku Pantai,HSS-KAB-159,Jambu Hulu - Paku Pantai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,159,Jambu Hulu - Paku Pantai,HSS-KAB-159,Jambu Hulu - Paku Pantai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,160,Sungai Minting - Ds. Malutu,HSS-KAB-160,Sungai Minting - Ds. Malutu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,160,Jl. Sungai Minting - Ds. Malutu,HSS-KAB-160,Sungai Minting - Ds. Malutu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,161,Padang Rasau (Tambak Tamiang) - Paku Pantai,HSS-KAB-161,Padang Rasau (Tambak Tamiang) - Paku Pantai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,161,Jl. Padang Rasau (Tambak Tamiang) - Paku Pantai,HSS-KAB-161,Padang Rasau (Tambak Tamiang) - Paku Pantai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,162,Jl. Galuntang Tayub - Ds. Madang,HSS-KAB-162,Galuntang Tayub - Ds. Madang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,162,Jl. Galuntang Tayub - Ds. Madang,HSS-KAB-162,Galuntang Tayub - Ds. Madang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,163,Jl. Menuju SMPN Malilingin,HSS-KAB-163,Menuju SMPN Malilingin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,163,Jl. Menuju SMPN Malilingin,HSS-KAB-163,Menuju SMPN Malilingin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,164,Jl. Samping Mesjid Mandapai,HSS-KAB-164,Samping Mesjid Mandapai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,164,Jl. Samping Mesjid Mandapai,HSS-KAB-164,Samping Mesjid Mandapai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,165,Muara Hariang - Bayumbung,HSS-KAB-165,Muara Hariang - Bayumbung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,165,Muara Hariang - Bayumbung,HSS-KAB-165,Muara Hariang - Bayumbung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,166,Tambak Pipii - Batu Ampar,HSS-KAB-166,Tambak Pipii - Batu Ampar,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,166,Tambak Pipii - Batu Ampar,HSS-KAB-166,Tambak Pipii - Batu Ampar,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,167,Bakarung - Rantauan,HSS-KAB-167,Bakarung - Rantauan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,167,Bakarung - Rantauan,HSS-KAB-167,Bakarung - Rantauan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,168,Taniran Selatan - Rantauan,HSS-KAB-168,Taniran Selatan - Rantauan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,168,Taniran Selatan - Rantauan,HSS-KAB-168,Taniran Selatan - Rantauan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,169,Bakarung -Tabihi - Karang Jawa,HSS-KAB-169,Bakarung -Tabihi - Karang Jawa,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,169,Bakarung - Tabihi -Karang Jawa,HSS-KAB-169,Bakarung -Tabihi - Karang Jawa,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,170,Pandulangan - Kalinduku,HSS-KAB-170,Pandulangan - Kalinduku,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,170,Pandulangan - Kalinduku,HSS-KAB-170,Pandulangan - Kalinduku,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,HSS-KAB-171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,171,Taniran Selatan Kubah - Buntut Taniran/Wawaran,HSS-KAB-171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,172,Angkinang Selatan - Tawia - Wawaran,HSS-KAB-172,Angkinang Selatan - Tawia - Wawaran,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,172,Angkinang Selatan - Tawia - Wawaran,HSS-KAB-172,Angkinang Selatan - Tawia - Wawaran,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,173,Tawia - Kayu Abang,HSS-KAB-173,Tawia - Kayu Abang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,173,Tawia - Kayu Abang,HSS-KAB-173,Tawia - Kayu Abang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,174,Bamban Selatan - Tanggang - Panggang Hijau,HSS-KAB-174,Bamban Selatan - Tanggang - Panggang Hijau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,174,Bamban Selatan - Tangang - Panggang Hijau,HSS-KAB-174,Bamban Selatan - Tanggang - Panggang Hijau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,175,Angkinang - Telaga Langsat,HSS-KAB-175,Angkinang - Telaga Langsat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,175,Angkinang - Telaga Langsat,HSS-KAB-175,Angkinang - Telaga Langsat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,176,Bamban Selatan - Pakuan,HSS-KAB-176,Bamban Selatan - Pakuan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,176,Bamban Selatan - Pakuan,HSS-KAB-176,Bamban Selatan - Pakuan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,177,Bamban Utara - Longawang,HSS-KAB-177,Bamban Utara - Longawang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,177,Bamban Utara - Longawang,HSS-KAB-177,Bamban Utara - Longawang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,178,Angkinang - Kayu Abang - Panggang Hijau,HSS-KAB-178,Angkinang - Kayu Abang - Panggang Hijau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,178,Angkinang - Kayu Abang - Panggang Hijau,HSS-KAB-178,Angkinang - Kayu Abang - Panggang Hijau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,HSS-KAB-179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,179,SP. Mandampa Telaga Sili-Sili - SP. Sungai Bungur,HSS-KAB-179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,180,Sungai Kudung - Kalinduku,HSS-KAB-180,Sungai Kudung - Kalinduku,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,180,Sungai Kudung - Kalinduku,HSS-KAB-180,Sungai Kudung - Kalinduku,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,181,Bamban Tengah - Lok Nyiur,HSS-KAB-181,Bamban Tengah - Lok Nyiur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,181,Bamban Tengah - Lok Nyiur,HSS-KAB-181,Bamban Tengah - Lok Nyiur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,182,Sp. Bakarung Selatan - Sungai Kudung,HSS-KAB-182,Sp. Bakarung Selatan - Sungai Kudung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,182,Simp. Bakarung Selatan - Sungai Kudung,HSS-KAB-182,Sp. Bakarung Selatan - Sungai Kudung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,183,Panggang Hijau - Ds. Tawar,HSS-KAB-183,Panggang Hijau - Ds. Tawar,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,183,Jl.Panggang Hijau - DsTawar,HSS-KAB-183,Panggang Hijau - Ds. Tawar,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,184,Taniran Tengah - Taniran Selatan,HSS-KAB-184,Taniran Tengah - Taniran Selatan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,184,Taniran Tengah - Taniran Selatan,HSS-KAB-184,Taniran Tengah - Taniran Selatan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,185,Jl. Kayu Abang - Ds. Anjiran,HSS-KAB-185,Kayu Abang - Ds. Anjiran,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,185,Jl. Kayu Abang - Ds. Anjiran,HSS-KAB-185,Kayu Abang - Ds. Anjiran,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,186,Jl. Rel Angkinang - TMMD Angkinang,HSS-KAB-186,Rel Angkinang - TMMD Angkinang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,186,Jl. Rel Angkinang - TMMD Angkinang,HSS-KAB-186,Rel Angkinang - TMMD Angkinang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,187,Jl. AMD - Ds. Lok Binuang,HSS-KAB-187,AMD - Ds. Lok Binuang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,187,Jl. AMD - Ds. Lok Binuang,HSS-KAB-187,AMD - Ds. Lok Binuang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,188,Jl. Pandan Sari - Ds. Angkinang,HSS-KAB-188,Pandan Sari - Ds. Angkinang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,188,Jl. Pandan Sari,HSS-KAB-188,Pandan Sari - Ds. Angkinang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,189,Bamban Selatan - Pakuan Balunan,HSS-KAB-189,Bamban Selatan - Pakuan Balunan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,189,Jl. Bamban Selatan - Pakuan Balunan,HSS-KAB-189,Bamban Selatan - Pakuan Balunan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,190,Kayu Abang - Paya,HSS-KAB-190,Kayu Abang - Paya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,190,Jl. Kayu Abang - Paya,HSS-KAB-190,Kayu Abang - Paya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,191,Bamban (Tibung) - Martajiwa,HSS-KAB-191,Bamban (Tibung) - Martajiwa,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,191,Jl. Bamban (Tibung) - Martajiwa,HSS-KAB-191,Bamban (Tibung) - Martajiwa,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,192,Rantauan - Sungai Baru (Jl. Pulau),HSS-KAB-192,Rantauan - Sungai Baru (Jl. Pulau),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,192,Jl. Rantauan - Sungai Baru (Jl. Pulau),HSS-KAB-192,Rantauan - Sungai Baru (Jl. Pulau),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,193,Telaga Langsat - Pakuan Timur,HSS-KAB-193,Telaga Langsat - Pakuan Timur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,193,Telaga Langsat - Pakuan Timur,HSS-KAB-193,Telaga Langsat - Pakuan Timur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,194,Longawang - Gumbil,HSS-KAB-194,Longawang - Gumbil,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,194,Longawang - Gumbil,HSS-KAB-194,Longawang - Gumbil,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,195,Mandampa - Longawang,HSS-KAB-195,Mandampa - Longawang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,195,Mandampa - Longawang,HSS-KAB-195,Mandampa - Longawang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,196,Gumbil - Masimpan,HSS-KAB-196,Gumbil - Masimpan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,196,Gumbil - Masimpan,HSS-KAB-196,Gumbil - Masimpan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,197,Hamak Timur - Umpaya,HSS-KAB-197,Hamak Timur - Umpaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,197,Hamak Timur - Umpaya,HSS-KAB-197,Hamak Timur - Umpaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,198,Hamak - Umbai,HSS-KAB-198,Hamak - Umbai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,198,Jl. Hamak - Umbai,HSS-KAB-198,Hamak - Umbai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,199,Hamak Utara - Samaragi,HSS-KAB-199,Hamak Utara - Samaragi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,199,Jl. Hamak Utara - Samaragi,HSS-KAB-199,Hamak Utara - Samaragi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,200,Umpaya - Tumarin,HSS-KAB-200,Umpaya - Tumarin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,200,Jl. Umpaya - Tumarin,HSS-KAB-200,Umpaya - Tumarin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,201,Jl. Sungai Durian - Ds. Gumbil,HSS-KAB-201,Sungai Durian - Ds. Gumbil,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,201,Jl. Sungai Durian - Ds. Gumbil,HSS-KAB-201,Sungai Durian - Ds. Gumbil,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,202,Pantai Langsat - Umpaya,HSS-KAB-202,Pantai Langsat - Umpaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,202,Jl. Pantai Langsat - Umpaya,HSS-KAB-202,Pantai Langsat - Umpaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,203,Halayung - Hantarukung,HSS-KAB-203,Halayung - Hantarukung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,203,Jl. Halayung - Hantarukung,HSS-KAB-203,Halayung - Hantarukung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,204,Wasah Hulu - Amparaya - Simpur,HSS-KAB-204,Wasah Hulu - Amparaya - Simpur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,204,Wasah Hulu - Amparaya - Simpur,HSS-KAB-204,Wasah Hulu - Amparaya - Simpur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,205,Wasah Hilir - Sarang Halang,HSS-KAB-205,Wasah Hilir - Sarang Halang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,205,Wasah Hilir - Sarang Halang,HSS-KAB-205,Wasah Hilir - Sarang Halang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,206,Simpur - Simp. Bilui,HSS-KAB-206,Simpur - Simp. Bilui,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,206,Simpur - Simpang Bilui,HSS-KAB-206,Simpur - Simp. Bilui,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,207,Simpur - Sp. 3 Muara Paring Agung,HSS-KAB-207,Simpur - Sp. 3 Muara Paring Agung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,207,Simpur - SP.3 Muara Paring Agung,HSS-KAB-207,Simpur - Sp. 3 Muara Paring Agung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,208,Wasah Tengah - Sungai Tarap,HSS-KAB-208,Wasah Tengah - Sungai Tarap,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,208,Wasah Tengah - Sungai Tarap,HSS-KAB-208,Wasah Tengah - Sungai Tarap,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,209,Wasah Hilir - Amparaya,HSS-KAB-209,Wasah Hilir - Amparaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,209,Wasah Hilir - Amparaya,HSS-KAB-209,Wasah Hilir - Amparaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,210,Panjampang Bahagia - Bayur,HSS-KAB-210,Panjampang Bahagia - Bayur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,210,Panjampang Bahagia - Bayur,HSS-KAB-210,Panjampang Bahagia - Bayur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,211,Ulin - Tanggul (Balai Mas),HSS-KAB-211,Ulin - Tanggul (Balai Mas),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,211,Ulin - Tanggul (Balai Mas),HSS-KAB-211,Ulin - Tanggul (Balai Mas),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,212,Panjampang Bahagia - Hanau,HSS-KAB-212,Panjampang Bahagia - Hanau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,212,Panjampang Bahagia - Hanau,HSS-KAB-212,Panjampang Bahagia - Hanau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,213,Jl. Halaban,HSS-KAB-213,Halaban,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,213,Jl. Halaban,HSS-KAB-213,Halaban,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,214,Amparaya - Karangan - Hanau,HSS-KAB-214,Amparaya - Karangan - Hanau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,214,Jl. Amparaya-Karangan - Hanau,HSS-KAB-214,Amparaya - Karangan - Hanau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,215,Jl. Kalimput Desa Wasah Hilir,HSS-KAB-215,Kalimput Desa Wasah Hilir,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,215,Jl. Kalimput Ds. Wasah Hilir,HSS-KAB-215,Kalimput Desa Wasah Hilir,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,216,Jl. Sungai Kacil I - Kapuh Padang,HSS-KAB-216,Sungai Kacil I - Kapuh Padang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,216,Jl. Sungai Kacil I - Kapuh Padang,HSS-KAB-216,Sungai Kacil I - Kapuh Padang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,217,Jl. Sungai Kacil II,HSS-KAB-217,Sungai Kacil II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,217,Jl. Sungai Kacil II,HSS-KAB-217,Sungai Kacil II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,218,Jl. Papagaran - Ds. Amawang Kanan,HSS-KAB-218,Papagaran - Ds. Amawang Kanan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,218,Jl. Papagaran - Ds. Amawang Kanan,HSS-KAB-218,Papagaran - Ds. Amawang Kanan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,219,Balaimas - Hanau,HSS-KAB-219,Balaimas - Hanau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,219,Jl. Balaimas - Hanau,HSS-KAB-219,Balaimas - Hanau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,220,Garunggang - Hantamangu,HSS-KAB-220,Garunggang - Hantamangu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,220,Garunggang - Hantamangu,HSS-KAB-220,Garunggang - Hantamangu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,221,Jl. KH. Ramli - DS. Amparaya,HSS-KAB-221,KH. Ramli - DS. Amparaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,221,Jl. KH. Ramli,HSS-KAB-221,KH. Ramli - DS. Amparaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,222,Jl. Tungkaran - Ds. Ulin,HSS-KAB-222,Tungkaran - Ds. Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,222,Jl. Tungkaran,HSS-KAB-222,Tungkaran - Ds. Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,223,Jl. Mondar (Ulin-Pantai Ulin) - Ds. Ulin,HSS-KAB-223,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,223,Jl. Mondar (Ulin - Pantai Ulin),HSS-KAB-223,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,224,Jl. Pendawa - Ds. Tebing Tinggi,HSS-KAB-224,Pendawa - Ds. Tebing Tinggi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,224,Jl. Pendawa - Ds. Tebing Tinggi,HSS-KAB-224,Pendawa - Ds. Tebing Tinggi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,225,Jl. Mangamol - Ds. Pantai Ulin,HSS-KAB-225,Mangamol - Ds. Pantai Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,225,Jl. Mangamol,HSS-KAB-225,Mangamol - Ds. Pantai Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,226,Jl. Guru H. Izim - Ds. Pantai Ulin,HSS-KAB-226,Guru H. Izim - Ds. Pantai Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,226,Jl. Guru H. Izim,HSS-KAB-226,Guru H. Izim - Ds. Pantai Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,227,Jl. Rawati - Ds. Panjampang Bahagia,HSS-KAB-227,Rawati - Ds. Panjampang Bahagia,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,227,Jl. Rawati,HSS-KAB-227,Rawati - Ds. Panjampang Bahagia,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,228,Jl. Pianggu,HSS-KAB-228,Pianggu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,228,Jl. Pianggu,HSS-KAB-228,Pianggu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,229,Jl. Buluh - Ds. Tebing Tinggi,HSS-KAB-229,Buluh - Ds. Tebing Tinggi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,229,Jl. Buluh Ds. Tebing Tinggi,HSS-KAB-229,Buluh - Ds. Tebing Tinggi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,230,Jl. H. Saim Garunggang - Kalimput,HSS-KAB-230,H. Saim Garunggang - Kalimput,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,230,Jl. H. Saim/Garunggang,HSS-KAB-230,H. Saim Garunggang - Kalimput,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,231,Jl. Padang Haur - Ds. Wasah Tengah,HSS-KAB-231,Padang Haur - Ds. Wasah Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,231,Jl. Padang Haur - Ds. Wasah Tengah,HSS-KAB-231,Padang Haur - Ds. Wasah Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,232,Jl. Gerilya - Ds. Simpur,HSS-KAB-232,Gerilya - Ds. Simpur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,232,Jl. Gerilya Ds. Simpur,HSS-KAB-232,Gerilya - Ds. Simpur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,233,Jl. Jangkang - Ds. Wasah Hilir,HSS-KAB-233,Jangkang - Ds. Wasah Hilir,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,233,Jl. Jangkang - Ds. Wasah Hilir,HSS-KAB-233,Jangkang - Ds. Wasah Hilir,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,234,Jl. Air Miris - Ds. Wasah Hilir,HSS-KAB-234,Air Miris - Ds. Wasah Hilir,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,234,Jl. Air Miris,HSS-KAB-234,Air Miris - Ds. Wasah Hilir,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,235,Jl. Tandik - Ds. Wasah Hilir,HSS-KAB-235,Tandik - Ds. Wasah Hilir,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,235,Tandik - Wasah Hilir,HSS-KAB-235,Tandik - Ds. Wasah Hilir,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,236,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),HSS-KAB-236,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,236,Jl. Ds. Kapuh Tengah (Jl. Menuju Majelis Taklim),HSS-KAB-236,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,237,Jl. Karampaci - Ds. Kapuh,HSS-KAB-237,Karampaci - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,237,Jl. Karampaci,HSS-KAB-237,Karampaci - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,238,Jl. At-Taubah - Ds. Kapuh,HSS-KAB-238,At-Taubah - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,238,Jl. At-Taubah,HSS-KAB-238,At-Taubah - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,239,Jl. Firdaus - Ds. Kapuh,HSS-KAB-239,Firdaus - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,239,Jl. Firdaus,HSS-KAB-239,Firdaus - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,240,Jl. Slasa Garih - Ds. Kapuh,HSS-KAB-240,Slasa Garih - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,240,Jl. Slasa Garih - Ds. Kapuh,HSS-KAB-240,Slasa Garih - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,241,Jl. Palas - Ds. Wasah Tengah,HSS-KAB-241,Palas - Ds. Wasah Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,241,Jl. Palas - Ds. Wasah Tengah,HSS-KAB-241,Palas - Ds. Wasah Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,242,Jl. Tanah Habang - Ds. Simpur,HSS-KAB-242,Tanah Habang - Ds. Simpur,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,242,Jl. Tanah Habang - Ds. Simpur,HSS-KAB-242,Tanah Habang - Ds. Simpur,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,243,Jl. Banua Kambang - Ds. Wasah Tengah,HSS-KAB-243,Banua Kambang - Ds. Wasah Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,243,Jl. Banua Kambang,HSS-KAB-243,Banua Kambang - Ds. Wasah Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,244,Jl. Pajah Api - Ds. Kapuh,HSS-KAB-244,Pajah Api - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,244,Jl. Pajah Api,HSS-KAB-244,Pajah Api - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,245,Jl. Talapak Manuk - Ds. Kapuh,HSS-KAB-245,Talapak Manuk - Ds. Kapuh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,245,Jl. Telapak Manuk,HSS-KAB-245,Talapak Manuk - Ds. Kapuh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,246,Sirih - Taro,HSS-KAB-246,Sirih - Taro,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,246,Sirih - Taro,HSS-KAB-246,Sirih - Taro,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,247,Kalumpang - Balimau,HSS-KAB-247,Kalumpang - Balimau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,247,Kalumpang - Balimau,HSS-KAB-247,Kalumpang - Balimau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,248,Kalumpang (Ds. Balanti) - Teratai,HSS-KAB-248,Kalumpang (Ds. Balanti) - Teratai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,248,Kalumpang (Ds. Belanti) - Teratai,HSS-KAB-248,Kalumpang (Ds. Balanti) - Teratai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,249,Bago Tanggul - Katilang - Teratai,HSS-KAB-249,Bago Tanggul - Katilang - Teratai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,249,Jl. Bago Tanggul - Katilang - Teratai,HSS-KAB-249,Bago Tanggul - Katilang - Teratai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,250,Binjai (Sirih Hulu) - Ds. Seranggan,HSS-KAB-250,Binjai (Sirih Hulu) - Ds. Seranggan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,250,Jl. Binjai (Sirih Hulu) - Ds. Seranggan,HSS-KAB-250,Binjai (Sirih Hulu) - Ds. Seranggan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,251,Balanti - (Ex. P3DT),HSS-KAB-251,Balanti - (Ex. P3DT),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,251,Jl. Balanti - (Ex. P3DT),HSS-KAB-251,Balanti - (Ex. P3DT),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,252,Kalumpang - Baruh,HSS-KAB-252,Kalumpang - Baruh,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,252,Kalumpang - Baruh,HSS-KAB-252,Kalumpang - Baruh,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,253,Sirih - Pacakan,HSS-KAB-253,Sirih - Pacakan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,253,Sirih - Pacakan,HSS-KAB-253,Sirih - Pacakan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,HSS-KAB-254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,HSS-KAB-254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,255,Kalumpang Selatan - Ds. Asam Tamiyang,HSS-KAB-255,Kalumpang Selatan - Ds. Asam Tamiyang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,255,Jl. Kalumpang Selatan - Ds. Asam Tamiyang,HSS-KAB-255,Kalumpang Selatan - Ds. Asam Tamiyang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,256,Balimau - Murung Dalam,HSS-KAB-256,Balimau - Murung Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,256,Jl. Balimau - Murung Dalam,HSS-KAB-256,Balimau - Murung Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,257,Jl. Karya Bakti - Ds. Balimau,HSS-KAB-257,Karya Bakti - Ds. Balimau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,257,Jl. Karya Bakti TNI - Ds. Balimau,HSS-KAB-257,Karya Bakti - Ds. Balimau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,258,Tanuhi - Ulang,HSS-KAB-258,Tanuhi - Ulang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,258,Tanuhi - Ulang,HSS-KAB-258,Tanuhi - Ulang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,259,Loksado - Loklahung,HSS-KAB-259,Loksado - Loklahung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,259,Loksado - Loklahung,HSS-KAB-259,Loksado - Loklahung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,260,Loksado - Haratai,HSS-KAB-260,Loksado - Haratai,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,260,Loksado - Haratai,HSS-KAB-260,Loksado - Haratai,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,261,Loklahung - Kamawakan,HSS-KAB-261,Loklahung - Kamawakan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,261,Loklahung - Kamawakan,HSS-KAB-261,Loklahung - Kamawakan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,262,Jl. Niagara (Ds. Halunuk) - Ayan,HSS-KAB-262,Niagara (Ds. Halunuk) - Ayan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,262,Jl. Niagara (Ds. Halunuk) - Ayan,HSS-KAB-262,Niagara (Ds. Halunuk) - Ayan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,263,Malinau - Katingin - Kamawakan,HSS-KAB-263,Malinau - Katingin - Kamawakan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,263,Malinau - Katingin - Kamawakan,HSS-KAB-263,Malinau - Katingin - Kamawakan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,264,Loklahung - Malaris,HSS-KAB-264,Loklahung - Malaris,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,264,Loklahung - Malaris,HSS-KAB-264,Loklahung - Malaris,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,265,Jl. Bubuih - Ds. Halunuk,HSS-KAB-265,Bubuih - Ds. Halunuk,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,265,Jl. Bubuih (Ds. Halunuk),HSS-KAB-265,Bubuih - Ds. Halunuk,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,HSS-KAB-266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,HSS-KAB-266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,267,Jl. Muara Kitar - Desa Lumpangi,HSS-KAB-267,Muara Kitar - Desa Lumpangi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,267,Jl. Muara Kitar - Ds. Lumpangi,HSS-KAB-267,Muara Kitar - Desa Lumpangi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,268,Jl. Hulu Banyu - Pantai Langsat,HSS-KAB-268,Hulu Banyu - Pantai Langsat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,268,Jl. Hulu Banyu - Pantai Langsat,HSS-KAB-268,Hulu Banyu - Pantai Langsat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,269,Jl. Bayampah - Tanuhi - Tugu Niih,HSS-KAB-269,Bayampah - Tanuhi - Tugu Niih,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,269,Jl. Bayampah - Tanuhi - Tugu Niih,HSS-KAB-269,Bayampah - Tanuhi - Tugu Niih,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,270,Jl. Kantor Camat Loksado II,HSS-KAB-270,Kantor Camat Loksado II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,270,Jl. Kantor Camat Loksado II,HSS-KAB-270,Kantor Camat Loksado II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,271,Jl. Buntu Muara Hatib - Bts. Kab. HST,HSS-KAB-271,Buntu Muara Hatib - Bts. Kab. HST,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,271,Jl. Buntu Muara Hatib,HSS-KAB-271,Buntu Muara Hatib - Bts. Kab. HST,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,272,Tanuhi - Hulu Banyu,HSS-KAB-272,Tanuhi - Hulu Banyu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,272,Jl. Tanuhi - Hulu Banyu,HSS-KAB-272,Tanuhi - Hulu Banyu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,273,Hulu Banyu - Datar Mangkung - Tumingki,HSS-KAB-273,Hulu Banyu - Datar Mangkung - Tumingki,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,273,Hulu Banyu - Datar Mangkung -Tumingki,HSS-KAB-273,Hulu Banyu - Datar Mangkung - Tumingki,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,274,Lambuk - Ds. Tumingki,HSS-KAB-274,Lambuk - Ds. Tumingki,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,274,Lambuk - Ds. Tumingki,HSS-KAB-274,Lambuk - Ds. Tumingki,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,275,Malaris - Loapanggang,HSS-KAB-275,Malaris - Loapanggang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,275,Malaris - Loapanggang,HSS-KAB-275,Malaris - Loapanggang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,276,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3,HSS-KAB-276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,276,Jl. Haratai 3 (Balai Kedayang) / SDN Haratai 3,HSS-KAB-276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,277,Jl. Haratai 2 (Balai Ujung Atas) SDN Haratai2,HSS-KAB-277,Haratai 2 (Balai Ujung Atas) SDN Haratai2,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,277,Jl. Haratai 2 (SDN Haratai2),HSS-KAB-277,Haratai 2 (Balai Ujung Atas) SDN Haratai2,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,278,Jl. Bubuih (Ds. Halunuk) - Kandihin,HSS-KAB-278,Bubuih (Ds. Halunuk) - Kandihin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,278,Jl. Bubuih - Kandihin,HSS-KAB-278,Bubuih (Ds. Halunuk) - Kandihin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,279,Jl. Makam Habib - Desa Lumpangi,HSS-KAB-279,Makam Habib - Desa Lumpangi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,279,Jl. Makam Habib Ds. Lumpangi,HSS-KAB-279,Makam Habib - Desa Lumpangi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,280,Jl. Datar Belimbing - Muara Kitar,HSS-KAB-280,Datar Belimbing - Muara Kitar,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,280,Jl. Datar Belimbing - Muara Kitar,HSS-KAB-280,Datar Belimbing - Muara Kitar,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,281,Jl. Tanginau - Balai Haruyan,HSS-KAB-281,Tanginau - Balai Haruyan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,281,Jl. Tanginau - Balai Haruyan,HSS-KAB-281,Tanginau - Balai Haruyan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,282,Jl. Tataian - (Ds. Ulang) - Loksado,HSS-KAB-282,Tataian - (Ds. Ulang) - Loksado,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,282,Jl. Tataian - (Ds. Ulang) - Loksado,HSS-KAB-282,Tataian - (Ds. Ulang) - Loksado,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,283,Jl. Ulang - Kacang Parang,HSS-KAB-283,Ulang - Kacang Parang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,283,Jl. Ulang - Kacang Parang,HSS-KAB-283,Ulang - Kacang Parang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,284,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias,HSS-KAB-284,Kacang Parang (Ulang) - Balai Mawak-Kias,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,284,Jl. Kacang Parang (Ulang) - Balai Mawak-Kias,HSS-KAB-284,Kacang Parang (Ulang) - Balai Mawak-Kias,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,285,Jl. Kacang Parang (Ulang) - Balai Wariung,HSS-KAB-285,Kacang Parang (Ulang) - Balai Wariung,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,285,Jl. Kacang Parang (Ulang) - Balai Wariung,HSS-KAB-285,Kacang Parang (Ulang) - Balai Wariung,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,286,Jl. Loksado - Pantai Dusin,HSS-KAB-286,Loksado - Pantai Dusin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,286,Jl. Loksado - Pantai Dusin,HSS-KAB-286,Loksado - Pantai Dusin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,287,Jl. Malinau - Kandihin,HSS-KAB-287,Malinau - Kandihin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,287,Jl. Malinau - Kandihin,HSS-KAB-287,Malinau - Kandihin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,288,Jl. Ulang - Bangkaun,HSS-KAB-288,Ulang - Bangkaun,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,288,Ulang - Bangkaun,HSS-KAB-288,Ulang - Bangkaun,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,289,Bayanan - Habirau Tengah,HSS-KAB-289,Bayanan - Habirau Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,289,Bayanan - Habirau Tengah,HSS-KAB-289,Bayanan - Habirau Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,290,Tumbukan Banyu - Banua Hanyar,HSS-KAB-290,Tumbukan Banyu - Banua Hanyar,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,290,Tumbukan Banyu - Banua Hanyar,HSS-KAB-290,Tumbukan Banyu - Banua Hanyar,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,291,Jl. Satria,HSS-KAB-291,Satria,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,291,Jl. Satria,HSS-KAB-291,Satria,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,292,Jl. Musyawarah,HSS-KAB-292,Musyawarah (Nagara),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,292,Jl. Musyawarah,HSS-KAB-292,Musyawarah (Nagara),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,293,Jl. Sekolah Islam,HSS-KAB-293,Sekolah Islam (Sungai Pinang),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,293,Jl. Sekolah Islam,HSS-KAB-293,Sekolah Islam (Sungai Pinang),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,294,Jl. Habib,HSS-KAB-294,Habib,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,294,Jl. Habib,HSS-KAB-294,Habib,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,295,Jl. Mawar,HSS-KAB-295,Mawar (Daha Selatan),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,295,Jl. Mawar,HSS-KAB-295,Mawar (Daha Selatan),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,296,Jl. Inst. PDAM Negara,HSS-KAB-296,Inst. PDAM Negara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,296,Jl. Instalasi PDAM Negara,HSS-KAB-296,Inst. PDAM Negara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,297,Jl. Gerilya / (Depan PUSTU Habirau),HSS-KAB-297,Gerilya / (Depan PUSTU Habirau),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,297,Jl. Gerilya / (Depan Pustu Habirau),HSS-KAB-297,Gerilya / (Depan PUSTU Habirau),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,298,Jl. Harapan (SDN Habirau II)/ Sei. Palangan,HSS-KAB-298,Harapan (SDN Habirau II)/ Sei. Palangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,298,Jl. Harapan (SDN Habirau II)/Sei. Palangan,HSS-KAB-298,Harapan (SDN Habirau II)/ Sei. Palangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,299,Samuda - Bajayau,HSS-KAB-299,Samuda - Bajayau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,299,Samuda - Bajayau,HSS-KAB-299,Samuda - Bajayau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,300,Jl. Tambangan - Ds. Baruh Jaya,HSS-KAB-300,Tambangan - Ds. Baruh Jaya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,300,Jl. Tambangan - Ds. Baruh Jaya,HSS-KAB-300,Tambangan - Ds. Baruh Jaya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,301,Muning Tengah - Batang Alai (Pihanin Raya),HSS-KAB-301,Muning Tengah - Batang Alai (Pihanin Raya),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,301,Jl. Muning Tengah - Batang Alai (Pihanin Raya),HSS-KAB-301,Muning Tengah - Batang Alai (Pihanin Raya),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,302,Muning Tengah - Ds. Muning Dalam,HSS-KAB-302,Muning Tengah - Ds. Muning Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,302,Jl. Muning Tengah - Muning Dalam,HSS-KAB-302,Muning Tengah - Ds. Muning Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,303,SP.4 Banjarbaru - Pasar Negara,HSS-KAB-303,SP.4 Banjarbaru - Pasar Negara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,303,SP.4 Banjarbaru - Pasar Negara,HSS-KAB-303,SP.4 Banjarbaru - Pasar Negara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,304,Negara - Tumbukan Banyu,HSS-KAB-304,Negara - Tumbukan Banyu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,304,Negara - Tumbukan Banyu,HSS-KAB-304,Negara - Tumbukan Banyu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,305,SP.4. Banjarbaru - Pihanin Raya,HSS-KAB-305,SP.4. Banjarbaru - Pihanin Raya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,305,SP.4. Banjarbaru - Pihanin Raya,HSS-KAB-305,SP.4. Banjarbaru - Pihanin Raya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,306,Bayanan - Pihanin,HSS-KAB-306,Bayanan - Pihanin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,306,Bayanan - Pihanin,HSS-KAB-306,Bayanan - Pihanin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,307,Jl. Kantor Camat Daha Selatan II,HSS-KAB-307,Kantor Camat Daha Selatan II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,307,Jl. Kantor Camat Daha Selatan II,HSS-KAB-307,Kantor Camat Daha Selatan II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,308,Jl. Sungai Bugundi,HSS-KAB-308,Sungai Bugundi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,308,Jl. Sungai Bugundi,HSS-KAB-308,Sungai Bugundi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,309,Jl. Tukang Garit (Tambangan),HSS-KAB-309,Tukang Garit (Tambangan),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,309,Jl. Tukang Garit,HSS-KAB-309,Tukang Garit (Tambangan),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,310,Pandak Daun - Baruh Jaya - Samuda,HSS-KAB-310,Pandak Daun - Baruh Jaya - Samuda,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,310,Pandak Daun - Baruh Jaya - Samuda,HSS-KAB-310,Pandak Daun - Baruh Jaya - Samuda,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,311,Sei. Mandala Murung Raya,HSS-KAB-311,Sei. Mandala Murung Raya,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,311,Sei. Mandala - Murung Raya,HSS-KAB-311,Sei. Mandala Murung Raya,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,312,Jl. Teluk Haur I,HSS-KAB-312,Teluk Haur I,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,312,Teluk haur I,HSS-KAB-312,Teluk Haur I,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,313,Jl. Teluk Haur II,HSS-KAB-313,Teluk Haur II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,313,Teluk Haur II,HSS-KAB-313,Teluk Haur II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,314,Jl. H.M. Thaib,HSS-KAB-314,H.M. Thaib,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,314,Jl. HM. Thaib,HSS-KAB-314,H.M. Thaib,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,315,Jl. Kenanga - Ds. Baruh Kambang,HSS-KAB-315,Kenanga - Ds. Baruh Kambang,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,315,Jl. Kenanga - Ds. Baruh Kambang,HSS-KAB-315,Kenanga - Ds. Baruh Kambang,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,316,Jl. SMAN Negara (KH. Abdullah),HSS-KAB-316,SMAN Negara (KH. Abdullah),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,316,Jl. SMAN Negara (KH. Abdullah),HSS-KAB-316,SMAN Negara (KH. Abdullah),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,317,Jl. Pertukangan,HSS-KAB-317,Pertukangan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,317,Jl. Pertukangan,HSS-KAB-317,Pertukangan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,318,Jl. Silaturrahim,HSS-KAB-318,Silaturrahim,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,318,Jl. Silaturahim,HSS-KAB-318,Silaturrahim,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,319,Jl. Habib Ibrahim - Ds. Sei Mandala,HSS-KAB-319,Habib Ibrahim - Ds. Sei Mandala,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,319,Jl. Habib Iberahim,HSS-KAB-319,Habib Ibrahim - Ds. Sei Mandala,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,320,Jl. Sukaramai - Keramat,HSS-KAB-320,Sukaramai - Keramat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,320,Jl. Sukaramai - Keramat,HSS-KAB-320,Sukaramai - Keramat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,321,Jl. Pakan Dalam I,HSS-KAB-321,Pakan Dalam I,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,321,Pakan Dalam I,HSS-KAB-321,Pakan Dalam I,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,322,Jl. Pakan Dalam II,HSS-KAB-322,Pakan Dalam II,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,322,Pakan Dalam II,HSS-KAB-322,Pakan Dalam II,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,323,Jl. Pakan Dalam III,HSS-KAB-323,Pakan Dalam III,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,323,Pakan Dalam III,HSS-KAB-323,Pakan Dalam III,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,324,Jl. Paramaian,HSS-KAB-324,Paramaian,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,324,Jl. Paramaian,HSS-KAB-324,Paramaian,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,325,Jl. MIN Pandak Daun,HSS-KAB-325,MIN Pandak Daun,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,325,Jl. MIN Pandak Daun,HSS-KAB-325,MIN Pandak Daun,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,326,Jl. Pesantren Muradiyah,HSS-KAB-326,Pesantren Muradiyah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,326,Jl. Pesantren Muradiyah,HSS-KAB-326,Pesantren Muradiyah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,HSS-KAB-327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,327,Jl. Pandak Daun (Buntut Muradiyah) - Pakan Dalam,HSS-KAB-327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,328,Pakan Dalam - Kaminting Batu,HSS-KAB-328,Pakan Dalam - Kaminting Batu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,328,Pakan Dalam - Keminting Batu,HSS-KAB-328,Pakan Dalam - Kaminting Batu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,329,Jl. Samping Kantor Camat Daha Utara,HSS-KAB-329,Samping Kantor Camat Daha Utara,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,329,Jl. Samping Kantor Camat Daha Utara,HSS-KAB-329,Samping Kantor Camat Daha Utara,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,330,Jl. Gang Bidan (Ds. Tambak Bitin),HSS-KAB-330,Gang Bidan (Ds. Tambak Bitin),OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,330,Jl. Gang Bidan (Ds. Tambak Bitin),HSS-KAB-330,Gang Bidan (Ds. Tambak Bitin),KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,331,Jl. Cangkingan Herman,HSS-KAB-331,Cangkingan Herman,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,331,Jl. Cakingan Herman,HSS-KAB-331,Cangkingan Herman,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,332,Jl. Kampung Kawat,HSS-KAB-332,Kampung Kawat,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,332,Jl. Kampung Kawat,HSS-KAB-332,Kampung Kawat,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,333,Jl. Kaminting Batu,HSS-KAB-333,Kaminting Batu,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,333,Jl. Keminting Batu,HSS-KAB-333,Kaminting Batu,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,334,Jl. Hamayung - Hakurung Dalam,HSS-KAB-334,Hamayung - Hakurung Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,334,Jl. Hamayung - Ds. Hakurung Dalam,HSS-KAB-334,Hamayung - Hakurung Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,335,Simpang Jadi Makmur - Ds. Samuda,HSS-KAB-335,Simpang Jadi Makmur - Ds. Samuda,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,335,Simpang Jadi Makmur Ds. Samuda,HSS-KAB-335,Simpang Jadi Makmur - Ds. Samuda,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,336,Jl. Sakincung - Ds. Hakurung Dalam,HSS-KAB-336,Sakincung - Ds. Hakurung Dalam,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,336,Jl. Sakincung Ds. Hakurun Dalam,HSS-KAB-336,Sakincung - Ds. Hakurung Dalam,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,337,Jl. Hakurung Dalam - Ds. Sungai Haji,HSS-KAB-337,Hakurung Dalam - Ds. Sungai Haji,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,337,Hakurung Dalam - Ds. Sungai haji,HSS-KAB-337,Hakurung Dalam - Ds. Sungai Haji,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,338,Jl. Siang Gantung - Ds. Baru,HSS-KAB-338,Siang Gantung - Ds. Baru,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,338,Jl. Siang Gantung - Ds. Baru,HSS-KAB-338,Siang Gantung - Ds. Baru,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,339,Jl. Baru - Ds. Bajayau,HSS-KAB-339,Baru - Ds. Bajayau,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,339,Jl. Baru - Ds. Bajayau,HSS-KAB-339,Baru - Ds. Bajayau,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,340,Jl. Bajayau - Ds. Bajayau Tengah,HSS-KAB-340,Bajayau - Ds. Bajayau Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,340,Bajayau - Bajayau Tengah,HSS-KAB-340,Bajayau - Ds. Bajayau Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,341,Jl. Banua Hanyar - Ds. Tanjung Selor,HSS-KAB-341,Banua Hanyar - Ds. Tanjung Selor,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,341,Jl. Banua Hanyar - Tanjung Selor,HSS-KAB-341,Banua Hanyar - Ds. Tanjung Selor,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,342,Jl. Tanjung Selor - Ds. Badaun,HSS-KAB-342,Tanjung Selor - Ds. Badaun,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,342,Jl. Tanjung Selor - Ds. Badaun,HSS-KAB-342,Tanjung Selor - Ds. Badaun,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,343,Jl. Badaun - Ds. Bjayau Lama,HSS-KAB-343,Badaun - Ds. Bjayau Lama,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,343,Jl. Badaun - Ds. Bajayau Lama,HSS-KAB-343,Badaun - Ds. Bjayau Lama,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,344,Jl. Goha - Ds. Amawang Kanan,HSS-KAB-344,Goha - Ds. Amawang Kanan,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,344,Jl. Goha - Ds. Amawang Kanan,HSS-KAB-344,Goha - Ds. Amawang Kanan,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,345,Jl. Al - Ikhlas - Ds. Baluti,HSS-KAB-345,Al - Ikhlas - Ds. Baluti,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,345,Jl. Al - Ikhlas - Ds. Baluti,HSS-KAB-345,Al - Ikhlas - Ds. Baluti,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,346,Jl. Angkakai - Ds. Amawang Kiri,HSS-KAB-346,Angkakai - Ds. Amawang Kiri,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,346,Jl. Angkakai - Ds. Amawang Kiri,HSS-KAB-346,Angkakai - Ds. Amawang Kiri,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,347,Jl. Anjiran Rantauan - Ds. Taniran Tengah,HSS-KAB-347,Anjiran Rantauan - Ds. Taniran Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,347,Jl. Anjiran Rantauan - Ds. Taniran Tengah,HSS-KAB-347,Anjiran Rantauan - Ds. Taniran Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,348,Jl. Asam Duhat - Ds. Pantai Ulin,HSS-KAB-348,Asam Duhat - Ds. Pantai Ulin,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,348,Jl. Asam Duhat - Ds. Pantai Ulin,HSS-KAB-348,Asam Duhat - Ds. Pantai Ulin,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,349,Jl. Pertanian - Ds. Wasah Tengah,HSS-KAB-349,Pertanian - Ds. Wasah Tengah,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,349,Jl. Pertanian - Ds. Wasah Tengah,HSS-KAB-349,Pertanian - Ds. Wasah Tengah,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+dashboard_2025,350,Jl. Keramat Sakti - Ds. Tebing Tinggi,HSS-KAB-350,Keramat Sakti - Ds. Tebing Tinggi,OFFICIAL_NO_RUAS,VERIFIED
+qgis_county_roads,350,Jl. Keramat Sakti - Ds. Tebing Tinggi,HSS-KAB-350,Keramat Sakti - Ds. Tebing Tinggi,KD_INF_EQUALS_OFFICIAL_NO_RUAS,VERIFIED
+historical_normative_workbook,1,AES Nasution,HSS-KAB-035,AES Nasution,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,2,Air Miris - Ds. Wasah Hilir,HSS-KAB-234,Air Miris - Ds. Wasah Hilir,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,3,Al - Ikhlas - Ds. Baluti,HSS-KAB-345,Al - Ikhlas - Ds. Baluti,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,4,Aluh Idut,HSS-KAB-008,Aluh Idut,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,5,Amawang Kanan - Wasah Hulu,HSS-KAB-032,Amawang Kanan - Wasah Hulu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,6,Amawang Muka - Getek,HSS-KAB-031,Amawang Muka - Getek,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,7,Ambarai - Madang,HSS-KAB-139,Ambarai - Madang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,8,AMD - Ds. Lok Binuang,HSS-KAB-187,AMD - Ds. Lok Binuang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,9,Amparaya - Karangan - Hanau,HSS-KAB-214,Amparaya - Karangan - Hanau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,10,Anggrek,HSS-KAB-011,Anggrek,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,11,Angkakai - Ds. Amawang Kiri,HSS-KAB-346,Angkakai - Ds. Amawang Kiri,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,12,Angkinang - Kayu Abang - Panggang Hijau,HSS-KAB-178,Angkinang - Kayu Abang - Panggang Hijau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,13,Angkinang - Telaga Langsat,HSS-KAB-175,Angkinang - Telaga Langsat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,14,Angkinang Selatan - Tawia - Wawaran,HSS-KAB-172,Angkinang Selatan - Tawia - Wawaran,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,15,Anjiran Rantauan - Ds. Taniran Tengah,HSS-KAB-347,Anjiran Rantauan - Ds. Taniran Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,16,Asam Cangkuk - Telaga Bidadari,HSS-KAB-097,Asam Cangkuk - Telaga Bidadari,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,17,Asam Duhat - Ds. Pantai Ulin,HSS-KAB-348,Asam Duhat - Ds. Pantai Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,18,Asam Seranggan - Asam Tamiyang,HSS-KAB-123,Asam Seranggan - Asam Tamiyang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,19,At-Taubah - Ds. Kapuh,HSS-KAB-238,At-Taubah - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,20,Badaun - Ds. Bjayau Lama,HSS-KAB-343,Badaun - Ds. Bjayau Lama,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,21,Bago Tanggul - Katilang - Teratai,HSS-KAB-249,Bago Tanggul - Katilang - Teratai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,22,Baiturrahim Parincahan,HSS-KAB-069,Baiturrahim Parincahan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,23,Bajayau - Ds. Bajayau Tengah,HSS-KAB-340,Bajayau - Ds. Bajayau Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,24,Bakarung - Rantauan,HSS-KAB-167,Bakarung - Rantauan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,25,Bakarung -Tabihi - Karang Jawa,HSS-KAB-169,Bakarung -Tabihi - Karang Jawa,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,26,Bakarung Tengah - Karang Jawa,HSS-KAB-056,Bakarung Tengah - Karang Jawa,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,27,Balaimas - Hanau,HSS-KAB-219,Balaimas - Hanau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,28,Balanti - (Ex. P3DT),HSS-KAB-251,Balanti - (Ex. P3DT),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,29,Balimau - Murung Dalam,HSS-KAB-256,Balimau - Murung Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,30,Baluti - Jambu Hulu (Paku),HSS-KAB-040,Baluti - Jambu Hulu (Paku),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,31,Bamban (Tibung) - Martajiwa,HSS-KAB-191,Bamban (Tibung) - Martajiwa,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,32,Bamban Selatan - Pakuan,HSS-KAB-176,Bamban Selatan - Pakuan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,33,Bamban Selatan - Pakuan Balunan,HSS-KAB-189,Bamban Selatan - Pakuan Balunan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,34,Bamban Selatan - Tanggang - Panggang Hijau,HSS-KAB-174,Bamban Selatan - Tanggang - Panggang Hijau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,35,Bamban Tengah - Lok Nyiur,HSS-KAB-181,Bamban Tengah - Lok Nyiur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,36,Bamban Utara - Longawang,HSS-KAB-177,Bamban Utara - Longawang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,37,Bangga TMMD,HSS-KAB-112,Bangga TMMD,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,38,Banua Hanyar - Ds. Tanjung Selor,HSS-KAB-341,Banua Hanyar - Ds. Tanjung Selor,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,39,Banua Kambang - Ds. Wasah Tengah,HSS-KAB-243,Banua Kambang - Ds. Wasah Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,40,Banyu Barau - Sei Kalang,HSS-KAB-050,Banyu Barau - Sei Kalang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,41,Bariang - Getek,HSS-KAB-046,Bariang - Getek,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,42,Bariang - Patigan,HSS-KAB-075,Bariang - Patigan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,43,Baru - Asam Desa Baru,HSS-KAB-125,Baru - Asam Desa Baru,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,44,Baru - Ds. Bajayau,HSS-KAB-339,Baru - Ds. Bajayau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,45,Batang Kulur Kanan - Batang Kulur Kiri,HSS-KAB-130,Batang Kulur Kanan - Batang Kulur Kiri,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,46,Batang Kulur Kanan - Bumi Berkat (Kisung),HSS-KAB-129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,47,Batang Kulur Kanan - Sarangan,HSS-KAB-091,Batang Kulur Kanan - Sarangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,48,Batang Kulur Kiri - Durian Landung,HSS-KAB-113,Batang Kulur Kiri - Durian Landung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,49,Batu Laki - Muara Pipii,HSS-KAB-154,Batu Laki - Muara Pipii,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,50,Bayampah - Tanuhi - Tugu Niih,HSS-KAB-269,Bayampah - Tanuhi - Tugu Niih,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,51,Bayanan - Habirau Tengah,HSS-KAB-289,Bayanan - Habirau Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,52,Bayanan - Pihanin,HSS-KAB-306,Bayanan - Pihanin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,53,Bina Bakat,HSS-KAB-039,Bina Bakat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,54,Binjai (Sirih Hulu) - Ds. Seranggan,HSS-KAB-250,Binjai (Sirih Hulu) - Ds. Seranggan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,55,Biti - Sungai Kupang (Karya Bakti TNI),HSS-KAB-082,Biti - Sungai Kupang (Karya Bakti TNI),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,56,Brigjen Katamso,HSS-KAB-023,Brigjen Katamso,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,57,Bubuih - Ds. Halunuk,HSS-KAB-265,Bubuih - Ds. Halunuk,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,58,Bubuih (Ds. Halunuk) - Kandihin,HSS-KAB-278,Bubuih (Ds. Halunuk) - Kandihin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,59,Budi Bakti - Tiga Desember,HSS-KAB-028,Budi Bakti - Tiga Desember,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,60,Buluh - Ds. Tebing Tinggi,HSS-KAB-229,Buluh - Ds. Tebing Tinggi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,61,Bumi Berkat - Mungkur Galah,HSS-KAB-092,Bumi Berkat - Mungkur Galah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,62,Buntu Muara Hatib - Bts. Kab. HST,HSS-KAB-271,Buntu Muara Hatib - Bts. Kab. HST,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,63,Cangkingan Herman,HSS-KAB-331,Cangkingan Herman,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,64,Dahlia,HSS-KAB-015,Dahlia,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,65,Datar Belimbing - Muara Kitar,HSS-KAB-280,Datar Belimbing - Muara Kitar,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,66,DI. Panjaitan - Loklua,HSS-KAB-033,DI. Panjaitan - Loklua,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,67,Ds. Kapuh Tengah (Menuju Majelis Talim),HSS-KAB-236,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,68,Firdaus - Ds. Kapuh,HSS-KAB-239,Firdaus - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,69,Galuntang Tayub - Ds. Madang,HSS-KAB-162,Galuntang Tayub - Ds. Madang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,70,Gambah Dalam - Rantauan,HSS-KAB-052,Gambah Dalam - Rantauan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,71,Gambah Dalam Barat - Mahulung,HSS-KAB-076,Gambah Dalam Barat - Mahulung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,72,Gambah Luar - Gambah Dalam,HSS-KAB-053,Gambah Luar - Gambah Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,73,Gambah Luar - Sungai Kudung,HSS-KAB-055,Gambah Luar - Sungai Kudung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,74,Gambir - Sp. Empat Lungau,HSS-KAB-045,Gambir - Sp. Empat Lungau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,75,Gang Bidan (Ds. Tambak Bitin),HSS-KAB-330,Gang Bidan (Ds. Tambak Bitin),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,76,Garunggang - Hantamangu,HSS-KAB-220,Garunggang - Hantamangu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,77,Gerilya - Ds. Simpur,HSS-KAB-232,Gerilya - Ds. Simpur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,78,Gerilya / (Depan PUSTU Habirau),HSS-KAB-297,Gerilya / (Depan PUSTU Habirau),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,79,Goha - Ds. Amawang Kanan,HSS-KAB-344,Goha - Ds. Amawang Kanan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,80,Gumbil - Masimpan,HSS-KAB-196,Gumbil - Masimpan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,81,Guru H. Izim - Ds. Pantai Ulin,HSS-KAB-226,Guru H. Izim - Ds. Pantai Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,82,H. Jarkasi - Ds. Sungai Paring,HSS-KAB-074,H. Jarkasi - Ds. Sungai Paring,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,83,H. Saim Garunggang - Kalimput,HSS-KAB-230,H. Saim Garunggang - Kalimput,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,84,H.M. Thaib,HSS-KAB-314,H.M. Thaib,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,85,Habib,HSS-KAB-294,Habib,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,86,Habib Ibrahim - Ds. Sei Mandala,HSS-KAB-319,Habib Ibrahim - Ds. Sei Mandala,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,87,Hakurung Dalam - Ds. Sungai Haji,HSS-KAB-337,Hakurung Dalam - Ds. Sungai Haji,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,88,Halaban,HSS-KAB-213,Halaban,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,89,Halayung - Hantarukung,HSS-KAB-203,Halayung - Hantarukung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,90,Halunuk - Riam Tajam/Talo - Hamak Umpaya,HSS-KAB-266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,91,Hamak - Umbai,HSS-KAB-198,Hamak - Umbai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,92,Hamak Timur - Umpaya,HSS-KAB-197,Hamak Timur - Umpaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,93,Hamak Utara - Samaragi,HSS-KAB-199,Hamak Utara - Samaragi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,94,Hamalau - Anjiran,HSS-KAB-086,Hamalau - Anjiran,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,95,Hamalau - Asam Cangkok,HSS-KAB-118,Hamalau - Asam Cangkok,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,96,Hamalau - Ganda,HSS-KAB-106,Hamalau - Ganda,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,97,Hamalau - Pahampangan,HSS-KAB-098,Hamalau - Pahampangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,98,Hamalau - Telaga Bidadari - Wasah Hilir,HSS-KAB-102,Hamalau - Telaga Bidadari - Wasah Hilir,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,99,Hamayung - Hakurung Dalam,HSS-KAB-334,Hamayung - Hakurung Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,100,Harapan (SDN Habirau II)/ Sei. Palangan,HSS-KAB-298,Harapan (SDN Habirau II)/ Sei. Palangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,101,Haratai 2 (Balai Ujung Atas) SDN Haratai2,HSS-KAB-277,Haratai 2 (Balai Ujung Atas) SDN Haratai2,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,102,Haratai 3 (Balai Kedayang) / SDN Haratai 3,HSS-KAB-276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,103,Haritas (PT. Pertani),HSS-KAB-110,Haritas (PT. Pertani),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,104,Hariti - Sungai Raya Selatan,HSS-KAB-119,Hariti - Sungai Raya Selatan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,105,Hulu Banyu - Datar Mangkung - Tumingki,HSS-KAB-273,Hulu Banyu - Datar Mangkung - Tumingki,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,106,Hulu Banyu - Pantai Langsat,HSS-KAB-268,Hulu Banyu - Pantai Langsat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,107,Ida Manggala - Padang Makmur,HSS-KAB-099,Ida Manggala - Padang Makmur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,108,Inst. PDAM Negara,HSS-KAB-296,Inst. PDAM Negara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,109,Jafri Zamzam,HSS-KAB-029,Jafri Zamzam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,110,Jambu Hulu - Paku Pantai,HSS-KAB-159,Jambu Hulu - Paku Pantai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,111,Jangkang - Ds. Wasah Hilir,HSS-KAB-233,Jangkang - Ds. Wasah Hilir,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,112,Jangkang - Pantai Ulin,HSS-KAB-062,Jangkang - Pantai Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,113,Jarau - Parandakan,HSS-KAB-127,Jarau - Parandakan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,114,Jend. Sudirman,HSS-KAB-034,Jend. Sudirman,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,115,Kacang Parang (Ulang) - Balai Mawak-Kias,HSS-KAB-284,Kacang Parang (Ulang) - Balai Mawak-Kias,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,116,Kacang Parang (Ulang) - Balai Wariung,HSS-KAB-285,Kacang Parang (Ulang) - Balai Wariung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,117,Kalaka Dayuh - Ds. Sungai Raya Utara,HSS-KAB-134,Kalaka Dayuh - Ds. Sungai Raya Utara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,118,Kalaka Indah - Perumnas Tibung,HSS-KAB-065,Kalaka Indah - Perumnas Tibung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,119,Kalimput Desa Wasah Hilir,HSS-KAB-215,Kalimput Desa Wasah Hilir,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,120,Kaliring - Sp. Padang Batung,HSS-KAB-144,Kaliring - Sp. Padang Batung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,121,Kalumpang - Balimau,HSS-KAB-247,Kalumpang - Balimau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,122,Kalumpang - Baruh,HSS-KAB-252,Kalumpang - Baruh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,123,Kalumpang (Ds. Balanti) - Teratai,HSS-KAB-248,Kalumpang (Ds. Balanti) - Teratai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,124,Kalumpang Selatan - Ds. Asam Tamiyang,HSS-KAB-255,Kalumpang Selatan - Ds. Asam Tamiyang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,125,Kamboja,HSS-KAB-014,Kamboja,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,126,Kaminting Batu,HSS-KAB-333,Kaminting Batu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,127,Kampung Kawat,HSS-KAB-332,Kampung Kawat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,128,Kandangan Hulu - Sp. Tabihi,HSS-KAB-049,Kandangan Hulu - Sp. Tabihi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,129,Kantor Camat Daha Selatan II,HSS-KAB-307,Kantor Camat Daha Selatan II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,130,Kantor Camat Loksado II,HSS-KAB-270,Kantor Camat Loksado II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,131,Karampaci - Ds. Kapuh,HSS-KAB-237,Karampaci - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,132,Karang Intan - Tanah Bangkang,HSS-KAB-109,Karang Intan - Tanah Bangkang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,133,Karang Jawa -Ambarai - Sungai Bungur,HSS-KAB-138,Karang Jawa -Ambarai - Sungai Bungur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,134,Karasikan - Sarang Halang,HSS-KAB-103,Karasikan - Sarang Halang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,135,Karya Bakti - Ds. Balimau,HSS-KAB-257,Karya Bakti - Ds. Balimau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,136,Kayu Abang - Ds. Anjiran,HSS-KAB-185,Kayu Abang - Ds. Anjiran,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,137,Kayu Abang - Paya,HSS-KAB-190,Kayu Abang - Paya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,138,Kenanga,HSS-KAB-012,Kenanga,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,139,Kenanga - Ds. Baruh Kambang,HSS-KAB-315,Kenanga - Ds. Baruh Kambang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,140,Keramat Sakti - Ds. Tebing Tinggi,HSS-KAB-350,Keramat Sakti - Ds. Tebing Tinggi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,141,Kesehatan - Komp. Rmh Dokter,HSS-KAB-037,Kesehatan - Komp. Rmh Dokter,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,142,KH. Ramli - DS. Amparaya,HSS-KAB-221,KH. Ramli - DS. Amparaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,143,Kolonel Sugiono,HSS-KAB-024,Kolonel Sugiono,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,144,KS. Tubun,HSS-KAB-016,KS. Tubun,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,145,Lambuk - Ds. Tumingki,HSS-KAB-274,Lambuk - Ds. Tumingki,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,146,Loklahung - Kamawakan,HSS-KAB-261,Loklahung - Kamawakan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,147,Loklahung - Malaris,HSS-KAB-264,Loklahung - Malaris,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,148,Loksado - Haratai,HSS-KAB-260,Loksado - Haratai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,149,Loksado - Loklahung,HSS-KAB-259,Loksado - Loklahung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,150,Loksado - Pantai Dusin,HSS-KAB-286,Loksado - Pantai Dusin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,151,Longawang - Gumbil,HSS-KAB-194,Longawang - Gumbil,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,152,Lorong Bupati,HSS-KAB-081,Lorong Bupati,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,153,Madang - Ambutun,HSS-KAB-152,Madang - Ambutun,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,154,Makam Habib - Desa Lumpangi,HSS-KAB-279,Makam Habib - Desa Lumpangi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,155,Malaris - Loapanggang,HSS-KAB-275,Malaris - Loapanggang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,156,Malilingin - Lokbahan - Paniungan,HSS-KAB-141,Malilingin - Lokbahan - Paniungan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,157,Malilingin - Muara Hariang,HSS-KAB-157,Malilingin - Muara Hariang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,158,Malinau - Kandihin,HSS-KAB-287,Malinau - Kandihin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,159,Malinau - Katingin - Kamawakan,HSS-KAB-263,Malinau - Katingin - Kamawakan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,160,Mandampa - Longawang,HSS-KAB-195,Mandampa - Longawang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,161,Mandapai - Madang,HSS-KAB-143,Mandapai - Madang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,162,Mangamol - Ds. Pantai Ulin,HSS-KAB-225,Mangamol - Ds. Pantai Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,163,Mangaris - Limau Manis,HSS-KAB-120,Mangaris - Limau Manis,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,164,Manggis - Ds. Baru,HSS-KAB-131,Manggis - Ds. Baru,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,165,Mangunang - Ds. Sungai Raya Utara,HSS-KAB-117,Mangunang - Ds. Sungai Raya Utara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,166,Matang Gadung - Halalang,HSS-KAB-115,Matang Gadung - Halalang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,167,Mawangi - Bukuanin - Telaga Langsat,HSS-KAB-142,Mawangi - Bukuanin - Telaga Langsat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,168,Mawangi - Pariangan,HSS-KAB-158,Mawangi - Pariangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,169,Mawar (Kandangan Utara),HSS-KAB-013,Mawar (Kandangan Utara),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,170,Mawar (Daha Selatan),HSS-KAB-295,Mawar (Daha Selatan),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,171,Menuju SMP 7 - Ds. Gambah Dalam,HSS-KAB-078,Menuju SMP 7 - Ds. Gambah Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,172,Menuju SMPN Malilingin,HSS-KAB-163,Menuju SMPN Malilingin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,173,Menuju Stadion 2 Desember,HSS-KAB-007,Menuju Stadion 2 Desember,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,174,Merah Johansyah - Melati,HSS-KAB-006,Merah Johansyah - Jl. Melati,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,175,Mesjid Quba,HSS-KAB-059,Mesjid Quba,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,176,MIN Pandak Daun,HSS-KAB-325,MIN Pandak Daun,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,177,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,HSS-KAB-223,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,178,Monumen 17 Mei - Mandapai,HSS-KAB-153,Monumen 17 Mei - Mandapai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,179,Muara Banta - Karang Jawa,HSS-KAB-047,Muara Banta - Karang Jawa,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,180,Muara Hariang - Bayumbung,HSS-KAB-165,Muara Hariang - Bayumbung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,181,Muara Kitar - Desa Lumpangi,HSS-KAB-267,Muara Kitar - Desa Lumpangi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,182,Muara Pipii - Tambak Pipii,HSS-KAB-155,Muara Pipii - Tambak Pipii,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,183,Munggu Raya - Ds. Hariti,HSS-KAB-121,Munggu Raya - Ds. Hariti,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,184,Mungkur Galah - Lokpaikat,HSS-KAB-128,Mungkur Galah - Lokpaikat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,185,Muning Tengah - Batang Alai (Pihanin Raya),HSS-KAB-301,Muning Tengah - Batang Alai (Pihanin Raya),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,186,Muning Tengah - Ds. Muning Dalam,HSS-KAB-302,Muning Tengah - Ds. Muning Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,187,Musyawarah (Kandangan),HSS-KAB-020,Musyawarah (Kandangan),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,188,Musyawarah (Nagara),HSS-KAB-292,Musyawarah (Nagara),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,189,Negara - Tumbukan Banyu,HSS-KAB-304,Negara - Tumbukan Banyu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,190,Newangsekarti - Ds. Gambah Luar Muka,HSS-KAB-070,Newangsekarti - Ds. Gambah Luar Muka,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,191,Niagara (Ds. Halunuk) - Ayan,HSS-KAB-262,Niagara (Ds. Halunuk) - Ayan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,192,Nomura,HSS-KAB-080,Nomura,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,193,Nusa Indah,HSS-KAB-010,Nusa Indah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,194,Padang Batung - Batulaki - Malilingin,HSS-KAB-140,Padang Batung - Batulaki - Malilingin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,195,Padang Haur - Ds. Wasah Tengah,HSS-KAB-231,Padang Haur - Ds. Wasah Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,196,Padang Palas,HSS-KAB-063,Padang Palas,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,197,Padang Rasau (Tambak Tamiang) - Paku Pantai,HSS-KAB-161,Padang Rasau (Tambak Tamiang) - Paku Pantai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,198,Pagar Haur - Malutu,HSS-KAB-145,Pagar Haur - Malutu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,199,Pagat Batu - Muara Hariang,HSS-KAB-148,Pagat Batu - Muara Hariang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,200,Paharuangan - Asam Dua,HSS-KAB-122,Paharuangan - Asam Dua,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,201,Paharuangan - Sei. Raya Selatan,HSS-KAB-111,Paharuangan - Sei. Raya Selatan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,202,Pajah Api - Ds. Kapuh,HSS-KAB-244,Pajah Api - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,203,Pakan Dalam - Kaminting Batu,HSS-KAB-328,Pakan Dalam - Kaminting Batu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,204,Pakan Dalam I,HSS-KAB-321,Pakan Dalam I,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,205,Pakan Dalam II,HSS-KAB-322,Pakan Dalam II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,206,Pakan Dalam III,HSS-KAB-323,Pakan Dalam III,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,207,Paku (Jambu Hulu) - Ganda,HSS-KAB-149,Paku (Jambu Hulu) - Ganda,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,208,Palajau - Ds. Baluti,HSS-KAB-083,Palajau - Ds. Baluti,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,209,Palas - Ds. Wasah Tengah,HSS-KAB-241,Palas - Ds. Wasah Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,210,Pandak Daun - Baruh Jaya - Samuda,HSS-KAB-310,Pandak Daun - Baruh Jaya - Samuda,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,211,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,HSS-KAB-327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,212,Pandan Sari - Ds. Angkinang,HSS-KAB-188,Pandan Sari - Ds. Angkinang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,213,Pandulangan - Kalinduku,HSS-KAB-170,Pandulangan - Kalinduku,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,214,Pangeran Antasari - Loklua,HSS-KAB-001,Pangeran Antasari - Loklua,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,215,Panggang Hijau - Ds. Tawar,HSS-KAB-183,Panggang Hijau - Ds. Tawar,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,216,Panglima Batur,HSS-KAB-009,Panglima Batur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,217,Panjampang Bahagia - Bayur,HSS-KAB-210,Panjampang Bahagia - Bayur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,218,Panjampang Bahagia - Hanau,HSS-KAB-212,Panjampang Bahagia - Hanau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,219,Pantai Langsat - Umpaya,HSS-KAB-202,Pantai Langsat - Umpaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,220,Papagaran - Ds. Amawang Kanan,HSS-KAB-218,Papagaran - Ds. Amawang Kanan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,221,Papagaran/Palangsatan,HSS-KAB-057,Papagaran/Palangsatan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,222,Papancan - Ds. Tanah Bangkang,HSS-KAB-124,Papancan - Ds. Tanah Bangkang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,223,Paramaian,HSS-KAB-324,Paramaian,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,224,Parincahan - Singakarsa (Harapan),HSS-KAB-027,Parincahan - Singakarsa (Jl. Harapan),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,225,Parindra,HSS-KAB-018,Parindra,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,226,Pasar Kandangan - Oprit Jembt. Loklua,HSS-KAB-003,Pasar Kandangan - Oprit Jembt. Loklua,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,227,Pegangsaan Timur - Teluk Aman,HSS-KAB-054,Pegangsaan Timur - Teluk Aman,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,228,Pembangunan - Ds. Sungai Raya Utara,HSS-KAB-133,Pembangunan - Ds. Sungai Raya Utara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,229,Pemuda,HSS-KAB-017,Pemuda,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,230,Pendawa - Ds. Tebing Tinggi,HSS-KAB-224,Pendawa - Ds. Tebing Tinggi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,231,Pertanian - Ds. Wasah Tengah,HSS-KAB-349,Pertanian - Ds. Wasah Tengah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,232,Pertukangan,HSS-KAB-317,Pertukangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,233,Pesantren Muradiyah,HSS-KAB-326,Pesantren Muradiyah,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,234,Pianggu,HSS-KAB-228,Pianggu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,235,Rahmah Bahran,HSS-KAB-022,Rahmah Bahran,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,236,Rambai - Bariang,HSS-KAB-061,Rambai - Bariang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,237,Rantauan - Sungai Baru (Pulau),HSS-KAB-192,Rantauan - Sungai Baru (Jl. Pulau),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,238,Rawati - Ds. Panjampang Bahagia,HSS-KAB-227,Rawati - Ds. Panjampang Bahagia,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,239,Rel Angkinang - TMMD Angkinang,HSS-KAB-186,Rel Angkinang - TMMD Angkinang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,240,RS. Hasan Basry II,HSS-KAB-084,RS. Hasan Basry II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,241,Sakincung - Ds. Hakurung Dalam,HSS-KAB-336,Sakincung - Ds. Hakurung Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,242,Samping Bappeda - Mesjid Darul Halik,HSS-KAB-038,Samping Bappeda - Mesjid Darul Halik,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,243,Samping Kantor Camat Daha Utara,HSS-KAB-329,Samping Kantor Camat Daha Utara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,244,Samping Mesjid Mandapai,HSS-KAB-164,Samping Mesjid Mandapai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,245,Samuda - Bajayau,HSS-KAB-299,Samuda - Bajayau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,246,Sarang Halang Padang - Sp. Batang Kulur,HSS-KAB-105,Sarang Halang Padang - Sp. Batang Kulur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,247,Satria,HSS-KAB-291,Satria,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,248,Sei Kupang Utara - Simp. Empat Lungau,HSS-KAB-042,Sei Kupang Utara - Simp. Empat Lungau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,249,Sei. Mandala Murung Raya,HSS-KAB-311,Sei. Mandala Murung Raya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,250,Sekolah Islam (Kandangan Barat),HSS-KAB-021,Sekolah Islam (Kandangan Barat),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,251,Sekolah Islam (Sungai Pinang),HSS-KAB-293,Sekolah Islam (Sungai Pinang),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,252,Siang Gantung - Ds. Baru,HSS-KAB-338,Siang Gantung - Ds. Baru,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,253,Silaturrahim,HSS-KAB-318,Silaturrahim,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,254,Simpang Hamalau - Teluk Pinang,HSS-KAB-100,Simpang Hamalau - Teluk Pinang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,255,Simpang Jadi Makmur - Ds. Samuda,HSS-KAB-335,Simpang Jadi Makmur - Ds. Samuda,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,256,Simpang Malutu - Pahampangan,HSS-KAB-146,Simpang Malutu - Pahampangan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,257,Simpang Malutu - Tambak,HSS-KAB-147,Simpang Malutu - Tambak,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,258,Simpur - Simp. Bilui,HSS-KAB-206,Simpur - Simp. Bilui,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,259,Simpur - Sp. 3 Muara Paring Agung,HSS-KAB-207,Simpur - Sp. 3 Muara Paring Agung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,260,Singakarsa - Getek,HSS-KAB-026,Singakarsa - Getek,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,261,Singakarsa - Palas,HSS-KAB-025,Singakarsa - Palas,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,262,Sirih - Pacakan,HSS-KAB-253,Sirih - Pacakan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,263,Sirih - Taro,HSS-KAB-246,Sirih - Taro,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,264,Slasa Garih - Ds. Kapuh,HSS-KAB-240,Slasa Garih - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,265,SMAN Negara (KH. Abdullah),HSS-KAB-316,SMAN Negara (KH. Abdullah),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,266,Soeprapto - H.M Rusli,HSS-KAB-002,Soeprapto - Jl. H.M Rusli,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,267,Soetoyo - Teluk Mesjid,HSS-KAB-004,Soetoyo - Teluk Mesjid,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,268,Sp. 3 Baluti - Amawang,HSS-KAB-041,Sp. 3 Baluti - Amawang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,269,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,HSS-KAB-096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,270,Sp. Bakarung Selatan - Sungai Kudung,HSS-KAB-182,Sp. Bakarung Selatan - Sungai Kudung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,271,Sp. Batang Kulur Kiri - Tatas,HSS-KAB-089,Sp. Batang Kulur Kiri - Tatas,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,272,Sp. Empat Lungau - Bangkau,HSS-KAB-043,Sp. Empat Lungau - Bangkau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,273,Sp. Empat Lungau - Garis,HSS-KAB-044,Sp. Empat Lungau - Garis,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,274,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,HSS-KAB-179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,275,Sp.3 Bukuanin - Riam Talo,HSS-KAB-150,Sp.3 Bukuanin - Riam Talo,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,276,Sp.3 Bukuanin - Tayub,HSS-KAB-151,Sp.3 Bukuanin - Tayub,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,277,SP.4 Banjarbaru - Pasar Negara,HSS-KAB-303,SP.4 Banjarbaru - Pasar Negara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,278,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,HSS-KAB-254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,279,SP.4. Banjarbaru - Pihanin Raya,HSS-KAB-305,SP.4. Banjarbaru - Pihanin Raya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,280,Sukaramai - Keramat,HSS-KAB-320,Sukaramai - Keramat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,281,Sungai Bugundi,HSS-KAB-308,Sungai Bugundi,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,282,Sungai Damang - Amawang Kiri,HSS-KAB-030,Sungai Damang - Amawang Kiri,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,283,Sungai Durian - Ds. Gumbil,HSS-KAB-201,Sungai Durian - Ds. Gumbil,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,284,Sungai Kacil I - Kapuh Padang,HSS-KAB-216,Sungai Kacil I - Kapuh Padang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,285,Sungai Kacil II,HSS-KAB-217,Sungai Kacil II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,286,Sungai Karuh,HSS-KAB-060,Sungai Karuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,287,Sungai Kudung - Kalinduku,HSS-KAB-180,Sungai Kudung - Kalinduku,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,288,Sungai Minting - Ds. Malutu,HSS-KAB-160,Sungai Minting - Ds. Malutu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,289,Sungai Namang - Ds. Tanah Bangkang,HSS-KAB-126,Sungai Namang - Ds. Tanah Bangkang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,290,Sungai Paring - Sei Hanyar Pantai Ulin,HSS-KAB-048,Sungai Paring - Sei Hanyar Pantai Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,291,Sungai Paring - Toba,HSS-KAB-072,Sungai Paring - Toba,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,292,Sungai Raya - Jambu Hulu/Paku,HSS-KAB-094,Sungai Raya - Jambu Hulu/Paku,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,293,Sungai Raya Selatan - Malutu - Goa Berangin,HSS-KAB-095,Sungai Raya Selatan - Malutu - Goa Berangin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,294,Sungai Raya Selatan - Sarang Halang,HSS-KAB-088,Sungai Raya Selatan - Sarang Halang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,295,Sungai Raya Utara - Teluk Pinang,HSS-KAB-116,Sungai Raya Utara - Teluk Pinang _x000D_,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,296,Suriangpati - Gambah Dalam Barat,HSS-KAB-077,Suriangpati - Gambah Dalam Barat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,297,Taal Batang Kulur - Sp. 3 Muara Prg Agung,HSS-KAB-090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,298,Taal Jarau - Sp. Baru/Tampang,HSS-KAB-093,Taal Jarau - Sp. Baru/Tampang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,299,Tabihi - Telaga Langsat,HSS-KAB-137,Tabihi - Telaga Langsat,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,300,Tajun - Sp.3 Muara Paring Agung,HSS-KAB-085,Tajun - Sp.3 Muara Paring Agung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,301,Talapak Manuk - Ds. Kapuh,HSS-KAB-245,Talapak Manuk - Ds. Kapuh,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,302,Tambak Pipii - Batu Ampar,HSS-KAB-166,Tambak Pipii - Batu Ampar,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,303,Tambak Pipii - Malilingin,HSS-KAB-156,Tambak Pipii - Malilingin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,304,Tambangan - Ds. Baruh Jaya,HSS-KAB-300,Tambangan - Ds. Baruh Jaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,305,Taminung,HSS-KAB-114,Taminung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,306,Tamiyang - Ds. Tamiyang (Eks TMMD),HSS-KAB-107,Tamiyang - Ds. Tamiyang (Eks TMMD),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,307,Tanah Bangkang Menuju Balai Benih Ikan,HSS-KAB-108,Tanah Bangkang Menuju Balai Benih Ikan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,308,Tanah Habang - Ds. Simpur,HSS-KAB-242,Tanah Habang - Ds. Simpur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,309,Tanayung - Simp. Ambarai,HSS-KAB-136,Tanayung - Simp. Ambarai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,310,Tandik - Ds. Wasah Hilir,HSS-KAB-235,Tandik - Ds. Wasah Hilir,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,311,Tanginau - Balai Haruyan,HSS-KAB-281,Tanginau - Balai Haruyan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,312,Taniran Selatan - Rantauan,HSS-KAB-168,Taniran Selatan - Rantauan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,313,Taniran Selatan Kubah - Buntut Taniran / Wawaran,HSS-KAB-171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,314,Taniran Tengah - Taniran Selatan,HSS-KAB-184,Taniran Tengah - Taniran Selatan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,315,Tanjung Selor - Ds. Badaun,HSS-KAB-342,Tanjung Selor - Ds. Badaun,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,316,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,HSS-KAB-087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,317,Tanjungan - Sp. 3 Sakijang,HSS-KAB-104,Tanjungan - Sp. 3 Sakijang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,318,Tanuhi - Hulu Banyu,HSS-KAB-272,Tanuhi - Hulu Banyu,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,319,Tanuhi - Ulang,HSS-KAB-258,Tanuhi - Ulang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,320,Tataian - (Ds. Ulang) - Loksado,HSS-KAB-282,Tataian - (Ds. Ulang) - Loksado,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,321,Tawia - Kayu Abang,HSS-KAB-173,Tawia - Kayu Abang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,322,Telaga Banta - Patigan,HSS-KAB-079,Telaga Banta - Patigan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,323,Telaga Langsat - Pakuan Timur,HSS-KAB-193,Telaga Langsat - Pakuan Timur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,324,Teluk Haur I,HSS-KAB-312,Teluk Haur I,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,325,Teluk Haur II,HSS-KAB-313,Teluk Haur II,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,326,Teluk Mesjid - Sp. 4 Muara Banta,HSS-KAB-005,Teluk Mesjid - Sp. 4 Muara Banta,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,327,Teluk Pinang - Baluti,HSS-KAB-067,Teluk Pinang - Baluti,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,328,Teluk Pinang - Padang Rasau,HSS-KAB-135,Teluk Pinang - Padang Rasau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,329,Teluk Pinang - Pahampangan Utara,HSS-KAB-101,Teluk Pinang - Pahampangan Utara,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,330,Tembok Baru - Ds. Baluti,HSS-KAB-073,Tembok Baru - Ds. Baluti,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,331,Tembok Baru (Asam Cangkok),HSS-KAB-071,Tembok Baru (Asam Cangkok),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,332,Tembok Kacil. Sei. Kudung,HSS-KAB-058,Tembok Kacil. Sei. Kudung,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,333,Tembok Lama - Loklua,HSS-KAB-036,Tembok Lama - Loklua,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,334,Teratai Menuju Komplek Perumnas Hamalau,HSS-KAB-066,Teratai Menuju Komplek Perumnas Hamalau,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,335,Tibung Dalam - Teratai,HSS-KAB-064,Tibung Dalam - Teratai,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,336,Tibung Raya - Asam Cangkuk,HSS-KAB-051,Tibung Raya - Asam Cangkuk,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,337,Tibung Raya - Hamalau Dalam,HSS-KAB-068,Tibung Raya - Hamalau Dalam,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,338,TPA - Ds. Sungai Raya Selatan,HSS-KAB-132,TPA - Ds. Sungai Raya Selatan,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,339,Tukang Garit (Tambangan),HSS-KAB-309,Tukang Garit (Tambangan),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,340,Tumbukan Banyu - Banua Hanyar,HSS-KAB-290,Tumbukan Banyu - Banua Hanyar,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,341,Tungkaran - Ds. Ulin,HSS-KAB-222,Tungkaran - Ds. Ulin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,342,Ulang - Bangkaun,HSS-KAB-288,Ulang - Bangkaun,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,343,Ulang - Kacang Parang,HSS-KAB-283,Ulang - Kacang Parang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,344,Ulin - Tanggul (Balai Mas),HSS-KAB-211,Ulin - Tanggul (Balai Mas),EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,345,Umpaya - Tumarin,HSS-KAB-200,Umpaya - Tumarin,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,346,Wahab Syahrani,HSS-KAB-019,Wahab Syahrani,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,347,Wasah Hilir - Amparaya,HSS-KAB-209,Wasah Hilir - Amparaya,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,348,Wasah Hilir - Sarang Halang,HSS-KAB-205,Wasah Hilir - Sarang Halang,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,349,Wasah Hulu - Amparaya - Simpur,HSS-KAB-204,Wasah Hulu - Amparaya - Simpur,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+historical_normative_workbook,350,Wasah Tengah - Sungai Tarap,HSS-KAB-208,Wasah Tengah - Sungai Tarap,EXACT_NORMALIZED_OR_APPROVED_ALIAS,VERIFIED
+dataset_ml_clean,325,AES Nasution,HSS-KAB-035,AES Nasution,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,189,Air Miris - Ds. Wasah Hilir,HSS-KAB-234,Air Miris - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,285,Al - Ikhlas - Ds. Baluti,HSS-KAB-345,Al - Ikhlas - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,160,Aluh Idut,HSS-KAB-008,Aluh Idut,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,75,Amawang Kanan - Wasah Hulu,HSS-KAB-032,Amawang Kanan - Wasah Hulu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,33,Amawang Muka - Getek,HSS-KAB-031,Amawang Muka - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,133,Ambarai - Madang,HSS-KAB-139,Ambarai - Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,148,AMD - Ds. Lok Binuang,HSS-KAB-187,AMD - Ds. Lok Binuang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,53,Amparaya - Karangan - Hanau,HSS-KAB-214,Amparaya - Karangan - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,328,Anggrek,HSS-KAB-011,Anggrek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,280,Angkakai - Ds. Amawang Kiri,HSS-KAB-346,Angkakai - Ds. Amawang Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,18,Angkinang - Kayu Abang - Panggang Hijau,HSS-KAB-178,Angkinang - Kayu Abang - Panggang Hijau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,32,Angkinang - Telaga Langsat,HSS-KAB-175,Angkinang - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,26,Angkinang Selatan - Tawia - Wawaran,HSS-KAB-172,Angkinang Selatan - Tawia - Wawaran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,175,Anjiran Rantauan - Ds. Taniran Tengah,HSS-KAB-347,Anjiran Rantauan - Ds. Taniran Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,212,Asam Cangkuk - Telaga Bidadari,HSS-KAB-097,Asam Cangkuk - Telaga Bidadari,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,183,Asam Duhat - Ds. Pantai Ulin,HSS-KAB-348,Asam Duhat - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,194,Asam Seranggan - Asam Tamiyang,HSS-KAB-123,Asam Seranggan - Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,267,At-Taubah - Ds. Kapuh,HSS-KAB-238,At-Taubah - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,78,Badaun - Ds. Bjayau Lama,HSS-KAB-343,Badaun - Ds. Bjayau Lama,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,4,Bago Tanggul - Katilang - Teratai,HSS-KAB-249,Bago Tanggul - Katilang - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,158,Baiturrahim Parincahan,HSS-KAB-069,Baiturrahim Parincahan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,14,Bajayau - Ds. Bajayau Tengah,HSS-KAB-340,Bajayau - Ds. Bajayau Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,79,Bakarung - Rantauan,HSS-KAB-167,Bakarung - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,48,Bakarung -Tabihi - Karang Jawa,HSS-KAB-169,Bakarung -Tabihi - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,65,Bakarung Tengah - Karang Jawa,HSS-KAB-056,Bakarung Tengah - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,101,Balaimas - Hanau,HSS-KAB-219,Balaimas - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,137,Balanti - (Ex. P3DT),HSS-KAB-251,Balanti - (Ex. P3DT),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,154,Balimau - Murung Dalam,HSS-KAB-256,Balimau - Murung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,61,Baluti - Jambu Hulu (Paku),HSS-KAB-040,Baluti - Jambu Hulu (Paku),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,239,Bamban (Tibung) - Martajiwa,HSS-KAB-191,Bamban (Tibung) - Martajiwa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,116,Bamban Selatan - Pakuan,HSS-KAB-176,Bamban Selatan - Pakuan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,134,Bamban Selatan - Pakuan Balunan,HSS-KAB-189,Bamban Selatan - Pakuan Balunan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,70,Bamban Selatan - Tanggang - Panggang Hijau,HSS-KAB-174,Bamban Selatan - Tanggang - Panggang Hijau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,169,Bamban Tengah - Lok Nyiur,HSS-KAB-181,Bamban Tengah - Lok Nyiur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,112,Bamban Utara - Longawang,HSS-KAB-177,Bamban Utara - Longawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,222,Bangga TMMD,HSS-KAB-112,Bangga TMMD,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,31,Banua Hanyar - Ds. Tanjung Selor,HSS-KAB-341,Banua Hanyar - Ds. Tanjung Selor,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,159,Banua Kambang - Ds. Wasah Tengah,HSS-KAB-243,Banua Kambang - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,114,Banyu Barau - Sei Kalang,HSS-KAB-050,Banyu Barau - Sei Kalang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,172,Bariang - Getek,HSS-KAB-046,Bariang - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,141,Bariang - Patigan,HSS-KAB-075,Bariang - Patigan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,162,Baru - Asam Desa Baru,HSS-KAB-125,Baru - Asam Desa Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,102,Baru - Ds. Bajayau,HSS-KAB-339,Baru - Ds. Bajayau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,215,Batang Kulur Kanan - Batang Kulur Kiri,HSS-KAB-130,Batang Kulur Kanan - Batang Kulur Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,143,Batang Kulur Kanan - Bumi Berkat (Kisung),HSS-KAB-129,Batang Kulur Kanan - Bumi Berkat (Jl. Kisung),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,109,Batang Kulur Kanan - Sarangan,HSS-KAB-091,Batang Kulur Kanan - Sarangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,255,Batang Kulur Kiri - Durian Landung,HSS-KAB-113,Batang Kulur Kiri - Durian Landung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,55,Batu Laki - Muara Pipii,HSS-KAB-154,Batu Laki - Muara Pipii,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,249,Bayampah - Tanuhi - Tugu Niih,HSS-KAB-269,Bayampah - Tanuhi - Tugu Niih,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,86,Bayanan - Habirau Tengah,HSS-KAB-289,Bayanan - Habirau Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,108,Bayanan - Pihanin,HSS-KAB-306,Bayanan - Pihanin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,324,Bina Bakat,HSS-KAB-039,Bina Bakat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,54,Binjai (Sirih Hulu) - Ds. Seranggan,HSS-KAB-250,Binjai (Sirih Hulu) - Ds. Seranggan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,129,Biti - Sungai Kupang (Karya Bakti TNI),HSS-KAB-082,Biti - Sungai Kupang (Karya Bakti TNI),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,291,Brigjen Katamso,HSS-KAB-023,Brigjen Katamso,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,225,Bubuih - Ds. Halunuk,HSS-KAB-265,Bubuih - Ds. Halunuk,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,83,Bubuih (Ds. Halunuk) - Kandihin,HSS-KAB-278,Bubuih (Ds. Halunuk) - Kandihin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,220,Budi Bakti - Tiga Desember,HSS-KAB-028,Budi Bakti - Tiga Desember,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,165,Buluh - Ds. Tebing Tinggi,HSS-KAB-229,Buluh - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,152,Bumi Berkat - Mungkur Galah,HSS-KAB-092,Bumi Berkat - Mungkur Galah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,181,Buntu Muara Hatib - Bts. Kab. HST,HSS-KAB-271,Buntu Muara Hatib - Bts. Kab. HST,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,299,Cangkingan Herman,HSS-KAB-331,Cangkingan Herman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,341,Dahlia,HSS-KAB-015,Dahlia,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,45,Datar Belimbing - Muara Kitar,HSS-KAB-280,Datar Belimbing - Muara Kitar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,275,DI. Panjaitan - Loklua,HSS-KAB-033,DI. Panjaitan - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,250,Ds. Kapuh Tengah (Menuju Majelis Talim),HSS-KAB-236,Ds. Kapuh Tengah (Jl. Menuju Majelis Talim),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,308,Firdaus - Ds. Kapuh,HSS-KAB-239,Firdaus - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,98,Galuntang Tayub - Ds. Madang,HSS-KAB-162,Galuntang Tayub - Ds. Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,151,Gambah Dalam - Rantauan,HSS-KAB-052,Gambah Dalam - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,124,Gambah Dalam Barat - Mahulung,HSS-KAB-076,Gambah Dalam Barat - Mahulung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,164,Gambah Luar - Gambah Dalam,HSS-KAB-053,Gambah Luar - Gambah Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,206,Gambah Luar - Sungai Kudung,HSS-KAB-055,Gambah Luar - Sungai Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,80,Gambir - Sp. Empat Lungau,HSS-KAB-045,Gambir - Sp. Empat Lungau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,251,Gang Bidan (Ds. Tambak Bitin),HSS-KAB-330,Gang Bidan (Ds. Tambak Bitin),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,180,Garunggang - Hantamangu,HSS-KAB-220,Garunggang - Hantamangu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,259,Gerilya - Ds. Simpur,HSS-KAB-232,Gerilya - Ds. Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,326,Gerilya / (Depan PUSTU Habirau),HSS-KAB-297,Gerilya / (Depan PUSTU Habirau),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,231,Goha - Ds. Amawang Kanan,HSS-KAB-344,Goha - Ds. Amawang Kanan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,39,Gumbil - Masimpan,HSS-KAB-196,Gumbil - Masimpan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,248,Guru H. Izim - Ds. Pantai Ulin,HSS-KAB-226,Guru H. Izim - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,346,H. Jarkasi - Ds. Sungai Paring,HSS-KAB-074,H. Jarkasi - Ds. Sungai Paring,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,228,H. Saim Garunggang - Kalimput,HSS-KAB-230,H. Saim Garunggang - Kalimput,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,292,H.M. Thaib,HSS-KAB-314,H.M. Thaib,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,300,Habib,HSS-KAB-294,Habib,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,343,Habib Ibrahim - Ds. Sei Mandala,HSS-KAB-319,Habib Ibrahim - Ds. Sei Mandala,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,252,Hakurung Dalam - Ds. Sungai Haji,HSS-KAB-337,Hakurung Dalam - Ds. Sungai Haji,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,111,Halaban,HSS-KAB-213,Halaban,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,125,Halayung - Hantarukung,HSS-KAB-203,Halayung - Hantarukung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,12,Halunuk - Riam Tajam/Talo - Hamak Umpaya,HSS-KAB-266,Halunuk - Riam Tajam/Talo - Hamak Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,198,Hamak - Umbai,HSS-KAB-198,Hamak - Umbai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,56,Hamak Timur - Umpaya,HSS-KAB-197,Hamak Timur - Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,307,Hamak Utara - Samaragi,HSS-KAB-199,Hamak Utara - Samaragi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,204,Hamalau - Anjiran,HSS-KAB-086,Hamalau - Anjiran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,156,Hamalau - Asam Cangkok,HSS-KAB-118,Hamalau - Asam Cangkok,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,179,Hamalau - Ganda,HSS-KAB-106,Hamalau - Ganda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,223,Hamalau - Pahampangan,HSS-KAB-098,Hamalau - Pahampangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,42,Hamalau - Telaga Bidadari - Wasah Hilir,HSS-KAB-102,Hamalau - Telaga Bidadari - Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,59,Hamayung - Hakurung Dalam,HSS-KAB-334,Hamayung - Hakurung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,334,Harapan (SDN Habirau II)/ Sei. Palangan,HSS-KAB-298,Harapan (SDN Habirau II)/ Sei. Palangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,92,Haratai 2 (Balai Ujung Atas) SDN Haratai2,HSS-KAB-277,Haratai 2 (Balai Ujung Atas) SDN Haratai2,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,36,Haratai 3 (Balai Kedayang) / SDN Haratai 3,HSS-KAB-276,Haratai 3 (Balai Kedayang) / SDN Haratai 3,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,245,Haritas (PT. Pertani),HSS-KAB-110,Haritas (PT. Pertani),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,93,Hariti - Sungai Raya Selatan,HSS-KAB-119,Hariti - Sungai Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,19,Hulu Banyu - Datar Mangkung - Tumingki,HSS-KAB-273,Hulu Banyu - Datar Mangkung - Tumingki,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,131,Hulu Banyu - Pantai Langsat,HSS-KAB-268,Hulu Banyu - Pantai Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,67,Ida Manggala - Padang Makmur,HSS-KAB-099,Ida Manggala - Padang Makmur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,321,Inst. PDAM Negara,HSS-KAB-296,Inst. PDAM Negara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,187,Jafri Zamzam,HSS-KAB-029,Jafri Zamzam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,142,Jambu Hulu - Paku Pantai,HSS-KAB-159,Jambu Hulu - Paku Pantai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,294,Jangkang - Ds. Wasah Hilir,HSS-KAB-233,Jangkang - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,136,Jangkang - Pantai Ulin,HSS-KAB-062,Jangkang - Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,230,Jarau - Parandakan,HSS-KAB-127,Jarau - Parandakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,96,Jend. Sudirman,HSS-KAB-034,Jend. Sudirman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,117,Kacang Parang (Ulang) - Balai Mawak-Kias,HSS-KAB-284,Kacang Parang (Ulang) - Balai Mawak-Kias,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,213,Kacang Parang (Ulang) - Balai Wariung,HSS-KAB-285,Kacang Parang (Ulang) - Balai Wariung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,272,Kalaka Dayuh - Ds. Sungai Raya Utara,HSS-KAB-134,Kalaka Dayuh - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,276,Kalaka Indah - Perumnas Tibung,HSS-KAB-065,Kalaka Indah - Perumnas Tibung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,205,Kalimput Desa Wasah Hilir,HSS-KAB-215,Kalimput Desa Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,51,Kaliring - Sp. Padang Batung,HSS-KAB-144,Kaliring - Sp. Padang Batung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,37,Kalumpang - Balimau,HSS-KAB-247,Kalumpang - Balimau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,91,Kalumpang - Baruh,HSS-KAB-252,Kalumpang - Baruh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,29,Kalumpang (Ds. Balanti) - Teratai,HSS-KAB-248,Kalumpang (Ds. Balanti) - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,219,Kalumpang Selatan - Ds. Asam Tamiyang,HSS-KAB-255,Kalumpang Selatan - Ds. Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,335,Kamboja,HSS-KAB-014,Kamboja,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,293,Kaminting Batu,HSS-KAB-333,Kaminting Batu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,298,Kampung Kawat,HSS-KAB-332,Kampung Kawat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,171,Kandangan Hulu - Sp. Tabihi,HSS-KAB-049,Kandangan Hulu - Sp. Tabihi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,301,Kantor Camat Daha Selatan II,HSS-KAB-307,Kantor Camat Daha Selatan II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,347,Kantor Camat Loksado II,HSS-KAB-270,Kantor Camat Loksado II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,260,Karampaci - Ds. Kapuh,HSS-KAB-237,Karampaci - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,184,Karang Intan - Tanah Bangkang,HSS-KAB-109,Karang Intan - Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,62,Karang Jawa -Ambarai - Sungai Bungur,HSS-KAB-138,Karang Jawa -Ambarai - Sungai Bungur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,126,Karasikan - Sarang Halang,HSS-KAB-103,Karasikan - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,207,Karya Bakti - Ds. Balimau,HSS-KAB-257,Karya Bakti - Ds. Balimau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,197,Kayu Abang - Ds. Anjiran,HSS-KAB-185,Kayu Abang - Ds. Anjiran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,233,Kayu Abang - Paya,HSS-KAB-190,Kayu Abang - Paya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,329,Kenanga,HSS-KAB-012,Kenanga,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,305,Kenanga - Ds. Baruh Kambang,HSS-KAB-315,Kenanga - Ds. Baruh Kambang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,234,Keramat Sakti - Ds. Tebing Tinggi,HSS-KAB-350,Keramat Sakti - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,314,Kesehatan - Komp. Rmh Dokter,HSS-KAB-037,Kesehatan - Komp. Rmh Dokter,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,295,KH. Ramli - DS. Amparaya,HSS-KAB-221,KH. Ramli - DS. Amparaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,331,Kolonel Sugiono,HSS-KAB-024,Kolonel Sugiono,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,199,KS. Tubun,HSS-KAB-016,KS. Tubun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,238,Lambuk - Ds. Tumingki,HSS-KAB-274,Lambuk - Ds. Tumingki,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,21,Loklahung - Kamawakan,HSS-KAB-261,Loklahung - Kamawakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,221,Loklahung - Malaris,HSS-KAB-264,Loklahung - Malaris,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,17,Loksado - Haratai,HSS-KAB-260,Loksado - Haratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,168,Loksado - Loklahung,HSS-KAB-259,Loksado - Loklahung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,103,Loksado - Pantai Dusin,HSS-KAB-286,Loksado - Pantai Dusin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,138,Longawang - Gumbil,HSS-KAB-194,Longawang - Gumbil,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,283,Lorong Bupati,HSS-KAB-081,Lorong Bupati,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,82,Madang - Ambutun,HSS-KAB-152,Madang - Ambutun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,286,Makam Habib - Desa Lumpangi,HSS-KAB-279,Makam Habib - Desa Lumpangi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,147,Malaris - Loapanggang,HSS-KAB-275,Malaris - Loapanggang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,3,Malilingin - Lokbahan - Paniungan,HSS-KAB-141,Malilingin - Lokbahan - Paniungan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,49,Malilingin - Muara Hariang,HSS-KAB-157,Malilingin - Muara Hariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,57,Malinau - Kandihin,HSS-KAB-287,Malinau - Kandihin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,5,Malinau - Katingin - Kamawakan,HSS-KAB-263,Malinau - Katingin - Kamawakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,87,Mandampa - Longawang,HSS-KAB-195,Mandampa - Longawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,28,Mandapai - Madang,HSS-KAB-143,Mandapai - Madang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,235,Mangamol - Ds. Pantai Ulin,HSS-KAB-225,Mangamol - Ds. Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,60,Mangaris - Limau Manis,HSS-KAB-120,Mangaris - Limau Manis,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,166,Manggis - Ds. Baru,HSS-KAB-131,Manggis - Ds. Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,232,Mangunang - Ds. Sungai Raya Utara,HSS-KAB-117,Mangunang - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,274,Matang Gadung - Halalang,HSS-KAB-115,Matang Gadung - Halalang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,2,Mawangi - Bukuanin - Telaga Langsat,HSS-KAB-142,Mawangi - Bukuanin - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,100,Mawangi - Pariangan,HSS-KAB-158,Mawangi - Pariangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,319,Mawar (Kandangan Utara),HSS-KAB-013,Mawar (Kandangan Utara),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,330,Mawar (Daha Selatan),HSS-KAB-295,Mawar (Daha Selatan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,195,Menuju SMP 7 - Ds. Gambah Dalam,HSS-KAB-078,Menuju SMP 7 - Ds. Gambah Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,270,Menuju SMPN Malilingin,HSS-KAB-163,Menuju SMPN Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,311,Menuju Stadion 2 Desember,HSS-KAB-007,Menuju Stadion 2 Desember,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,216,Merah Johansyah - Melati,HSS-KAB-006,Merah Johansyah - Jl. Melati,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,336,Mesjid Quba,HSS-KAB-059,Mesjid Quba,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,309,MIN Pandak Daun,HSS-KAB-325,MIN Pandak Daun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,128,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,HSS-KAB-223,Mondar (Ulin-Pantai Ulin) - Ds. Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,350,Monumen 17 Mei - Mandapai,HSS-KAB-153,Monumen 17 Mei - Mandapai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,145,Muara Banta - Karang Jawa,HSS-KAB-047,Muara Banta - Karang Jawa,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,63,Muara Hariang - Bayumbung,HSS-KAB-165,Muara Hariang - Bayumbung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,273,Muara Kitar - Desa Lumpangi,HSS-KAB-267,Muara Kitar - Desa Lumpangi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,47,Muara Pipii - Tambak Pipii,HSS-KAB-155,Muara Pipii - Tambak Pipii,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,269,Munggu Raya - Ds. Hariti,HSS-KAB-121,Munggu Raya - Ds. Hariti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,229,Mungkur Galah - Lokpaikat,HSS-KAB-128,Mungkur Galah - Lokpaikat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,35,Muning Tengah - Batang Alai (Pihanin Raya),HSS-KAB-301,Muning Tengah - Batang Alai (Pihanin Raya),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,1,Muning Tengah - Ds. Muning Dalam,HSS-KAB-302,Muning Tengah - Ds. Muning Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,277,Musyawarah (Kandangan),HSS-KAB-020,Musyawarah (Kandangan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,302,Musyawarah (Nagara),HSS-KAB-292,Musyawarah (Nagara),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,258,Negara - Tumbukan Banyu,HSS-KAB-304,Negara - Tumbukan Banyu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,312,Newangsekarti - Ds. Gambah Luar Muka,HSS-KAB-070,Newangsekarti - Ds. Gambah Luar Muka,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,118,Niagara (Ds. Halunuk) - Ayan,HSS-KAB-262,Niagara (Ds. Halunuk) - Ayan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,278,Nomura,HSS-KAB-080,Nomura,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,287,Nusa Indah,HSS-KAB-010,Nusa Indah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,6,Padang Batung - Batulaki - Malilingin,HSS-KAB-140,Padang Batung - Batulaki - Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,174,Padang Haur - Ds. Wasah Tengah,HSS-KAB-231,Padang Haur - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,236,Padang Palas,HSS-KAB-063,Padang Palas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,106,Padang Rasau (Tambak Tamiang) - Paku Pantai,HSS-KAB-161,Padang Rasau (Tambak Tamiang) - Paku Pantai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,333,Pagar Haur - Malutu,HSS-KAB-145,Pagar Haur - Malutu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,74,Pagat Batu - Muara Hariang,HSS-KAB-148,Pagat Batu - Muara Hariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,202,Paharuangan - Asam Dua,HSS-KAB-122,Paharuangan - Asam Dua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,123,Paharuangan - Sei. Raya Selatan,HSS-KAB-111,Paharuangan - Sei. Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,296,Pajah Api - Ds. Kapuh,HSS-KAB-244,Pajah Api - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,130,Pakan Dalam - Kaminting Batu,HSS-KAB-328,Pakan Dalam - Kaminting Batu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,303,Pakan Dalam I,HSS-KAB-321,Pakan Dalam I,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,313,Pakan Dalam II,HSS-KAB-322,Pakan Dalam II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,315,Pakan Dalam III,HSS-KAB-323,Pakan Dalam III,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,127,Paku (Jambu Hulu) - Ganda,HSS-KAB-149,Paku (Jambu Hulu) - Ganda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,167,Palajau - Ds. Baluti,HSS-KAB-083,Palajau - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,214,Palas - Ds. Wasah Tengah,HSS-KAB-241,Palas - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,15,Pandak Daun - Baruh Jaya - Samuda,HSS-KAB-310,Pandak Daun - Baruh Jaya - Samuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,139,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,HSS-KAB-327,Pandak Daun (Buntut Muradiyah) - Pakan Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,271,Pandan Sari - Ds. Angkinang,HSS-KAB-188,Pandan Sari - Ds. Angkinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,188,Pandulangan - Kalinduku,HSS-KAB-170,Pandulangan - Kalinduku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,253,Pangeran Antasari - Loklua,HSS-KAB-001,Pangeran Antasari - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,68,Panggang Hijau - Ds. Tawar,HSS-KAB-183,Panggang Hijau - Ds. Tawar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,186,Panglima Batur,HSS-KAB-009,Panglima Batur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,150,Panjampang Bahagia - Bayur,HSS-KAB-210,Panjampang Bahagia - Bayur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,46,Panjampang Bahagia - Hanau,HSS-KAB-212,Panjampang Bahagia - Hanau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,52,Pantai Langsat - Umpaya,HSS-KAB-202,Pantai Langsat - Umpaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,257,Papagaran - Ds. Amawang Kanan,HSS-KAB-218,Papagaran - Ds. Amawang Kanan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,196,Papagaran/Palangsatan,HSS-KAB-057,Papagaran/Palangsatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,155,Papancan - Ds. Tanah Bangkang,HSS-KAB-124,Papancan - Ds. Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,310,Paramaian,HSS-KAB-324,Paramaian,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,240,Parincahan - Singakarsa (Harapan),HSS-KAB-027,Parincahan - Singakarsa (Jl. Harapan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,316,Parindra,HSS-KAB-018,Parindra,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,317,Pasar Kandangan - Oprit Jembt. Loklua,HSS-KAB-003,Pasar Kandangan - Oprit Jembt. Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,191,Pegangsaan Timur - Teluk Aman,HSS-KAB-054,Pegangsaan Timur - Teluk Aman,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,200,Pembangunan - Ds. Sungai Raya Utara,HSS-KAB-133,Pembangunan - Ds. Sungai Raya Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,322,Pemuda,HSS-KAB-017,Pemuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,217,Pendawa - Ds. Tebing Tinggi,HSS-KAB-224,Pendawa - Ds. Tebing Tinggi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,290,Pertanian - Ds. Wasah Tengah,HSS-KAB-349,Pertanian - Ds. Wasah Tengah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,304,Pertukangan,HSS-KAB-317,Pertukangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,320,Pesantren Muradiyah,HSS-KAB-326,Pesantren Muradiyah,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,218,Pianggu,HSS-KAB-228,Pianggu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,332,Rahmah Bahran,HSS-KAB-022,Rahmah Bahran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,177,Rambai - Bariang,HSS-KAB-061,Rambai - Bariang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,178,Rantauan - Sungai Baru (Pulau),HSS-KAB-192,Rantauan - Sungai Baru (Jl. Pulau),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,176,Rawati - Ds. Panjampang Bahagia,HSS-KAB-227,Rawati - Ds. Panjampang Bahagia,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,69,Rel Angkinang - TMMD Angkinang,HSS-KAB-186,Rel Angkinang - TMMD Angkinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,349,RS. Hasan Basry II,HSS-KAB-084,RS. Hasan Basry II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,161,Sakincung - Ds. Hakurung Dalam,HSS-KAB-336,Sakincung - Ds. Hakurung Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,340,Samping Bappeda - Mesjid Darul Halik,HSS-KAB-038,Samping Bappeda - Mesjid Darul Halik,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,344,Samping Kantor Camat Daha Utara,HSS-KAB-329,Samping Kantor Camat Daha Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,327,Samping Mesjid Mandapai,HSS-KAB-164,Samping Mesjid Mandapai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,8,Samuda - Bajayau,HSS-KAB-299,Samuda - Bajayau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,113,Sarang Halang Padang - Sp. Batang Kulur,HSS-KAB-105,Sarang Halang Padang - Sp. Batang Kulur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,288,Satria,HSS-KAB-291,Satria,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,99,Sei Kupang Utara - Simp. Empat Lungau,HSS-KAB-042,Sei Kupang Utara - Simp. Empat Lungau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,115,Sei. Mandala Murung Raya,HSS-KAB-311,Sei. Mandala Murung Raya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,281,Sekolah Islam (Kandangan Barat),HSS-KAB-021,Sekolah Islam (Kandangan Barat),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,338,Sekolah Islam (Sungai Pinang),HSS-KAB-293,Sekolah Islam (Sungai Pinang),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,20,Siang Gantung - Ds. Baru,HSS-KAB-338,Siang Gantung - Ds. Baru,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,318,Silaturrahim,HSS-KAB-318,Silaturrahim,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,237,Simpang Hamalau - Teluk Pinang,HSS-KAB-100,Simpang Hamalau - Teluk Pinang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,241,Simpang Jadi Makmur - Ds. Samuda,HSS-KAB-335,Simpang Jadi Makmur - Ds. Samuda,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,50,Simpang Malutu - Pahampangan,HSS-KAB-146,Simpang Malutu - Pahampangan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,85,Simpang Malutu - Tambak,HSS-KAB-147,Simpang Malutu - Tambak,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,193,Simpur - Simp. Bilui,HSS-KAB-206,Simpur - Simp. Bilui,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,90,Simpur - Sp. 3 Muara Paring Agung,HSS-KAB-207,Simpur - Sp. 3 Muara Paring Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,339,Singakarsa - Getek,HSS-KAB-026,Singakarsa - Getek,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,34,Singakarsa - Palas,HSS-KAB-025,Singakarsa - Palas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,246,Sirih - Pacakan,HSS-KAB-253,Sirih - Pacakan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,170,Sirih - Taro,HSS-KAB-246,Sirih - Taro,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,263,Slasa Garih - Ds. Kapuh,HSS-KAB-240,Slasa Garih - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,297,SMAN Negara (KH. Abdullah),HSS-KAB-316,SMAN Negara (KH. Abdullah),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,261,Soeprapto - H.M Rusli,HSS-KAB-002,Soeprapto - Jl. H.M Rusli,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,323,Soetoyo - Teluk Mesjid,HSS-KAB-004,Soetoyo - Teluk Mesjid,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,149,Sp. 3 Baluti - Amawang,HSS-KAB-041,Sp. 3 Baluti - Amawang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,66,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,HSS-KAB-096,Sp. 4 Baru/Tampang - Sp. Bilui Pamujaan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,256,Sp. Bakarung Selatan - Sungai Kudung,HSS-KAB-182,Sp. Bakarung Selatan - Sungai Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,97,Sp. Batang Kulur Kiri - Tatas,HSS-KAB-089,Sp. Batang Kulur Kiri - Tatas,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,10,Sp. Empat Lungau - Bangkau,HSS-KAB-043,Sp. Empat Lungau - Bangkau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,9,Sp. Empat Lungau - Garis,HSS-KAB-044,Sp. Empat Lungau - Garis,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,43,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,HSS-KAB-179,Sp. Mandampa Tel. Sili-Sili - Sp. Sei. Bungur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,77,Sp.3 Bukuanin - Riam Talo,HSS-KAB-150,Sp.3 Bukuanin - Riam Talo,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,72,Sp.3 Bukuanin - Tayub,HSS-KAB-151,Sp.3 Bukuanin - Tayub,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,242,SP.4 Banjarbaru - Pasar Negara,HSS-KAB-303,SP.4 Banjarbaru - Pasar Negara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,25,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,HSS-KAB-254,SP.4 Mesjid Sirih - Sarang Nyamuk - Asam Tamiyang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,192,SP.4. Banjarbaru - Pihanin Raya,HSS-KAB-305,SP.4. Banjarbaru - Pihanin Raya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,226,Sukaramai - Keramat,HSS-KAB-320,Sukaramai - Keramat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,306,Sungai Bugundi,HSS-KAB-308,Sungai Bugundi,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,95,Sungai Damang - Amawang Kiri,HSS-KAB-030,Sungai Damang - Amawang Kiri,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,201,Sungai Durian - Ds. Gumbil,HSS-KAB-201,Sungai Durian - Ds. Gumbil,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,163,Sungai Kacil I - Kapuh Padang,HSS-KAB-216,Sungai Kacil I - Kapuh Padang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,284,Sungai Kacil II,HSS-KAB-217,Sungai Kacil II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,122,Sungai Karuh,HSS-KAB-060,Sungai Karuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,81,Sungai Kudung - Kalinduku,HSS-KAB-180,Sungai Kudung - Kalinduku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,268,Sungai Minting - Ds. Malutu,HSS-KAB-160,Sungai Minting - Ds. Malutu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,227,Sungai Namang - Ds. Tanah Bangkang,HSS-KAB-126,Sungai Namang - Ds. Tanah Bangkang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,27,Sungai Paring - Sei Hanyar Pantai Ulin,HSS-KAB-048,Sungai Paring - Sei Hanyar Pantai Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,210,Sungai Paring - Toba,HSS-KAB-072,Sungai Paring - Toba,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,38,Sungai Raya - Jambu Hulu/Paku,HSS-KAB-094,Sungai Raya - Jambu Hulu/Paku,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,24,Sungai Raya Selatan - Malutu - Goa Berangin,HSS-KAB-095,Sungai Raya Selatan - Malutu - Goa Berangin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,94,Sungai Raya Selatan - Sarang Halang,HSS-KAB-088,Sungai Raya Selatan - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,135,Sungai Raya Utara - Teluk Pinang,HSS-KAB-116,Sungai Raya Utara - Teluk Pinang _x000D_,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,88,Suriangpati - Gambah Dalam Barat,HSS-KAB-077,Suriangpati - Gambah Dalam Barat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,58,Taal Batang Kulur - Sp. 3 Muara Prg Agung,HSS-KAB-090,Taal Batang Kulur - Sp. 3 Muara Prg Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,30,Taal Jarau - Sp. Baru/Tampang,HSS-KAB-093,Taal Jarau - Sp. Baru/Tampang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,7,Tabihi - Telaga Langsat,HSS-KAB-137,Tabihi - Telaga Langsat,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,41,Tajun - Sp.3 Muara Paring Agung,HSS-KAB-085,Tajun - Sp.3 Muara Paring Agung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,224,Talapak Manuk - Ds. Kapuh,HSS-KAB-245,Talapak Manuk - Ds. Kapuh,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,121,Tambak Pipii - Batu Ampar,HSS-KAB-166,Tambak Pipii - Batu Ampar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,44,Tambak Pipii - Malilingin,HSS-KAB-156,Tambak Pipii - Malilingin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,105,Tambangan - Ds. Baruh Jaya,HSS-KAB-300,Tambangan - Ds. Baruh Jaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,120,Taminung,HSS-KAB-114,Taminung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,119,Tamiyang - Ds. Tamiyang (Eks TMMD),HSS-KAB-107,Tamiyang - Ds. Tamiyang (Eks TMMD),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,243,Tanah Bangkang Menuju Balai Benih Ikan,HSS-KAB-108,Tanah Bangkang Menuju Balai Benih Ikan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,190,Tanah Habang - Ds. Simpur,HSS-KAB-242,Tanah Habang - Ds. Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,144,Tanayung - Simp. Ambarai,HSS-KAB-136,Tanayung - Simp. Ambarai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,264,Tandik - Ds. Wasah Hilir,HSS-KAB-235,Tandik - Ds. Wasah Hilir,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,182,Tanginau - Balai Haruyan,HSS-KAB-281,Tanginau - Balai Haruyan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,185,Taniran Selatan - Rantauan,HSS-KAB-168,Taniran Selatan - Rantauan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,22,Taniran Selatan Kubah - Buntut Taniran / Wawaran,HSS-KAB-171,Taniran Selatan Kubah - Buntut Taniran / Wawaran,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,104,Taniran Tengah - Taniran Selatan,HSS-KAB-184,Taniran Tengah - Taniran Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,11,Tanjung Selor - Ds. Badaun,HSS-KAB-342,Tanjung Selor - Ds. Badaun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,16,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,HSS-KAB-087,Tanjungan - Sp. 10 Batang Kulur - Sungai Kali,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,146,Tanjungan - Sp. 3 Sakijang,HSS-KAB-104,Tanjungan - Sp. 3 Sakijang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,244,Tanuhi - Hulu Banyu,HSS-KAB-272,Tanuhi - Hulu Banyu,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,13,Tanuhi - Ulang,HSS-KAB-258,Tanuhi - Ulang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,282,Tataian - (Ds. Ulang) - Loksado,HSS-KAB-282,Tataian - (Ds. Ulang) - Loksado,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,153,Tawia - Kayu Abang,HSS-KAB-173,Tawia - Kayu Abang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,247,Telaga Banta - Patigan,HSS-KAB-079,Telaga Banta - Patigan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,89,Telaga Langsat - Pakuan Timur,HSS-KAB-193,Telaga Langsat - Pakuan Timur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,342,Teluk Haur I,HSS-KAB-312,Teluk Haur I,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,337,Teluk Haur II,HSS-KAB-313,Teluk Haur II,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,157,Teluk Mesjid - Sp. 4 Muara Banta,HSS-KAB-005,Teluk Mesjid - Sp. 4 Muara Banta,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,140,Teluk Pinang - Baluti,HSS-KAB-067,Teluk Pinang - Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,110,Teluk Pinang - Padang Rasau,HSS-KAB-135,Teluk Pinang - Padang Rasau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,107,Teluk Pinang - Pahampangan Utara,HSS-KAB-101,Teluk Pinang - Pahampangan Utara,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,345,Tembok Baru - Ds. Baluti,HSS-KAB-073,Tembok Baru - Ds. Baluti,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,265,Tembok Baru (Asam Cangkok),HSS-KAB-071,Tembok Baru (Asam Cangkok),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,289,Tembok Kacil. Sei. Kudung,HSS-KAB-058,Tembok Kacil. Sei. Kudung,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,211,Tembok Lama - Loklua,HSS-KAB-036,Tembok Lama - Loklua,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,279,Teratai Menuju Komplek Perumnas Hamalau,HSS-KAB-066,Teratai Menuju Komplek Perumnas Hamalau,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,262,Tibung Dalam - Teratai,HSS-KAB-064,Tibung Dalam - Teratai,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,208,Tibung Raya - Asam Cangkuk,HSS-KAB-051,Tibung Raya - Asam Cangkuk,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,203,Tibung Raya - Hamalau Dalam,HSS-KAB-068,Tibung Raya - Hamalau Dalam,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,209,TPA - Ds. Sungai Raya Selatan,HSS-KAB-132,TPA - Ds. Sungai Raya Selatan,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,266,Tukang Garit (Tambangan),HSS-KAB-309,Tukang Garit (Tambangan),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,40,Tumbukan Banyu - Banua Hanyar,HSS-KAB-290,Tumbukan Banyu - Banua Hanyar,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,173,Tungkaran - Ds. Ulin,HSS-KAB-222,Tungkaran - Ds. Ulin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,71,Ulang - Bangkaun,HSS-KAB-288,Ulang - Bangkaun,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,132,Ulang - Kacang Parang,HSS-KAB-283,Ulang - Kacang Parang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,64,Ulin - Tanggul (Balai Mas),HSS-KAB-211,Ulin - Tanggul (Balai Mas),EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,254,Umpaya - Tumarin,HSS-KAB-200,Umpaya - Tumarin,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,348,Wahab Syahrani,HSS-KAB-019,Wahab Syahrani,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,84,Wasah Hilir - Amparaya,HSS-KAB-209,Wasah Hilir - Amparaya,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,76,Wasah Hilir - Sarang Halang,HSS-KAB-205,Wasah Hilir - Sarang Halang,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,23,Wasah Hulu - Amparaya - Simpur,HSS-KAB-204,Wasah Hulu - Amparaya - Simpur,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED
+dataset_ml_clean,73,Wasah Tengah - Sungai Tarap,HSS-KAB-208,Wasah Tengah - Sungai Tarap,EXACT_SOURCE_NAME_TO_HISTORICAL_THEN_VERIFIED_CANONICAL,VERIFIED

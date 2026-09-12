@@ -1,0 +1,17 @@
+{
+  "year": 2025,
+  "road_count": 350,
+  "total_length_km": 732.46,
+  "baik_km": 131.65,
+  "sedang_km": 261.239999,
+  "rusak_ringan_km": 111.41,
+  "rusak_berat_km": 228.160002,
+  "mantap_km": 392.889998,
+  "mantap_pct": 53.639789,
+  "tidak_mantap_km": 339.570002,
+  "tidak_mantap_pct": 46.360211,
+  "condition_sum_minus_length_km": 3e-09,
+  "mantap_sum_minus_length_km": 3e-09,
+  "rows_outside_0_01km_balance_tolerance": 0,
+  "authority": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik"
+}

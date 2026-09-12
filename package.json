@@ -1,0 +1,19 @@
+{
+  "name": "diklat-pim-prioritas-jalan-hss",
+  "version": "1.0.0",
+  "description": "Sistem Pendukung Prioritas Penanganan Jalan Kabupaten Hulu Sungai Selatan",
+  "type": "module",
+  "scripts": {
+    "db:init": "node --experimental-strip-types src/ingestion/ingestAuthoritativeData.ts",
+    "db:seed": "node --experimental-strip-types src/ingestion/ingestAuthoritativeData.ts",
+    "test:phase1": "node --experimental-strip-types src/tests/phase1-verification.ts",
+    "smoke": "node --experimental-strip-types src/cli/smoke.ts"
+  },
+  "keywords": [
+    "prioritas-jalan",
+    "hulu-sungai-selatan",
+    "diklat-pim"
+  ],
+  "author": "Antigravity",
+  "license": "UNLICENSED"
+}

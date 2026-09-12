@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "network_connectors",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "connector_id": "bridge-gap-01", "connector_name": "Jembatan Desa Hakurung", "road_a_name": "Jl. Sakincung Ds. Hakurun Dalam", "road_b_name": "(Provinsi) Nagara Muara Tapus", "connector_type": "bridge_gap", "is_synthetic": true, "purpose": "network_topology", "geometry_length_m": 99.43 }, "geometry": { "type": "LineString", "coordinates": [ [ 115.140635433350781, -2.547404165469434 ], [ 115.141405398507061, -2.54694731112997 ] ] } },
+{ "type": "Feature", "properties": { "connector_id": "bridge-gap-02", "connector_name": "Jembatan Pasungkan", "road_a_name": "Pandak Daun - Baruh Jaya - Samuda", "road_b_name": "Nagara Muara Tapus", "connector_type": "bridge_gap", "is_synthetic": true, "purpose": "network_topology", "geometry_length_m": 90.3 }, "geometry": { "type": "LineString", "coordinates": [ [ 115.099899344525895, -2.60399859744482 ], [ 115.100635529644904, -2.604342858320461 ] ] } },
+{ "type": "Feature", "properties": { "connector_id": "bridge-gap-03", "connector_name": "Jembatan Rahimin", "road_a_name": "Pandak Daun - Baruh Jaya - Samuda", "road_b_name": "Nagara Muara Tapus", "connector_type": "bridge_gap", "is_synthetic": true, "purpose": "network_topology", "geometry_length_m": 112.49 }, "geometry": { "type": "LineString", "coordinates": [ [ 115.107055390439953, -2.629002965626127 ], [ 115.107955451866289, -2.629466955161508 ] ] } },
+{ "type": "Feature", "properties": { "connector_id": "bridge-gap-04", "connector_name": "Bendung Irigasi Telaga Langsat", "road_a_name": "Mawangi - Bukuanin - Telaga Langsat", "road_b_name": "Gumbil - Masimpan", "connector_type": "bridge_gap", "is_synthetic": true, "purpose": "network_topology", "geometry_length_m": 252.65 }, "geometry": { "type": "LineString", "coordinates": [ [ 115.337278442972931, -2.735671974086303 ], [ 115.337590206608027, -2.735334085051019 ], [ 115.337850381381273, -2.735219608150786 ], [ 115.33803423822107, -2.734879646447059 ], [ 115.338041176215015, -2.733932610272388 ], [ 115.338040379030204, -2.733728333322101 ] ] } }
+]
+}

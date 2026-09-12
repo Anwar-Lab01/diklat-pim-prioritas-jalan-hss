@@ -1,0 +1,329 @@
+{
+  "priority_baseline": {
+    "source": "dataset_ml_clean.csv",
+    "rows": 350,
+    "unique_nomor_ruas": 350,
+    "normalized_fields": 17,
+    "duplicate_base_name_records": 6,
+    "duplicate_base_names": [
+      "Mawar",
+      "Musyawarah",
+      "Sekolah Islam"
+    ],
+    "runtime_alias_pairs_exported": 32
+  },
+  "rtrw": {
+    "source_archive": "_6306_50KB_RTRW_KABUPATEN_HULUSUNGAISELATAN_2025.gdb.zip",
+    "source_feature_classes": 13,
+    "exported_nonempty_layers": 9,
+    "layers": [
+      {
+        "clean_name": "rtrw_pola_ruang",
+        "source_layer": "_6306_50KB_AR_PR_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 2832,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 82,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_energi_point",
+        "source_layer": "_6306_50KB_PT_SR_ENERGI_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 1,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_energi_line",
+        "source_layer": "_6306_50KB_LN_SR_ENERGI_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 3,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_pusat_permukiman",
+        "source_layer": "_6306_50KB_PT_SR_PUSATPERMUKIMAN_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 11,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_sda_point",
+        "source_layer": "_6306_50KB_PT_SR_SDA_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 6,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_sda_line",
+        "source_layer": "_6306_50KB_LN_SR_SDA_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 66,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_telekomunikasi_point",
+        "source_layer": "_6306_50KB_PT_SR_TELEKOMUNIKASI_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 2,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_transportasi_point",
+        "source_layer": "_6306_50KB_PT_SR_TRANSPORTASI_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 5,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      },
+      {
+        "clean_name": "rtrw_transportasi_line",
+        "source_layer": "_6306_50KB_LN_SR_TRANSPORTASI_KABUPATEN_HULUSUNGAISELATAN_2024",
+        "features": 20,
+        "source_crs": "EPSG:9518",
+        "export_crs": "EPSG:4326",
+        "invalid_geometry_before": 0,
+        "invalid_geometry_after": 0,
+        "null_geometry_before": 0,
+        "null_geometry_after": 0,
+        "geometry_cleaning": "make_valid + force_2d; no simplification"
+      }
+    ]
+  },
+  "new_in_v2": {
+    "roads": {
+      "county": {
+        "features": 350,
+        "invalid_before": 1,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      },
+      "provincial": {
+        "features": 4,
+        "invalid_before": 0,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      },
+      "national": {
+        "features": 8,
+        "invalid_before": 0,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      },
+      "condition_columns_exported": false,
+      "note": "Condition/mantap fields from these sources are intentionally excluded. Await final canonical condition dataset."
+    },
+    "network": {
+      "features": 366,
+      "source_counts": {
+        "kabupaten": 350,
+        "nasional": 8,
+        "provinsi": 4,
+        "jembatan": 4
+      },
+      "connectors": 4,
+      "network_geometry_qa": {
+        "invalid_before": 1,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      },
+      "connector_geometry_qa": {
+        "invalid_before": 0,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      }
+    },
+    "facilities": {
+      "schools": 251,
+      "schools_by_level": {
+        "SD": 214,
+        "SMP": 37
+      },
+      "markets": 11,
+      "rsud": 2,
+      "combined": 264,
+      "puskesmas_included": false,
+      "geometry_qa": {
+        "schools": {
+          "invalid_before": 0,
+          "invalid_after": 0,
+          "null_before": 0,
+          "null_after": 0
+        },
+        "markets": {
+          "invalid_before": 0,
+          "invalid_after": 0,
+          "null_before": 0,
+          "null_after": 0
+        },
+        "rsud": {
+          "invalid_before": 0,
+          "invalid_after": 0,
+          "null_before": 0,
+          "null_after": 0
+        }
+      }
+    },
+    "historical_context": {
+      "rows": 350,
+      "fields_exported": 54,
+      "condition_related_fields_excluded": 42,
+      "source_sheet": "clean_historis"
+    },
+    "identity_precheck": {
+      "county_roads": 350,
+      "exact_normalized": 278,
+      "treatment_engine_alias": 25,
+      "resolved_precheck_total": 303,
+      "unresolved": 47,
+      "warning": "This is a non-destructive precheck, not final canonical identity mapping."
+    }
+  },
+  "new_in_v3": {
+    "administration": {
+      "villages_total": 148,
+      "desa": 144,
+      "kelurahan": 4,
+      "districts": 11,
+      "duplicate_village_name_records": 4,
+      "source_crs_recovered_from_qgis_project": "EPSG:4326",
+      "geometry_qa": {
+        "invalid_before": 0,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      }
+    },
+    "puskesmas": {
+      "features": 21,
+      "assigned_to_village": 21,
+      "geometry_qa": {
+        "invalid_before": 0,
+        "invalid_after": 0,
+        "null_before": 0,
+        "null_after": 0
+      }
+    },
+    "public_facilities": {
+      "combined_features": 285,
+      "type_counts": {
+        "school": 251,
+        "puskesmas": 21,
+        "market": 11,
+        "hospital": 2
+      },
+      "spatially_assigned_to_village": 284
+    },
+    "road_admin_overlay": {
+      "road_count_with_village_intersection": 350,
+      "road_village_relation_rows": 691,
+      "road_district_relation_rows": 410,
+      "min_intersection_length_m": 1,
+      "metric_crs_used_for_length": "EPSG:32750",
+      "identity_warning": "candidate_nomor_ruas is provisional where present; canonical road_key still pending.",
+      "county_road_geometry_features": 350,
+      "unique_source_road_code": 350,
+      "unique_source_object_id": 277,
+      "join_key_used": "road_geometry_id derived from unique source_road_code (Kd_Inf)",
+      "source_object_id_warning": "OBJECTID is non-unique in this GPKG and MUST NOT be used as road identity."
+    },
+    "dashboard_workbook": {
+      "included": false,
+      "reason": "Held from seed ingestion. Road condition/mantap authority remains pending final dataset from user."
+    },
+    "identity_precheck_corrected": {
+      "rows": 350,
+      "exact_normalized": 277,
+      "treatment_engine_alias": 25,
+      "resolved_precheck_total": 302,
+      "unresolved": 48,
+      "key": "source_road_code (unique 350/350)",
+      "canonical_status": "provisional only; final road_key pending"
+    }
+  },
+  "new_in_v4": {
+    "canonical_road_master": {
+      "roads": 350,
+      "road_key_format": "HSS-KAB-NNN",
+      "unique_road_key": 350,
+      "dashboard_no_ruas_unique": 350,
+      "qgis_kd_inf_unique": 350,
+      "dashboard_to_qgis_key_match": 350,
+      "duplicate_base_names_disambiguated": [
+        "Mawar (Kandangan Utara)",
+        "Musyawarah (Kandangan Kota)",
+        "Sekolah Islam (Kandangan Barat)",
+        "Musyawarah (Tumbukan Banyu)",
+        "Sekolah Islam (Sungai Pinang)",
+        "Mawar (Sungai Pinang)"
+      ]
+    },
+    "conditions_2025": {
+      "year": 2025,
+      "road_count": 350,
+      "total_length_km": 732.46,
+      "baik_km": 131.65,
+      "sedang_km": 261.239999,
+      "rusak_ringan_km": 111.41,
+      "rusak_berat_km": 228.160002,
+      "mantap_km": 392.889998,
+      "mantap_pct": 53.639789,
+      "tidak_mantap_km": 339.570002,
+      "tidak_mantap_pct": 46.360211,
+      "condition_sum_minus_length_km": 3e-09,
+      "mantap_sum_minus_length_km": 3e-09,
+      "rows_outside_0_01km_balance_tolerance": 0,
+      "authority": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik"
+    },
+    "network": {
+      "county_features_with_canonical_road_key": 350,
+      "network_county_geometry_match_method": "exact WKB against source county geometry"
+    },
+    "source_id_semantics_correction": {
+      "dataset_ml_clean.nomor_ruas": "renamed to source_ml_road_id in v4; not treated as official canonical road number",
+      "historical_workbook.nomor_ruas": "renamed to source_ml_road_id in v4; not treated as official canonical road number"
+    }
+  }
+}

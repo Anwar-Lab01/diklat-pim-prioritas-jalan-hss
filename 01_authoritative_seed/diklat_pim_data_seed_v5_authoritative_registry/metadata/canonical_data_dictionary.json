@@ -1,0 +1,28 @@
+{
+  "canonical_identity": {
+    "road_id": "Stable deterministic UUIDv5 internal ID.",
+    "road_key": "Human-readable canonical application key HSS-KAB-NNN.",
+    "nomor_ruas": "Official 3-digit NO RUAS from Dashboard 2025; matched to GIS Kd_Inf 350/350.",
+    "canonical_name": "Official/display source name from Dashboard 2025.",
+    "display_name": "UI name; duplicate names get a location qualifier."
+  },
+  "condition_2025": {
+    "source": "Dashboard_Analitik_Data_Jalan_2025_Revisi.xlsx / Data_Analitik",
+    "percentage_scale": "0..100 in clean exports (converted from Excel ratio 0..1).",
+    "fields": [
+      "baik_km",
+      "baik_pct",
+      "sedang_km",
+      "sedang_pct",
+      "rusak_ringan_km",
+      "rusak_ringan_pct",
+      "rusak_berat_km",
+      "rusak_berat_pct",
+      "mantap_km",
+      "mantap_pct",
+      "tidak_mantap_km",
+      "tidak_mantap_pct"
+    ]
+  },
+  "important": "Never join road datasets by name when road_key/nomor_ruas is available."
+}
