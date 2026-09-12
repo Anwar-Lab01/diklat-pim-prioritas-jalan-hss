@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
+import { PROJECT_ROOT } from '../config/constants.ts';
 import { UiDataService } from '../services/uiDataService.ts';
 import { ModelService } from '../services/modelService.ts';
 import { SpatialService } from '../services/spatialService.ts';
@@ -223,7 +224,7 @@ export function createServer() {
   });
 
   // Serve static UI assets
-  const publicDir = path.join(__dirname, '../public');
+  const publicDir = path.resolve(PROJECT_ROOT, 'src/public');
   app.use(express.static(publicDir));
 
   // SPA fallback to index.html for non-API GET requests

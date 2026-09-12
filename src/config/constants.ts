@@ -4,7 +4,26 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-export const PROJECT_ROOT = path.resolve(__dirname, '../../');
+function getProjectRoot(): string {
+  if (process.env.PROJECT_ROOT) {
+    return path.resolve(process.env.PROJECT_ROOT);
+  }
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    return process.cwd();
+  }
+  let curr = __dirname;
+  for (let i = 0; i < 5; i++) {
+    if (fs.existsSync(path.join(curr, 'package.json')) && fs.existsSync(path.join(curr, '01_authoritative_seed'))) {
+      return curr;
+    }
+    const parent = path.dirname(curr);
+    if (parent === curr) break;
+    curr = parent;
+  }
+  return path.resolve(__dirname, '../../');
+}
+
+export const PROJECT_ROOT = getProjectRoot();
 
 export const DB_DIR = path.resolve(PROJECT_ROOT, 'data');
 export const DEPLOY_DB_PATH = path.resolve(DB_DIR, 'diklat_pim_deploy.db');
