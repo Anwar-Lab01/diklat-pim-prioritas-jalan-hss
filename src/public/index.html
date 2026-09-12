@@ -198,13 +198,13 @@
 
         <div class="pt-3 pb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">Modul Lanjutan</div>
 
-        <div class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 cursor-not-allowed opacity-75">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <a href="#simulasi" id="nav-simulasi" class="nav-link flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-700 hover:bg-slate-100">
+          <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
           </svg>
-          <span>Simulasi Skenario</span>
-          <span class="ml-auto text-[9px] bg-slate-200 text-slate-600 font-semibold px-1.5 py-0.5 rounded uppercase">Fase 5</span>
-        </div>
+          <span class="font-semibold">Simulasi Skenario</span>
+          <span class="ml-auto text-[9px] bg-sky-100 text-sky-800 font-bold px-1.5 py-0.5 rounded uppercase border border-sky-200">Fase 5</span>
+        </a>
 
         <div class="pt-4 border-t border-slate-200 text-[11px] text-slate-500 px-3 space-y-1">
           <div class="font-semibold text-slate-700">Versi Rilis: MVP v1.0.0</div>
@@ -476,6 +476,13 @@
               <button id="preset-tataruang" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition" title="Prioritas Jalan, Pola Ruang RTRW & Batas Administrasi">Tata Ruang</button>
             </div>
 
+            <!-- Simulation Layer Toggle on Map -->
+            <div id="map-simulation-mode-toggle" class="flex items-center space-x-1 border border-slate-200 bg-white p-1 rounded-lg shadow-sm">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">Skor:</span>
+              <button id="map-btn-source-baseline" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-sky-600 text-white shadow-xs transition" title="Pewarnaan peta berdasarkan peringkat resmi baseline">Baseline</button>
+              <button id="map-btn-source-simulation" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition" title="Pewarnaan peta berdasarkan hasil simulasi skenario">Simulasi</button>
+            </div>
+
             <button id="map-btn-fit-hss" class="text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 font-semibold px-3 py-1.5 rounded-lg shadow-sm flex items-center space-x-1.5 transition">
               <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
@@ -560,6 +567,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
               </svg>
               <span>Basemap daring tidak tersedia — menggunakan latar netral.</span>
+            </div>
+
+            <!-- Simulation Mode Banner on Map (Non-authoritative indicator) -->
+            <div id="map-simulation-banner" class="hidden absolute top-12 left-14 z-[1000] bg-amber-500/95 text-white backdrop-blur-sm px-3.5 py-1.5 rounded-lg shadow-lg text-xs font-semibold flex items-center space-x-2 border border-amber-400">
+              <span class="animate-pulse">⚠️</span>
+              <span>MODE SIMULASI: Pewarnaan Peta Berdasarkan Skenario Kebijakan (Non-Otoritatif)</span>
+              <button id="map-btn-restore-baseline" class="ml-2 underline hover:text-amber-100 text-[11px] font-bold">Kembali ke Baseline</button>
             </div>
 
             <!-- Empty State Overlay on Zero Filter Match -->
@@ -935,6 +949,285 @@
 
       </section>
 
+      <!-- ============================================================ -->
+      <!-- VIEW 6: SIMULASI SKENARIO BOBOT KEBIJAKAN (FASE 5)           -->
+      <!-- ============================================================ -->
+      <section id="view-simulasi" class="hidden flex flex-col space-y-5">
+        
+        <!-- Header & Action Bar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center space-x-2">
+              <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Simulasi Skenario Bobot Kebijakan</h1>
+              <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-300 uppercase tracking-wider">Mode Simulasi</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-0.5">Eksperimen interaktif pergeseran peringkat prioritas 350 ruas jalan kabupaten melalui penyesuaian bobot hierarkis.</p>
+          </div>
+
+          <!-- Presets & Actions -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center space-x-1 border border-slate-200 bg-white p-1 rounded-lg shadow-sm text-xs">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1.5">Preset:</span>
+              <button id="sim-preset-baseline" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition" title="Pulihkan ke konfigurasi awal POLICY_DEFAULT_V1">Baseline (Default)</button>
+              <button id="sim-preset-pelayanan" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition" title="Fokuskan bobot ke fasilitas RSUD & Puskesmas">Fokus Pelayanan</button>
+              <button id="sim-preset-akses" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 transition" title="Fokuskan ke konektivitas jalan provinsi & nasional">Fokus Aksesibilitas</button>
+              <button id="sim-preset-kerusakan" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition" title="Fokuskan ke kondisi rusak berat & sedang">Fokus Kerusakan</button>
+            </div>
+
+            <button id="sim-btn-reset" class="text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-300 font-bold px-3 py-2 rounded-lg shadow-sm flex items-center space-x-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              <span>Reset ke POLICY_DEFAULT_V1</span>
+            </button>
+
+            <button id="sim-btn-goto-map" class="text-xs bg-sky-600 hover:bg-sky-700 text-white font-bold px-3 py-2 rounded-lg shadow-sm flex items-center space-x-1.5 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+              </svg>
+              <span>Bandingkan di Peta GIS</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Safety Notice Banner -->
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start space-x-3 text-xs text-amber-900 shadow-sm">
+          <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm shrink-0">⚠️</div>
+          <div class="flex-1">
+            <span class="font-bold text-amber-950">Lingkungan Simulasi Non-Destruktif:</span>
+            <span class="text-amber-800 ml-1">
+              Seluruh penyesuaian koefisien bobot dihitung seketika pada memori peramban (*stateless in-memory*) dan <strong>TIDAK MENGUBAH</strong> model kebijakan aktif produksi (<code class="bg-amber-100/80 px-1 py-0.5 rounded font-mono font-bold text-amber-900">POLICY_DEFAULT_V1</code>) maupun database otoritatif PUTR.
+            </span>
+          </div>
+        </div>
+
+        <!-- 2-Column Responsive Desktop Grid -->
+        <div class="flex flex-col xl:flex-row gap-5 items-start">
+          
+          <!-- LEFT COLUMN: HIERARCHICAL WEIGHT EDITOR (4 Categories & 17 Variables) -->
+          <div class="w-full xl:w-[480px] 2xl:w-[520px] shrink-0 space-y-4">
+            
+            <!-- Card 1: Level 1 - Bobot 4 Kategori Kebijakan -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+                    <span>⚖️</span>
+                    <span>1. Bobot Kategori Kebijakan (Level 1)</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-500">Otomatis seimbang secara proporsional antar kategori (Jumlah = 100%).</p>
+                </div>
+                <span id="sim-category-sum-badge" class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-2 py-0.5 rounded">Total: 100.00%</span>
+              </div>
+
+              <!-- Category Sliders & Numeric Inputs -->
+              <div id="sim-categories-container" class="space-y-3">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+
+            <!-- Card 2: Level 2 - Bobot Variabel Lokal (17 Variabel) -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+                    <span>📊</span>
+                    <span>2. Bobot Variabel Lokal (Level 2)</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-500">Menyesuaikan prioritas lokal per kategori. Bobot efektif (Ω) bersifat read-only.</p>
+                </div>
+                <span id="sim-local-sum-badge" class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-2 py-0.5 rounded">Lokal: 100.00%</span>
+              </div>
+
+              <!-- Category Tabs for Variables -->
+              <div class="flex flex-wrap gap-1 border-b border-slate-200 pb-1" id="sim-variable-category-tabs">
+                <button data-cat="TEKNIS_JALAN" class="sim-cat-tab active px-2.5 py-1 text-xs font-semibold rounded-md bg-sky-50 text-sky-700 border border-sky-200 transition">Teknis (7)</button>
+                <button data-cat="AKSESIBILITAS" class="sim-cat-tab px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:bg-slate-100 transition">Aksesibilitas (3)</button>
+                <button data-cat="PELAYANAN_MASYARAKAT" class="sim-cat-tab px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:bg-slate-100 transition">Pelayanan (4)</button>
+                <button data-cat="SPASIAL_DEMOGRAFI" class="sim-cat-tab px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:bg-slate-100 transition">Spasial (3)</button>
+              </div>
+
+              <!-- Active Category Variables Container -->
+              <div id="sim-variables-container" class="space-y-3 pt-1">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: SIMULATION RESULTS, KPIS & COMPARISON TABLE -->
+          <div class="flex-1 w-full space-y-4 min-w-0">
+
+            <!-- Summary KPI Metric Cards (6 Cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 flex items-center space-x-1">
+                  <span>▲</span>
+                  <span>Naik Peringkat</span>
+                </div>
+                <div id="sim-kpi-moved-up" class="text-xl font-black text-slate-900 mt-1">0 <span class="text-xs font-normal text-slate-400">ruas</span></div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-rose-600 flex items-center space-x-1">
+                  <span>▼</span>
+                  <span>Turun Peringkat</span>
+                </div>
+                <div id="sim-kpi-moved-down" class="text-xl font-black text-slate-900 mt-1">0 <span class="text-xs font-normal text-slate-400">ruas</span></div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Peringkat Tetap</div>
+                <div id="sim-kpi-unchanged" class="text-xl font-black text-slate-900 mt-1">350 <span class="text-xs font-normal text-slate-400">ruas</span></div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Perubahan Tier</div>
+                <div id="sim-kpi-tier-changed" class="text-xl font-black text-slate-900 mt-1">0 <span class="text-xs font-normal text-slate-400">ruas</span></div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm col-span-1 sm:col-span-1 lg:col-span-1">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Kenaikan Max</div>
+                <div id="sim-kpi-top-up" class="text-xs font-bold text-slate-900 truncate mt-1">—</div>
+              </div>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm col-span-1 sm:col-span-1 lg:col-span-1">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-rose-700">Penurunan Max</div>
+                <div id="sim-kpi-top-down" class="text-xs font-bold text-slate-900 truncate mt-1">—</div>
+              </div>
+            </div>
+
+            <!-- Top 10 Comparison Snapshot Card -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center space-x-1.5">
+                  <span>🏆</span>
+                  <span>Potret Top 10 Prioritas Skenario Simulasi vs Baseline</span>
+                </h3>
+                <span class="text-[11px] text-slate-400">10 Besar Prioritas Penanganan</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase font-semibold border-b border-slate-200">
+                    <tr>
+                      <th class="py-2 px-2 text-center">Rank Sim</th>
+                      <th class="py-2 px-2 text-center">Rank Base</th>
+                      <th class="py-2 px-2 text-center">Δ Rank</th>
+                      <th class="py-2 px-2.5">No. Ruas</th>
+                      <th class="py-2 px-3">Nama Ruas Jalan</th>
+                      <th class="py-2 px-2.5">Kecamatan</th>
+                      <th class="py-2 px-2.5 text-right">Skor Sim</th>
+                      <th class="py-2 px-2.5 text-right">Skor Base</th>
+                      <th class="py-2 px-2.5 text-center">Tier Sim</th>
+                      <th class="py-2 px-2 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sim-top10-body" class="divide-y divide-slate-100 text-slate-700">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Full 350-Road Interactive Comparison Table -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+                    <span>📋</span>
+                    <span>Tabel Perbandingan 350 Ruas (Simulasi vs Baseline)</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-500">Gunakan filter untuk mengamati ruas yang berpindah peringkat atau berganti tier.</p>
+                </div>
+                <div class="text-xs text-slate-500 flex items-center space-x-1">
+                  <span>Menampilkan</span>
+                  <span id="sim-table-count" class="font-bold text-sky-700">350</span>
+                  <span>dari 350 ruas</span>
+                </div>
+              </div>
+
+              <!-- Filters Toolbar -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
+                <div>
+                  <input type="text" id="sim-filter-search" placeholder="Cari ruas / no ruas..." class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-1 focus:ring-sky-500 focus:bg-white transition" />
+                </div>
+                <div>
+                  <select id="sim-filter-district" class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:ring-1 focus:ring-sky-500">
+                    <option value="ALL">Semua Kecamatan (11)</option>
+                  </select>
+                </div>
+                <div>
+                  <select id="sim-filter-movement" class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:ring-1 focus:ring-sky-500">
+                    <option value="ALL">Semua Pergerakan Peringkat</option>
+                    <option value="MOVED_UP">▲ Hanya yang Naik Peringkat</option>
+                    <option value="MOVED_DOWN">▼ Hanya yang Turun Peringkat</option>
+                    <option value="TIER_CHANGED">★ Hanya yang Berubah Tier</option>
+                    <option value="UNCHANGED">— Hanya yang Tetap</option>
+                  </select>
+                </div>
+                <div>
+                  <select id="sim-filter-tier" class="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 focus:ring-1 focus:ring-sky-500">
+                    <option value="ALL">Semua Tier Simulasi</option>
+                    <option value="TOP_35">Tier 1: TOP_35 (Sangat Mendesak)</option>
+                    <option value="TOP_70">Tier 2: TOP_70 (Prioritas Tinggi)</option>
+                    <option value="TOP_105">Tier 3: TOP_105 (Prioritas Kebijakan)</option>
+                    <option value="REGULAR">Reguler Jaringan</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Table Container -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase font-semibold border-b border-slate-200">
+                    <tr>
+                      <th class="py-2.5 px-2 text-center">Rank Sim</th>
+                      <th class="py-2.5 px-2 text-center">Rank Base</th>
+                      <th class="py-2.5 px-2 text-center">Δ Rank</th>
+                      <th class="py-2.5 px-2.5">No. Ruas</th>
+                      <th class="py-2.5 px-3">Nama Ruas Jalan</th>
+                      <th class="py-2.5 px-2.5">Kecamatan</th>
+                      <th class="py-2.5 px-2.5 text-right">Skor Sim</th>
+                      <th class="py-2.5 px-2.5 text-right">Skor Base</th>
+                      <th class="py-2.5 px-2.5 text-center">Tier Base</th>
+                      <th class="py-2.5 px-2.5 text-center">Tier Sim</th>
+                      <th class="py-2.5 px-2 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sim-table-body" class="divide-y divide-slate-100 text-slate-700">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination Controls -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs text-slate-600">
+                <div class="flex items-center space-x-2">
+                  <span>Halaman per:</span>
+                  <select id="sim-page-size-select" class="px-2 py-1 bg-slate-50 border border-slate-200 rounded text-xs">
+                    <option value="15">15</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="350">350 (Semua)</option>
+                  </select>
+                  <span id="sim-pagination-info" class="text-slate-500">1-25 dari 350 ruas</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                  <button id="sim-btn-prev-page" class="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">Sebelumnya</button>
+                  <span id="sim-current-page" class="px-2 font-semibold">1</span>
+                  <button id="sim-btn-next-page" class="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">Berikutnya</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
     </main>
 
   </div>
@@ -1119,6 +1412,107 @@
         <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
           <span>Kunci Kanonikal: <code id="footer-road-key" class="font-bold text-slate-800">HSS-KAB-000</code></span>
           <button id="btn-close-drawer-bottom" class="px-3 py-1.5 bg-white border border-slate-300 rounded font-semibold text-slate-700 hover:bg-slate-100">
+            Tutup
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: ROAD-LEVEL EXPLAINABILITY (FASE 5 SIMULASI SKENARIO)  -->
+  <!-- ============================================================ -->
+  <div id="modal-sim-explain" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-sim-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity" id="modal-sim-backdrop"></div>
+
+    <div class="min-h-screen px-4 text-center flex items-center justify-center p-4">
+      <div class="inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all my-8 align-middle max-w-4xl w-full border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs bg-sky-500 text-white font-bold px-2 py-0.5 rounded uppercase">Audit Komparatif Skenario</span>
+              <span id="sim-modal-road-key" class="font-mono text-xs text-slate-300">HSS-KAB-000</span>
+            </div>
+            <h2 id="sim-modal-road-name" class="text-lg font-black tracking-tight">Nama Ruas Jalan</h2>
+            <p id="sim-modal-district" class="text-xs text-slate-300">Kecamatan —</p>
+          </div>
+          <button id="btn-close-sim-modal" class="text-slate-400 hover:text-white text-2xl font-bold p-1">&times;</button>
+        </div>
+
+        <!-- Metrics Comparison Ribbon -->
+        <div class="bg-slate-50 border-b border-slate-200 p-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+            <div class="text-[10px] text-slate-400 uppercase font-bold">Peringkat Prioritas</div>
+            <div class="flex items-baseline space-x-2 mt-1">
+              <span id="sim-modal-rank-sim" class="text-lg font-black text-slate-900">#1</span>
+              <span class="text-slate-400 text-[11px]">dari <span id="sim-modal-rank-base" class="line-through text-slate-500">#10</span></span>
+              <span id="sim-modal-rank-delta" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">+9</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+            <div class="text-[10px] text-slate-400 uppercase font-bold">Skor Akhir Komposit</div>
+            <div class="flex items-baseline space-x-2 mt-1">
+              <span id="sim-modal-score-sim" class="text-base font-black text-slate-900">0.000000</span>
+              <span id="sim-modal-score-delta" class="text-[11px] font-bold text-slate-600">+0.0000</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+            <div class="text-[10px] text-slate-400 uppercase font-bold">Tier Baseline</div>
+            <div id="sim-modal-tier-base" class="mt-1">—</div>
+          </div>
+
+          <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+            <div class="text-[10px] text-slate-400 uppercase font-bold">Tier Hasil Simulasi</div>
+            <div id="sim-modal-tier-sim" class="mt-1">—</div>
+          </div>
+        </div>
+
+        <!-- Body: 17 Variables Comparative Decomposition -->
+        <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+              <span>🔬</span>
+              <span>Dekomposisi 17 Faktor Normatif (Baseline vs Simulasi)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Tabel berikut memperlihatkan mengapa ruas ini bergerak: perubahan bobot efektif (Ω) dan kontribusi nilai (V × Ω) per variabel.</p>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-200 rounded-xl">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-700 text-[11px] uppercase font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Variabel</th>
+                  <th class="py-2.5 px-2.5">Kategori</th>
+                  <th class="py-2.5 px-2.5 text-right">Nilai Norm (V)</th>
+                  <th class="py-2.5 px-2.5 text-right">Bobot Base (Ω_b)</th>
+                  <th class="py-2.5 px-2.5 text-right">Bobot Sim (Ω_s)</th>
+                  <th class="py-2.5 px-2.5 text-right">Δ Bobot</th>
+                  <th class="py-2.5 px-2.5 text-right">Kontribusi Base</th>
+                  <th class="py-2.5 px-2.5 text-right">Kontribusi Sim</th>
+                  <th class="py-2.5 px-2.5 text-right">Δ Kontribusi</th>
+                </tr>
+              </thead>
+              <tbody id="sim-modal-factors-body" class="divide-y divide-slate-100 text-slate-700">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Insight Narrative Box -->
+          <div id="sim-modal-insight" class="bg-sky-50 border border-sky-200 rounded-xl p-3.5 text-xs text-sky-900 space-y-1">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between text-xs">
+          <span class="text-slate-500">Analisis Otoritatif Dinas PUTR Kabupaten Hulu Sungai Selatan</span>
+          <button id="btn-close-sim-modal-bottom" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-lg shadow-xs transition">
             Tutup
           </button>
         </div>

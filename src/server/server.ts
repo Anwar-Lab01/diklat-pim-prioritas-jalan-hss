@@ -5,6 +5,7 @@ import { PROJECT_ROOT } from '../config/constants.ts';
 import { UiDataService } from '../services/uiDataService.ts';
 import { ModelService } from '../services/modelService.ts';
 import { SpatialService } from '../services/spatialService.ts';
+import { SimulationService } from '../services/simulationService.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,6 +15,7 @@ export function createServer() {
   const uiService = new UiDataService();
   const modelService = new ModelService();
   const spatialService = new SpatialService();
+  const simulationService = new SimulationService();
 
   app.use(express.json());
 
@@ -95,6 +97,52 @@ export function createServer() {
           variables,
         },
       });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 5B. Simulation Scenario APIs (Phase 5 - Stateless & In-Memory)
+  // 5B-1. Get full simulation context (baseline config, feature vectors, baseline scores)
+  app.get('/api/simulation/context', (req, res) => {
+    try {
+      const mode = (req.query.mode as any) || 'OPERATIONAL_2025';
+      const data = simulationService.getSimulationContext(mode);
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 5B-2. Pure stateless in-memory simulation calculation
+  app.post('/api/simulation/calculate', (req, res) => {
+    try {
+      const { config, mode } = req.body;
+      if (!config || !config.categories || !config.variables) {
+        return res.status(400).json({
+          success: false,
+          error: 'INVALID_PAYLOAD: Missing config with categories and variables.',
+        });
+      }
+      const data = simulationService.calculateSimulation(config, mode || 'OPERATIONAL_2025');
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 5B-3. Single road comparative explainability
+  app.post('/api/simulation/explain', (req, res) => {
+    try {
+      const { roadKey, config, mode } = req.body;
+      if (!roadKey || !config) {
+        return res.status(400).json({
+          success: false,
+          error: 'INVALID_PAYLOAD: Missing roadKey or config.',
+        });
+      }
+      const data = simulationService.explainRoad(roadKey, config, mode || 'OPERATIONAL_2025');
+      res.json({ success: true, data });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }

@@ -82,6 +82,28 @@ const state = {
   tooltipSettings: {
     enabled: true,
   },
+
+  // --- Phase 5: Policy Weight Scenario Simulation State ---
+  simulation: {
+    initialized: false,
+    simConfig: null,
+    featureVectors: null,
+    baselineScores: null,
+    simulatedScores: null,
+    comparisons: [],
+    summary: null,
+    activeVariableCategory: 'TEKNIS_JALAN',
+    filter: {
+      search: '',
+      district: 'ALL',
+      movement: 'ALL',
+      tier: 'ALL',
+    },
+    page: 1,
+    pageSize: 25,
+    mapColorSource: 'BASELINE', // 'BASELINE' | 'SIMULATION'
+    selectedRoadExplainKey: null,
+  },
 };
 
 window.appState = state;
@@ -175,6 +197,9 @@ function initEventListeners() {
       renderMathAudit(state.selectedRoadDetail);
     }
   });
+
+  // Phase 5 Simulation listeners
+  initSimulationEventListeners();
 }
 
 function updateModeVisuals() {
@@ -202,6 +227,8 @@ function reloadActiveData() {
     if (state.mapInitialized) {
       loadMapCountyRoads();
     }
+  } else if (state.currentView === 'simulasi') {
+    loadSimulation();
   }
   if (state.selectedRoadDetail) {
     openRoadDetail(state.selectedRoadDetail.identity.road_key);
@@ -220,6 +247,7 @@ function handleRouting() {
     '#peta': 'peta',
     '#data-sumber': 'data-sumber',
     '#model': 'model',
+    '#simulasi': 'simulasi',
   };
 
   const targetView = viewMap[baseHash] || 'dashboard';
@@ -285,6 +313,9 @@ function switchView(viewName) {
   } else if (viewName === 'model') {
     drawerEl?.classList.remove('drawer-map-mode');
     loadModel();
+  } else if (viewName === 'simulasi') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadSimulation();
   }
 }
 
@@ -835,6 +866,17 @@ function initMapControls() {
   document.getElementById('preset-pelayanan')?.addEventListener('click', () => applyMapPreset('pelayanan'));
   document.getElementById('preset-tataruang')?.addEventListener('click', () => applyMapPreset('tataruang'));
 
+  // Simulation Map Mode Toggles
+  document.getElementById('map-btn-source-baseline')?.addEventListener('click', () => {
+    setMapColorSource('BASELINE');
+  });
+  document.getElementById('map-btn-source-simulation')?.addEventListener('click', () => {
+    setMapColorSource('SIMULATION');
+  });
+  document.getElementById('map-btn-restore-baseline')?.addEventListener('click', () => {
+    setMapColorSource('BASELINE');
+  });
+
   // Basemap radio toggles (Latar Netral, Peta Jalan, Citra Satelit)
   document.querySelectorAll('input[name="basemap-layer"]').forEach((radio) => {
     radio.addEventListener('change', (e) => {
@@ -1195,23 +1237,58 @@ function renderThematicRoads(features) {
     state.map.removeLayer(state.mapLayers.countyRoadsHitTarget);
   }
 
+  const isSimMode = state.simulation?.mapColorSource === 'SIMULATION' && (state.simulation?.comparisons?.length || 0) > 0;
+  const simMap = isSimMode
+    ? new Map(state.simulation.comparisons.map((c) => [c.road_key, c]))
+    : null;
+
   const setupRoadInteractivity = (feature, layer) => {
     const p = feature.properties;
-    const tierStyle = ROAD_TIER_STYLES[p.tier_category] || ROAD_TIER_STYLES.REGULAR;
+    const simComp = simMap?.get(p.road_key);
+    const activeTier = (isSimMode && simComp) ? simComp.simulated_tier : p.tier_category;
+    const tierStyle = ROAD_TIER_STYLES[activeTier] || ROAD_TIER_STYLES.REGULAR;
+
+    let scoreInfo = `
+      <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
+        <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
+        <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
+      </div>
+      <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
+        <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(activeTier)}</span>
+        <span class="text-slate-600">Mantap: ${p.mantap_pct.toFixed(1)}%</span>
+      </div>
+    `;
+
+    if (isSimMode && simComp) {
+      const delta = simComp.rank_delta;
+      const deltaClass = delta > 0 ? 'text-emerald-700 bg-emerald-100' : delta < 0 ? 'text-rose-700 bg-rose-100' : 'text-slate-700 bg-slate-100';
+      const deltaText = delta > 0 ? `▲ +${delta}` : delta < 0 ? `▼ ${delta}` : '— 0';
+
+      scoreInfo = `
+        <div class="mt-1.5 pt-1.5 border-t border-amber-200 bg-amber-50/80 -mx-1 px-1.5 py-1 rounded">
+          <div class="text-[10px] font-bold text-amber-800 uppercase tracking-wider mb-0.5">Mode Simulasi Skenario</div>
+          <div class="flex items-center justify-between space-x-2">
+            <span class="font-bold text-slate-900">Rank Sim: #${simComp.simulated_rank}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded ${deltaClass}">${deltaText}</span>
+          </div>
+          <div class="flex items-center justify-between space-x-2 mt-0.5 text-[10px]">
+            <span class="text-slate-500">Baseline: #${simComp.baseline_rank}</span>
+            <span class="font-mono font-semibold text-amber-900">Skor: ${simComp.simulated_score.toFixed(4)}</span>
+          </div>
+          <div class="mt-1 flex items-center justify-between text-[10px]">
+            <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(activeTier)}</span>
+            <span class="text-slate-500">Δ Skor: ${(simComp.score_delta >= 0 ? '+' : '') + simComp.score_delta.toFixed(4)}</span>
+          </div>
+        </div>
+      `;
+    }
 
     const tooltipContent = `
       <div class="p-1 text-xs leading-relaxed">
         <div class="font-bold text-slate-900">${escapeHtml(p.display_name)}</div>
         <div class="text-[10px] text-slate-500 font-mono">No: ${p.nomor_ruas} | ${p.road_key}</div>
         <div class="text-[11px] text-slate-700">Kecamatan: <strong>${escapeHtml(p.district_name)}</strong></div>
-        <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
-          <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
-          <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
-        </div>
-        <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
-          <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(p.tier_category)}</span>
-          <span class="text-slate-600">Mantap: ${p.mantap_pct.toFixed(1)}%</span>
-        </div>
+        ${scoreInfo}
       </div>
     `;
     layer.bindTooltip(tooltipContent, {
@@ -1244,8 +1321,11 @@ function renderThematicRoads(features) {
     {
       pane: 'countyRoadsPane',
       style: (feature) => {
-        const tier = feature.properties.tier_category || 'REGULAR';
-        const style = ROAD_TIER_STYLES[tier] || ROAD_TIER_STYLES.REGULAR;
+        const p = feature.properties;
+        const activeTier = (isSimMode && simMap?.get(p.road_key))
+          ? simMap.get(p.road_key).simulated_tier
+          : (p.tier_category || 'REGULAR');
+        const style = ROAD_TIER_STYLES[activeTier] || ROAD_TIER_STYLES.REGULAR;
         return {
           color: style.color,
           weight: style.weight,
@@ -2243,3 +2323,886 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+// ============================================================================
+// PHASE 5: SIMULASI SKENARIO BOBOT KEBIJAKAN (IN-MEMORY STATELESS WORKSPACE)
+// ============================================================================
+
+const SIM_BASELINE_CATEGORIES = [
+  { category_code: 'TEKNIS_JALAN', category_name: 'Data Teknis Jalan', raw_weight: 0.378965 },
+  { category_code: 'AKSESIBILITAS', category_name: 'Data Aksesibilitas', raw_weight: 0.283815 },
+  { category_code: 'PELAYANAN_MASYARAKAT', category_name: 'Data Pelayanan Masyarakat', raw_weight: 0.192412 },
+  { category_code: 'SPASIAL_DEMOGRAFI', category_name: 'Data Spasial & Demografi', raw_weight: 0.144807 },
+];
+
+const SIM_BASELINE_VARIABLES = [
+  // 1. TEKNIS_JALAN (7 variables -> 1/7 each)
+  { variable_code: 'norm_panjang_ruas', category_code: 'TEKNIS_JALAN', variable_label: 'Panjang Ruas', local_weight: 1 / 7 },
+  { variable_code: 'norm_lebar_ruas', category_code: 'TEKNIS_JALAN', variable_label: 'Lebar Ruas', local_weight: 1 / 7 },
+  { variable_code: 'norm_kondisi_sedang', category_code: 'TEKNIS_JALAN', variable_label: 'Kondisi Sedang', local_weight: 1 / 7 },
+  { variable_code: 'norm_rusak_ringan', category_code: 'TEKNIS_JALAN', variable_label: 'Rusak Ringan', local_weight: 1 / 7 },
+  { variable_code: 'norm_rusak_berat', category_code: 'TEKNIS_JALAN', variable_label: 'Rusak Berat', local_weight: 1 / 7 },
+  { variable_code: 'norm_permukaan_aspal_penmac', category_code: 'TEKNIS_JALAN', variable_label: 'Permukaan Aspal/Penmac', local_weight: 1 / 7 },
+  { variable_code: 'norm_permukaan_beton', category_code: 'TEKNIS_JALAN', variable_label: 'Permukaan Beton', local_weight: 1 / 7 },
+
+  // 2. AKSESIBILITAS (3 variables -> 1/3 each)
+  { variable_code: 'norm_koneksi_jalan_provinsi', category_code: 'AKSESIBILITAS', variable_label: 'Koneksi Jalan Provinsi', local_weight: 1 / 3 },
+  { variable_code: 'norm_koneksi_jalan_nasional', category_code: 'AKSESIBILITAS', variable_label: 'Koneksi Jalan Nasional', local_weight: 1 / 3 },
+  { variable_code: 'norm_jarak_ibukota_kabupaten_cost', category_code: 'AKSESIBILITAS', variable_label: 'Jarak Ibukota Kabupaten (Cost)', local_weight: 1 / 3 },
+
+  // 3. PELAYANAN_MASYARAKAT (4 variables -> 1/4 each)
+  { variable_code: 'norm_jarak_rsud_cost', category_code: 'PELAYANAN_MASYARAKAT', variable_label: 'Jarak RSUD (Cost)', local_weight: 1 / 4 },
+  { variable_code: 'norm_jarak_puskesmas_cost', category_code: 'PELAYANAN_MASYARAKAT', variable_label: 'Jarak Puskesmas (Cost)', local_weight: 1 / 4 },
+  { variable_code: 'norm_jarak_sd_smp_cost', category_code: 'PELAYANAN_MASYARAKAT', variable_label: 'Jarak SD/SMP (Cost)', local_weight: 1 / 4 },
+  { variable_code: 'norm_jarak_pasar_cost', category_code: 'PELAYANAN_MASYARAKAT', variable_label: 'Jarak Pasar (Cost)', local_weight: 1 / 4 },
+
+  // 4. SPASIAL_DEMOGRAFI (3 variables -> 1/3 each)
+  { variable_code: 'norm_penduduk_dilayani', category_code: 'SPASIAL_DEMOGRAFI', variable_label: 'Penduduk Dilayani', local_weight: 1 / 3 },
+  { variable_code: 'norm_desa_dilalui', category_code: 'SPASIAL_DEMOGRAFI', variable_label: 'Desa Dilalui', local_weight: 1 / 3 },
+  { variable_code: 'norm_kecamatan_dilalui', category_code: 'SPASIAL_DEMOGRAFI', variable_label: 'Kecamatan Dilalui', local_weight: 1 / 3 },
+];
+
+function getInitialSimConfig() {
+  return {
+    categories: SIM_BASELINE_CATEGORIES.map((c) => ({ ...c })),
+    variables: SIM_BASELINE_VARIABLES.map((v) => ({ ...v })),
+  };
+}
+
+// Proportional Sibling Auto-Balancing (Category Level)
+function simRebalanceCategorySiblings(currentCategories, editedCode, newWeight) {
+  const clamped = Math.min(1.0, Math.max(0.0, Number(newWeight) || 0));
+  const siblings = currentCategories.filter((c) => c.category_code !== editedCode);
+  const remainingMass = 1.0 - clamped;
+  const currentSiblingSum = siblings.reduce((s, c) => s + c.raw_weight, 0);
+
+  return currentCategories.map((cat) => {
+    if (cat.category_code === editedCode) {
+      return { ...cat, raw_weight: clamped };
+    }
+    if (currentSiblingSum > 1e-12) {
+      return { ...cat, raw_weight: remainingMass * (cat.raw_weight / currentSiblingSum) };
+    } else {
+      return { ...cat, raw_weight: remainingMass / siblings.length };
+    }
+  });
+}
+
+// Proportional Sibling Auto-Balancing (Variable Level within Category)
+function simRebalanceVariableSiblings(currentVariables, categoryCode, editedCode, newWeight) {
+  const clamped = Math.min(1.0, Math.max(0.0, Number(newWeight) || 0));
+  const catVars = currentVariables.filter((v) => v.category_code === categoryCode);
+  const siblings = catVars.filter((v) => v.variable_code !== editedCode);
+  const remainingMass = 1.0 - clamped;
+  const currentSiblingSum = siblings.reduce((s, v) => s + v.local_weight, 0);
+
+  return currentVariables.map((v) => {
+    if (v.category_code !== categoryCode) return { ...v };
+    if (v.variable_code === editedCode) return { ...v, local_weight: clamped };
+    if (currentSiblingSum > 1e-12) {
+      return { ...v, local_weight: remainingMass * (v.local_weight / currentSiblingSum) };
+    } else {
+      return { ...v, local_weight: remainingMass / siblings.length };
+    }
+  });
+}
+
+// Normalized & Effective Weights Calculation
+function simCalculateNormalizedWeights(simConfig) {
+  const rawSum = simConfig.categories.reduce((s, c) => s + c.raw_weight, 0) || 1.0;
+  const category_normalized_weights = {};
+  for (const c of simConfig.categories) {
+    category_normalized_weights[c.category_code] = c.raw_weight / rawSum;
+  }
+
+  const effective_weights = {};
+  for (const v of simConfig.variables) {
+    const catNorm = category_normalized_weights[v.category_code] || 0.0;
+    effective_weights[v.variable_code] = catNorm * v.local_weight;
+  }
+
+  return { category_normalized_weights, effective_weights };
+}
+
+// Deterministic Comparator
+function simCompareRoadPriority(a, b) {
+  const scoreDiff = b.final_score - a.final_score;
+  if (Math.abs(scoreDiff) > 1e-7) return scoreDiff;
+  const mantapDiff = a.mantap_pct - b.mantap_pct;
+  if (Math.abs(mantapDiff) > 1e-4) return mantapDiff;
+  const popDiff = b.penduduk_dilayani_raw - a.penduduk_dilayani_raw;
+  if (Math.abs(popDiff) > 0.001) return popDiff;
+  return a.nomor_ruas.localeCompare(b.nomor_ruas);
+}
+
+// Pure in-memory ranking
+function simRankRoads(featureVectors, simConfig) {
+  const weights = simCalculateNormalizedWeights(simConfig);
+
+  const scoredRoads = featureVectors.map((rf) => {
+    let final_score = 0.0;
+    const category_subtotals = {};
+    const factor_contributions = {};
+
+    for (const c of simConfig.categories) {
+      category_subtotals[c.category_code] = {
+        category_code: c.category_code,
+        subtotal: 0.0,
+      };
+    }
+
+    for (const v of simConfig.variables) {
+      const normVal = Math.min(1.0, Math.max(0.0, rf.normalized_values[v.variable_code] || 0.0));
+      const effWeight = weights.effective_weights[v.variable_code] || 0.0;
+      const contribution = normVal * effWeight;
+
+      factor_contributions[v.variable_code] = {
+        variable_code: v.variable_code,
+        category_code: v.category_code,
+        normalized_value: normVal,
+        effective_weight: effWeight,
+        contribution,
+      };
+
+      category_subtotals[v.category_code].subtotal += contribution;
+      final_score += contribution;
+    }
+
+    return {
+      road_key: rf.road_key,
+      nomor_ruas: rf.nomor_ruas,
+      display_name: rf.display_name,
+      district_name: rf.district_name,
+      mantap_pct: rf.mantap_pct,
+      penduduk_dilayani_raw: rf.penduduk_dilayani_raw,
+      final_score,
+      category_subtotals,
+      factor_contributions,
+    };
+  });
+
+  scoredRoads.sort(simCompareRoadPriority);
+
+  return scoredRoads.map((road, idx) => {
+    const priority_rank = idx + 1;
+    let tier_category = 'REGULAR';
+    if (priority_rank <= 35) tier_category = 'TOP_35';
+    else if (priority_rank <= 70) tier_category = 'TOP_70';
+    else if (priority_rank <= 105) tier_category = 'TOP_105';
+
+    return {
+      ...road,
+      priority_rank,
+      tier_category,
+    };
+  });
+}
+
+// Recalculate simulation state & generate comparison metrics
+function recalculateSimulation() {
+  if (!state.simulation.featureVectors || !state.simulation.baselineScores) return;
+
+  const simScores = simRankRoads(state.simulation.featureVectors, state.simulation.simConfig);
+  state.simulation.simulatedScores = simScores;
+
+  const baselineMap = new Map(state.simulation.baselineScores.map((b) => [b.road_key, b]));
+
+  let movedUp = 0;
+  let movedDown = 0;
+  let unchanged = 0;
+  let tierChanged = 0;
+
+  let maxUp = null;
+  let maxDown = null;
+
+  const comparisons = simScores.map((sim) => {
+    const base = baselineMap.get(sim.road_key);
+    const rankDelta = base.priority_rank - sim.priority_rank; // positive = UP
+    const scoreDelta = sim.final_score - base.final_score;
+    const isTierChanged = base.tier_category !== sim.tier_category;
+
+    if (rankDelta > 0) movedUp++;
+    else if (rankDelta < 0) movedDown++;
+    else unchanged++;
+
+    if (isTierChanged) tierChanged++;
+
+    if (rankDelta > 0 && (!maxUp || rankDelta > maxUp.rank_delta)) {
+      maxUp = {
+        road_key: sim.road_key,
+        display_name: sim.display_name,
+        baseline_rank: base.priority_rank,
+        simulated_rank: sim.priority_rank,
+        rank_delta: rankDelta,
+      };
+    }
+
+    if (rankDelta < 0 && (!maxDown || rankDelta < maxDown.rank_delta)) {
+      maxDown = {
+        road_key: sim.road_key,
+        display_name: sim.display_name,
+        baseline_rank: base.priority_rank,
+        simulated_rank: sim.priority_rank,
+        rank_delta: rankDelta,
+      };
+    }
+
+    return {
+      road_key: sim.road_key,
+      nomor_ruas: sim.nomor_ruas,
+      display_name: sim.display_name,
+      district_name: sim.district_name,
+      baseline_rank: base.priority_rank,
+      simulated_rank: sim.priority_rank,
+      rank_delta: rankDelta,
+      baseline_score: base.final_score,
+      simulated_score: sim.final_score,
+      score_delta: scoreDelta,
+      baseline_tier: base.tier_category,
+      simulated_tier: sim.tier_category,
+      tier_changed: isTierChanged,
+      subtotal_teknis: sim.category_subtotals['TEKNIS_JALAN']?.subtotal || 0.0,
+      subtotal_akses: sim.category_subtotals['AKSESIBILITAS']?.subtotal || 0.0,
+      subtotal_pelayanan: sim.category_subtotals['PELAYANAN_MASYARAKAT']?.subtotal || 0.0,
+      subtotal_spasial: sim.category_subtotals['SPASIAL_DEMOGRAFI']?.subtotal || 0.0,
+    };
+  });
+
+  state.simulation.comparisons = comparisons;
+  state.simulation.summary = {
+    roads_evaluated: simScores.length,
+    moved_up_count: movedUp,
+    moved_down_count: movedDown,
+    unchanged_count: unchanged,
+    tier_changed_count: tierChanged,
+    biggest_upward_mover: maxUp,
+    biggest_downward_mover: maxDown,
+    top10_simulated: comparisons.slice(0, 10),
+  };
+
+  renderSimulationKPIs();
+  renderSimulationTop10();
+  renderSimulationTable();
+
+  // If map is currently displaying simulation tier, update map
+  if (state.simulation.mapColorSource === 'SIMULATION' && state.currentView === 'peta') {
+    applyMapFilters();
+  }
+}
+
+// Load Simulation Context from API
+async function loadSimulation() {
+  try {
+    if (!state.simulation.initialized) {
+      const res = await fetch(`/api/simulation/context?mode=${state.mode}`);
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error);
+
+      state.simulation.featureVectors = json.data.featureVectors;
+      state.simulation.baselineScores = json.data.baselineRankedScores;
+      state.simulation.simConfig = getInitialSimConfig();
+
+      // Populate district filter
+      const districtSelect = document.getElementById('sim-filter-district');
+      if (districtSelect) {
+        const districts = Array.from(new Set(json.data.featureVectors.map((f) => f.district_name))).sort();
+        districtSelect.innerHTML = '<option value="ALL">Semua Kecamatan (11)</option>';
+        districts.forEach((d) => {
+          districtSelect.innerHTML += `<option value="${escapeHtml(d)}">${escapeHtml(d)}</option>`;
+        });
+      }
+
+      state.simulation.initialized = true;
+    }
+
+    renderSimulationCategories();
+    renderSimulationVariables();
+    recalculateSimulation();
+  } catch (err) {
+    console.error('Error loading simulation workspace:', err);
+  }
+}
+
+// Render Category Controls (Level 1)
+function renderSimulationCategories() {
+  const container = document.getElementById('sim-categories-container');
+  if (!container || !state.simulation.simConfig) return;
+
+  const weights = simCalculateNormalizedWeights(state.simulation.simConfig);
+  const baseMap = new Map(SIM_BASELINE_CATEGORIES.map((c) => [c.category_code, c.raw_weight]));
+
+  let html = '';
+  for (const cat of state.simulation.simConfig.categories) {
+    const rawVal = cat.raw_weight;
+    const normVal = weights.category_normalized_weights[cat.category_code] || 0.0;
+    const baseRaw = baseMap.get(cat.category_code) || 0.0;
+    const delta = rawVal - baseRaw;
+    const deltaBadge = Math.abs(delta) > 0.0001
+      ? `<span class="text-[10px] font-bold px-1.5 py-0.2 rounded ${delta > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${delta > 0 ? '+' : ''}${(delta * 100).toFixed(1)}%</span>`
+      : '<span class="text-[10px] text-slate-400">Baseline</span>';
+
+    html += `
+      <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-bold text-slate-800 text-xs">${escapeHtml(cat.category_name)}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${cat.category_code}</div>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            ${deltaBadge}
+            <span class="text-xs font-bold text-sky-700 bg-white px-2 py-0.5 rounded border border-slate-200 font-mono">${(normVal * 100).toFixed(2)}%</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <input type="range" min="0" max="1" step="0.005" value="${rawVal}"
+            class="flex-1 accent-sky-600 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
+            oninput="window.onCategoryWeightChange('${cat.category_code}', this.value)" />
+          <input type="number" min="0" max="1" step="0.001" value="${rawVal.toFixed(4)}"
+            class="w-20 px-2 py-1 text-xs font-mono font-bold bg-white border border-slate-200 rounded text-right focus:ring-1 focus:ring-sky-500"
+            onchange="window.onCategoryWeightChange('${cat.category_code}', this.value)" />
+        </div>
+        <div class="text-[10px] text-slate-400 flex justify-between">
+          <span>Baseline Raw: ${baseRaw.toFixed(4)}</span>
+          <span>Normal: ${(normVal * 100).toFixed(2)}%</span>
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
+// Render Local Variable Controls (Level 2)
+function renderSimulationVariables() {
+  const container = document.getElementById('sim-variables-container');
+  if (!container || !state.simulation.simConfig) return;
+
+  const activeCat = state.simulation.activeVariableCategory || 'TEKNIS_JALAN';
+  const catVars = state.simulation.simConfig.variables.filter((v) => v.category_code === activeCat);
+  const weights = simCalculateNormalizedWeights(state.simulation.simConfig);
+
+  const baseConfig = getBaselineSimulationConfig();
+  const baseWeights = simCalculateNormalizedWeights(baseConfig);
+  const baseVarMap = new Map(baseConfig.variables.map((v) => [v.variable_code, v.local_weight]));
+
+  let html = '';
+  for (const v of catVars) {
+    const localVal = v.local_weight;
+    const effWeight = weights.effective_weights[v.variable_code] || 0.0;
+    const baseLocal = baseVarMap.get(v.variable_code) || 0.0;
+    const baseEff = baseWeights.effective_weights[v.variable_code] || 0.0;
+    const effDelta = effWeight - baseEff;
+    const deltaBadge = Math.abs(effDelta) > 0.0001
+      ? `<span class="text-[10px] font-bold px-1.5 py-0.2 rounded ${effDelta > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">Δ ${(effDelta >= 0 ? '+' : '')}${(effDelta * 100).toFixed(2)}%</span>`
+      : '<span class="text-[10px] text-slate-400">Baseline</span>';
+
+    html += `
+      <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1.5">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-semibold text-slate-800 text-xs">${escapeHtml(v.variable_label)}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${v.variable_code}</div>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            ${deltaBadge}
+            <span class="text-[11px] font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200 font-mono" title="Bobot Efektif (Read-Only)">Ω = ${(effWeight * 100).toFixed(2)}%</span>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <input type="range" min="0" max="1" step="0.005" value="${localVal}"
+            class="flex-1 accent-indigo-600 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
+            oninput="window.onVariableWeightChange('${activeCat}', '${v.variable_code}', this.value)" />
+          <input type="number" min="0" max="1" step="0.001" value="${localVal.toFixed(4)}"
+            class="w-20 px-2 py-1 text-xs font-mono font-bold bg-white border border-slate-200 rounded text-right focus:ring-1 focus:ring-indigo-500"
+            onchange="window.onVariableWeightChange('${activeCat}', '${v.variable_code}', this.value)" />
+        </div>
+        <div class="text-[10px] text-slate-400 flex justify-between">
+          <span>Bobot Lokal: ${(localVal * 100).toFixed(2)}%</span>
+          <span class="font-mono">Efektif (Read-Only): ${(effWeight * 100).toFixed(2)}%</span>
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  // Update tabs active state
+  document.querySelectorAll('.sim-cat-tab').forEach((tab) => {
+    if (tab.getAttribute('data-cat') === activeCat) {
+      tab.className = 'sim-cat-tab active px-2.5 py-1 text-xs font-semibold rounded-md bg-sky-50 text-sky-700 border border-sky-200 transition';
+    } else {
+      tab.className = 'sim-cat-tab px-2.5 py-1 text-xs font-medium rounded-md text-slate-600 hover:bg-slate-100 transition';
+    }
+  });
+}
+
+// Render Summary KPIs
+function renderSimulationKPIs() {
+  const sum = state.simulation.summary;
+  if (!sum) return;
+
+  const kpiMovedUp = document.getElementById('sim-kpi-moved-up');
+  const kpiMovedDown = document.getElementById('sim-kpi-moved-down');
+  const kpiUnchanged = document.getElementById('sim-kpi-unchanged');
+  const kpiTierChanged = document.getElementById('sim-kpi-tier-changed');
+  const kpiTopUp = document.getElementById('sim-kpi-top-up');
+  const kpiTopDown = document.getElementById('sim-kpi-top-down');
+
+  if (kpiMovedUp) kpiMovedUp.innerHTML = `${sum.moved_up_count} <span class="text-xs font-normal text-slate-400">ruas</span>`;
+  if (kpiMovedDown) kpiMovedDown.innerHTML = `${sum.moved_down_count} <span class="text-xs font-normal text-slate-400">ruas</span>`;
+  if (kpiUnchanged) kpiUnchanged.innerHTML = `${sum.unchanged_count} <span class="text-xs font-normal text-slate-400">ruas</span>`;
+  if (kpiTierChanged) kpiTierChanged.innerHTML = `${sum.tier_changed_count} <span class="text-xs font-normal text-slate-400">ruas</span>`;
+
+  if (kpiTopUp) {
+    if (sum.biggest_upward_mover) {
+      kpiTopUp.innerHTML = `<span class="text-emerald-700" title="${escapeHtml(sum.biggest_upward_mover.display_name)}">${escapeHtml(sum.biggest_upward_mover.display_name)}</span> <span class="text-[10px] text-emerald-800 font-extrabold bg-emerald-100 px-1 rounded">▲ +${sum.biggest_upward_mover.rank_delta}</span>`;
+    } else {
+      kpiTopUp.textContent = '—';
+    }
+  }
+
+  if (kpiTopDown) {
+    if (sum.biggest_downward_mover) {
+      kpiTopDown.innerHTML = `<span class="text-rose-700" title="${escapeHtml(sum.biggest_downward_mover.display_name)}">${escapeHtml(sum.biggest_downward_mover.display_name)}</span> <span class="text-[10px] text-rose-800 font-extrabold bg-rose-100 px-1 rounded">▼ ${sum.biggest_downward_mover.rank_delta}</span>`;
+    } else {
+      kpiTopDown.textContent = '—';
+    }
+  }
+}
+
+// Render Top 10 Comparison Table
+function renderSimulationTop10() {
+  const tbody = document.getElementById('sim-top10-body');
+  if (!tbody || !state.simulation.summary) return;
+
+  const top10 = state.simulation.summary.top10_simulated;
+  let html = '';
+
+  for (const r of top10) {
+    const delta = r.rank_delta;
+    const deltaBadge = delta > 0
+      ? `<span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">▲ +${delta}</span>`
+      : delta < 0
+      ? `<span class="text-rose-700 font-bold bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">▼ ${delta}</span>`
+      : '<span class="text-slate-400 font-medium">— 0</span>';
+
+    html += `
+      <tr class="hover:bg-slate-50 transition">
+        <td class="py-2 px-2 text-center font-black text-slate-900">#${r.simulated_rank}</td>
+        <td class="py-2 px-2 text-center text-slate-400">#${r.baseline_rank}</td>
+        <td class="py-2 px-2 text-center">${deltaBadge}</td>
+        <td class="py-2 px-2.5 font-mono text-slate-600">${escapeHtml(r.nomor_ruas)}</td>
+        <td class="py-2 px-3 font-semibold text-slate-800">${escapeHtml(r.display_name)}</td>
+        <td class="py-2 px-2.5 text-slate-600">${escapeHtml(r.district_name)}</td>
+        <td class="py-2 px-2.5 text-right font-mono font-bold text-sky-800">${r.simulated_score.toFixed(4)}</td>
+        <td class="py-2 px-2.5 text-right font-mono text-slate-400">${r.baseline_score.toFixed(4)}</td>
+        <td class="py-2 px-2.5 text-center">${renderTierBadge(r.simulated_tier)}</td>
+        <td class="py-2 px-2 text-center">
+          <button onclick="window.openSimulationExplainModal('${r.road_key}')" class="px-2 py-0.5 text-[10px] font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 rounded border border-sky-200 transition">Audit</button>
+        </td>
+      </tr>
+    `;
+  }
+
+  tbody.innerHTML = html;
+}
+
+// Render Full 350-Road Table with Filtering & Pagination
+function renderSimulationTable() {
+  const tbody = document.getElementById('sim-table-body');
+  if (!tbody || !state.simulation.comparisons) return;
+
+  const f = state.simulation.filter;
+  let filtered = state.simulation.comparisons;
+
+  if (f.search) {
+    const q = f.search.toLowerCase();
+    filtered = filtered.filter((r) =>
+      r.display_name.toLowerCase().includes(q) ||
+      r.nomor_ruas.toLowerCase().includes(q) ||
+      r.road_key.toLowerCase().includes(q)
+    );
+  }
+
+  if (f.district !== 'ALL') {
+    filtered = filtered.filter((r) => r.district_name === f.district);
+  }
+
+  if (f.movement === 'MOVED_UP') {
+    filtered = filtered.filter((r) => r.rank_delta > 0);
+  } else if (f.movement === 'MOVED_DOWN') {
+    filtered = filtered.filter((r) => r.rank_delta < 0);
+  } else if (f.movement === 'TIER_CHANGED') {
+    filtered = filtered.filter((r) => r.tier_changed);
+  } else if (f.movement === 'UNCHANGED') {
+    filtered = filtered.filter((r) => r.rank_delta === 0);
+  }
+
+  if (f.tier !== 'ALL') {
+    filtered = filtered.filter((r) => r.simulated_tier === f.tier);
+  }
+
+  const countBadge = document.getElementById('sim-table-count');
+  if (countBadge) countBadge.textContent = filtered.length;
+
+  // Pagination
+  const pageSize = state.simulation.pageSize || 25;
+  const totalPages = Math.ceil(filtered.length / pageSize) || 1;
+  state.simulation.page = Math.min(state.simulation.page, totalPages);
+  state.simulation.page = Math.max(1, state.simulation.page);
+
+  const startIdx = (state.simulation.page - 1) * pageSize;
+  const pageRows = filtered.slice(startIdx, startIdx + pageSize);
+
+  const pageInfo = document.getElementById('sim-pagination-info');
+  if (pageInfo) pageInfo.textContent = `${filtered.length > 0 ? startIdx + 1 : 0}-${Math.min(startIdx + pageSize, filtered.length)} dari ${filtered.length} ruas`;
+
+  const currPage = document.getElementById('sim-current-page');
+  if (currPage) currPage.textContent = state.simulation.page;
+
+  const prevBtn = document.getElementById('sim-btn-prev-page');
+  const nextBtn = document.getElementById('sim-btn-next-page');
+  if (prevBtn) prevBtn.disabled = state.simulation.page <= 1;
+  if (nextBtn) nextBtn.disabled = state.simulation.page >= totalPages;
+
+  let html = '';
+  for (const r of pageRows) {
+    const delta = r.rank_delta;
+    const deltaBadge = delta > 0
+      ? `<span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">▲ +${delta}</span>`
+      : delta < 0
+      ? `<span class="text-rose-700 font-bold bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">▼ ${delta}</span>`
+      : '<span class="text-slate-400 font-medium">— 0</span>';
+
+    const scoreDelta = r.score_delta;
+    const scoreDeltaText = `${scoreDelta >= 0 ? '+' : ''}${scoreDelta.toFixed(4)}`;
+
+    html += `
+      <tr class="hover:bg-slate-50 transition">
+        <td class="py-2 px-2 text-center font-black text-slate-900">#${r.simulated_rank}</td>
+        <td class="py-2 px-2 text-center text-slate-400">#${r.baseline_rank}</td>
+        <td class="py-2 px-2 text-center">${deltaBadge}</td>
+        <td class="py-2 px-2.5 font-mono text-slate-600">${escapeHtml(r.nomor_ruas)}</td>
+        <td class="py-2 px-3 font-semibold text-slate-800">${escapeHtml(r.display_name)}</td>
+        <td class="py-2 px-2.5 text-slate-600">${escapeHtml(r.district_name)}</td>
+        <td class="py-2 px-2.5 text-right font-mono font-bold text-sky-800">${r.simulated_score.toFixed(4)}</td>
+        <td class="py-2 px-2.5 text-right font-mono text-slate-400">${r.baseline_score.toFixed(4)}</td>
+        <td class="py-2 px-2.5 text-center">${renderTierBadge(r.baseline_tier)}</td>
+        <td class="py-2 px-2.5 text-center">${renderTierBadge(r.simulated_tier)}</td>
+        <td class="py-2 px-2 text-center space-x-1 whitespace-nowrap">
+          <button onclick="window.openSimulationExplainModal('${r.road_key}')" class="px-2 py-0.5 text-[10px] font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 rounded border border-sky-200 transition" title="Audit Dekomposisi 17 Faktor">🔍 Audit</button>
+          <button onclick="window.viewRoadOnSimulationMap('${r.road_key}')" class="px-2 py-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded border border-emerald-200 transition" title="Lihat di Peta GIS">🗺️ Peta</button>
+        </td>
+      </tr>
+    `;
+  }
+
+  tbody.innerHTML = html;
+}
+
+// Window Event Callbacks for Category and Variable Sliders
+window.onCategoryWeightChange = function (categoryCode, value) {
+  if (!state.simulation.simConfig) return;
+  state.simulation.simConfig.categories = simRebalanceCategorySiblings(
+    state.simulation.simConfig.categories,
+    categoryCode,
+    parseFloat(value)
+  );
+  renderSimulationCategories();
+  renderSimulationVariables();
+  recalculateSimulation();
+};
+
+window.onVariableWeightChange = function (categoryCode, variableCode, value) {
+  if (!state.simulation.simConfig) return;
+  state.simulation.simConfig.variables = simRebalanceVariableSiblings(
+    state.simulation.simConfig.variables,
+    categoryCode,
+    variableCode,
+    parseFloat(value)
+  );
+  renderSimulationVariables();
+  recalculateSimulation();
+};
+
+window.applySimulationPreset = function (presetType) {
+  if (!state.simulation.simConfig) return;
+
+  if (presetType === 'BASELINE') {
+    state.simulation.simConfig = getInitialSimConfig();
+  } else if (presetType === 'PELAYANAN') {
+    state.simulation.simConfig = getInitialSimConfig();
+    state.simulation.simConfig.categories = simRebalanceCategorySiblings(
+      state.simulation.simConfig.categories,
+      'PELAYANAN_MASYARAKAT',
+      0.450
+    );
+    state.simulation.simConfig.variables = simRebalanceVariableSiblings(
+      state.simulation.simConfig.variables,
+      'PELAYANAN_MASYARAKAT',
+      'norm_jarak_rsud_cost',
+      0.50
+    );
+  } else if (presetType === 'AKSES') {
+    state.simulation.simConfig = getInitialSimConfig();
+    state.simulation.simConfig.categories = simRebalanceCategorySiblings(
+      state.simulation.simConfig.categories,
+      'AKSESIBILITAS',
+      0.450
+    );
+    state.simulation.simConfig.variables = simRebalanceVariableSiblings(
+      state.simulation.simConfig.variables,
+      'AKSESIBILITAS',
+      'norm_koneksi_jalan_provinsi',
+      0.40
+    );
+  } else if (presetType === 'KERUSAKAN') {
+    state.simulation.simConfig = getInitialSimConfig();
+    state.simulation.simConfig.categories = simRebalanceCategorySiblings(
+      state.simulation.simConfig.categories,
+      'TEKNIS_JALAN',
+      0.550
+    );
+    state.simulation.simConfig.variables = simRebalanceVariableSiblings(
+      state.simulation.simConfig.variables,
+      'TEKNIS_JALAN',
+      'norm_rusak_berat',
+      0.35
+    );
+  }
+
+  renderSimulationCategories();
+  renderSimulationVariables();
+  recalculateSimulation();
+};
+
+window.resetSimulationToBaseline = function () {
+  window.applySimulationPreset('BASELINE');
+};
+
+// Open Single Road Explainability Modal
+window.openSimulationExplainModal = function (roadKey) {
+  const road = state.simulation.comparisons?.find((r) => r.road_key === roadKey);
+  const feat = state.simulation.featureVectors?.find((r) => r.road_key === roadKey);
+  if (!road || !feat) return;
+
+  const modal = document.getElementById('modal-sim-explain');
+  if (!modal) return;
+
+  document.getElementById('sim-modal-road-key').textContent = road.road_key;
+  document.getElementById('sim-modal-road-name').textContent = road.display_name;
+  document.getElementById('sim-modal-district').textContent = `Kecamatan ${road.district_name} | No. Ruas: ${road.nomor_ruas}`;
+
+  document.getElementById('sim-modal-rank-sim').textContent = `#${road.simulated_rank}`;
+  document.getElementById('sim-modal-rank-base').textContent = `#${road.baseline_rank}`;
+
+  const rankDeltaEl = document.getElementById('sim-modal-rank-delta');
+  if (rankDeltaEl) {
+    if (road.rank_delta > 0) {
+      rankDeltaEl.className = 'text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200';
+      rankDeltaEl.textContent = `▲ +${road.rank_delta} (Naik)`;
+    } else if (road.rank_delta < 0) {
+      rankDeltaEl.className = 'text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200';
+      rankDeltaEl.textContent = `▼ ${road.rank_delta} (Turun)`;
+    } else {
+      rankDeltaEl.className = 'text-xs font-medium text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200';
+      rankDeltaEl.textContent = '— Tetap (0)';
+    }
+  }
+
+  document.getElementById('sim-modal-score-sim').textContent = road.simulated_score.toFixed(6);
+  document.getElementById('sim-modal-score-delta').textContent = `Δ ${(road.score_delta >= 0 ? '+' : '')}${road.score_delta.toFixed(6)}`;
+
+  document.getElementById('sim-modal-tier-base').innerHTML = renderTierBadge(road.baseline_tier);
+  document.getElementById('sim-modal-tier-sim').innerHTML = renderTierBadge(road.simulated_tier);
+
+  // Compute 17 variables comparative breakdown
+  const baseConfig = getBaselineSimulationConfig();
+  const baseWeights = simCalculateNormalizedWeights(baseConfig);
+  const simWeights = simCalculateNormalizedWeights(state.simulation.simConfig);
+
+  const tbody = document.getElementById('sim-modal-factors-body');
+  let html = '';
+  let topPositiveFactor = null;
+  let topNegativeFactor = null;
+
+  for (const v of state.simulation.simConfig.variables) {
+    const normVal = feat.normalized_values[v.variable_code] || 0.0;
+    const baseEff = baseWeights.effective_weights[v.variable_code] || 0.0;
+    const simEff = simWeights.effective_weights[v.variable_code] || 0.0;
+    const effDelta = simEff - baseEff;
+
+    const baseContrib = normVal * baseEff;
+    const simContrib = normVal * simEff;
+    const contribDelta = simContrib - baseContrib;
+
+    if (contribDelta > 0 && (!topPositiveFactor || contribDelta > topPositiveFactor.delta)) {
+      topPositiveFactor = { label: v.variable_label, delta: contribDelta };
+    }
+    if (contribDelta < 0 && (!topNegativeFactor || contribDelta < topNegativeFactor.delta)) {
+      topNegativeFactor = { label: v.variable_label, delta: contribDelta };
+    }
+
+    const deltaClass = contribDelta > 0.0001
+      ? 'text-emerald-700 font-bold bg-emerald-50'
+      : contribDelta < -0.0001
+      ? 'text-rose-700 font-bold bg-rose-50'
+      : 'text-slate-500';
+
+    html += `
+      <tr class="hover:bg-slate-50 transition">
+        <td class="py-2 px-3 font-medium text-slate-800">${escapeHtml(v.variable_label)}</td>
+        <td class="py-2 px-2.5 text-slate-500 font-mono text-[10px]">${v.category_code}</td>
+        <td class="py-2 px-2.5 text-right font-mono">${normVal.toFixed(4)}</td>
+        <td class="py-2 px-2.5 text-right font-mono text-slate-500">${(baseEff * 100).toFixed(2)}%</td>
+        <td class="py-2 px-2.5 text-right font-mono font-semibold text-slate-800">${(simEff * 100).toFixed(2)}%</td>
+        <td class="py-2 px-2.5 text-right font-mono ${effDelta >= 0 ? 'text-emerald-700' : 'text-rose-700'}">${(effDelta >= 0 ? '+' : '')}${(effDelta * 100).toFixed(2)}%</td>
+        <td class="py-2 px-2.5 text-right font-mono text-slate-500">${baseContrib.toFixed(5)}</td>
+        <td class="py-2 px-2.5 text-right font-mono font-bold text-sky-800">${simContrib.toFixed(5)}</td>
+        <td class="py-2 px-2.5 text-right font-mono px-2 py-0.5 rounded ${deltaClass}">${(contribDelta >= 0 ? '+' : '')}${contribDelta.toFixed(5)}</td>
+      </tr>
+    `;
+  }
+
+  tbody.innerHTML = html;
+
+  // Insight box
+  const insightBox = document.getElementById('sim-modal-insight');
+  if (insightBox) {
+    let narrative = `<strong>Uraian Perubahan:</strong> Ruas ini `;
+    if (road.rank_delta > 0) {
+      narrative += `mengalami <span class="text-emerald-700 font-bold">kenaikan ${road.rank_delta} peringkat</span> (dari #${road.baseline_rank} ke #${road.simulated_rank}). `;
+      if (topPositiveFactor) {
+        narrative += `Pendorong utama kenaikan adalah peningkatan bobot pada <strong>${topPositiveFactor.label}</strong> (kontribusi naik +${topPositiveFactor.delta.toFixed(5)}).`;
+      }
+    } else if (road.rank_delta < 0) {
+      narrative += `mengalami <span class="text-rose-700 font-bold">penurunan ${Math.abs(road.rank_delta)} peringkat</span> (dari #${road.baseline_rank} ke #${road.simulated_rank}). `;
+      if (topNegativeFactor) {
+        narrative += `Penurunan dipicu oleh reduksi kontribusi relatif pada <strong>${topNegativeFactor.label}</strong> (${topNegativeFactor.delta.toFixed(5)}).`;
+      }
+    } else {
+      narrative += `mempertahankan posisi peringkat (#${road.baseline_rank}) karena total kontribusi perubahan antar kategori saling menyeimbangkan.`;
+    }
+    insightBox.innerHTML = narrative;
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeSimulationExplainModal = function () {
+  document.getElementById('modal-sim-explain')?.classList.add('hidden');
+};
+
+// View on GIS Simulation Map
+window.viewRoadOnSimulationMap = function (roadKey) {
+  setMapColorSource('SIMULATION');
+  switchView('peta');
+  setTimeout(() => {
+    selectRoadOnMap(roadKey);
+  }, 400);
+};
+
+// Map Color Source Toggle
+function setMapColorSource(source) {
+  state.simulation.mapColorSource = source;
+
+  const btnBase = document.getElementById('map-btn-source-baseline');
+  const btnSim = document.getElementById('map-btn-source-simulation');
+  const banner = document.getElementById('map-simulation-banner');
+
+  if (source === 'SIMULATION') {
+    btnSim?.classList.add('bg-amber-600', 'text-white');
+    btnSim?.classList.remove('bg-slate-100', 'text-slate-700');
+    btnBase?.classList.remove('bg-sky-600', 'text-white');
+    btnBase?.classList.add('bg-slate-100', 'text-slate-700');
+    banner?.classList.remove('hidden');
+  } else {
+    btnBase?.classList.add('bg-sky-600', 'text-white');
+    btnBase?.classList.remove('bg-slate-100', 'text-slate-700');
+    btnSim?.classList.remove('bg-amber-600', 'text-white');
+    btnSim?.classList.add('bg-slate-100', 'text-slate-700');
+    banner?.classList.add('hidden');
+  }
+
+  if (state.mapData.countyRoads) {
+    applyMapFilters();
+  }
+}
+
+// Hook up simulation UI listeners
+function initSimulationEventListeners() {
+  // Preset buttons
+  document.getElementById('sim-preset-baseline')?.addEventListener('click', () => window.applySimulationPreset('BASELINE'));
+  document.getElementById('sim-preset-pelayanan')?.addEventListener('click', () => window.applySimulationPreset('PELAYANAN'));
+  document.getElementById('sim-preset-akses')?.addEventListener('click', () => window.applySimulationPreset('AKSES'));
+  document.getElementById('sim-preset-kerusakan')?.addEventListener('click', () => window.applySimulationPreset('KERUSAKAN'));
+
+  // Reset button
+  document.getElementById('sim-btn-reset')?.addEventListener('click', window.resetSimulationToBaseline);
+
+  // Go to map button
+  document.getElementById('sim-btn-goto-map')?.addEventListener('click', () => {
+    setMapColorSource('SIMULATION');
+    switchView('peta');
+  });
+
+  // Category tabs for variables
+  document.getElementById('sim-variable-category-tabs')?.addEventListener('click', (e) => {
+    const tab = e.target.closest('.sim-cat-tab');
+    if (!tab) return;
+    state.simulation.activeVariableCategory = tab.getAttribute('data-cat');
+    renderSimulationVariables();
+  });
+
+  // Table filters
+  document.getElementById('sim-filter-search')?.addEventListener('input', (e) => {
+    state.simulation.filter.search = e.target.value.trim();
+    state.simulation.page = 1;
+    renderSimulationTable();
+  });
+
+  document.getElementById('sim-filter-district')?.addEventListener('change', (e) => {
+    state.simulation.filter.district = e.target.value;
+    state.simulation.page = 1;
+    renderSimulationTable();
+  });
+
+  document.getElementById('sim-filter-movement')?.addEventListener('change', (e) => {
+    state.simulation.filter.movement = e.target.value;
+    state.simulation.page = 1;
+    renderSimulationTable();
+  });
+
+  document.getElementById('sim-filter-tier')?.addEventListener('change', (e) => {
+    state.simulation.filter.tier = e.target.value;
+    state.simulation.page = 1;
+    renderSimulationTable();
+  });
+
+  // Pagination
+  document.getElementById('sim-page-size-select')?.addEventListener('change', (e) => {
+    state.simulation.pageSize = parseInt(e.target.value, 10);
+    state.simulation.page = 1;
+    renderSimulationTable();
+  });
+
+  document.getElementById('sim-btn-prev-page')?.addEventListener('click', () => {
+    if (state.simulation.page > 1) {
+      state.simulation.page--;
+      renderSimulationTable();
+    }
+  });
+
+  document.getElementById('sim-btn-next-page')?.addEventListener('click', () => {
+    state.simulation.page++;
+    renderSimulationTable();
+  });
+
+  // Modal close listeners
+  document.getElementById('btn-close-sim-modal')?.addEventListener('click', window.closeSimulationExplainModal);
+  document.getElementById('btn-close-sim-modal-bottom')?.addEventListener('click', window.closeSimulationExplainModal);
+  document.getElementById('modal-sim-backdrop')?.addEventListener('click', window.closeSimulationExplainModal);
+}
+

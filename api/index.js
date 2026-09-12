@@ -1966,6 +1966,262 @@ var SpatialService = class {
   }
 };
 
+// src/engine/simulationEngine.ts
+var BASELINE_RAW_CATEGORIES = [
+  { category_code: "TEKNIS_JALAN", category_name: "Data Teknis Jalan", raw_weight: 0.378965 },
+  { category_code: "AKSESIBILITAS", category_name: "Data Aksesibilitas", raw_weight: 0.283815 },
+  { category_code: "PELAYANAN_MASYARAKAT", category_name: "Data Pelayanan Masyarakat", raw_weight: 0.192412 },
+  { category_code: "SPASIAL_DEMOGRAFI", category_name: "Data Spasial & Demografi", raw_weight: 0.144807 }
+];
+var BASELINE_LOCAL_VARIABLES = [
+  // 1. TEKNIS_JALAN (7 variables -> 1/7 each)
+  { variable_code: "norm_panjang_ruas", category_code: "TEKNIS_JALAN", variable_label: "Panjang Ruas", local_weight: 1 / 7 },
+  { variable_code: "norm_lebar_ruas", category_code: "TEKNIS_JALAN", variable_label: "Lebar Ruas", local_weight: 1 / 7 },
+  { variable_code: "norm_kondisi_sedang", category_code: "TEKNIS_JALAN", variable_label: "Kondisi Sedang", local_weight: 1 / 7 },
+  { variable_code: "norm_rusak_ringan", category_code: "TEKNIS_JALAN", variable_label: "Rusak Ringan", local_weight: 1 / 7 },
+  { variable_code: "norm_rusak_berat", category_code: "TEKNIS_JALAN", variable_label: "Rusak Berat", local_weight: 1 / 7 },
+  { variable_code: "norm_permukaan_aspal_penmac", category_code: "TEKNIS_JALAN", variable_label: "Permukaan Aspal/Penmac", local_weight: 1 / 7 },
+  { variable_code: "norm_permukaan_beton", category_code: "TEKNIS_JALAN", variable_label: "Permukaan Beton", local_weight: 1 / 7 },
+  // 2. AKSESIBILITAS (3 variables -> 1/3 each)
+  { variable_code: "norm_koneksi_jalan_provinsi", category_code: "AKSESIBILITAS", variable_label: "Koneksi Jalan Provinsi", local_weight: 1 / 3 },
+  { variable_code: "norm_koneksi_jalan_nasional", category_code: "AKSESIBILITAS", variable_label: "Koneksi Jalan Nasional", local_weight: 1 / 3 },
+  { variable_code: "norm_jarak_ibukota_kabupaten_cost", category_code: "AKSESIBILITAS", variable_label: "Jarak Ibukota Kabupaten (Cost)", local_weight: 1 / 3 },
+  // 3. PELAYANAN_MASYARAKAT (4 variables -> 1/4 each)
+  { variable_code: "norm_jarak_rsud_cost", category_code: "PELAYANAN_MASYARAKAT", variable_label: "Jarak RSUD (Cost)", local_weight: 1 / 4 },
+  { variable_code: "norm_jarak_puskesmas_cost", category_code: "PELAYANAN_MASYARAKAT", variable_label: "Jarak Puskesmas (Cost)", local_weight: 1 / 4 },
+  { variable_code: "norm_jarak_sd_smp_cost", category_code: "PELAYANAN_MASYARAKAT", variable_label: "Jarak SD/SMP (Cost)", local_weight: 1 / 4 },
+  { variable_code: "norm_jarak_pasar_cost", category_code: "PELAYANAN_MASYARAKAT", variable_label: "Jarak Pasar (Cost)", local_weight: 1 / 4 },
+  // 4. SPASIAL_DEMOGRAFI (3 variables -> 1/3 each)
+  { variable_code: "norm_penduduk_dilayani", category_code: "SPASIAL_DEMOGRAFI", variable_label: "Penduduk Dilayani", local_weight: 1 / 3 },
+  { variable_code: "norm_desa_dilalui", category_code: "SPASIAL_DEMOGRAFI", variable_label: "Desa Dilalui", local_weight: 1 / 3 },
+  { variable_code: "norm_kecamatan_dilalui", category_code: "SPASIAL_DEMOGRAFI", variable_label: "Kecamatan Dilalui", local_weight: 1 / 3 }
+];
+function getBaselineSimulationConfig() {
+  return {
+    categories: BASELINE_RAW_CATEGORIES.map((c) => ({ ...c })),
+    variables: BASELINE_LOCAL_VARIABLES.map((v) => ({ ...v }))
+  };
+}
+function buildScoringModelConfig(simConfig, modelId = "SIMULATION_DRAFT") {
+  const categories = simConfig.categories.map((c) => ({
+    category_code: c.category_code,
+    category_name: c.category_name,
+    raw_weight: c.raw_weight,
+    variable_codes: simConfig.variables.filter((v) => v.category_code === c.category_code).map((v) => v.variable_code)
+  }));
+  const variables = simConfig.variables.map((v) => ({
+    variable_code: v.variable_code,
+    category_code: v.category_code,
+    local_weight: v.local_weight
+  }));
+  return {
+    model_id: modelId,
+    model_code: "SIMULATION_SCENARIO",
+    categories,
+    variables
+  };
+}
+function runSimulationComparison(featureVectors, baselineScores, simConfig) {
+  const scoringConfig = buildScoringModelConfig(simConfig);
+  const simulatedRankedScores = rankRoads(featureVectors, scoringConfig);
+  const baselineMap = new Map(
+    baselineScores.map((b) => [b.road_key, b])
+  );
+  let movedUpCount = 0;
+  let movedDownCount = 0;
+  let unchangedCount = 0;
+  let tierChangedCount = 0;
+  let biggestUpwardMover = null;
+  let biggestDownwardMover = null;
+  const comparisons = simulatedRankedScores.map((sim) => {
+    const base = baselineMap.get(sim.road_key);
+    if (!base) {
+      throw new Error(`MISSING_BASELINE: No baseline score found for road '${sim.road_key}'`);
+    }
+    const rankDelta = base.priority_rank - sim.priority_rank;
+    const scoreDelta = sim.final_score - base.final_score;
+    const tierChanged = base.tier_category !== sim.tier_category;
+    if (rankDelta > 0) movedUpCount++;
+    else if (rankDelta < 0) movedDownCount++;
+    else unchangedCount++;
+    if (tierChanged) tierChangedCount++;
+    if (rankDelta > 0 && (!biggestUpwardMover || rankDelta > biggestUpwardMover.rank_delta)) {
+      biggestUpwardMover = {
+        road_key: sim.road_key,
+        nomor_ruas: sim.nomor_ruas,
+        display_name: sim.display_name,
+        baseline_rank: base.priority_rank,
+        simulated_rank: sim.priority_rank,
+        rank_delta: rankDelta
+      };
+    }
+    if (rankDelta < 0 && (!biggestDownwardMover || rankDelta < biggestDownwardMover.rank_delta)) {
+      biggestDownwardMover = {
+        road_key: sim.road_key,
+        nomor_ruas: sim.nomor_ruas,
+        display_name: sim.display_name,
+        baseline_rank: base.priority_rank,
+        simulated_rank: sim.priority_rank,
+        rank_delta: rankDelta
+      };
+    }
+    return {
+      road_key: sim.road_key,
+      nomor_ruas: sim.nomor_ruas,
+      display_name: sim.display_name,
+      district_name: sim.district_name,
+      baseline_rank: base.priority_rank,
+      simulated_rank: sim.priority_rank,
+      rank_delta: rankDelta,
+      baseline_score: base.final_score,
+      simulated_score: sim.final_score,
+      score_delta: scoreDelta,
+      baseline_tier: base.tier_category,
+      simulated_tier: sim.tier_category,
+      tier_changed: tierChanged,
+      subtotal_teknis: sim.category_subtotals["TEKNIS_JALAN"]?.subtotal || 0,
+      subtotal_akses: sim.category_subtotals["AKSESIBILITAS"]?.subtotal || 0,
+      subtotal_pelayanan: sim.category_subtotals["PELAYANAN_MASYARAKAT"]?.subtotal || 0,
+      subtotal_spasial: sim.category_subtotals["SPASIAL_DEMOGRAFI"]?.subtotal || 0
+    };
+  });
+  const summary = {
+    roads_evaluated: simulatedRankedScores.length,
+    moved_up_count: movedUpCount,
+    moved_down_count: movedDownCount,
+    unchanged_count: unchangedCount,
+    tier_changed_count: tierChangedCount,
+    biggest_upward_mover: biggestUpwardMover,
+    biggest_downward_mover: biggestDownwardMover,
+    top10_simulated: comparisons.slice(0, 10)
+  };
+  return {
+    simulatedRankedScores,
+    comparisons,
+    summary
+  };
+}
+function explainRoadMovement(roadKey, featureVectors, baselineScores, simConfig) {
+  const roadFeatures = featureVectors.find((r) => r.road_key === roadKey);
+  if (!roadFeatures) {
+    throw new Error(`ROAD_NOT_FOUND: Road '${roadKey}' not found in feature vectors.`);
+  }
+  const baseRoadScore = baselineScores.find((r) => r.road_key === roadKey);
+  if (!baseRoadScore) {
+    throw new Error(`BASELINE_SCORE_NOT_FOUND: No baseline score for road '${roadKey}'.`);
+  }
+  const baselineWeights = calculateNormalizedWeights(
+    buildScoringModelConfig(getBaselineSimulationConfig())
+  );
+  const simWeights = calculateNormalizedWeights(buildScoringModelConfig(simConfig));
+  const simScoringConfig = buildScoringModelConfig(simConfig);
+  const allSimScores = rankRoads(featureVectors, simScoringConfig);
+  const simRoadScore = allSimScores.find((r) => r.road_key === roadKey);
+  const categoryNameMap = new Map(
+    simConfig.categories.map((c) => [c.category_code, c.category_name])
+  );
+  const factors = simConfig.variables.map((v) => {
+    const normVal = roadFeatures.normalized_values[v.variable_code] || 0;
+    const baseEffWeight = baselineWeights.effective_weights[v.variable_code] || 0;
+    const simEffWeight = simWeights.effective_weights[v.variable_code] || 0;
+    const baseContribution = normVal * baseEffWeight;
+    const simContribution = normVal * simEffWeight;
+    return {
+      variable_code: v.variable_code,
+      variable_label: v.variable_label,
+      category_code: v.category_code,
+      category_name: categoryNameMap.get(v.category_code) || v.category_code,
+      normalized_value: normVal,
+      baseline_effective_weight: baseEffWeight,
+      simulated_effective_weight: simEffWeight,
+      weight_delta: simEffWeight - baseEffWeight,
+      baseline_contribution: baseContribution,
+      simulated_contribution: simContribution,
+      contribution_delta: simContribution - baseContribution
+    };
+  });
+  return {
+    road_key: roadKey,
+    nomor_ruas: roadFeatures.nomor_ruas,
+    display_name: roadFeatures.display_name,
+    district_name: roadFeatures.district_name,
+    baseline_rank: baseRoadScore.priority_rank,
+    simulated_rank: simRoadScore.priority_rank,
+    rank_delta: baseRoadScore.priority_rank - simRoadScore.priority_rank,
+    baseline_score: baseRoadScore.final_score,
+    simulated_score: simRoadScore.final_score,
+    score_delta: simRoadScore.final_score - baseRoadScore.final_score,
+    baseline_tier: baseRoadScore.tier_category,
+    simulated_tier: simRoadScore.tier_category,
+    factors
+  };
+}
+
+// src/services/simulationService.ts
+var SimulationService = class {
+  db;
+  scoringService;
+  modelService;
+  constructor(db) {
+    this.db = db || getDatabase();
+    this.scoringService = new ScoringService(this.db);
+    this.modelService = new ModelService(this.db);
+  }
+  /**
+   * Provides full initial context for the simulation workspace.
+   * Includes baseline model configuration, all 350 feature vectors,
+   * and baseline ranked priority scores.
+   * ZERO database writes.
+   */
+  getSimulationContext(operatingMode = "OPERATIONAL_2025") {
+    const baselineConfig = getBaselineSimulationConfig();
+    const featureVectors = this.scoringService.loadRoadFeatureVectors(operatingMode);
+    let latestRun = this.scoringService.getLatestScoringRun(operatingMode, "POLICY_DEFAULT_V1");
+    if (!latestRun) {
+      this.scoringService.executeScoringRun(operatingMode, "POLICY_DEFAULT_V1");
+      latestRun = this.scoringService.getLatestScoringRun(operatingMode, "POLICY_DEFAULT_V1");
+    }
+    const baselineScoringConfig = {
+      model_id: "POLICY_DEFAULT_V1",
+      model_code: "POLICY_DEFAULT_V1",
+      categories: baselineConfig.categories.map((c) => ({
+        category_code: c.category_code,
+        category_name: c.category_name,
+        raw_weight: c.raw_weight,
+        variable_codes: baselineConfig.variables.filter((v) => v.category_code === c.category_code).map((v) => v.variable_code)
+      })),
+      variables: baselineConfig.variables.map((v) => ({
+        variable_code: v.variable_code,
+        category_code: v.category_code,
+        local_weight: v.local_weight
+      }))
+    };
+    const baselineRankedScores = rankRoads(featureVectors, baselineScoringConfig);
+    return {
+      operatingMode,
+      modelCode: "POLICY_DEFAULT_V1",
+      baselineConfig,
+      featureVectors,
+      baselineRankedScores
+    };
+  }
+  /**
+   * Pure in-memory stateless simulation calculation.
+   * ZERO database writes.
+   */
+  calculateSimulation(simConfig, operatingMode = "OPERATIONAL_2025") {
+    const { featureVectors, baselineRankedScores } = this.getSimulationContext(operatingMode);
+    return runSimulationComparison(featureVectors, baselineRankedScores, simConfig);
+  }
+  /**
+   * Explains why a specific road moved rank under the given scenario.
+   */
+  explainRoad(roadKey, simConfig, operatingMode = "OPERATIONAL_2025") {
+    const { featureVectors, baselineRankedScores } = this.getSimulationContext(operatingMode);
+    return explainRoadMovement(roadKey, featureVectors, baselineRankedScores, simConfig);
+  }
+};
+
 // src/server/server.ts
 var __filename3 = fileURLToPath3(import.meta.url);
 var __dirname3 = path3.dirname(__filename3);
@@ -1974,6 +2230,7 @@ function createServer() {
   const uiService = new UiDataService();
   const modelService = new ModelService();
   const spatialService = new SpatialService();
+  const simulationService = new SimulationService();
   app2.use(express.json());
   app2.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -2042,6 +2299,45 @@ function createServer() {
           variables
         }
       });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/simulation/context", (req, res) => {
+    try {
+      const mode = req.query.mode || "OPERATIONAL_2025";
+      const data = simulationService.getSimulationContext(mode);
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/simulation/calculate", (req, res) => {
+    try {
+      const { config, mode } = req.body;
+      if (!config || !config.categories || !config.variables) {
+        return res.status(400).json({
+          success: false,
+          error: "INVALID_PAYLOAD: Missing config with categories and variables."
+        });
+      }
+      const data = simulationService.calculateSimulation(config, mode || "OPERATIONAL_2025");
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/simulation/explain", (req, res) => {
+    try {
+      const { roadKey, config, mode } = req.body;
+      if (!roadKey || !config) {
+        return res.status(400).json({
+          success: false,
+          error: "INVALID_PAYLOAD: Missing roadKey or config."
+        });
+      }
+      const data = simulationService.explainRoad(roadKey, config, mode || "OPERATIONAL_2025");
+      res.json({ success: true, data });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }
