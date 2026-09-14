@@ -16,6 +16,7 @@ import {
   ROUTE_TRACING_STYLE,
   ROUTE_ACCESS_POINT_STYLE,
   DD1_SEGMENT_STYLES,
+  getDD1SegmentFullMapStyle,
 } from './mapStyle.js';
 
 const state = {
@@ -36,7 +37,8 @@ const state = {
   pageSize: 50,
   precisionMode: false,
 
-  // --- Phase 4, 4.5 & 4.6 Web GIS State ---
+  // --- Phase 4, 4.5, 4.6 & 5.1C Web GIS State ---
+  roadThematicMode: 'PRIORITAS', // 'PRIORITAS' | 'KONDISI_DD1'
   map: null,
   mapInitialized: false,
   mapLayers: {
@@ -44,6 +46,7 @@ const state = {
     satelliteBasemap: null,
     countyRoads: null,
     countyRoadsHitTarget: null,
+    fullDd1Segments: null,
     provincialRoads: null,
     nationalRoads: null,
     connectors: null,
@@ -65,6 +68,7 @@ const state = {
   showDd1Segments: false,
   mapData: {
     countyRoads: null,
+    dd1Segments: null,
     referenceNetwork: null,
     facilities: null,
     kabupaten: null,
@@ -686,6 +690,7 @@ async function initMap() {
     { name: 'countyRoadsPane', zIndex: 500 },
     { name: 'routeTracingPane', zIndex: 550 },
     { name: 'selectionHaloPane', zIndex: 600 },
+    { name: 'dd1SegmentsPane', zIndex: 610 },
     { name: 'facilitiesPane', zIndex: 700 },
   ];
 
@@ -885,6 +890,14 @@ function initMapControls() {
   document.getElementById('preset-prioritas')?.addEventListener('click', () => applyMapPreset('prioritas'));
   document.getElementById('preset-pelayanan')?.addEventListener('click', () => applyMapPreset('pelayanan'));
   document.getElementById('preset-tataruang')?.addEventListener('click', () => applyMapPreset('tataruang'));
+
+  // Thematic Road View Mode: Prioritas <-> Kondisi DD1 (Phase 5.1C)
+  document.getElementById('btn-theme-prioritas')?.addEventListener('click', () => {
+    setRoadThematicMode('PRIORITAS');
+  });
+  document.getElementById('btn-theme-dd1')?.addEventListener('click', () => {
+    setRoadThematicMode('KONDISI_DD1');
+  });
 
   // Simulation Map Mode Toggles
   document.getElementById('map-btn-source-baseline')?.addEventListener('click', () => {
@@ -1333,7 +1346,10 @@ function renderThematicRoads(features) {
       style: HIT_TARGET_STYLE,
       onEachFeature: setupRoadInteractivity,
     }
-  ).addTo(state.map);
+  );
+  if (state.roadThematicMode === 'PRIORITAS') {
+    state.mapLayers.countyRoadsHitTarget.addTo(state.map);
+  }
 
   // 2. Visible thematic priority styled road layer
   state.mapLayers.countyRoads = L.geoJSON(
@@ -1356,8 +1372,189 @@ function renderThematicRoads(features) {
       },
       onEachFeature: setupRoadInteractivity,
     }
-  ).addTo(state.map);
+  );
+  if (state.roadThematicMode === 'PRIORITAS') {
+    state.mapLayers.countyRoads.addTo(state.map);
+  }
+
+  // 3. If in DD1 mode, update/render DD1 segments layer for currently filtered roads
+  if (state.roadThematicMode === 'KONDISI_DD1') {
+    renderFullDD1Segments(features);
+  }
 }
+
+// --- FULL-MAP THEMATIC MODE: KONDISI DD1 (Phase 5.1C) ---
+async function loadFullDD1SegmentsData() {
+  if (state.mapData.dd1Segments) return state.mapData.dd1Segments;
+  try {
+    const res = await fetch('/api/map/dd1-segments');
+    const data = await res.json();
+    state.mapData.dd1Segments = data;
+    return data;
+  } catch (err) {
+    console.error('Failed to load full DD1 segments data:', err);
+    return null;
+  }
+}
+
+function setupDD1SegmentInteractivity(feature, layer) {
+  const p = feature.properties;
+  const condLabelMap = {
+    baik: 'Baik',
+    sedang: 'Sedang',
+    rusak_ringan: 'Rusak Ringan',
+    rusak_berat: 'Rusak Berat',
+  };
+  const condBadgeMap = {
+    baik: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+    sedang: 'bg-amber-100 text-amber-800 border-amber-300',
+    rusak_ringan: 'bg-orange-100 text-orange-800 border-orange-300',
+    rusak_berat: 'bg-rose-100 text-rose-800 border-rose-300',
+  };
+  const condBadge = condBadgeMap[p.dominant_condition] || 'bg-slate-100 text-slate-800';
+  const condLabel = condLabelMap[p.dominant_condition] || p.dominant_condition;
+  const statusBadge = p.segment_status === 'mantap'
+    ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Mantap</span>'
+    : '<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">Tidak Mantap</span>';
+
+  const priorityBadge = p.priority_rank !== null
+    ? `<div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between text-[11px]">
+         <span class="text-slate-500">Prioritas ruas:</span>
+         <span class="font-bold text-slate-800">#${p.priority_rank} <span class="text-[10px] text-slate-500">(${p.priority_tier || 'REGULAR'})</span></span>
+       </div>`
+    : '';
+
+  const tooltipContent = `
+    <div class="p-1.5 text-xs leading-relaxed max-w-xs">
+      <div class="font-bold text-slate-900">${escapeHtml(p.nama_ruas)}</div>
+      <div class="text-[10px] text-slate-500 font-mono">No: ${p.nomor_ruas} | ${p.road_key}</div>
+      
+      <div class="mt-1 flex items-center justify-between text-[11px] font-semibold text-slate-700">
+        <span>${p.sta_label}</span>
+        <span class="text-slate-500 font-normal">${p.length_m} m ${p.is_short_final ? '(akhir pendek)' : ''}</span>
+      </div>
+      
+      <div class="mt-1 flex items-center space-x-1.5">
+        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold border ${condBadge}">${condLabel}</span>
+        ${statusBadge}
+      </div>
+
+      <div class="mt-1 text-[10px] text-slate-600">
+        <div>Perlakuan: <span class="font-medium text-slate-800">${escapeHtml(p.treatment)}</span></div>
+        <div>Permukaan: <span class="font-medium text-slate-800">${p.surface}</span> (${p.road_width_m} m)</div>
+      </div>
+      
+      ${priorityBadge}
+    </div>
+  `;
+
+  layer.bindTooltip(tooltipContent, {
+    sticky: true,
+    className: 'shadow-md rounded-lg border border-slate-200 dd1-segment-tooltip',
+  });
+
+  layer.on('click', (e) => {
+    if (e && e.originalEvent) {
+      L.DomEvent.stopPropagation(e);
+    }
+    selectRoadOnMap(p.road_key);
+    openRoadDetail(p.road_key);
+  });
+}
+
+async function renderFullDD1Segments(filteredCountyRoads) {
+  if (state.mapLayers.fullDd1Segments && state.map) {
+    state.map.removeLayer(state.mapLayers.fullDd1Segments);
+    state.mapLayers.fullDd1Segments = null;
+  }
+
+  const dd1Data = await loadFullDD1SegmentsData();
+  if (!dd1Data || !dd1Data.features || !state.map) return;
+
+  const allowedKeys = filteredCountyRoads
+    ? new Set(filteredCountyRoads.map((f) => f.properties.road_key))
+    : null;
+
+  const featuresToRender = allowedKeys
+    ? dd1Data.features.filter((f) => allowedKeys.has(f.properties.road_key))
+    : dd1Data.features;
+
+  const canvasRenderer = L.canvas({ padding: 0.5, pane: 'dd1SegmentsPane' });
+
+  state.mapLayers.fullDd1Segments = L.geoJSON(
+    { type: 'FeatureCollection', features: featuresToRender },
+    {
+      renderer: canvasRenderer,
+      style: (feature) => getDD1SegmentFullMapStyle(feature),
+      onEachFeature: setupDD1SegmentInteractivity,
+    }
+  );
+
+  if (state.roadThematicMode === 'KONDISI_DD1') {
+    state.mapLayers.fullDd1Segments.addTo(state.map);
+  }
+}
+
+async function setRoadThematicMode(mode) {
+  if (state.roadThematicMode === mode) return;
+  state.roadThematicMode = mode;
+
+  const btnPrioritas = document.getElementById('btn-theme-prioritas');
+  const btnDd1 = document.getElementById('btn-theme-dd1');
+
+  if (mode === 'PRIORITAS') {
+    if (btnPrioritas) {
+      btnPrioritas.className = 'px-2.5 py-1 text-xs font-semibold rounded-md bg-rose-600 text-white shadow-xs transition';
+    }
+    if (btnDd1) {
+      btnDd1.className = 'px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+    }
+
+    // Hide DD1 segments
+    if (state.mapLayers.fullDd1Segments && state.map && state.map.hasLayer(state.mapLayers.fullDd1Segments)) {
+      state.map.removeLayer(state.mapLayers.fullDd1Segments);
+    }
+
+    // Show county roads
+    if (state.mapLayers.countyRoads && state.map && !state.map.hasLayer(state.mapLayers.countyRoads)) {
+      state.mapLayers.countyRoads.addTo(state.map);
+    }
+    if (state.mapLayers.countyRoadsHitTarget && state.map && !state.map.hasLayer(state.mapLayers.countyRoadsHitTarget)) {
+      state.mapLayers.countyRoadsHitTarget.addTo(state.map);
+    }
+  } else if (mode === 'KONDISI_DD1') {
+    if (btnPrioritas) {
+      btnPrioritas.className = 'px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+    }
+    if (btnDd1) {
+      btnDd1.className = 'px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-600 text-white shadow-xs transition';
+    }
+
+    // Hide county roads
+    if (state.mapLayers.countyRoads && state.map && state.map.hasLayer(state.mapLayers.countyRoads)) {
+      state.map.removeLayer(state.mapLayers.countyRoads);
+    }
+    if (state.mapLayers.countyRoadsHitTarget && state.map && state.map.hasLayer(state.mapLayers.countyRoadsHitTarget)) {
+      state.map.removeLayer(state.mapLayers.countyRoadsHitTarget);
+    }
+
+    // Render & show full DD1 segments
+    if (!state.mapLayers.fullDd1Segments) {
+      await renderFullDD1Segments(state.filteredRoads ? state.filteredRoads.map((r) => ({ properties: r })) : null);
+    } else if (state.map && !state.map.hasLayer(state.mapLayers.fullDd1Segments)) {
+      state.mapLayers.fullDd1Segments.addTo(state.map);
+    }
+  }
+
+  // Preserve selected road halo highlight if a road is active
+  if (state.selectedRoadKey) {
+    selectRoadOnMap(state.selectedRoadKey);
+  }
+
+  updateDynamicLegend();
+}
+
+window.setRoadThematicMode = setRoadThematicMode;
 
 function renderReferenceNetwork(data) {
   const provincialFeatures = data.features.filter((f) => f.properties.network_class === 'PROVINSI');
@@ -1886,30 +2083,59 @@ function updateDynamicLegend() {
 
   let html = '';
 
-  // 1. Prioritas Jalan Kabupaten (Always present)
-  html += `
-    <div>
-      <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Prioritas Jalan Kabupaten</div>
-      <div class="space-y-1">
-        <div class="flex items-center space-x-2">
-          <span class="w-5 h-1.5 bg-rose-600 rounded-full inline-block"></span>
-          <span class="font-semibold text-rose-800">Top 35 (Sangat Mendesak)</span>
+  // 1. Primary Road Symbology: Prioritas Penanganan vs Kondisi Jalan DD1 — 2025
+  if (state.roadThematicMode === 'KONDISI_DD1') {
+    html += `
+      <div>
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Kondisi Jalan DD1 — 2025</div>
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1.5 bg-emerald-500 rounded-full inline-block"></span>
+            <span class="font-semibold text-emerald-800">Baik (131,65 km · 17,97%)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1.5 bg-amber-500 rounded-full inline-block"></span>
+            <span class="text-slate-700">Sedang (261,24 km · 35,67%)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1.5 bg-orange-500 rounded-full inline-block"></span>
+            <span class="text-slate-700">Rusak Ringan (111,41 km · 15,21%)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1.5 bg-rose-500 rounded-full inline-block"></span>
+            <span class="font-semibold text-rose-700">Rusak Berat (228,16 km · 31,15%)</span>
+          </div>
         </div>
-        <div class="flex items-center space-x-2">
-          <span class="w-5 h-1 bg-orange-500 rounded-full inline-block"></span>
-          <span class="text-slate-700">Rank 36–70 (Prioritas Tinggi)</span>
-        </div>
-        <div class="flex items-center space-x-2">
-          <span class="w-5 h-1 bg-amber-500 rounded-full inline-block"></span>
-          <span class="text-slate-700">Rank 71–105 (Kebijakan)</span>
-        </div>
-        <div class="flex items-center space-x-2">
-          <span class="w-5 h-1 bg-slate-600 inline-block"></span>
-          <span class="text-slate-600">Ruas Kabupaten Lainnya / Di Luar Prioritas Utama</span>
+        <div class="text-[10px] text-slate-400 mt-1 pl-1">
+          * 7.487 segmen survei kondisi 100m
         </div>
       </div>
-    </div>
-  `;
+    `;
+  } else {
+    html += `
+      <div>
+        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Prioritas Penanganan</div>
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1.5 bg-rose-600 rounded-full inline-block"></span>
+            <span class="font-semibold text-rose-800">Top 35 (Sangat Mendesak)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1 bg-orange-500 rounded-full inline-block"></span>
+            <span class="text-slate-700">Rank 36–70 (Prioritas Tinggi)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1 bg-amber-500 rounded-full inline-block"></span>
+            <span class="text-slate-700">Rank 71–105 (Kebijakan)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-1 bg-slate-600 inline-block"></span>
+            <span class="text-slate-600">Ruas Kabupaten Lainnya / Di Luar Prioritas Utama</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
   // 2. Jaringan Referensi (Only if any checked)
   const showProv = document.getElementById('layer-roads-provincial')?.checked;

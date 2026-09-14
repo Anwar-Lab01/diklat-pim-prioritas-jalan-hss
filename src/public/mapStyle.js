@@ -292,4 +292,18 @@ export const DD1_SEGMENT_STYLES = {
   },
 };
 
+export function getDD1SegmentFullMapStyle(feature) {
+  const cond = (feature?.properties?.dominant_condition || 'sedang').toLowerCase();
+  const style = DD1_SEGMENT_STYLES[cond] || DD1_SEGMENT_STYLES.sedang;
+  return {
+    color: style.color,
+    weight: 3.5,
+    opacity: 0.90,
+    lineCap: 'round',
+    lineJoin: 'round',
+    pane: 'dd1SegmentsPane',
+  };
+}
+
+
 

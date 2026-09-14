@@ -2,7 +2,7 @@
 import { fileURLToPath as fileURLToPath4 } from "node:url";
 
 // src/server/server.ts
-import path3 from "node:path";
+import path4 from "node:path";
 import { fileURLToPath as fileURLToPath3 } from "node:url";
 import express from "express";
 
@@ -3093,9 +3093,215 @@ var DemographicsAndSegmentsService = class {
   }
 };
 
+// src/services/dd1SegmentGeometryService.ts
+import fs6 from "node:fs";
+import path3 from "node:path";
+var DD1SegmentGeometryService = class {
+  db;
+  constructor(db) {
+    this.db = db || getDatabase();
+  }
+  extractLines(geom) {
+    if (geom.type === "LineString") return [geom.coordinates];
+    if (geom.type === "MultiLineString") return geom.coordinates;
+    if (geom.type === "GeometryCollection") {
+      const lines = [];
+      for (const g of geom.geometries) {
+        if (g.type === "LineString") lines.push(g.coordinates);
+        if (g.type === "MultiLineString") lines.push(...g.coordinates);
+      }
+      return lines;
+    }
+    return [];
+  }
+  haversineM(c1, c2) {
+    const R = 6371e3;
+    const dLat = (c2[1] - c1[1]) * Math.PI / 180;
+    const dLon = (c2[0] - c1[0]) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(c1[1] * Math.PI / 180) * Math.cos(c2[1] * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+  /**
+   * Generates a deterministic GeoJSON FeatureCollection of all 7,487 condition segments
+   * using proportional STA slicing along the canonical road geometries.
+   */
+  generateDD1SegmentsGeoJson() {
+    const latestRun = this.db.prepare(`
+      SELECT r.run_id 
+      FROM scoring_runs r 
+      JOIN priority_models m ON r.model_id = m.model_id 
+      WHERE r.operating_mode = 'OPERATIONAL_2025' AND m.model_code = 'POLICY_DEFAULT_V1' 
+      ORDER BY r.executed_at DESC LIMIT 1
+    `).get();
+    const runId = latestRun ? latestRun.run_id : null;
+    const roads = this.db.prepare(`
+      SELECT 
+        g.road_key, 
+        g.geometry_geojson, 
+        r.nomor_ruas, 
+        r.canonical_name, 
+        r.display_name, 
+        s.priority_rank, 
+        s.tier_category 
+      FROM road_geometries g 
+      JOIN roads r ON g.road_key = r.road_key 
+      LEFT JOIN road_priority_scores s ON s.road_key = r.road_key AND s.run_id = ?
+      ORDER BY r.nomor_ruas ASC
+    `).all(runId);
+    const segments = this.db.prepare(`
+      SELECT 
+        road_key, 
+        segment_id, 
+        sta_start_m, 
+        sta_end_m, 
+        segment_length_m, 
+        dominant_condition, 
+        segment_status, 
+        recommended_treatment, 
+        surface_type, 
+        road_width_m, 
+        survey_date 
+      FROM treatment_engine_segments 
+      ORDER BY road_key, sta_start_m ASC
+    `).all();
+    const roadMap = /* @__PURE__ */ new Map();
+    for (const r of roads) {
+      const geom = JSON.parse(r.geometry_geojson);
+      const lines = this.extractLines(geom);
+      const coords = lines.reduce((acc, cur) => acc.concat(cur), []);
+      roadMap.set(r.road_key, {
+        road_key: r.road_key,
+        nomor_ruas: r.nomor_ruas,
+        display_name: r.display_name,
+        priority_rank: r.priority_rank,
+        tier_category: r.tier_category,
+        coords
+      });
+    }
+    const segsByRoad = /* @__PURE__ */ new Map();
+    for (const seg of segments) {
+      if (!segsByRoad.has(seg.road_key)) segsByRoad.set(seg.road_key, []);
+      segsByRoad.get(seg.road_key).push(seg);
+    }
+    let totalLengthM = 0;
+    const features = [];
+    for (const [roadKey, roadSegs] of segsByRoad.entries()) {
+      const road = roadMap.get(roadKey);
+      if (!road) continue;
+      const rawCoords = road.coords;
+      if (rawCoords.length < 2) continue;
+      const cumDist = [0];
+      for (let i = 1; i < rawCoords.length; i++) {
+        cumDist[i] = cumDist[i - 1] + this.haversineM(rawCoords[i - 1], rawCoords[i]);
+      }
+      const totalGeoLength = cumDist[cumDist.length - 1];
+      if (totalGeoLength <= 0) continue;
+      const maxSta = roadSegs[roadSegs.length - 1].sta_end_m;
+      if (maxSta <= 0) continue;
+      const interpolatePoint = (dist) => {
+        if (dist <= 0) return [Number(rawCoords[0][0].toFixed(6)), Number(rawCoords[0][1].toFixed(6))];
+        if (dist >= totalGeoLength) {
+          const last = rawCoords[rawCoords.length - 1];
+          return [Number(last[0].toFixed(6)), Number(last[1].toFixed(6))];
+        }
+        let idx = 1;
+        while (idx < cumDist.length && cumDist[idx] < dist) idx++;
+        const segLen = cumDist[idx] - cumDist[idx - 1];
+        const segFrac = segLen > 0 ? (dist - cumDist[idx - 1]) / segLen : 0;
+        const p0 = rawCoords[idx - 1];
+        const p1 = rawCoords[idx];
+        const lng = p0[0] + (p1[0] - p0[0]) * segFrac;
+        const lat = p0[1] + (p1[1] - p0[1]) * segFrac;
+        return [Number(lng.toFixed(6)), Number(lat.toFixed(6))];
+      };
+      for (let sIdx = 0; sIdx < roadSegs.length; sIdx++) {
+        const seg = roadSegs[sIdx];
+        const len = Number(seg.segment_length_m);
+        totalLengthM += len;
+        const startFrac = seg.sta_start_m / maxSta;
+        const endFrac = seg.sta_end_m / maxSta;
+        const targetStart = startFrac * totalGeoLength;
+        const targetEnd = endFrac * totalGeoLength;
+        const coords = [interpolatePoint(targetStart)];
+        for (let i = 0; i < rawCoords.length; i++) {
+          if (cumDist[i] > targetStart && cumDist[i] < targetEnd) {
+            coords.push([Number(rawCoords[i][0].toFixed(6)), Number(rawCoords[i][1].toFixed(6))]);
+          }
+        }
+        coords.push(interpolatePoint(targetEnd));
+        const isShort = sIdx === roadSegs.length - 1 && len < 100;
+        const staStartKm = Math.floor(seg.sta_start_m / 1e3);
+        const staStartRem = Math.round(seg.sta_start_m % 1e3);
+        const staEndKm = Math.floor(seg.sta_end_m / 1e3);
+        const staEndRem = Math.round(seg.sta_end_m % 1e3);
+        const staLabel = `STA ${staStartKm}+${String(staStartRem).padStart(3, "0")} - ${staEndKm}+${String(staEndRem).padStart(3, "0")}`;
+        const cond = String(seg.dominant_condition).toLowerCase() || "sedang";
+        const status = String(seg.segment_status).toLowerCase() || "mantap";
+        features.push({
+          type: "Feature",
+          geometry: {
+            type: "LineString",
+            coordinates: coords
+          },
+          properties: {
+            segment_id: seg.segment_id,
+            road_key: road.road_key,
+            nomor_ruas: road.nomor_ruas,
+            nama_ruas: road.display_name,
+            priority_rank: road.priority_rank,
+            priority_tier: road.tier_category,
+            sta_start_m: seg.sta_start_m,
+            sta_end_m: seg.sta_end_m,
+            sta_label: staLabel,
+            length_m: len,
+            is_short_final: isShort,
+            dominant_condition: cond,
+            segment_status: status,
+            treatment: seg.recommended_treatment || "Pemeliharaan Rutin",
+            surface: seg.surface_type || "Aspal",
+            road_width_m: Number(seg.road_width_m) || 4,
+            survey_year: 2025
+          }
+        });
+      }
+    }
+    return {
+      type: "FeatureCollection",
+      properties: {
+        description: "Authoritative DD1 Road Condition Segments (100m interval)",
+        condition_standard: "DD1",
+        total_segments: features.length,
+        total_roads: segsByRoad.size,
+        total_length_m: totalLengthM,
+        generated_at: (/* @__PURE__ */ new Date()).toISOString()
+      },
+      features
+    };
+  }
+  /**
+   * Generates and writes the canonical static GeoJSON file into src/public/data/
+   */
+  writeCanonicalGeoJsonFile() {
+    const geojson = this.generateDD1SegmentsGeoJson();
+    const dataDir = path3.resolve(PROJECT_ROOT, "src/public/data");
+    if (!fs6.existsSync(dataDir)) {
+      fs6.mkdirSync(dataDir, { recursive: true });
+    }
+    const targetPath = path3.join(dataDir, "dd1_condition_segments_2025.geojson");
+    const content = JSON.stringify(geojson);
+    fs6.writeFileSync(targetPath, content, "utf8");
+    return {
+      filePath: targetPath,
+      totalSegments: geojson.features.length,
+      byteSize: Buffer.byteLength(content)
+    };
+  }
+};
+
 // src/server/server.ts
+import fs7 from "node:fs";
 var __filename3 = fileURLToPath3(import.meta.url);
-var __dirname3 = path3.dirname(__filename3);
+var __dirname3 = path4.dirname(__filename3);
 function createServer() {
   const app2 = express();
   const uiService = new UiDataService();
@@ -3104,6 +3310,7 @@ function createServer() {
   const simulationService = new SimulationService();
   const derivationService = new SpatialDerivationService();
   const demoSegService = new DemographicsAndSegmentsService(derivationService["db"]);
+  const dd1GeomService = new DD1SegmentGeometryService(derivationService["db"]);
   app2.use(express.json());
   app2.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -3334,6 +3541,22 @@ function createServer() {
       res.status(500).json({ success: false, error: err.message });
     }
   });
+  app2.get("/api/map/dd1-segments", (req, res) => {
+    try {
+      const geojsonPath = path4.resolve(PROJECT_ROOT, "src/public/data/dd1_condition_segments_2025.geojson");
+      if (fs7.existsSync(geojsonPath)) {
+        res.setHeader("Content-Type", "application/json");
+        res.setHeader("Cache-Control", "public, max-age=3600");
+        return fs7.createReadStream(geojsonPath).pipe(res);
+      }
+      const data = dd1GeomService.generateDD1SegmentsGeoJson();
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
   app2.get("/api/spatial/roads/:roadKey/coverage", (req, res) => {
     try {
       const roadKey = req.params.roadKey;
@@ -3395,11 +3618,11 @@ function createServer() {
       res.status(500).json({ success: false, error: err.message });
     }
   });
-  const publicDir = path3.resolve(PROJECT_ROOT, "src/public");
+  const publicDir = path4.resolve(PROJECT_ROOT, "src/public");
   app2.use(express.static(publicDir));
   app2.use((req, res, next) => {
     if (req.method === "GET" && !req.path.startsWith("/api")) {
-      return res.sendFile(path3.join(publicDir, "index.html"));
+      return res.sendFile(path4.join(publicDir, "index.html"));
     }
     next();
   });

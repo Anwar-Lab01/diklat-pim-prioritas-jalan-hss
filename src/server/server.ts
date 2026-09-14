@@ -8,6 +8,8 @@ import { SpatialService } from '../services/spatialService.ts';
 import { SimulationService } from '../services/simulationService.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 import { DemographicsAndSegmentsService } from '../services/demographicsAndSegmentsService.ts';
+import { DD1SegmentGeometryService } from '../services/dd1SegmentGeometryService.ts';
+import fs from 'node:fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +22,7 @@ export function createServer() {
   const simulationService = new SimulationService();
   const derivationService = new SpatialDerivationService();
   const demoSegService = new DemographicsAndSegmentsService(derivationService['db']);
+  const dd1GeomService = new DD1SegmentGeometryService(derivationService['db']);
 
   app.use(express.json());
 
@@ -292,6 +295,24 @@ export function createServer() {
     try {
       const data = spatialService.getRtrwGeoJson();
       res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 6H. Full-Map Authoritative DD1 Road Condition Segments (7,487 Segments)
+  app.get('/api/map/dd1-segments', (req, res) => {
+    try {
+      const geojsonPath = path.resolve(PROJECT_ROOT, 'src/public/data/dd1_condition_segments_2025.geojson');
+      if (fs.existsSync(geojsonPath)) {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        return fs.createReadStream(geojsonPath).pipe(res);
+      }
+      const data = dd1GeomService.generateDD1SegmentsGeoJson();
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      res.json(data);
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }
