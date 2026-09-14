@@ -146,12 +146,12 @@ Ruas `HSS-KAB-001` dipilih pada mode Kondisi DD1. Cyan Selection Halo (`#06b6d4`
 Seluruh 376 pengujian otomatis yang mencakup Fase 1, 2, 3, 4, 5, 5.1, 5.1B, 5.1A, dan 5.1C dijalankan secara serentak (`npm run test:all`). Hasil membuktikan bahwa:
 
 1. **Jumlah Ruas Kanonikal**: Tepat 350 ruas jalan (`HSS-KAB-001` s/d `HSS-KAB-350`).
-2. **Peringkat Kunci Mandatory Tidak Mengalami Pergeseran**:
-   - Peringkat #1: `HSS-KAB-025` (Skor Komposit: **0,649945**)
-   - Peringkat #12: `HSS-KAB-001` (Skor Komposit: **0,569616**)
-   - Peringkat #133: `HSS-KAB-295` (Skor Komposit: **0,477172**)
-   - Peringkat #169: `HSS-KAB-350` (Skor Komposit: **0,466795**)
-   - Peringkat #245: `HSS-KAB-013` (Skor Komposit: **0,432839**)
+2. **Peringkat Kunci Mandatory & Skor Baseline Terkunci (OPERATIONAL_2025)**:
+   - Peringkat #1: `HSS-KAB-025` (Singakarsa - Palas, Skor Komposit: **0,649945**)
+   - Peringkat #12: `HSS-KAB-001` (Pangeran Antasari - Loklua, Skor Komposit: **0,529610**)
+   - Peringkat #133: `HSS-KAB-295` (Mawar (Daha Selatan), Skor Komposit: **0,412427**)
+   - Peringkat #169: `HSS-KAB-350` (Keramat Sakti - Ds. Tebing Tinggi, Skor Komposit: **0,381386**)
+   - Peringkat #245: `HSS-KAB-013` (Mawar (Kandangan Utara), Skor Komposit: **0,340749**)
 3. **Distribusi Partisi Tier**: Tepat `{35, 35, 35, 245}` ruas.
 4. **Bobot Kategori Kebijakan**:
    - Data Teknis Jalan = **0,378965**

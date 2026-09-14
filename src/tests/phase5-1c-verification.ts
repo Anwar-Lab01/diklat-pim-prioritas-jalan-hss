@@ -32,19 +32,23 @@ assert(rankedScores.length === 350, 'Canonical roads count must equal 350');
 
 const top1 = rankedScores.find((s) => s.priority_rank === 1);
 assert(top1?.road_key === 'HSS-KAB-025', 'Mandatory rank #1 is HSS-KAB-025', `got ${top1?.road_key}`);
-assert(Math.abs(top1!.final_score - 0.649945) < 0.001, 'Mandatory rank #1 score is ~0.649945', `got ${top1?.final_score}`);
+assert(Math.abs(top1!.final_score - 0.649945) < 0.0005, 'Mandatory rank #1 score is ~0.649945', `got ${top1?.final_score}`);
 
 const top12 = rankedScores.find((s) => s.priority_rank === 12);
 assert(top12?.road_key === 'HSS-KAB-001', 'Mandatory rank #12 is HSS-KAB-001', `got ${top12?.road_key}`);
+assert(Math.abs(top12!.final_score - 0.529610) < 0.0005, 'Mandatory rank #12 score is ~0.529610', `got ${top12?.final_score}`);
 
 const rank133 = rankedScores.find((s) => s.priority_rank === 133);
 assert(rank133?.road_key === 'HSS-KAB-295', 'Mandatory rank #133 is HSS-KAB-295', `got ${rank133?.road_key}`);
+assert(Math.abs(rank133!.final_score - 0.412427) < 0.0005, 'Mandatory rank #133 score is ~0.412427', `got ${rank133?.final_score}`);
 
 const rank169 = rankedScores.find((s) => s.priority_rank === 169);
 assert(rank169?.road_key === 'HSS-KAB-350', 'Mandatory rank #169 is HSS-KAB-350', `got ${rank169?.road_key}`);
+assert(Math.abs(rank169!.final_score - 0.381386) < 0.0005, 'Mandatory rank #169 score is ~0.381386', `got ${rank169?.final_score}`);
 
 const rank245 = rankedScores.find((s) => s.priority_rank === 245);
 assert(rank245?.road_key === 'HSS-KAB-013', 'Mandatory rank #245 is HSS-KAB-013', `got ${rank245?.road_key}`);
+assert(Math.abs(rank245!.final_score - 0.340749) < 0.0005, 'Mandatory rank #245 score is ~0.340749', `got ${rank245?.final_score}`);
 
 const top35Count = rankedScores.filter((s) => s.tier_category === 'TOP_35').length;
 const top70Count = rankedScores.filter((s) => s.tier_category === 'TOP_70').length;

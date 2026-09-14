@@ -1540,7 +1540,8 @@ async function setRoadThematicMode(mode) {
 
     // Render & show full DD1 segments
     if (!state.mapLayers.fullDd1Segments) {
-      await renderFullDD1Segments(state.filteredRoads ? state.filteredRoads.map((r) => ({ properties: r })) : null);
+      const isFiltered = state.filteredRoads && state.filteredRoads.length > 0 && state.filteredRoads.length < 350;
+      await renderFullDD1Segments(isFiltered ? state.filteredRoads.map((r) => ({ properties: r })) : null);
     } else if (state.map && !state.map.hasLayer(state.mapLayers.fullDd1Segments)) {
       state.mapLayers.fullDd1Segments.addTo(state.map);
     }
