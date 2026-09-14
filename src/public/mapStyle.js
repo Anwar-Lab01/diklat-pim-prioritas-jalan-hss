@@ -265,3 +265,31 @@ export function createFacilityIcon(facilityType) {
   }
 }
 
+export const DD1_SEGMENT_STYLES = {
+  baik: {
+    color: '#10b981', // Emerald-500
+    weight: 6,
+    opacity: 0.95,
+    label: 'Baik',
+  },
+  sedang: {
+    color: '#f59e0b', // Amber-500
+    weight: 6,
+    opacity: 0.95,
+    label: 'Sedang',
+  },
+  rusak_ringan: {
+    color: '#f97316', // Orange-500
+    weight: 6,
+    opacity: 0.95,
+    label: 'Rusak Ringan',
+  },
+  rusak_berat: {
+    color: '#ef4444', // Red-500
+    weight: 6,
+    opacity: 0.95,
+    label: 'Rusak Berat',
+  },
+};
+
+

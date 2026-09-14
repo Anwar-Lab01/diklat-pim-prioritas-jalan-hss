@@ -15,6 +15,7 @@ import {
   createFacilityIcon,
   ROUTE_TRACING_STYLE,
   ROUTE_ACCESS_POINT_STYLE,
+  DD1_SEGMENT_STYLES,
 } from './mapStyle.js';
 
 const state = {
@@ -56,8 +57,12 @@ const state = {
     rtrw: null,
     selectionHalo: null,
     routeTrace: null,
+    dd1Segments: null,
   },
   currentRoadNearestFacilities: [],
+  currentRoadDemographics: null,
+  currentRoadDD1Segments: null,
+  showDd1Segments: false,
   mapData: {
     countyRoads: null,
     referenceNetwork: null,
@@ -211,6 +216,9 @@ function initEventListeners() {
   document.getElementById('btn-trace-hospital')?.addEventListener('click', () => traceNearestFacilityRoute('hospital'));
   document.getElementById('btn-trace-market')?.addEventListener('click', () => traceNearestFacilityRoute('market'));
   document.getElementById('btn-clear-route-trace')?.addEventListener('click', clearRouteTrace);
+
+  // Phase 5.1A Segment toggle listener
+  document.getElementById('btn-toggle-dd1-segments')?.addEventListener('click', toggleDD1SegmentsOnMap);
 }
 
 function updateModeVisuals() {
@@ -1807,6 +1815,7 @@ window.clearRoadSelection = function () {
     state.map.removeLayer(state.mapLayers.selectionHalo);
     state.mapLayers.selectionHalo = null;
   }
+  clearDD1SegmentsLayer();
   state.selectedRoadKey = null;
   document.getElementById('map-btn-clear-selection')?.classList.add('hidden');
 
@@ -2168,6 +2177,7 @@ function closeDetailDrawer() {
   drawer.classList.add('hidden');
   drawer.classList.remove('drawer-map-mode');
   state.selectedRoadDetail = null;
+  clearDD1SegmentsLayer();
 
   // Clean URL query
   const currentBase = window.location.hash.split('?')[0] || '#prioritas';
@@ -2217,6 +2227,12 @@ function renderRoadDetailDrawer(data) {
   // Section C.2: Nearest Facilities & Accessibility Tracing (Phase 5.1)
   loadRoadNearestFacilities(id.road_key);
   clearRouteTrace();
+
+  // Section F: Demografi Rumah Tangga Dilayani (Phase 5.1A)
+  loadRoadDemographics(id.road_key);
+
+  // Section G: Data Kondisi Jalan per Segmen DD1 (Phase 5.1A)
+  loadRoadDD1Segments(id.road_key);
 
   // Section D: 4 Category Contributions
   const catCards = document.getElementById('d-category-cards');
@@ -2594,6 +2610,341 @@ function traceNearestFacilityRoute(facilityType) {
     btnClear.classList.remove('hidden');
   }
 }
+
+// ====================================================================
+// SECTION F: DEMOGRAFI RUMAH TANGGA DILAYANI (PHASE 5.1A)
+// ====================================================================
+async function loadRoadDemographics(roadKey) {
+  const badge = document.getElementById('d-households-summary-badge');
+  const totalEl = document.getElementById('d-households-total');
+  const maleEl = document.getElementById('d-households-male');
+  const femaleEl = document.getElementById('d-households-female');
+  const listEl = document.getElementById('d-households-villages-list');
+  if (!totalEl || !listEl) return;
+
+  if (badge) badge.textContent = 'Memuat...';
+  totalEl.textContent = '...';
+  if (maleEl) maleEl.textContent = '...';
+  if (femaleEl) femaleEl.textContent = '...';
+  listEl.innerHTML = '<span class="text-slate-400 italic text-[11px]">Memuat data rumah tangga...</span>';
+
+  try {
+    const res = await fetch(`/api/roads/${encodeURIComponent(roadKey)}/demographics`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    const demo = json.data;
+    state.currentRoadDemographics = demo;
+
+    if (badge) {
+      badge.textContent = `${demo.total_households.toLocaleString('id-ID')} Rumah Tangga`;
+    }
+    totalEl.textContent = `${demo.total_households.toLocaleString('id-ID')}`;
+    if (maleEl) maleEl.textContent = `${demo.total_households_male.toLocaleString('id-ID')}`;
+    if (femaleEl) femaleEl.textContent = `${demo.total_households_female.toLocaleString('id-ID')}`;
+
+    if (!demo.villages || demo.villages.length === 0) {
+      listEl.innerHTML = '<span class="text-slate-400 italic text-[11px]">Tidak ada data desa terlintasi</span>';
+    } else {
+      listEl.innerHTML = demo.villages
+        .map(
+          (v) => `
+        <div class="flex items-center justify-between p-2 rounded bg-white border border-slate-200 text-xs">
+          <div>
+            <div class="font-semibold text-slate-800">${escapeHtml(v.village_name)}</div>
+            <div class="text-[10px] text-slate-400">Kec. ${escapeHtml(v.district_name)} · Lintasan ${v.intersection_length_m.toFixed(0)}m (${v.share_of_road_pct.toFixed(0)}%)</div>
+          </div>
+          <div class="text-right font-mono">
+            <div class="font-bold text-emerald-800">${v.households_total.toLocaleString('id-ID')} RT</div>
+            <div class="text-[9px] text-slate-400">LK: ${v.households_male.toLocaleString('id-ID')} · PR: ${v.households_female.toLocaleString('id-ID')}</div>
+          </div>
+        </div>
+      `
+        )
+        .join('');
+    }
+  } catch (err) {
+    console.error('Error loading road demographics:', err);
+    if (badge) badge.textContent = 'Gagal';
+    if (totalEl) totalEl.textContent = '-';
+    if (listEl) listEl.innerHTML = '<span class="text-rose-500 text-[11px]">Gagal memuat data demografi rumah tangga</span>';
+  }
+}
+
+// ====================================================================
+// SECTION G: DATA KONDISI JALAN PER SEGMEN DD1 (PHASE 5.1A)
+// ====================================================================
+async function loadRoadDD1Segments(roadKey) {
+  const badge = document.getElementById('d-segments-summary-badge');
+  const totalLenEl = document.getElementById('d-segments-total-len');
+  const countLabel = document.getElementById('d-segments-count-label');
+  const listEl = document.getElementById('d-segments-list');
+  const progressBar = document.getElementById('d-segments-progress-bar');
+  const btnToggle = document.getElementById('btn-toggle-dd1-segments');
+  const btnLabel = document.getElementById('btn-toggle-dd1-label');
+
+  if (!listEl) return;
+
+  clearDD1SegmentsLayer();
+  state.currentRoadDD1Segments = null;
+  state.showDd1Segments = false;
+  if (btnLabel) btnLabel.textContent = 'Tampilkan di Peta';
+  if (btnToggle) {
+    btnToggle.className = 'px-3 py-1.5 rounded text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white transition-colors flex items-center space-x-1';
+  }
+
+  if (badge) badge.textContent = 'Memuat...';
+  listEl.innerHTML = '<span class="text-slate-400 italic text-[11px]">Memuat data segmen DD1...</span>';
+
+  try {
+    const res = await fetch(`/api/roads/${encodeURIComponent(roadKey)}/segments`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    const segData = json.data;
+    state.currentRoadDD1Segments = segData;
+
+    if (badge) {
+      badge.textContent = `${segData.total_segments} Segmen · ${segData.total_length_m.toLocaleString('id-ID')} m`;
+    }
+    if (totalLenEl) {
+      totalLenEl.textContent = `${segData.total_length_m.toLocaleString('id-ID')} m (${segData.summary.mantap_pct}% Mantap)`;
+    }
+    if (countLabel) {
+      countLabel.textContent = `${segData.total_segments} Segmen ${segData.has_short_final_segment ? '(Segmen akhir ' + segData.last_segment_length_m + 'm)' : '(Standard 100m)'}`;
+    }
+
+    // Stats chips
+    const statBaik = document.getElementById('d-seg-stat-baik');
+    const statSedang = document.getElementById('d-seg-stat-sedang');
+    const statRR = document.getElementById('d-seg-stat-rr');
+    const statRB = document.getElementById('d-seg-stat-rb');
+    if (statBaik) statBaik.textContent = `${segData.summary.baik_m} m (${segData.summary.baik_pct}%)`;
+    if (statSedang) statSedang.textContent = `${segData.summary.sedang_m} m (${segData.summary.sedang_pct}%)`;
+    if (statRR) statRR.textContent = `${segData.summary.rusak_ringan_m} m (${segData.summary.rusak_ringan_pct}%)`;
+    if (statRB) statRB.textContent = `${segData.summary.rusak_berat_m} m (${segData.summary.rusak_berat_pct}%)`;
+
+    // Progress bar
+    if (progressBar) {
+      progressBar.innerHTML = `
+        <div style="width: ${segData.summary.baik_pct}%" class="bg-emerald-500 h-full" title="Baik: ${segData.summary.baik_pct}%"></div>
+        <div style="width: ${segData.summary.sedang_pct}%" class="bg-amber-400 h-full" title="Sedang: ${segData.summary.sedang_pct}%"></div>
+        <div style="width: ${segData.summary.rusak_ringan_pct}%" class="bg-orange-500 h-full" title="Rusak Ringan: ${segData.summary.rusak_ringan_pct}%"></div>
+        <div style="width: ${segData.summary.rusak_berat_pct}%" class="bg-rose-500 h-full" title="Rusak Berat: ${segData.summary.rusak_berat_pct}%"></div>
+      `;
+    }
+
+    if (!segData.segments || segData.segments.length === 0) {
+      listEl.innerHTML = '<span class="text-slate-400 italic text-[11px]">Tidak ada data segmen DD1</span>';
+    } else {
+      listEl.innerHTML = segData.segments
+        .map((s) => {
+          const isShort = s.segment_length_m < 100;
+          const condStyle = DD1_SEGMENT_STYLES[s.dominant_condition] || DD1_SEGMENT_STYLES.sedang;
+          const statusBg = s.segment_status === 'mantap' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800';
+          return `
+            <div id="seg-card-${s.segment_id}" class="p-2 rounded bg-white border border-slate-200 text-xs hover:border-sky-400 cursor-pointer transition-colors space-y-1" onclick="focusDD1Segment('${s.segment_id}')">
+              <div class="flex items-center justify-between">
+                <span class="font-bold font-mono text-slate-800">${escapeHtml(s.sta_display)}</span>
+                <div class="flex items-center space-x-1">
+                  <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold ${isShort ? 'bg-indigo-100 text-indigo-800 border border-indigo-200' : 'bg-slate-100 text-slate-600'}">
+                    ${s.segment_length_m} m ${isShort ? '⚡' : ''}
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold ${statusBg}">
+                    ${s.status_label}
+                  </span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[11px]">
+                <div class="flex items-center space-x-1">
+                  <span class="w-2 h-2 rounded-full inline-block" style="background-color: ${condStyle.color}"></span>
+                  <span class="font-semibold text-slate-700">${s.condition_label}</span>
+                </div>
+                <span class="text-[10px] text-slate-500 font-medium">${escapeHtml(s.treatment_label)}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 flex items-center justify-between">
+                <span>${escapeHtml(s.surface_type)} · ${s.road_width_m}m</span>
+                <span class="text-sky-600 hover:underline">Sorot di peta ➔</span>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+  } catch (err) {
+    console.error('Error loading DD1 segments:', err);
+    if (badge) badge.textContent = 'Gagal';
+    if (listEl) listEl.innerHTML = '<span class="text-rose-500 text-[11px]">Gagal memuat segmen kondisi DD1</span>';
+  }
+}
+
+function clearDD1SegmentsLayer() {
+  if (state.mapLayers.dd1Segments && state.map) {
+    state.map.removeLayer(state.mapLayers.dd1Segments);
+    state.mapLayers.dd1Segments = null;
+  }
+  state.showDd1Segments = false;
+  const btnLabel = document.getElementById('btn-toggle-dd1-label');
+  const btnToggle = document.getElementById('btn-toggle-dd1-segments');
+  if (btnLabel) btnLabel.textContent = 'Tampilkan di Peta';
+  if (btnToggle) {
+    btnToggle.className = 'px-3 py-1.5 rounded text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white transition-colors flex items-center space-x-1';
+  }
+}
+
+function toggleDD1SegmentsOnMap() {
+  if (state.showDd1Segments) {
+    clearDD1SegmentsLayer();
+  } else {
+    if (!state.currentRoadDD1Segments || !state.selectedRoadKey) return;
+    renderDD1SegmentsOnMap(state.currentRoadDD1Segments, state.selectedRoadKey);
+  }
+}
+
+function renderDD1SegmentsOnMap(segData, roadKey) {
+  if (!state.map || !state.mapData.countyRoads) return;
+  const roadFeature = state.mapData.countyRoads.features.find((f) => f.properties.road_key === roadKey);
+  if (!roadFeature || !roadFeature.geometry) return;
+
+  clearDD1SegmentsLayer();
+
+  const geom = roadFeature.geometry;
+  const rawCoords = geom.type === 'LineString' ? geom.coordinates : (geom.coordinates[0] || []);
+  if (rawCoords.length < 2) return;
+
+  function haversineM(c1, c2) {
+    const R = 6371000;
+    const dLat = ((c2[1] - c1[1]) * Math.PI) / 180;
+    const dLon = ((c2[0] - c1[0]) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((c1[1] * Math.PI) / 180) * Math.cos((c2[1] * Math.PI) / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  const cumDist = [0];
+  for (let i = 1; i < rawCoords.length; i++) {
+    cumDist[i] = cumDist[i - 1] + haversineM(rawCoords[i - 1], rawCoords[i]);
+  }
+  const totalGeoLength = cumDist[cumDist.length - 1];
+  if (totalGeoLength <= 0) return;
+
+  const roadTotalM = segData.total_length_m > 0 ? segData.total_length_m : totalGeoLength;
+
+  function interpolatePoint(dist) {
+    if (dist <= 0) return [rawCoords[0][1], rawCoords[0][0]];
+    if (dist >= totalGeoLength) return [rawCoords[rawCoords.length - 1][1], rawCoords[rawCoords.length - 1][0]];
+    let idx = 1;
+    while (idx < cumDist.length && cumDist[idx] < dist) idx++;
+    const segLen = cumDist[idx] - cumDist[idx - 1];
+    const segFrac = segLen > 0 ? (dist - cumDist[idx - 1]) / segLen : 0;
+    const p0 = rawCoords[idx - 1];
+    const p1 = rawCoords[idx];
+    const lng = p0[0] + (p1[0] - p0[0]) * segFrac;
+    const lat = p0[1] + (p1[1] - p0[1]) * segFrac;
+    return [lat, lng];
+  }
+
+  function sliceLineToLatLngs(staStartM, staEndM) {
+    const startRatio = staStartM / roadTotalM;
+    const endRatio = staEndM / roadTotalM;
+    const targetStart = startRatio * totalGeoLength;
+    const targetEnd = endRatio * totalGeoLength;
+
+    const latLngs = [interpolatePoint(targetStart)];
+    for (let i = 0; i < rawCoords.length; i++) {
+      if (cumDist[i] > targetStart && cumDist[i] < targetEnd) {
+        latLngs.push([rawCoords[i][1], rawCoords[i][0]]);
+      }
+    }
+    latLngs.push(interpolatePoint(targetEnd));
+    return latLngs;
+  }
+
+  const segmentGroup = L.featureGroup();
+  state.segmentPolylineMap = new Map();
+
+  for (const seg of segData.segments) {
+    const latLngs = sliceLineToLatLngs(seg.sta_start_m, seg.sta_end_m);
+    if (latLngs.length < 2) continue;
+
+    const condStyle = DD1_SEGMENT_STYLES[seg.dominant_condition] || DD1_SEGMENT_STYLES.sedang;
+    const polyline = L.polyline(latLngs, {
+      color: condStyle.color,
+      weight: 6,
+      opacity: 0.95,
+      lineCap: 'round',
+      lineJoin: 'round',
+    });
+
+    const tooltipContent = `
+      <div class="p-1.5 text-xs space-y-1">
+        <div class="font-bold text-slate-900">${escapeHtml(seg.sta_display)} (${seg.segment_length_m} m)</div>
+        <div class="text-[11px] text-slate-700 font-semibold">${escapeHtml(roadFeature.properties.display_name)}</div>
+        <div class="text-[10px]">
+          Kondisi: <strong style="color: ${condStyle.color}">${seg.condition_label}</strong> (${seg.status_label})
+        </div>
+        <div class="text-[10px] text-slate-600">Penanganan: <strong>${escapeHtml(seg.treatment_label)}</strong></div>
+        <div class="text-[9px] text-slate-400">Permukaan: ${seg.surface_type} | Lebar: ${seg.road_width_m} m</div>
+      </div>
+    `;
+
+    polyline.bindTooltip(tooltipContent, {
+      sticky: true,
+      className: 'shadow-md rounded-lg border border-slate-200',
+    });
+
+    polyline.on('mouseover', () => {
+      polyline.setStyle({ weight: 9 });
+      const card = document.getElementById(`seg-card-${seg.segment_id}`);
+      if (card) card.classList.add('ring-2', 'ring-sky-400', 'bg-sky-50');
+    });
+
+    polyline.on('mouseout', () => {
+      polyline.setStyle({ weight: 6 });
+      const card = document.getElementById(`seg-card-${seg.segment_id}`);
+      if (card) card.classList.remove('ring-2', 'ring-sky-400', 'bg-sky-50');
+    });
+
+    polyline.on('click', (e) => {
+      if (e && e.originalEvent) L.DomEvent.stopPropagation(e);
+      focusDD1Segment(seg.segment_id);
+    });
+
+    segmentGroup.addLayer(polyline);
+    state.segmentPolylineMap.set(seg.segment_id, polyline);
+  }
+
+  segmentGroup.addTo(state.map);
+  state.mapLayers.dd1Segments = segmentGroup;
+  state.showDd1Segments = true;
+
+  const btnLabel = document.getElementById('btn-toggle-dd1-label');
+  const btnToggle = document.getElementById('btn-toggle-dd1-segments');
+  if (btnLabel) btnLabel.textContent = 'Sembunyikan Segmen';
+  if (btnToggle) {
+    btnToggle.className = 'px-3 py-1.5 rounded text-xs font-semibold bg-slate-700 hover:bg-slate-800 text-white transition-colors flex items-center space-x-1';
+  }
+}
+
+window.focusDD1Segment = function(segmentId) {
+  const card = document.getElementById(`seg-card-${segmentId}`);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    card.classList.add('ring-2', 'ring-sky-500', 'bg-sky-50');
+    setTimeout(() => card.classList.remove('ring-2', 'ring-sky-500', 'bg-sky-50'), 1500);
+  }
+
+  if (!state.showDd1Segments) {
+    toggleDD1SegmentsOnMap();
+  }
+
+  if (state.segmentPolylineMap && state.segmentPolylineMap.has(segmentId)) {
+    const polyline = state.segmentPolylineMap.get(segmentId);
+    polyline.setStyle({ weight: 10 });
+    polyline.openTooltip();
+    setTimeout(() => polyline.setStyle({ weight: 6 }), 2000);
+  }
+};
 
 function renderFactorsBreakdown(data) {
   const tbody = document.getElementById('d-factors-body');

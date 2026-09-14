@@ -403,18 +403,21 @@ CREATE TABLE IF NOT EXISTS road_nearest_facilities (
 CREATE INDEX IF NOT EXISTS idx_rnf_road ON road_nearest_facilities(road_key);
 CREATE INDEX IF NOT EXISTS idx_rnf_type ON road_nearest_facilities(facility_type);
 
--- 22. Kontrak Integrasi Demografi Desa (Data Contract Placeholder - Phase 5.1)
+-- 22. Kontrak Integrasi Demografi Desa (Data Contract Phase 5.1 & Phase 5.1A)
 CREATE TABLE IF NOT EXISTS village_demographics (
     village_id              TEXT PRIMARY KEY REFERENCES villages(village_id) ON DELETE RESTRICT,
     year                    INTEGER NOT NULL,
     population              INTEGER,
-    households_kk           INTEGER,
-    source                  TEXT,
+    households_total        INTEGER NOT NULL,
+    households_male         INTEGER NOT NULL,
+    households_female       INTEGER NOT NULL,
+    households_kk           INTEGER, -- backward compatibility alias
+    source                  TEXT NOT NULL,
     source_reference        TEXT,
     imported_at             TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
--- 23. Kontrak Integrasi Treatment Engine (Data Contract Placeholder - Phase 5.1)
+-- 23. Kontrak Integrasi Treatment Engine / Data Kondisi Jalan DD1 (Phase 5.1 & Phase 5.1A)
 CREATE TABLE IF NOT EXISTS treatment_engine_segments (
     segment_id              TEXT PRIMARY KEY,
     road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
@@ -423,17 +426,23 @@ CREATE TABLE IF NOT EXISTS treatment_engine_segments (
     segment_length_m        REAL NOT NULL,
     damage_type             TEXT,
     condition_class         TEXT,
+    dominant_condition      TEXT,
+    segment_status          TEXT,
     severity                TEXT,
     damage_area_m2          REAL,
     damage_pct              REAL,
     surface_type            TEXT,
+    road_width_m            REAL,
     recommended_treatment   TEXT,
     survey_date             TEXT,
-    source                  TEXT NOT NULL DEFAULT 'TREATMENT_ENGINE',
+    source                  TEXT NOT NULL DEFAULT 'DD1_CONDITION_SURVEY',
     source_record_id        TEXT,
     segment_geometry        TEXT,
     created_at              TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE INDEX IF NOT EXISTS idx_tes_road_key ON treatment_engine_segments(road_key);
+CREATE INDEX IF NOT EXISTS idx_tes_condition ON treatment_engine_segments(dominant_condition);
+CREATE INDEX IF NOT EXISTS idx_tes_status ON treatment_engine_segments(segment_status);
+
 

@@ -1529,26 +1529,105 @@
 
           </div>
 
-          <!-- Section F: Kontrak Integrasi Lanjutan (Demografi & Treatment Engine) -->
-          <div class="bg-slate-50 rounded-xl p-4 border border-dashed border-slate-300 space-y-2">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
-              <span>📦</span>
-              <span>F. Kontrak Integrasi Lanjutan (Phase 5.1 Foundation)</span>
-            </h3>
-            <div class="space-y-1.5 text-xs text-slate-600">
-              <div class="flex items-center justify-between bg-white p-2 rounded border border-slate-200">
-                <div>
-                  <span class="font-medium text-slate-800 block">Agregat Demografi (Desa / KK Terlintasi)</span>
-                  <span class="text-[10px] text-slate-400">Tabel: village_demographics</span>
-                </div>
-                <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">DATA_REQUIRED</span>
+          <!-- Section F: Demografi Rumah Tangga Dilayani (Phase 5.1A Otoritatif 2025) -->
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center space-x-1.5">
+                <span>👥</span>
+                <span>F. Demografi Rumah Tangga Dilayani (2025)</span>
+              </h3>
+              <span id="d-households-summary-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                Memuat...
+              </span>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 bg-white p-2.5 rounded-lg border border-slate-200 text-center">
+              <div>
+                <span class="text-[10px] text-slate-400 block font-medium">Total Rumah Tangga</span>
+                <span id="d-households-total" class="text-sm font-bold font-mono text-slate-800">-</span>
               </div>
-              <div class="flex items-center justify-between bg-white p-2 rounded border border-slate-200">
-                <div>
-                  <span class="font-medium text-slate-800 block">Segmen Treatment Engine (~100m)</span>
-                  <span class="text-[10px] text-slate-400">Tabel: treatment_engine_segments</span>
+              <div>
+                <span class="text-[10px] text-slate-400 block font-medium">Kepala RT Laki-Laki</span>
+                <span id="d-households-male" class="text-sm font-bold font-mono text-slate-600">-</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block font-medium">Kepala RT Perempuan</span>
+                <span id="d-households-female" class="text-sm font-bold font-mono text-slate-600">-</span>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                <span>Rincian per Desa yang Dilalui:</span>
+                <span class="text-[10px] text-slate-400">Sumber: Disdukcapil HSS (2025)</span>
+              </div>
+              <div id="d-households-villages-list" class="space-y-1.5 max-h-40 overflow-y-auto custom-scrollbar pr-1">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Section G: Kondisi Jalan per Segmen (Data Kondisi DD1 - Phase 5.1A) -->
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center space-x-1.5">
+                <span>🛣️</span>
+                <span>G. Data Kondisi Jalan per Segmen (DD1)</span>
+              </h3>
+              <span id="d-segments-summary-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                Memuat...
+              </span>
+            </div>
+
+            <!-- Segment Map Toggle Button -->
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-lg border border-slate-200">
+              <div class="text-xs">
+                <span class="font-semibold text-slate-800 block">Visualisasi Segmen di Peta</span>
+                <span class="text-[10px] text-slate-500">Tampilkan poliline berwarna per segmen STA (DD1)</span>
+              </div>
+              <button id="btn-toggle-dd1-segments" type="button" class="px-3 py-1.5 rounded text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white transition-colors flex items-center space-x-1">
+                <span>🗺️</span>
+                <span id="btn-toggle-dd1-label">Tampilkan di Peta</span>
+              </button>
+            </div>
+
+            <!-- Segment Condition Distribution Bar & Chips -->
+            <div class="space-y-2 bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+              <div class="flex items-center justify-between text-[11px] font-medium text-slate-600">
+                <span>Komposisi Kondisi Segmen:</span>
+                <span id="d-segments-total-len" class="font-mono text-slate-500">-</span>
+              </div>
+              <div id="d-segments-progress-bar" class="w-full h-2.5 rounded-full overflow-hidden bg-slate-200 flex">
+                <!-- Filled via JS -->
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10px]">
+                <div class="p-1.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800">
+                  <span class="block font-medium">Baik:</span>
+                  <span id="d-seg-stat-baik" class="font-bold font-mono">0 m (0%)</span>
                 </div>
-                <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800">DATA_REQUIRED</span>
+                <div class="p-1.5 rounded bg-amber-50 border border-amber-200 text-amber-800">
+                  <span class="block font-medium">Sedang:</span>
+                  <span id="d-seg-stat-sedang" class="font-bold font-mono">0 m (0%)</span>
+                </div>
+                <div class="p-1.5 rounded bg-orange-50 border border-orange-200 text-orange-800">
+                  <span class="block font-medium">Rusak Ringan:</span>
+                  <span id="d-seg-stat-rr" class="font-bold font-mono">0 m (0%)</span>
+                </div>
+                <div class="p-1.5 rounded bg-rose-50 border border-rose-200 text-rose-800">
+                  <span class="block font-medium">Rusak Berat:</span>
+                  <span id="d-seg-stat-rb" class="font-bold font-mono">0 m (0%)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Segment List -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                <span>Daftar Segmen Kondisi DD1 (~100m):</span>
+                <span id="d-segments-count-label" class="text-[10px] text-slate-400">0 Segmen</span>
+              </div>
+              <div id="d-segments-list" class="space-y-1.5 max-h-56 overflow-y-auto custom-scrollbar pr-1">
+                <!-- Populated via JS -->
               </div>
             </div>
           </div>

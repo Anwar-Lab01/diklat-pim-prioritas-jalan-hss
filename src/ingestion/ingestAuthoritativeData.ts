@@ -6,6 +6,8 @@ import { ingestGeometries } from './ingestGeometries.ts';
 import { ingestAdminAndFacilities } from './ingestAdminAndFacilities.ts';
 import { seedModelDefinitions } from './seedModelDefinitions.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
+import { ingestDemographics } from './ingestDemographics.ts';
+import { ingestTreatmentSegments } from './ingestTreatmentSegments.ts';
 
 export function runMasterIngestion(dbPath?: string): {
   success: boolean;
@@ -52,13 +54,20 @@ export function runMasterIngestion(dbPath?: string): {
       `      ✓ Category Weights: ${modelStats.insertedCategoryWeights}, Variable Weights: ${modelStats.insertedVariableWeights}, Observations: ${modelStats.insertedObservations}`
     );
 
-    console.log('[7/7] Computing spatial derivations and network accessibility foundation (Phase 5.1)...');
+    console.log('[7/8] Computing spatial derivations and network accessibility foundation (Phase 5.1)...');
     const spatialDerivationService = new SpatialDerivationService(db);
     const adminDerivStats = spatialDerivationService.ingestAdminIntersections();
     const snapStats = spatialDerivationService.snapAllFacilities();
     const facilityDistStats = spatialDerivationService.recalculateFacilityDistances();
     console.log(
       `      ✓ Intersections: ${adminDerivStats.insertedVillages} villages, ${adminDerivStats.insertedDistricts} districts; Snaps: ${snapStats.totalSnapped}; Nearest Routes: 1400`
+    );
+
+    console.log('[8/8] Ingesting authoritative 2025 village demographics and DD1 condition segments (Phase 5.1A)...');
+    const demographicStats = ingestDemographics(db);
+    const treatmentSegmentStats = ingestTreatmentSegments(db);
+    console.log(
+      `      ✓ Demographics: ${demographicStats.insertedVillages} villages, ${demographicStats.totalHouseholds} households; Segments: ${treatmentSegmentStats.insertedSegments} DD1 segments (${treatmentSegmentStats.totalLengthM} m)`
     );
 
     return {
@@ -73,6 +82,8 @@ export function runMasterIngestion(dbPath?: string): {
         snapStats,
         facilityDistStats,
       },
+      demographicStats,
+      treatmentSegmentStats,
     };
   });
 

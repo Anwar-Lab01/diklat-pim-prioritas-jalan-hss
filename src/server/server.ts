@@ -7,6 +7,7 @@ import { ModelService } from '../services/modelService.ts';
 import { SpatialService } from '../services/spatialService.ts';
 import { SimulationService } from '../services/simulationService.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
+import { DemographicsAndSegmentsService } from '../services/demographicsAndSegmentsService.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ export function createServer() {
   const spatialService = new SpatialService();
   const simulationService = new SimulationService();
   const derivationService = new SpatialDerivationService();
+  const demoSegService = new DemographicsAndSegmentsService(derivationService['db']);
 
   app.use(express.json());
 
@@ -69,6 +71,28 @@ export function createServer() {
           error: `ROAD_NOT_FOUND: Road with key '${roadKey}' does not exist.`,
         });
       }
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 3A. Road Demographics API (Phase 5.1A: 2025 Household Coverage)
+  app.get('/api/roads/:roadKey/demographics', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = demoSegService.getRoadDemographics(roadKey);
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 3B. Road Condition Segments API (Phase 5.1A: DD1 Condition Segments)
+  app.get('/api/roads/:roadKey/segments', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = demoSegService.getRoadDD1Segments(roadKey);
       res.json({ success: true, data });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
