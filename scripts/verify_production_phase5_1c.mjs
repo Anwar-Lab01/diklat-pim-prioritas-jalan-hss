@@ -88,7 +88,7 @@ async function main() {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
-  const port = 9223;
+  const port = 9226;
   const userDataDir = path.resolve('temp_chrome_prod_p51c');
 
   console.log('Launching headless Chrome to load Vercel production...');
@@ -231,11 +231,21 @@ async function main() {
       await window.openRoadDetail('HSS-KAB-025');
       await window.selectRoadOnMap('HSS-KAB-025');
       
-      // Trigger route tracing to nearest puskesmas
-      if (typeof window.traceNearestFacilityRoute === 'function') {
-        window.traceNearestFacilityRoute('HSS-KAB-025', 'puskesmas');
+      // Wait for nearest facilities data to load
+      for (let i = 0; i < 30; i++) {
+        if (!window.appState.nearestFacilitiesLoading && (window.appState.currentRoadNearestFacilities || []).length > 0) {
+          break;
+        }
+        await new Promise((r) => setTimeout(r, 100));
       }
-      const routeLayer = window.appState && window.appState.mapLayers && window.appState.mapLayers.routeTracing;
+
+      // Trigger route tracing
+      if (typeof window.traceNearestFacilityRoute === 'function') {
+        window.traceNearestFacilityRoute('puskesmas');
+      }
+      await new Promise((r) => setTimeout(r, 400));
+
+      const routeLayer = window.appState && window.appState.mapLayers && (window.appState.mapLayers.routeTrace || window.appState.mapLayers.routeTracing);
       const isRouteActive = !!(routeLayer && window.appState.map && window.appState.map.hasLayer(routeLayer));
       return { isRouteActive };
     `);
