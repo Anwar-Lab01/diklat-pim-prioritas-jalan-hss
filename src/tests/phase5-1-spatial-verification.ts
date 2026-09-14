@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { getDatabase, closeDatabase } from '../db/connection.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 import { ScoringService } from '../services/scoringService.ts';
@@ -206,8 +208,74 @@ async function runPhase51Verification() {
   assert(reconciliation.length === 350, 'Distance reconciliation covers all 350 canonical roads', `got ${reconciliation.length}`);
   assert(reconciliation[0].status_ibukota === 'DATA_REQUIRED_NO_OFFICIAL_COORDINATE', 'Ibukota Kabupaten status is DATA_REQUIRED_NO_OFFICIAL_COORDINATE');
 
+  // --- 8. PHASE 5.1B TARGETED DISTANCE UI & ROUTE TRACING CONTRACT ---
+  console.log('\n--- 8. PHASE 5.1B TARGETED DISTANCE UI & ROUTE TRACING CONTRACT ---');
+
+  // 1. HSS-KAB-025 nearest facility payload
+  const near025 = derivationService.getRoadNearestFacilities('HSS-KAB-025');
+  assert(near025.length === 4, 'HSS-KAB-025 payload returns exactly 4 facility categories', `got ${near025.length}`);
+  const types025 = near025.map((f) => f.facility_type).sort();
+  assert(
+    JSON.stringify(types025) === JSON.stringify(['hospital', 'market', 'puskesmas', 'school']),
+    'HSS-KAB-025 includes hospital, market, puskesmas, and school'
+  );
+
+  // 2. Frontend schema compatibility
+  for (const f of near025) {
+    assert(typeof f.road_key === 'string' && f.road_key === 'HSS-KAB-025', 'Schema: road_key is valid');
+    assert(typeof f.nearest_facility_id === 'string' && f.nearest_facility_id.length > 0, 'Schema: nearest_facility_id is valid');
+    assert(typeof f.nearest_facility_name === 'string' && f.nearest_facility_name.length > 0, 'Schema: nearest_facility_name is valid');
+    assert(typeof f.network_distance_m === 'number', 'Schema: network_distance_m is number');
+    assert(typeof f.route_geometry_geojson === 'string', 'Schema: route_geometry_geojson is string');
+    assert(typeof f.road_access_point_geojson === 'string', 'Schema: road_access_point_geojson is string');
+    assert(typeof f.facility_snap_point_geojson === 'string', 'Schema: facility_snap_point_geojson is string');
+    assert(typeof (f.network_version || (f as any).network_graph_hash) === 'string', 'Schema: network_version is string');
+
+    const routeG = JSON.parse(f.route_geometry_geojson);
+    assert(routeG.type === 'LineString' && Array.isArray(routeG.coordinates), 'Schema: route parses as GeoJSON LineString');
+
+    const accG = JSON.parse(f.road_access_point_geojson);
+    assert(accG.type === 'Point' && accG.coordinates.length === 2, 'Schema: access point parses as GeoJSON Point');
+
+    const snapG = JSON.parse(f.facility_snap_point_geojson);
+    assert(snapG.type === 'Point' && snapG.coordinates.length === 2, 'Schema: snap point parses as GeoJSON Point');
+  }
+
+  // 3. Facility cards populate with network distance
+  const pusk025 = near025.find((f) => f.facility_type === 'puskesmas')!;
+  assert(pusk025.network_distance_m > 1000 && pusk025.network_distance_m < 2000, 'HSS-KAB-025 Puskesmas network distance ~1168m');
+  const sch025 = near025.find((f) => f.facility_type === 'school')!;
+  assert(sch025.network_distance_m > 0 && sch025.network_distance_m < 100, 'HSS-KAB-025 School network distance ~24m');
+
+  // 4. Clicking Puskesmas renders route
+  const puskRoute = JSON.parse(pusk025.route_geometry_geojson);
+  assert(puskRoute.coordinates.length >= 2, 'Puskesmas route geometry has >= 2 vertices');
+
+  // 5. Clicking School renders route
+  const schRoute = JSON.parse(sch025.route_geometry_geojson);
+  assert(schRoute.coordinates.length >= 2, 'School route geometry has >= 2 vertices');
+
+  // 6. Disconnected road shows UNRESOLVED_NETWORK
+  const near338 = derivationService.getRoadNearestFacilities('HSS-KAB-338');
+  const hosp338 = near338.find((f) => f.facility_type === 'hospital');
+  assert(hosp338 !== undefined, 'HSS-KAB-338 has hospital record');
+  assert(hosp338!.network_distance_m === -1, 'HSS-KAB-338 hospital network_distance_m is -1 (UNRESOLVED_NETWORK)');
+  assert(hosp338!.nearest_facility_id === 'UNRESOLVED_DISCONNECTED', 'HSS-KAB-338 facility_id is UNRESOLVED_DISCONNECTED');
+
+  // 7. Generic "jarak data belum termuat" is not shown
+  const appJsContent = fs.readFileSync(path.join(process.cwd(), 'src', 'public', 'app.js'), 'utf8');
+  assert(!appJsContent.includes("alert('Data fasilitas terdekat belum termuat.')"), 'app.js does NOT contain generic alert');
+  assert(!appJsContent.includes('alert('), 'app.js contains zero blocking alert dialogs');
+  const indexHtmlContent = fs.readFileSync(path.join(process.cwd(), 'src', 'public', 'index.html'), 'utf8');
+  assert(indexHtmlContent.includes('id="name-dist-puskesmas"'), 'index.html contains name-dist-puskesmas');
+  assert(indexHtmlContent.includes('id="rtc-unresolved-msg"'), 'index.html contains rtc-unresolved-msg');
+
+  // 8. Baseline ranking remains unchanged
+  assert(rank1?.road_key === 'HSS-KAB-025', 'Mandatory rank #1 is HSS-KAB-025');
+  assert(Math.abs(rank1!.final_score - 0.649945) < 1e-4, 'Mandatory rank #1 score is ~0.649945');
+
   console.log('\n================================================================');
-  console.log(`PHASE 5.1 VERIFICATION COMPLETE: ${passCount} PASSED, ${failCount} FAILED`);
+  console.log(`PHASE 5.1 & 5.1B VERIFICATION COMPLETE: ${passCount} PASSED, ${failCount} FAILED`);
   console.log('================================================================');
 
   closeDatabase();

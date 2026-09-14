@@ -2307,36 +2307,119 @@ async function loadRoadCoverage(roadKey) {
   }
 }
 
+const FACILITY_CARD_CONFIG = [
+  { type: 'puskesmas', label: 'Puskesmas', icon: '🩺' },
+  { type: 'school', label: 'Sekolah', icon: '🏫' },
+  { type: 'hospital', label: 'RSUD', icon: '🏥' },
+  { type: 'market', label: 'Pasar', icon: '🛒' },
+];
+
 async function loadRoadNearestFacilities(roadKey) {
   state.currentRoadKey = roadKey;
   state.currentRoadNearestFacilities = [];
+  state.nearestFacilitiesLoading = true;
+  state.nearestFacilitiesError = null;
 
-  const bPusk = document.getElementById('badge-dist-puskesmas');
-  const bSchool = document.getElementById('badge-dist-school');
-  const bHosp = document.getElementById('badge-dist-hospital');
-  const bMkt = document.getElementById('badge-dist-market');
-
-  if (bPusk) bPusk.textContent = '...';
-  if (bSchool) bSchool.textContent = '...';
-  if (bHosp) bHosp.textContent = '...';
-  if (bMkt) bMkt.textContent = '...';
+  // 1. Set explicit LOADING state: "Memuat data jarak..."
+  for (const cfg of FACILITY_CARD_CONFIG) {
+    const b = document.getElementById(`badge-dist-${cfg.type}`);
+    const n = document.getElementById(`name-dist-${cfg.type}`);
+    const s = document.getElementById(`status-dist-${cfg.type}`);
+    if (b) {
+      b.textContent = '...';
+      b.className = 'text-[11px] font-mono font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded';
+    }
+    if (n) {
+      n.textContent = 'Memuat data jarak...';
+      n.className = 'text-[11px] text-slate-400 italic truncate mt-1';
+    }
+    if (s) {
+      s.innerHTML = '<span>Memuat rute jaringan...</span>';
+    }
+  }
 
   try {
-    const res = await fetch(`/api/spatial/roads/${roadKey}/nearest-facilities`);
+    const res = await fetch(`/api/spatial/roads/${encodeURIComponent(roadKey)}/nearest-facilities`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
-    if (!json.success) throw new Error(json.error);
+    if (!json.success) throw new Error(json.error || 'Gagal memuat');
 
-    state.currentRoadNearestFacilities = json.data;
+    state.currentRoadNearestFacilities = json.data || [];
+    state.nearestFacilitiesLoading = false;
 
-    for (const f of json.data) {
-      const distStr = f.network_distance_m >= 0 ? `${(f.network_distance_m / 1000).toFixed(1)} km` : 'Terputus';
-      if (f.facility_type === 'puskesmas' && bPusk) bPusk.textContent = distStr;
-      if (f.facility_type === 'school' && bSchool) bSchool.textContent = distStr;
-      if (f.facility_type === 'hospital' && bHosp) bHosp.textContent = distStr;
-      if (f.facility_type === 'market' && bMkt) bMkt.textContent = distStr;
+    // 2. Populate facility cards with explicit states: AVAILABLE, UNRESOLVED_NETWORK, NO_FACILITY_DATA
+    for (const cfg of FACILITY_CARD_CONFIG) {
+      const b = document.getElementById(`badge-dist-${cfg.type}`);
+      const n = document.getElementById(`name-dist-${cfg.type}`);
+      const s = document.getElementById(`status-dist-${cfg.type}`);
+      const fac = state.currentRoadNearestFacilities.find((f) => f.facility_type === cfg.type);
+
+      if (!fac) {
+        // NO_FACILITY_DATA: "Data fasilitas belum tersedia"
+        if (b) {
+          b.textContent = 'Tidak ada';
+          b.className = 'text-[11px] font-mono font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded';
+        }
+        if (n) {
+          n.textContent = 'Data fasilitas belum tersedia';
+          n.className = 'text-[11px] text-slate-500 truncate mt-1';
+        }
+        if (s) {
+          s.innerHTML = '<span class="text-slate-400">Data fasilitas belum tersedia</span>';
+        }
+      } else if (fac.network_distance_m < 0) {
+        // UNRESOLVED_NETWORK: "Rute jaringan tidak terhubung"
+        if (b) {
+          b.textContent = 'Terputus';
+          b.className = 'text-[11px] font-mono font-bold text-amber-700 bg-amber-100 border border-amber-200 px-1.5 py-0.5 rounded';
+        }
+        if (n) {
+          n.textContent = 'Rute jaringan tidak terhubung';
+          n.className = 'text-[11px] font-semibold text-amber-800 truncate mt-1';
+        }
+        if (s) {
+          s.innerHTML = '<span class="text-amber-700 font-medium">Ruas berada pada komponen jaringan yang terpisah.</span>';
+        }
+      } else {
+        // AVAILABLE: Show actual nearest facility name & network distance
+        const distKm = (fac.network_distance_m / 1000).toFixed(1);
+        if (b) {
+          b.textContent = `${distKm} km`;
+          b.className = 'text-[11px] font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded';
+        }
+        if (n) {
+          n.textContent = fac.nearest_facility_name;
+          n.className = 'text-[11px] font-semibold text-slate-800 truncate mt-1';
+          n.title = fac.nearest_facility_name;
+        }
+        if (s) {
+          const snapStr = fac.facility_snap_distance_m ? `Snap: ${fac.facility_snap_distance_m.toFixed(0)}m` : '';
+          s.innerHTML = `<span class="text-slate-500">${snapStr}</span><span class="text-indigo-600 font-semibold group-hover:underline">Petakan ➔</span>`;
+        }
+      }
     }
   } catch (err) {
+    state.nearestFacilitiesLoading = false;
+    state.nearestFacilitiesError = err.message;
     console.error('Error loading nearest facilities:', err);
+
+    // ERROR state: "Gagal memuat data aksesibilitas"
+    for (const cfg of FACILITY_CARD_CONFIG) {
+      const b = document.getElementById(`badge-dist-${cfg.type}`);
+      const n = document.getElementById(`name-dist-${cfg.type}`);
+      const s = document.getElementById(`status-dist-${cfg.type}`);
+      if (b) {
+        b.textContent = 'Error';
+        b.className = 'text-[11px] font-mono font-bold text-rose-700 bg-rose-100 border border-rose-200 px-1.5 py-0.5 rounded';
+      }
+      if (n) {
+        n.textContent = 'Gagal memuat data aksesibilitas';
+        n.className = 'text-[11px] text-rose-600 truncate mt-1';
+      }
+      if (s) {
+        s.innerHTML = '<span class="text-rose-500 font-medium">Periksa koneksi server</span>';
+      }
+    }
   }
 }
 
@@ -2347,24 +2430,96 @@ function clearRouteTrace() {
   }
   const card = document.getElementById('route-trace-card');
   const btnClear = document.getElementById('btn-clear-route-trace');
+  const unresMsg = document.getElementById('rtc-unresolved-msg');
+  const grid = document.getElementById('rtc-details-grid');
   if (card) card.classList.add('hidden');
   if (btnClear) btnClear.classList.add('hidden');
+  if (unresMsg) unresMsg.classList.add('hidden');
+  if (grid) grid.classList.remove('hidden');
 }
 
 function traceNearestFacilityRoute(facilityType) {
   clearRouteTrace();
 
-  if (!state.currentRoadNearestFacilities || state.currentRoadNearestFacilities.length === 0) {
-    alert('Data fasilitas terdekat belum termuat.');
+  const card = document.getElementById('route-trace-card');
+  const btnClear = document.getElementById('btn-clear-route-trace');
+  const unresMsg = document.getElementById('rtc-unresolved-msg');
+  const grid = document.getElementById('rtc-details-grid');
+  const nameEl = document.getElementById('rtc-facility-name');
+  const distEl = document.getElementById('rtc-network-dist');
+
+  // Guard: Loading state
+  if (state.nearestFacilitiesLoading) {
+    if (card && nameEl && distEl) {
+      nameEl.textContent = 'Memuat data jarak...';
+      distEl.textContent = '...';
+      distEl.className = 'font-mono text-slate-500';
+      if (grid) grid.classList.add('hidden');
+      if (unresMsg) {
+        unresMsg.textContent = 'Sedang memuat data jarak rute jaringan. Mohon tunggu sejenak.';
+        unresMsg.className = 'text-[11px] text-indigo-800 bg-indigo-50 p-2.5 rounded border border-indigo-200 leading-relaxed';
+        unresMsg.classList.remove('hidden');
+      }
+      card.classList.remove('hidden');
+    }
     return;
   }
 
-  const facRecord = state.currentRoadNearestFacilities.find((f) => f.facility_type === facilityType);
-  if (!facRecord || facRecord.network_distance_m < 0) {
-    alert('Rute jaringan terputus atau fasilitas tidak dapat dijangkau dari komponen jaringan jalan ini.');
+  // Guard: Error state
+  if (state.nearestFacilitiesError) {
+    if (card && nameEl && distEl) {
+      nameEl.textContent = 'Gagal memuat data aksesibilitas';
+      distEl.textContent = 'Error';
+      distEl.className = 'font-mono text-rose-700 font-bold';
+      if (grid) grid.classList.add('hidden');
+      if (unresMsg) {
+        unresMsg.textContent = 'Gagal memuat data aksesibilitas. Silakan periksa koneksi server.';
+        unresMsg.className = 'text-[11px] text-rose-800 bg-rose-50 p-2.5 rounded border border-rose-200 leading-relaxed';
+        unresMsg.classList.remove('hidden');
+      }
+      card.classList.remove('hidden');
+    }
     return;
   }
 
+  const facRecord = (state.currentRoadNearestFacilities || []).find((f) => f.facility_type === facilityType);
+
+  // Guard: No data for this category
+  if (!facRecord) {
+    if (card && nameEl && distEl) {
+      nameEl.textContent = 'Data fasilitas belum tersedia';
+      distEl.textContent = '-';
+      distEl.className = 'font-mono text-slate-500';
+      if (grid) grid.classList.add('hidden');
+      if (unresMsg) {
+        unresMsg.textContent = 'Data fasilitas belum tersedia untuk kategori ini.';
+        unresMsg.className = 'text-[11px] text-slate-700 bg-slate-50 p-2.5 rounded border border-slate-200 leading-relaxed';
+        unresMsg.classList.remove('hidden');
+      }
+      card.classList.remove('hidden');
+    }
+    return;
+  }
+
+  // Guard: Disconnected network (UNRESOLVED_NETWORK)
+  if (facRecord.network_distance_m < 0) {
+    if (card && nameEl && distEl) {
+      nameEl.textContent = facRecord.nearest_facility_name || 'Fasilitas Tidak Terjangkau';
+      distEl.textContent = 'Rute jaringan tidak terhubung';
+      distEl.className = 'font-mono text-amber-700 font-bold';
+      if (grid) grid.classList.add('hidden');
+      if (unresMsg) {
+        unresMsg.textContent = 'Rute jaringan tidak terhubung. Ruas berada pada komponen jaringan yang terpisah dari lokasi fasilitas ini.';
+        unresMsg.className = 'text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded border border-amber-200 leading-relaxed';
+        unresMsg.classList.remove('hidden');
+      }
+      card.classList.remove('hidden');
+      if (btnClear) btnClear.classList.remove('hidden');
+    }
+    return;
+  }
+
+  // AVAILABLE: Render route tracing on map
   // Ensure routeTracingPane exists
   if (state.map && !state.map.getPane('routeTracingPane')) {
     state.map.createPane('routeTracingPane');
@@ -2377,14 +2532,14 @@ function traceNearestFacilityRoute(facilityType) {
 
   const routeGroup = L.layerGroup();
 
-  // 1. Route line
+  // 1. Route line (violet #8b5cf6, weight 4.5, dashArray 6,6)
   const routeLine = L.geoJSON(routeGeo, {
     pane: 'routeTracingPane',
     style: ROUTE_TRACING_STYLE,
   });
   routeGroup.addLayer(routeLine);
 
-  // 2. Road access point
+  // 2. Road access point (cyan #06b6d4)
   const accessMarker = L.circleMarker([accessPt.coordinates[1], accessPt.coordinates[0]], {
     pane: 'selectionHaloPane',
     ...ROUTE_ACCESS_POINT_STYLE,
@@ -2396,7 +2551,7 @@ function traceNearestFacilityRoute(facilityType) {
   `);
   routeGroup.addLayer(accessMarker);
 
-  // 3. Destination facility marker
+  // 3. Destination facility marker (violet #8b5cf6)
   const facIcon = createFacilityIcon(facilityType);
   const facMarker = L.marker([snapPt.coordinates[1], snapPt.coordinates[0]], {
     pane: 'facilitiesPane',
@@ -2423,15 +2578,16 @@ function traceNearestFacilityRoute(facilityType) {
   }
 
   // Update Route Trace Card
-  const card = document.getElementById('route-trace-card');
-  const btnClear = document.getElementById('btn-clear-route-trace');
   if (card) {
-    document.getElementById('rtc-facility-name').textContent = facRecord.nearest_facility_name;
-    document.getElementById('rtc-network-dist').textContent = `${(facRecord.network_distance_m / 1000).toFixed(2)} km (${facRecord.network_distance_m.toFixed(0)} m)`;
+    nameEl.textContent = facRecord.nearest_facility_name;
+    distEl.textContent = `${(facRecord.network_distance_m / 1000).toFixed(2)} km (${facRecord.network_distance_m.toFixed(0)} m)`;
+    distEl.className = 'font-mono text-indigo-700 font-bold';
     document.getElementById('rtc-straight-dist').textContent = facRecord.straight_line_distance_m !== null
       ? `${(facRecord.straight_line_distance_m / 1000).toFixed(2)} km`
       : '-';
     document.getElementById('rtc-snap-dist').textContent = `${facRecord.facility_snap_distance_m.toFixed(1)} m`;
+    if (grid) grid.classList.remove('hidden');
+    if (unresMsg) unresMsg.classList.add('hidden');
     card.classList.remove('hidden');
   }
   if (btnClear) {
@@ -3426,5 +3582,8 @@ window.openSimExplainModal = window.openSimulationExplainModal;
 window.closeSimExplainModal = window.closeSimulationExplainModal;
 window.resetSimulationWeights = window.resetSimulationToBaseline;
 window.setMapColorSource = setMapColorSource;
+window.appState = state;
+window.clearRouteTrace = clearRouteTrace;
+window.traceNearestFacilityRoute = traceNearestFacilityRoute;
 
 

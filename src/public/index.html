@@ -1384,26 +1384,70 @@
               <span class="text-[10px] text-indigo-700 bg-white border border-indigo-200 px-2 py-0.5 rounded font-mono">Dijkstra 366 Ruas</span>
             </div>
             <p class="text-[11px] text-slate-600">
-              Pilih fasilitas untuk memetakan rute jaringan terpendek dari ruas ini ke simpul fasilitas publik:
+              Jarak jaringan rute riil (bukan garis lurus) dari ruas ini ke fasilitas publik terdekat. Klik kartu untuk menampilkan rute pada peta:
             </p>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <button id="btn-trace-puskesmas" class="px-2.5 py-2 bg-white hover:bg-indigo-100/70 text-indigo-900 border border-indigo-200 rounded-lg text-left transition flex items-center justify-between group">
-                <span class="font-medium">🩺 Puskesmas</span>
-                <span id="badge-dist-puskesmas" class="text-[10px] font-mono text-slate-500 group-hover:text-indigo-700">...</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs" id="facility-cards-container">
+              <!-- Puskesmas -->
+              <button id="btn-trace-puskesmas" class="p-2.5 bg-white hover:bg-indigo-50/80 border border-indigo-200 rounded-lg text-left transition flex flex-col justify-between group shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <div class="flex items-center justify-between w-full">
+                  <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span>🩺</span> Puskesmas Terdekat
+                  </span>
+                  <span id="badge-dist-puskesmas" class="text-[11px] font-mono font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">...</span>
+                </div>
+                <div id="name-dist-puskesmas" class="text-[11px] text-slate-600 truncate mt-1">Memuat data jarak...</div>
+                <div id="status-dist-puskesmas" class="text-[9px] text-slate-400 mt-1 flex items-center justify-between w-full">
+                  <span>Klik untuk memetakan</span>
+                  <span class="text-indigo-600 font-medium group-hover:underline">Petakan ➔</span>
+                </div>
               </button>
-              <button id="btn-trace-school" class="px-2.5 py-2 bg-white hover:bg-indigo-100/70 text-indigo-900 border border-indigo-200 rounded-lg text-left transition flex items-center justify-between group">
-                <span class="font-medium">🏫 SD / SMP</span>
-                <span id="badge-dist-school" class="text-[10px] font-mono text-slate-500 group-hover:text-indigo-700">...</span>
+
+              <!-- Sekolah -->
+              <button id="btn-trace-school" class="p-2.5 bg-white hover:bg-indigo-50/80 border border-indigo-200 rounded-lg text-left transition flex flex-col justify-between group shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <div class="flex items-center justify-between w-full">
+                  <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span>🏫</span> Sekolah Terdekat
+                  </span>
+                  <span id="badge-dist-school" class="text-[11px] font-mono font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">...</span>
+                </div>
+                <div id="name-dist-school" class="text-[11px] text-slate-600 truncate mt-1">Memuat data jarak...</div>
+                <div id="status-dist-school" class="text-[9px] text-slate-400 mt-1 flex items-center justify-between w-full">
+                  <span>Klik untuk memetakan</span>
+                  <span class="text-indigo-600 font-medium group-hover:underline">Petakan ➔</span>
+                </div>
               </button>
-              <button id="btn-trace-hospital" class="px-2.5 py-2 bg-white hover:bg-indigo-100/70 text-indigo-900 border border-indigo-200 rounded-lg text-left transition flex items-center justify-between group">
-                <span class="font-medium">🏥 RSUD</span>
-                <span id="badge-dist-hospital" class="text-[10px] font-mono text-slate-500 group-hover:text-indigo-700">...</span>
+
+              <!-- RSUD -->
+              <button id="btn-trace-hospital" class="p-2.5 bg-white hover:bg-indigo-50/80 border border-indigo-200 rounded-lg text-left transition flex flex-col justify-between group shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <div class="flex items-center justify-between w-full">
+                  <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span>🏥</span> RSUD Terdekat
+                  </span>
+                  <span id="badge-dist-hospital" class="text-[11px] font-mono font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">...</span>
+                </div>
+                <div id="name-dist-hospital" class="text-[11px] text-slate-600 truncate mt-1">Memuat data jarak...</div>
+                <div id="status-dist-hospital" class="text-[9px] text-slate-400 mt-1 flex items-center justify-between w-full">
+                  <span>Klik untuk memetakan</span>
+                  <span class="text-indigo-600 font-medium group-hover:underline">Petakan ➔</span>
+                </div>
               </button>
-              <button id="btn-trace-market" class="px-2.5 py-2 bg-white hover:bg-indigo-100/70 text-indigo-900 border border-indigo-200 rounded-lg text-left transition flex items-center justify-between group">
-                <span class="font-medium">🛒 Pasar Rakyat</span>
-                <span id="badge-dist-market" class="text-[10px] font-mono text-slate-500 group-hover:text-indigo-700">...</span>
+
+              <!-- Pasar -->
+              <button id="btn-trace-market" class="p-2.5 bg-white hover:bg-indigo-50/80 border border-indigo-200 rounded-lg text-left transition flex flex-col justify-between group shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <div class="flex items-center justify-between w-full">
+                  <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span>🛒</span> Pasar Terdekat
+                  </span>
+                  <span id="badge-dist-market" class="text-[11px] font-mono font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">...</span>
+                </div>
+                <div id="name-dist-market" class="text-[11px] text-slate-600 truncate mt-1">Memuat data jarak...</div>
+                <div id="status-dist-market" class="text-[9px] text-slate-400 mt-1 flex items-center justify-between w-full">
+                  <span>Klik untuk memetakan</span>
+                  <span class="text-indigo-600 font-medium group-hover:underline">Petakan ➔</span>
+                </div>
               </button>
             </div>
+
             <div class="flex items-center justify-between pt-1">
               <div class="text-[10px] text-slate-500 italic">
                 🏛️ Ibukota Kab: <span class="text-amber-700 font-semibold not-italic">DATA_REQUIRED</span> (Tanpa koordinat resmi)
@@ -1412,14 +1456,18 @@
                 ✕ Hapus Jejak Rute
               </button>
             </div>
-            <div id="route-trace-card" class="bg-white p-3 rounded-lg border border-indigo-200 text-xs space-y-1.5 hidden">
+
+            <div id="route-trace-card" class="bg-white p-3 rounded-lg border border-indigo-200 text-xs space-y-1.5 hidden shadow-sm">
               <div class="flex items-center justify-between font-bold text-slate-800">
                 <span id="rtc-facility-name">-</span>
                 <span id="rtc-network-dist" class="font-mono text-indigo-700">0.0 km</span>
               </div>
-              <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500">
+              <div id="rtc-details-grid" class="grid grid-cols-2 gap-2 text-[11px] text-slate-500">
                 <div>Jarak Lurus: <span id="rtc-straight-dist" class="font-mono text-slate-700">-</span></div>
                 <div>Jarak Snap: <span id="rtc-snap-dist" class="font-mono text-slate-700">-</span></div>
+              </div>
+              <div id="rtc-unresolved-msg" class="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded border border-amber-200 hidden leading-relaxed">
+                Rute jaringan tidak terhubung. Ruas berada pada komponen jaringan yang terpisah.
               </div>
             </div>
           </div>
