@@ -321,3 +321,119 @@ WHEN (SELECT is_locked FROM priority_models WHERE model_id = OLD.model_id) = 1
 BEGIN
     SELECT RAISE(ABORT, 'LOCKED_MODEL_IMMUTABLE: Cannot delete variable weights of a locked priority model.');
 END;
+
+-- --------------------------------------------------------------------
+-- LAYER 5: SPATIAL DERIVATION & ACCESSIBILITY FOUNDATION (PHASE 5.1)
+-- --------------------------------------------------------------------
+
+-- 18. Relasi Spasial Ruas - Desa Otoritatif (Line-Polygon Intersection)
+CREATE TABLE IF NOT EXISTS road_village_intersections (
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    village_id              TEXT NOT NULL REFERENCES villages(village_id) ON DELETE RESTRICT,
+    village_name            TEXT NOT NULL,
+    district_id             TEXT NOT NULL REFERENCES districts(district_id) ON DELETE RESTRICT,
+    district_name           TEXT NOT NULL,
+    intersection_length_m   REAL NOT NULL,
+    share_of_road_pct       REAL NOT NULL,
+    traversal_order         INTEGER,
+    is_boundary_ambiguous   INTEGER NOT NULL DEFAULT 0,
+    derivation_method       TEXT NOT NULL DEFAULT 'LINE_POLYGON_INTERSECTION',
+    source_version          TEXT NOT NULL DEFAULT 'AUTHORITATIVE_V5',
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (road_key, village_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rvi_road ON road_village_intersections(road_key);
+CREATE INDEX IF NOT EXISTS idx_rvi_village ON road_village_intersections(village_id);
+
+-- 19. Relasi Spasial Ruas - Kecamatan Otoritatif
+CREATE TABLE IF NOT EXISTS road_district_intersections (
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    district_id             TEXT NOT NULL REFERENCES districts(district_id) ON DELETE RESTRICT,
+    district_name           TEXT NOT NULL,
+    intersection_length_m   REAL NOT NULL,
+    share_of_road_pct       REAL NOT NULL,
+    traversal_order         INTEGER,
+    derivation_method       TEXT NOT NULL DEFAULT 'LINE_POLYGON_INTERSECTION',
+    source_version          TEXT NOT NULL DEFAULT 'AUTHORITATIVE_V5',
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (road_key, district_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rdi_road ON road_district_intersections(road_key);
+CREATE INDEX IF NOT EXISTS idx_rdi_district ON road_district_intersections(district_id);
+
+-- 20. Snap Fasilitas Publik ke Jaringan Jalan (285 Titik)
+CREATE TABLE IF NOT EXISTS facility_network_snaps (
+    facility_id             TEXT PRIMARY KEY REFERENCES public_facilities(facility_id) ON DELETE RESTRICT,
+    facility_name           TEXT NOT NULL,
+    facility_type           TEXT NOT NULL,
+    facility_subtype        TEXT,
+    original_lat            REAL NOT NULL,
+    original_lng            REAL NOT NULL,
+    snapped_lat             REAL NOT NULL,
+    snapped_lng             REAL NOT NULL,
+    snap_distance_m         REAL NOT NULL,
+    network_edge_id         TEXT,
+    is_suspicious           INTEGER NOT NULL DEFAULT 0,
+    network_version         TEXT NOT NULL,
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_fns_type ON facility_network_snaps(facility_type);
+
+-- 21. Fasilitas Terdekat dan Rute Jaringan per Ruas Jalan
+CREATE TABLE IF NOT EXISTS road_nearest_facilities (
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    facility_type           TEXT NOT NULL,
+    nearest_facility_id     TEXT NOT NULL,
+    nearest_facility_name   TEXT NOT NULL,
+    network_distance_m      REAL NOT NULL,
+    straight_line_distance_m REAL,
+    road_access_point_geojson TEXT NOT NULL,
+    facility_snap_point_geojson TEXT NOT NULL,
+    facility_snap_distance_m REAL NOT NULL,
+    route_geometry_geojson  TEXT NOT NULL,
+    network_version         TEXT NOT NULL,
+    derivation_method       TEXT NOT NULL DEFAULT 'MULTI_SOURCE_DIJKSTRA',
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (road_key, facility_type)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rnf_road ON road_nearest_facilities(road_key);
+CREATE INDEX IF NOT EXISTS idx_rnf_type ON road_nearest_facilities(facility_type);
+
+-- 22. Kontrak Integrasi Demografi Desa (Data Contract Placeholder - Phase 5.1)
+CREATE TABLE IF NOT EXISTS village_demographics (
+    village_id              TEXT PRIMARY KEY REFERENCES villages(village_id) ON DELETE RESTRICT,
+    year                    INTEGER NOT NULL,
+    population              INTEGER,
+    households_kk           INTEGER,
+    source                  TEXT,
+    source_reference        TEXT,
+    imported_at             TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- 23. Kontrak Integrasi Treatment Engine (Data Contract Placeholder - Phase 5.1)
+CREATE TABLE IF NOT EXISTS treatment_engine_segments (
+    segment_id              TEXT PRIMARY KEY,
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    sta_start_m             REAL NOT NULL,
+    sta_end_m               REAL NOT NULL,
+    segment_length_m        REAL NOT NULL,
+    damage_type             TEXT,
+    condition_class         TEXT,
+    severity                TEXT,
+    damage_area_m2          REAL,
+    damage_pct              REAL,
+    surface_type            TEXT,
+    recommended_treatment   TEXT,
+    survey_date             TEXT,
+    source                  TEXT NOT NULL DEFAULT 'TREATMENT_ENGINE',
+    source_record_id        TEXT,
+    segment_geometry        TEXT,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_tes_road_key ON treatment_engine_segments(road_key);
+

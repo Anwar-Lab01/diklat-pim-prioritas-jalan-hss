@@ -13,6 +13,8 @@ import {
   RTRW_FAMILY_LABELS,
   BASEMAP_CONFIG,
   createFacilityIcon,
+  ROUTE_TRACING_STYLE,
+  ROUTE_ACCESS_POINT_STYLE,
 } from './mapStyle.js';
 
 const state = {
@@ -53,7 +55,9 @@ const state = {
     villages: null,
     rtrw: null,
     selectionHalo: null,
+    routeTrace: null,
   },
+  currentRoadNearestFacilities: [],
   mapData: {
     countyRoads: null,
     referenceNetwork: null,
@@ -200,6 +204,13 @@ function initEventListeners() {
 
   // Phase 5 Simulation listeners
   initSimulationEventListeners();
+
+  // Phase 5.1 Route Tracing listeners
+  document.getElementById('btn-trace-puskesmas')?.addEventListener('click', () => traceNearestFacilityRoute('puskesmas'));
+  document.getElementById('btn-trace-school')?.addEventListener('click', () => traceNearestFacilityRoute('school'));
+  document.getElementById('btn-trace-hospital')?.addEventListener('click', () => traceNearestFacilityRoute('hospital'));
+  document.getElementById('btn-trace-market')?.addEventListener('click', () => traceNearestFacilityRoute('market'));
+  document.getElementById('btn-clear-route-trace')?.addEventListener('click', clearRouteTrace);
 }
 
 function updateModeVisuals() {
@@ -665,6 +676,7 @@ async function initMap() {
     { name: 'refRoadsPane', zIndex: 450 },
     { name: 'connectorsPane', zIndex: 460 },
     { name: 'countyRoadsPane', zIndex: 500 },
+    { name: 'routeTracingPane', zIndex: 550 },
     { name: 'selectionHaloPane', zIndex: 600 },
     { name: 'facilitiesPane', zIndex: 700 },
   ];
@@ -1883,8 +1895,8 @@ function updateDynamicLegend() {
           <span class="text-slate-700">Rank 71–105 (Kebijakan)</span>
         </div>
         <div class="flex items-center space-x-2">
-          <span class="w-5 h-0.5 bg-slate-500 inline-block"></span>
-          <span class="text-slate-600">Rank 106–350 (Reguler Jaringan)</span>
+          <span class="w-5 h-1 bg-slate-600 inline-block"></span>
+          <span class="text-slate-600">Ruas Kabupaten Lainnya / Di Luar Prioritas Utama</span>
         </div>
       </div>
     </div>
@@ -2199,6 +2211,13 @@ function renderRoadDetailDrawer(data) {
   )}`;
   badgeEl.textContent = getTierDisplayName(res.tier_category);
 
+  // Section A.2: Spatial Administrative Coverage (Phase 5.1)
+  loadRoadCoverage(id.road_key);
+
+  // Section C.2: Nearest Facilities & Accessibility Tracing (Phase 5.1)
+  loadRoadNearestFacilities(id.road_key);
+  clearRouteTrace();
+
   // Section D: 4 Category Contributions
   const catCards = document.getElementById('d-category-cards');
   catCards.innerHTML = data.categoryContributions
@@ -2224,6 +2243,200 @@ function renderRoadDetailDrawer(data) {
   // Section E: 17 Factors Breakdown
   renderFactorsBreakdown(data);
   renderMathAudit(data);
+}
+
+async function loadRoadCoverage(roadKey) {
+  const badge = document.getElementById('d-coverage-summary-badge');
+  const vList = document.getElementById('d-villages-list');
+  const dList = document.getElementById('d-districts-list');
+  if (!vList || !dList) return;
+
+  vList.innerHTML = '<span class="text-slate-400 italic text-[11px]">Memuat data desa...</span>';
+  dList.innerHTML = '<span class="text-slate-400 italic text-[11px]">Memuat data kecamatan...</span>';
+
+  try {
+    const res = await fetch(`/api/spatial/roads/${roadKey}/coverage`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    const cov = json.data;
+
+    if (badge) {
+      badge.textContent = `${cov.village_count} Desa · ${cov.district_count} Kec`;
+    }
+
+    if (cov.villages.length === 0) {
+      vList.innerHTML = '<span class="text-slate-400 italic text-[11px]">Tidak ada data spasial desa</span>';
+    } else {
+      vList.innerHTML = cov.villages
+        .map(
+          (v) => `
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${
+          v.is_boundary_ambiguous
+            ? 'bg-amber-50 text-amber-800 border border-amber-200'
+            : 'bg-white text-slate-700 border border-slate-200'
+        }">
+          ${escapeHtml(v.village_name)}
+          <span class="ml-1 text-[9px] font-mono ${v.is_boundary_ambiguous ? 'text-amber-600' : 'text-slate-400'}">
+            (${v.intersection_length_m.toFixed(0)}m · ${v.share_of_road_pct.toFixed(0)}%)
+          </span>
+          ${v.is_boundary_ambiguous ? '<span class="ml-1 text-[9px]" title="Batas administratif ambigu (<15m)">⚠️</span>' : ''}
+        </span>
+      `
+        )
+        .join('');
+    }
+
+    if (cov.districts.length === 0) {
+      dList.innerHTML = '<span class="text-slate-400 italic text-[11px]">Tidak ada data spasial kecamatan</span>';
+    } else {
+      dList.innerHTML = cov.districts
+        .map(
+          (d) => `
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-white text-sky-800 border border-sky-200">
+          Kec. ${escapeHtml(d.district_name)}
+          <span class="ml-1 text-[9px] font-mono text-sky-600">(${d.share_of_road_pct.toFixed(0)}%)</span>
+        </span>
+      `
+        )
+        .join('');
+    }
+  } catch (err) {
+    console.error('Error loading road coverage:', err);
+    if (vList) vList.innerHTML = '<span class="text-rose-500 text-[11px]">Gagal memuat desa</span>';
+    if (dList) dList.innerHTML = '<span class="text-rose-500 text-[11px]">Gagal memuat kecamatan</span>';
+  }
+}
+
+async function loadRoadNearestFacilities(roadKey) {
+  state.currentRoadKey = roadKey;
+  state.currentRoadNearestFacilities = [];
+
+  const bPusk = document.getElementById('badge-dist-puskesmas');
+  const bSchool = document.getElementById('badge-dist-school');
+  const bHosp = document.getElementById('badge-dist-hospital');
+  const bMkt = document.getElementById('badge-dist-market');
+
+  if (bPusk) bPusk.textContent = '...';
+  if (bSchool) bSchool.textContent = '...';
+  if (bHosp) bHosp.textContent = '...';
+  if (bMkt) bMkt.textContent = '...';
+
+  try {
+    const res = await fetch(`/api/spatial/roads/${roadKey}/nearest-facilities`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+
+    state.currentRoadNearestFacilities = json.data;
+
+    for (const f of json.data) {
+      const distStr = f.network_distance_m >= 0 ? `${(f.network_distance_m / 1000).toFixed(1)} km` : 'Terputus';
+      if (f.facility_type === 'puskesmas' && bPusk) bPusk.textContent = distStr;
+      if (f.facility_type === 'school' && bSchool) bSchool.textContent = distStr;
+      if (f.facility_type === 'hospital' && bHosp) bHosp.textContent = distStr;
+      if (f.facility_type === 'market' && bMkt) bMkt.textContent = distStr;
+    }
+  } catch (err) {
+    console.error('Error loading nearest facilities:', err);
+  }
+}
+
+function clearRouteTrace() {
+  if (state.mapLayers.routeTrace && state.map) {
+    state.map.removeLayer(state.mapLayers.routeTrace);
+    state.mapLayers.routeTrace = null;
+  }
+  const card = document.getElementById('route-trace-card');
+  const btnClear = document.getElementById('btn-clear-route-trace');
+  if (card) card.classList.add('hidden');
+  if (btnClear) btnClear.classList.add('hidden');
+}
+
+function traceNearestFacilityRoute(facilityType) {
+  clearRouteTrace();
+
+  if (!state.currentRoadNearestFacilities || state.currentRoadNearestFacilities.length === 0) {
+    alert('Data fasilitas terdekat belum termuat.');
+    return;
+  }
+
+  const facRecord = state.currentRoadNearestFacilities.find((f) => f.facility_type === facilityType);
+  if (!facRecord || facRecord.network_distance_m < 0) {
+    alert('Rute jaringan terputus atau fasilitas tidak dapat dijangkau dari komponen jaringan jalan ini.');
+    return;
+  }
+
+  // Ensure routeTracingPane exists
+  if (state.map && !state.map.getPane('routeTracingPane')) {
+    state.map.createPane('routeTracingPane');
+    state.map.getPane('routeTracingPane').style.zIndex = 550;
+  }
+
+  const routeGeo = JSON.parse(facRecord.route_geometry_geojson);
+  const accessPt = JSON.parse(facRecord.road_access_point_geojson);
+  const snapPt = JSON.parse(facRecord.facility_snap_point_geojson);
+
+  const routeGroup = L.layerGroup();
+
+  // 1. Route line
+  const routeLine = L.geoJSON(routeGeo, {
+    pane: 'routeTracingPane',
+    style: ROUTE_TRACING_STYLE,
+  });
+  routeGroup.addLayer(routeLine);
+
+  // 2. Road access point
+  const accessMarker = L.circleMarker([accessPt.coordinates[1], accessPt.coordinates[0]], {
+    pane: 'selectionHaloPane',
+    ...ROUTE_ACCESS_POINT_STYLE,
+  }).bindPopup(`
+    <div class="p-1 text-xs">
+      <strong>Titik Akses Jalan Optimal</strong><br>
+      Ruas: ${escapeHtml(facRecord.road_key)}
+    </div>
+  `);
+  routeGroup.addLayer(accessMarker);
+
+  // 3. Destination facility marker
+  const facIcon = createFacilityIcon(facilityType);
+  const facMarker = L.marker([snapPt.coordinates[1], snapPt.coordinates[0]], {
+    pane: 'facilitiesPane',
+    icon: facIcon,
+  }).bindPopup(`
+    <div class="p-1.5 text-xs">
+      <div class="font-bold text-slate-900">${escapeHtml(facRecord.nearest_facility_name)}</div>
+      <div class="text-[11px] text-indigo-700 font-semibold mt-0.5">Jarak Jaringan: ${(facRecord.network_distance_m / 1000).toFixed(2)} km</div>
+      <div class="text-[10px] text-slate-500">Snap ke Jaringan: ${facRecord.facility_snap_distance_m.toFixed(1)} m</div>
+      <div class="text-[9px] font-mono text-slate-400 mt-1">Metode: ${facRecord.derivation_method}</div>
+    </div>
+  `);
+  routeGroup.addLayer(facMarker);
+
+  if (state.map) {
+    routeGroup.addTo(state.map);
+    state.mapLayers.routeTrace = routeGroup;
+
+    // Fit bounds to route
+    const bounds = routeLine.getBounds();
+    if (bounds.isValid()) {
+      state.map.fitBounds(bounds, { padding: [60, 60] });
+    }
+  }
+
+  // Update Route Trace Card
+  const card = document.getElementById('route-trace-card');
+  const btnClear = document.getElementById('btn-clear-route-trace');
+  if (card) {
+    document.getElementById('rtc-facility-name').textContent = facRecord.nearest_facility_name;
+    document.getElementById('rtc-network-dist').textContent = `${(facRecord.network_distance_m / 1000).toFixed(2)} km (${facRecord.network_distance_m.toFixed(0)} m)`;
+    document.getElementById('rtc-straight-dist').textContent = facRecord.straight_line_distance_m !== null
+      ? `${(facRecord.straight_line_distance_m / 1000).toFixed(2)} km`
+      : '-';
+    document.getElementById('rtc-snap-dist').textContent = `${facRecord.facility_snap_distance_m.toFixed(1)} m`;
+    card.classList.remove('hidden');
+  }
+  if (btnClear) {
+    btnClear.classList.remove('hidden');
+  }
 }
 
 function renderFactorsBreakdown(data) {
@@ -2310,7 +2523,7 @@ function getTierDisplayName(tier) {
       return 'TOP_105 (Tier 3)';
     case 'REGULAR':
     default:
-      return 'Reguler Jaringan';
+      return 'Ruas Kabupaten Lainnya / Di Luar Prioritas Utama';
   }
 }
 

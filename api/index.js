@@ -59,7 +59,12 @@ var SEED_FILES = {
   priorityBaselineCanonical: path.resolve(
     SEED_BASE_DIR,
     "priority/priority_baseline_normative_canonical.csv"
-  )
+  ),
+  roadVillageIntersectionsCsv: path.resolve(SEED_BASE_DIR, "context/road_village_intersections.csv"),
+  roadDistrictIntersectionsCsv: path.resolve(SEED_BASE_DIR, "context/road_district_intersections.csv"),
+  roadAdminSummaryCsv: path.resolve(SEED_BASE_DIR, "context/road_admin_overlay_summary.csv"),
+  networkAnalysisGeoJson: path.resolve(SEED_BASE_DIR, "spatial/network_analysis.geojson"),
+  roadContextHistoryCsv: path.resolve(SEED_BASE_DIR, "context/road_context_history_noncondition_source.csv")
 };
 var AUTHORITY_INVARIANTS = {
   CANONICAL_ROAD_COUNT: 350,
@@ -2222,6 +2227,706 @@ var SimulationService = class {
   }
 };
 
+// src/services/spatialDerivationService.ts
+import fs5 from "node:fs";
+import crypto2 from "node:crypto";
+import * as turf2 from "@turf/turf";
+var MinHeap = class {
+  heap = [];
+  push(key, val) {
+    this.heap.push({ key, val });
+    this.bubbleUp(this.heap.length - 1);
+  }
+  pop() {
+    if (this.heap.length === 0) return void 0;
+    const top = this.heap[0];
+    const bottom = this.heap.pop();
+    if (this.heap.length > 0) {
+      this.heap[0] = bottom;
+      this.bubbleDown(0);
+    }
+    return top;
+  }
+  get size() {
+    return this.heap.length;
+  }
+  bubbleUp(idx) {
+    while (idx > 0) {
+      const parentIdx = idx - 1 >> 1;
+      if (this.heap[idx].key < this.heap[parentIdx].key) {
+        const temp = this.heap[idx];
+        this.heap[idx] = this.heap[parentIdx];
+        this.heap[parentIdx] = temp;
+        idx = parentIdx;
+      } else {
+        break;
+      }
+    }
+  }
+  bubbleDown(idx) {
+    const len = this.heap.length;
+    while ((idx << 1) + 1 < len) {
+      let left = (idx << 1) + 1;
+      let right = left + 1;
+      let smallest = idx;
+      if (left < len && this.heap[left].key < this.heap[smallest].key) {
+        smallest = left;
+      }
+      if (right < len && this.heap[right].key < this.heap[smallest].key) {
+        smallest = right;
+      }
+      if (smallest !== idx) {
+        const temp = this.heap[idx];
+        this.heap[idx] = this.heap[smallest];
+        this.heap[smallest] = temp;
+        idx = smallest;
+      } else {
+        break;
+      }
+    }
+  }
+};
+var SpatialDerivationService = class {
+  db;
+  networkData = null;
+  nodes = /* @__PURE__ */ new Map();
+  roadNodesMap = /* @__PURE__ */ new Map();
+  networkHash = "";
+  networkStatsCache = null;
+  facilitySnapsCache = /* @__PURE__ */ new Map();
+  constructor(db) {
+    this.db = db || getDatabase();
+  }
+  /**
+   * Helper to format coordinate key with precision ~1.1m (5 decimal places)
+   */
+  coordKey(coord) {
+    return `${coord[0].toFixed(5)},${coord[1].toFixed(5)}`;
+  }
+  /**
+   * Extract all 2D Line coordinate chains from any GeoJSON geometry type
+   */
+  extractLines(geom) {
+    if (geom.type === "LineString") return [geom.coordinates];
+    if (geom.type === "MultiLineString") return geom.coordinates;
+    if (geom.type === "GeometryCollection") {
+      const lines = [];
+      for (const g of geom.geometries) {
+        if (g.type === "LineString") lines.push(g.coordinates);
+        if (g.type === "MultiLineString") lines.push(...g.coordinates);
+      }
+      return lines;
+    }
+    return [];
+  }
+  /**
+   * Lazy-load network and build the in-memory graph
+   */
+  ensureNetworkGraph() {
+    if (this.nodes.size > 0 && this.networkHash) return;
+    if (!fs5.existsSync(SEED_FILES.networkAnalysisGeoJson)) {
+      throw new Error(`Network file not found at: ${SEED_FILES.networkAnalysisGeoJson}`);
+    }
+    const raw = fs5.readFileSync(SEED_FILES.networkAnalysisGeoJson, "utf8");
+    this.networkData = JSON.parse(raw);
+    this.networkHash = crypto2.createHash("sha256").update(raw).digest("hex").substring(0, 16);
+    let edgeCount = 0;
+    let countyCount = 0;
+    let provCount = 0;
+    let natCount = 0;
+    let connCount = 0;
+    const anomalies = [];
+    for (let fIdx = 0; fIdx < this.networkData.features.length; fIdx++) {
+      const f = this.networkData.features[fIdx];
+      const p = f.properties;
+      const roadKey = p.road_key || void 0;
+      if (p.source_layer === "ruas_kabupaten_reproject") countyCount++;
+      else if (p.source_layer === "ruas_provinsi_reproject") provCount++;
+      else if (p.source_layer === "ruas_nasioanl_reproject") natCount++;
+      else if (p.source_layer === "jembatan_penghubung") connCount++;
+      if (f.geometry.type === "GeometryCollection") {
+        anomalies.push(`Feature ${p.network_feature_id} (${p.road_name || roadKey}) has GeometryCollection geometry`);
+      }
+      const lines = this.extractLines(f.geometry);
+      for (const line of lines) {
+        for (let i = 0; i < line.length - 1; i++) {
+          const p1 = line[i];
+          const p2 = line[i + 1];
+          const k1 = this.coordKey(p1);
+          const k2 = this.coordKey(p2);
+          if (k1 === k2) continue;
+          if (!this.nodes.has(k1)) {
+            this.nodes.set(k1, { id: this.nodes.size, coord: p1, neighbors: [], roadKeys: /* @__PURE__ */ new Set() });
+          }
+          if (!this.nodes.has(k2)) {
+            this.nodes.set(k2, { id: this.nodes.size, coord: p2, neighbors: [], roadKeys: /* @__PURE__ */ new Set() });
+          }
+          const dMeters = turf2.distance(turf2.point(p1), turf2.point(p2), { units: "kilometers" }) * 1e3;
+          this.nodes.get(k1).neighbors.push({ to: k2, dist: dMeters, roadKey, featureIdx: fIdx, p1, p2 });
+          this.nodes.get(k2).neighbors.push({ to: k1, dist: dMeters, roadKey, featureIdx: fIdx, p1: p2, p2: p1 });
+          edgeCount++;
+          if (roadKey) {
+            this.nodes.get(k1).roadKeys.add(roadKey);
+            this.nodes.get(k2).roadKeys.add(roadKey);
+            if (!this.roadNodesMap.has(roadKey)) this.roadNodesMap.set(roadKey, /* @__PURE__ */ new Set());
+            this.roadNodesMap.get(roadKey).add(k1);
+            this.roadNodesMap.get(roadKey).add(k2);
+          }
+        }
+      }
+    }
+    const visited = /* @__PURE__ */ new Set();
+    const components = [];
+    for (const [k] of this.nodes.entries()) {
+      if (visited.has(k)) continue;
+      const comp = [];
+      const queue = [k];
+      visited.add(k);
+      while (queue.length > 0) {
+        const currKey = queue.shift();
+        comp.push(currKey);
+        const currNode = this.nodes.get(currKey);
+        for (const edge of currNode.neighbors) {
+          if (!visited.has(edge.to)) {
+            visited.add(edge.to);
+            queue.push(edge.to);
+          }
+        }
+      }
+      components.push(comp);
+    }
+    components.sort((a, b) => b.length - a.length);
+    const isolatedRoads = [];
+    if (components.length > 1) {
+      for (let cIdx = 1; cIdx < components.length; cIdx++) {
+        const compSet = new Set(components[cIdx]);
+        const compRoads = /* @__PURE__ */ new Set();
+        for (const nodeKey of compSet) {
+          const n = this.nodes.get(nodeKey);
+          if (n) {
+            for (const rk of n.roadKeys) compRoads.add(rk);
+          }
+        }
+        for (const rk of compRoads) {
+          isolatedRoads.push({
+            road_key: rk,
+            road_name: this.getRoadName(rk),
+            component_index: cIdx + 1,
+            node_count: components[cIdx].length
+          });
+        }
+      }
+    }
+    this.networkStatsCache = {
+      featureCount: this.networkData.features.length,
+      countyCount,
+      provincialCount: provCount,
+      nationalCount: natCount,
+      connectorCount: connCount,
+      nodeCount: this.nodes.size,
+      edgeCount,
+      connectedComponentsCount: components.length,
+      largestComponentNodes: components[0]?.length || 0,
+      largestComponentPct: components[0] ? components[0].length / this.nodes.size * 100 : 0,
+      networkHash: this.networkHash,
+      topComponentSizes: components.slice(0, 10).map((c) => c.length),
+      isolatedRoads,
+      topologyAnomalies: anomalies
+    };
+  }
+  getRoadName(roadKey) {
+    const row = this.db.prepare("SELECT display_name FROM roads WHERE road_key = ?").get(roadKey);
+    return row?.display_name || roadKey;
+  }
+  getNetworkStats() {
+    this.ensureNetworkGraph();
+    return this.networkStatsCache;
+  }
+  /**
+   * Ingest authoritative Road-Village and Road-District intersections
+   */
+  ingestAdminIntersections() {
+    const villageCsv = fs5.readFileSync(SEED_FILES.roadVillageIntersectionsCsv, "utf8");
+    const villageRows = parseCsv(villageCsv);
+    const districtCsv = fs5.readFileSync(SEED_FILES.roadDistrictIntersectionsCsv, "utf8");
+    const districtRows = parseCsv(districtCsv);
+    const insertVillageStmt = this.db.prepare(`
+      INSERT INTO road_village_intersections (
+        road_key,
+        village_id,
+        village_name,
+        district_id,
+        district_name,
+        intersection_length_m,
+        share_of_road_pct,
+        traversal_order,
+        is_boundary_ambiguous,
+        derivation_method,
+        source_version,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      ON CONFLICT(road_key, village_id) DO UPDATE SET
+        intersection_length_m = excluded.intersection_length_m,
+        share_of_road_pct = excluded.share_of_road_pct,
+        traversal_order = excluded.traversal_order,
+        is_boundary_ambiguous = excluded.is_boundary_ambiguous
+    `);
+    const roadVillageLengths = {};
+    for (const r of villageRows) {
+      const len = parseFloat(r.intersection_length_m) || 0;
+      roadVillageLengths[r.road_key] = (roadVillageLengths[r.road_key] || 0) + len;
+    }
+    let insertedVillages = 0;
+    for (let i = 0; i < villageRows.length; i++) {
+      const r = villageRows[i];
+      const len = parseFloat(r.intersection_length_m) || 0;
+      const totalLen = roadVillageLengths[r.road_key] || len || 1;
+      const sharePct = Math.round(len / totalLen * 1e4) / 100;
+      const isAmbiguous = len > 0 && len < 15 ? 1 : 0;
+      insertVillageStmt.run(
+        r.road_key,
+        r.village_id,
+        r.village_name,
+        r.district_id,
+        r.district_name,
+        len,
+        sharePct,
+        null,
+        isAmbiguous,
+        "LINE_POLYGON_INTERSECTION",
+        "AUTHORITATIVE_V5"
+      );
+      insertedVillages++;
+    }
+    const insertDistrictStmt = this.db.prepare(`
+      INSERT INTO road_district_intersections (
+        road_key,
+        district_id,
+        district_name,
+        intersection_length_m,
+        share_of_road_pct,
+        traversal_order,
+        derivation_method,
+        source_version,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      ON CONFLICT(road_key, district_id) DO UPDATE SET
+        intersection_length_m = excluded.intersection_length_m,
+        share_of_road_pct = excluded.share_of_road_pct,
+        traversal_order = excluded.traversal_order
+    `);
+    const roadDistrictLengths = {};
+    for (const r of districtRows) {
+      const len = parseFloat(r.intersection_length_m) || 0;
+      roadDistrictLengths[r.road_key] = (roadDistrictLengths[r.road_key] || 0) + len;
+    }
+    let insertedDistricts = 0;
+    for (const r of districtRows) {
+      const len = parseFloat(r.intersection_length_m) || 0;
+      const totalLen = roadDistrictLengths[r.road_key] || len || 1;
+      const sharePct = Math.round(len / totalLen * 1e4) / 100;
+      insertDistrictStmt.run(
+        r.road_key,
+        r.district_id,
+        r.district_name,
+        len,
+        sharePct,
+        null,
+        "LINE_POLYGON_INTERSECTION",
+        "AUTHORITATIVE_V5"
+      );
+      insertedDistricts++;
+    }
+    return { insertedVillages, insertedDistricts };
+  }
+  /**
+   * Snap all 285 public facilities to the network and record snap coordinates and perpendicular distances.
+   */
+  snapAllFacilities() {
+    this.ensureNetworkGraph();
+    const stmt = this.db.prepare("SELECT * FROM public_facilities");
+    const facilities = stmt.all();
+    const insertSnapStmt = this.db.prepare(`
+      INSERT INTO facility_network_snaps (
+        facility_id,
+        facility_name,
+        facility_type,
+        facility_subtype,
+        original_lat,
+        original_lng,
+        snapped_lat,
+        snapped_lng,
+        snap_distance_m,
+        network_edge_id,
+        is_suspicious,
+        network_version,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      ON CONFLICT(facility_id) DO UPDATE SET
+        snapped_lat = excluded.snapped_lat,
+        snapped_lng = excluded.snapped_lng,
+        snap_distance_m = excluded.snap_distance_m,
+        is_suspicious = excluded.is_suspicious,
+        network_version = excluded.network_version
+    `);
+    let suspiciousCount = 0;
+    let totalSnapped = 0;
+    for (const fac of facilities) {
+      const fPt = turf2.point([fac.longitude, fac.latitude]);
+      let minD = Infinity;
+      let nearestCoord = [fac.longitude, fac.latitude];
+      for (let fIdx = 0; fIdx < this.networkData.features.length; fIdx++) {
+        const feat = this.networkData.features[fIdx];
+        const lines = this.extractLines(feat.geometry);
+        for (const coords of lines) {
+          for (let i = 0; i < coords.length - 1; i++) {
+            const seg = turf2.lineString([coords[i], coords[i + 1]]);
+            const ptOnLine = turf2.nearestPointOnLine(seg, fPt);
+            const d = (ptOnLine.properties.dist || 0) * 1e3;
+            if (d < minD) {
+              minD = d;
+              nearestCoord = ptOnLine.geometry.coordinates;
+            }
+          }
+        }
+      }
+      const isSuspicious = minD > 500 ? 1 : 0;
+      if (isSuspicious) suspiciousCount++;
+      const snapEntity = {
+        facility_id: fac.facility_id,
+        facility_name: fac.facility_name,
+        facility_type: fac.facility_type,
+        facility_subtype: fac.facility_subtype,
+        original_lat: fac.latitude,
+        original_lng: fac.longitude,
+        snapped_lat: nearestCoord[1],
+        snapped_lng: nearestCoord[0],
+        snap_distance_m: Math.round(minD * 100) / 100,
+        network_edge_id: null,
+        is_suspicious: isSuspicious,
+        network_version: this.networkHash,
+        calculated_at: (/* @__PURE__ */ new Date()).toISOString()
+      };
+      insertSnapStmt.run(
+        snapEntity.facility_id,
+        snapEntity.facility_name,
+        snapEntity.facility_type,
+        snapEntity.facility_subtype,
+        snapEntity.original_lat,
+        snapEntity.original_lng,
+        snapEntity.snapped_lat,
+        snapEntity.snapped_lng,
+        snapEntity.snap_distance_m,
+        snapEntity.network_edge_id,
+        snapEntity.is_suspicious,
+        snapEntity.network_version
+      );
+      this.facilitySnapsCache.set(fac.facility_id, snapEntity);
+      totalSnapped++;
+    }
+    return { totalSnapped, suspiciousCount };
+  }
+  /**
+   * Multi-Source Dijkstra for a specific facility category.
+   * Target facility types:
+   * - 'hospital' (RSUD, 2 points)
+   * - 'puskesmas' (21 points)
+   * - 'school' (SD/SMP, 251 points)
+   * - 'market' (Pasar, 11 points)
+   */
+  computeNearestFacilitiesForType(facilityType) {
+    this.ensureNetworkGraph();
+    const snapsStmt = this.db.prepare("SELECT * FROM facility_network_snaps WHERE facility_type = ?");
+    const snaps = snapsStmt.all(facilityType);
+    if (snaps.length === 0) {
+      this.snapAllFacilities();
+    }
+    const facilitySnaps = snapsStmt.all(facilityType);
+    if (facilitySnaps.length === 0) {
+      throw new Error(`No facilities found for type: ${facilityType}`);
+    }
+    const dist = /* @__PURE__ */ new Map();
+    const nearestFacMap = /* @__PURE__ */ new Map();
+    const parent = /* @__PURE__ */ new Map();
+    const pq = new MinHeap();
+    for (const snap of facilitySnaps) {
+      const snapCoord = [snap.snapped_lng, snap.snapped_lat];
+      const snapKey = this.coordKey(snapCoord);
+      let closestNodeKey = snapKey;
+      let minSnapToNodeDist = Infinity;
+      if (this.nodes.has(snapKey)) {
+        closestNodeKey = snapKey;
+        minSnapToNodeDist = 0;
+      } else {
+        for (const [k, n] of this.nodes.entries()) {
+          const d = turf2.distance(turf2.point(snapCoord), turf2.point(n.coord), { units: "kilometers" }) * 1e3;
+          if (d < minSnapToNodeDist) {
+            minSnapToNodeDist = d;
+            closestNodeKey = k;
+          }
+        }
+      }
+      const initialDist = snap.snap_distance_m + (minSnapToNodeDist < Infinity ? minSnapToNodeDist : 0);
+      if (!dist.has(closestNodeKey) || initialDist < dist.get(closestNodeKey)) {
+        dist.set(closestNodeKey, initialDist);
+        nearestFacMap.set(closestNodeKey, snap);
+        pq.push(initialDist, closestNodeKey);
+      }
+    }
+    while (pq.size > 0) {
+      const top = pq.pop();
+      const d = top.key;
+      const uKey = top.val;
+      if (d > (dist.get(uKey) || Infinity)) continue;
+      const uNode = this.nodes.get(uKey);
+      if (!uNode) continue;
+      const currentFac = nearestFacMap.get(uKey);
+      for (const edge of uNode.neighbors) {
+        const vKey = edge.to;
+        const newDist = d + edge.dist;
+        if (newDist < (dist.get(vKey) || Infinity)) {
+          dist.set(vKey, newDist);
+          nearestFacMap.set(vKey, currentFac);
+          parent.set(vKey, { fromNode: uKey, edgeP1: edge.p1, edgeP2: edge.p2 });
+          pq.push(newDist, vKey);
+        }
+      }
+    }
+    const roadsStmt = this.db.prepare("SELECT road_key, display_name FROM roads ORDER BY road_key ASC");
+    const roads = roadsStmt.all();
+    const insertNearestStmt = this.db.prepare(`
+      INSERT INTO road_nearest_facilities (
+        road_key,
+        facility_type,
+        nearest_facility_id,
+        nearest_facility_name,
+        network_distance_m,
+        straight_line_distance_m,
+        road_access_point_geojson,
+        facility_snap_point_geojson,
+        facility_snap_distance_m,
+        route_geometry_geojson,
+        network_version,
+        derivation_method,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      ON CONFLICT(road_key, facility_type) DO UPDATE SET
+        nearest_facility_id = excluded.nearest_facility_id,
+        nearest_facility_name = excluded.nearest_facility_name,
+        network_distance_m = excluded.network_distance_m,
+        straight_line_distance_m = excluded.straight_line_distance_m,
+        road_access_point_geojson = excluded.road_access_point_geojson,
+        facility_snap_point_geojson = excluded.facility_snap_point_geojson,
+        facility_snap_distance_m = excluded.facility_snap_distance_m,
+        route_geometry_geojson = excluded.route_geometry_geojson,
+        network_version = excluded.network_version
+    `);
+    let evaluatedRoads = 0;
+    let resolvedRoads = 0;
+    let unresolvedRoads = 0;
+    for (const r of roads) {
+      evaluatedRoads++;
+      const roadNodes = this.roadNodesMap.get(r.road_key);
+      let bestNodeKey = null;
+      let minRoadDist = Infinity;
+      if (roadNodes && roadNodes.size > 0) {
+        for (const nKey of roadNodes) {
+          const d = dist.get(nKey);
+          if (d !== void 0 && d < minRoadDist) {
+            minRoadDist = d;
+            bestNodeKey = nKey;
+          }
+        }
+      }
+      if (bestNodeKey && minRoadDist < Infinity) {
+        resolvedRoads++;
+        const targetFac = nearestFacMap.get(bestNodeKey);
+        const accessNode = this.nodes.get(bestNodeKey);
+        const accessCoord = accessNode.coord;
+        const facSnapCoord = [targetFac.snapped_lng, targetFac.snapped_lat];
+        const routeCoords = [accessCoord];
+        let curr = bestNodeKey;
+        const visitedRoute = /* @__PURE__ */ new Set();
+        while (parent.has(curr) && !visitedRoute.has(curr)) {
+          visitedRoute.add(curr);
+          const pInfo = parent.get(curr);
+          routeCoords.push(pInfo.edgeP1);
+          curr = pInfo.fromNode;
+        }
+        routeCoords.push(facSnapCoord);
+        const straightLineKm = turf2.distance(turf2.point(accessCoord), turf2.point([targetFac.original_lng, targetFac.original_lat]), {
+          units: "kilometers"
+        });
+        const straightLineM = Math.round(straightLineKm * 1e3 * 10) / 10;
+        const routeGeoJson = {
+          type: "LineString",
+          coordinates: routeCoords
+        };
+        const accessPtGeoJson = {
+          type: "Point",
+          coordinates: accessCoord
+        };
+        const facSnapPtGeoJson = {
+          type: "Point",
+          coordinates: facSnapCoord
+        };
+        insertNearestStmt.run(
+          r.road_key,
+          facilityType,
+          targetFac.facility_id,
+          targetFac.facility_name,
+          Math.round(minRoadDist * 10) / 10,
+          straightLineM,
+          JSON.stringify(accessPtGeoJson),
+          JSON.stringify(facSnapPtGeoJson),
+          targetFac.snap_distance_m,
+          JSON.stringify(routeGeoJson),
+          this.networkHash,
+          "MULTI_SOURCE_DIJKSTRA"
+        );
+      } else {
+        unresolvedRoads++;
+        const defaultPt = { type: "Point", coordinates: [115.25, -2.78] };
+        const emptyLine = { type: "LineString", coordinates: [] };
+        insertNearestStmt.run(
+          r.road_key,
+          facilityType,
+          "UNRESOLVED_DISCONNECTED",
+          "Rute Jaringan Terputus / Tidak Terkoneksi",
+          -1,
+          null,
+          JSON.stringify(defaultPt),
+          JSON.stringify(defaultPt),
+          0,
+          JSON.stringify(emptyLine),
+          this.networkHash,
+          "DISCONNECTED_COMPONENT"
+        );
+      }
+    }
+    return { evaluatedRoads, resolvedRoads, unresolvedRoads };
+  }
+  /**
+   * Recalculate nearest-facility distances deterministically across all facility types
+   */
+  recalculateFacilityDistances(facilityType) {
+    const typesToRun = facilityType ? [facilityType] : ["hospital", "puskesmas", "school", "market"];
+    const results = {};
+    for (const t of typesToRun) {
+      const stats = this.computeNearestFacilitiesForType(t);
+      results[t] = {
+        evaluated: stats.evaluatedRoads,
+        resolved: stats.resolvedRoads,
+        unresolved: stats.unresolvedRoads
+      };
+    }
+    return results;
+  }
+  /**
+   * Retrieve administrative coverage for a road
+   */
+  getRoadCoverage(roadKey) {
+    const roadStmt = this.db.prepare("SELECT display_name FROM roads WHERE road_key = ?");
+    const roadRow = roadStmt.get(roadKey);
+    const vStmt = this.db.prepare(`
+      SELECT * FROM road_village_intersections
+      WHERE road_key = ?
+      ORDER BY intersection_length_m DESC
+    `);
+    const villages = vStmt.all(roadKey);
+    const dStmt = this.db.prepare(`
+      SELECT * FROM road_district_intersections
+      WHERE road_key = ?
+      ORDER BY intersection_length_m DESC
+    `);
+    const districts = dStmt.all(roadKey);
+    return {
+      road_key: roadKey,
+      road_name: roadRow?.display_name || roadKey,
+      villages,
+      districts,
+      village_count: villages.length,
+      district_count: districts.length
+    };
+  }
+  /**
+   * Retrieve nearest facilities and routes for a road
+   */
+  getRoadNearestFacilities(roadKey) {
+    const stmt = this.db.prepare(`
+      SELECT * FROM road_nearest_facilities
+      WHERE road_key = ?
+      ORDER BY facility_type ASC
+    `);
+    return stmt.all(roadKey);
+  }
+  /**
+   * Retrieve comparison between imported historical distance vs network-calculated distance
+   */
+  getDistanceReconciliation() {
+    const csvContent = fs5.readFileSync(SEED_FILES.roadContextHistoryCsv, "utf8");
+    const histRows = parseCsv(csvContent);
+    const histMap = /* @__PURE__ */ new Map();
+    for (const row of histRows) {
+      histMap.set(row.no, row);
+    }
+    const roadsStmt = this.db.prepare(`
+      SELECT r.road_key, r.nomor_ruas, r.display_name, r.district_name
+      FROM roads r
+      ORDER BY r.nomor_ruas ASC
+    `);
+    const roads = roadsStmt.all();
+    const calcStmt = this.db.prepare(`
+      SELECT road_key, facility_type, network_distance_m
+      FROM road_nearest_facilities
+    `);
+    const calcRows = calcStmt.all();
+    const calcMap = /* @__PURE__ */ new Map();
+    for (const cr of calcRows) {
+      if (!calcMap.has(cr.road_key)) calcMap.set(cr.road_key, {});
+      calcMap.get(cr.road_key)[cr.facility_type] = cr.network_distance_m;
+    }
+    const reconciliation = [];
+    for (const r of roads) {
+      const hist = histMap.get(r.nomor_ruas) || histMap.get(parseInt(r.nomor_ruas, 10).toString()) || {};
+      const calc = calcMap.get(r.road_key) || {};
+      const impRsud = hist.jarak_rsud_m !== void 0 && hist.jarak_rsud_m !== "" ? parseFloat(hist.jarak_rsud_m) : null;
+      const calcRsud = calc.hospital !== void 0 && calc.hospital >= 0 ? calc.hospital : null;
+      const deltaRsud = impRsud !== null && calcRsud !== null ? Math.round((calcRsud - impRsud) * 10) / 10 : null;
+      const impPusk = hist.jarak_puskesmas_m !== void 0 && hist.jarak_puskesmas_m !== "" ? parseFloat(hist.jarak_puskesmas_m) : null;
+      const calcPusk = calc.puskesmas !== void 0 && calc.puskesmas >= 0 ? calc.puskesmas : null;
+      const deltaPusk = impPusk !== null && calcPusk !== null ? Math.round((calcPusk - impPusk) * 10) / 10 : null;
+      const impSchool = hist.jarak_sd_smp_m !== void 0 && hist.jarak_sd_smp_m !== "" ? parseFloat(hist.jarak_sd_smp_m) : null;
+      const calcSchool = calc.school !== void 0 && calc.school >= 0 ? calc.school : null;
+      const deltaSchool = impSchool !== null && calcSchool !== null ? Math.round((calcSchool - impSchool) * 10) / 10 : null;
+      const impPasar = hist.jarak_pasar_m !== void 0 && hist.jarak_pasar_m !== "" ? parseFloat(hist.jarak_pasar_m) : null;
+      const calcPasar = calc.market !== void 0 && calc.market >= 0 ? calc.market : null;
+      const deltaPasar = impPasar !== null && calcPasar !== null ? Math.round((calcPasar - impPasar) * 10) / 10 : null;
+      const impIbukota = hist.jarak_ibukota_m !== void 0 && hist.jarak_ibukota_m !== "" ? parseFloat(hist.jarak_ibukota_m) : null;
+      reconciliation.push({
+        road_key: r.road_key,
+        display_name: r.display_name,
+        district_name: r.district_name,
+        imported_rsud_m: impRsud,
+        calculated_rsud_m: calcRsud,
+        delta_rsud_m: deltaRsud,
+        imported_puskesmas_m: impPusk,
+        calculated_puskesmas_m: calcPusk,
+        delta_puskesmas_m: deltaPusk,
+        imported_sd_smp_m: impSchool,
+        calculated_sd_smp_m: calcSchool,
+        delta_sd_smp_m: deltaSchool,
+        imported_pasar_m: impPasar,
+        calculated_pasar_m: calcPasar,
+        delta_pasar_m: deltaPasar,
+        imported_ibukota_m: impIbukota,
+        status_ibukota: "DATA_REQUIRED_NO_OFFICIAL_COORDINATE"
+      });
+    }
+    return reconciliation;
+  }
+};
+
 // src/server/server.ts
 var __filename3 = fileURLToPath3(import.meta.url);
 var __dirname3 = path3.dirname(__filename3);
@@ -2231,6 +2936,7 @@ function createServer() {
   const modelService = new ModelService();
   const spatialService = new SpatialService();
   const simulationService = new SimulationService();
+  const derivationService = new SpatialDerivationService();
   app2.use(express.json());
   app2.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -2439,6 +3145,67 @@ function createServer() {
     try {
       const data = spatialService.getRtrwGeoJson();
       res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/roads/:roadKey/coverage", (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = derivationService.getRoadCoverage(roadKey);
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/roads/:roadKey/nearest-facilities", (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = derivationService.getRoadNearestFacilities(roadKey);
+      res.json({ success: true, total: data.length, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/network/stats", (req, res) => {
+    try {
+      const data = derivationService.getNetworkStats();
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/facilities/snaps", (req, res) => {
+    try {
+      const type = req.query.type;
+      const db = derivationService["db"];
+      let sql = "SELECT * FROM facility_network_snaps";
+      const params = [];
+      if (type) {
+        sql += " WHERE facility_type = ?";
+        params.push(type);
+      }
+      sql += " ORDER BY facility_type ASC, snap_distance_m ASC";
+      const stmt = db.prepare(sql);
+      const rows = params.length > 0 ? stmt.all(...params) : stmt.all();
+      res.json({ success: true, total: rows.length, data: rows });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/spatial/recalculate", (req, res) => {
+    try {
+      const facilityType = req.body?.facilityType;
+      const results = derivationService.recalculateFacilityDistances(facilityType);
+      res.json({ success: true, data: results });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/reconciliation", (req, res) => {
+    try {
+      const data = derivationService.getDistanceReconciliation();
+      res.json({ success: true, total: data.length, data });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }

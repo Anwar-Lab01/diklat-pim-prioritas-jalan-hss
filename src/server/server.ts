@@ -6,6 +6,7 @@ import { UiDataService } from '../services/uiDataService.ts';
 import { ModelService } from '../services/modelService.ts';
 import { SpatialService } from '../services/spatialService.ts';
 import { SimulationService } from '../services/simulationService.ts';
+import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,7 @@ export function createServer() {
   const modelService = new ModelService();
   const spatialService = new SpatialService();
   const simulationService = new SimulationService();
+  const derivationService = new SpatialDerivationService();
 
   app.use(express.json());
 
@@ -266,6 +268,79 @@ export function createServer() {
     try {
       const data = spatialService.getRtrwGeoJson();
       res.json({ success: true, total: data.features?.length || 0, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7A. Road Administrative Coverage (Desa & Kecamatan yang dilalui)
+  app.get('/api/spatial/roads/:roadKey/coverage', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = derivationService.getRoadCoverage(roadKey);
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7B. Road Nearest Facilities & Route Geometries
+  app.get('/api/spatial/roads/:roadKey/nearest-facilities', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = derivationService.getRoadNearestFacilities(roadKey);
+      res.json({ success: true, total: data.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7C. Network Graph Topology & Statistics
+  app.get('/api/spatial/network/stats', (req, res) => {
+    try {
+      const data = derivationService.getNetworkStats();
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7D. Facility Network Snaps (285 Facilities)
+  app.get('/api/spatial/facilities/snaps', (req, res) => {
+    try {
+      const type = req.query.type as string | undefined;
+      const db = derivationService['db'];
+      let sql = 'SELECT * FROM facility_network_snaps';
+      const params: any[] = [];
+      if (type) {
+        sql += ' WHERE facility_type = ?';
+        params.push(type);
+      }
+      sql += ' ORDER BY facility_type ASC, snap_distance_m ASC';
+      const stmt = db.prepare(sql);
+      const rows = params.length > 0 ? stmt.all(...params) : stmt.all();
+      res.json({ success: true, total: rows.length, data: rows });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7E. Recalculate Nearest Facility Distances Engine
+  app.post('/api/spatial/recalculate', (req, res) => {
+    try {
+      const facilityType = req.body?.facilityType;
+      const results = derivationService.recalculateFacilityDistances(facilityType);
+      res.json({ success: true, data: results });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7F. Reconciliation of Imported vs Network-Calculated Distances
+  app.get('/api/spatial/reconciliation', (req, res) => {
+    try {
+      const data = derivationService.getDistanceReconciliation();
+      res.json({ success: true, total: data.length, data });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }

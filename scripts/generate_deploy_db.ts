@@ -49,6 +49,12 @@ async function main() {
     'model_category_weights',
     'model_variable_weights',
     'source_crosswalk',
+    'road_village_intersections',
+    'road_district_intersections',
+    'facility_network_snaps',
+    'road_nearest_facilities',
+    'village_demographics',
+    'treatment_engine_segments',
   ];
 
   for (const table of fullCopyTables) {

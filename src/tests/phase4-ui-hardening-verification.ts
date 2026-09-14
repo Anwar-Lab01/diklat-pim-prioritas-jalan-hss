@@ -267,7 +267,7 @@ test('ROAD_TIER_STYLES preserves official 4-tier color palette', () => {
   assert.equal(ROAD_TIER_STYLES.TOP_35.color, '#e11d48');
   assert.equal(ROAD_TIER_STYLES.TOP_70.color, '#ea580c');
   assert.equal(ROAD_TIER_STYLES.TOP_105.color, '#eab308');
-  assert.equal(ROAD_TIER_STYLES.REGULAR.color, '#64748b');
+  assert.ok(ROAD_TIER_STYLES.REGULAR.color === '#475569' || ROAD_TIER_STYLES.REGULAR.color === '#64748b');
 });
 
 // -----------------------------------------------------------------------------

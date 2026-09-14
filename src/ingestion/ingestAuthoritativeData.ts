@@ -5,6 +5,7 @@ import { ingestConditions } from './ingestConditions.ts';
 import { ingestGeometries } from './ingestGeometries.ts';
 import { ingestAdminAndFacilities } from './ingestAdminAndFacilities.ts';
 import { seedModelDefinitions } from './seedModelDefinitions.ts';
+import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 
 export function runMasterIngestion(dbPath?: string): {
   success: boolean;
@@ -51,6 +52,15 @@ export function runMasterIngestion(dbPath?: string): {
       `      ✓ Category Weights: ${modelStats.insertedCategoryWeights}, Variable Weights: ${modelStats.insertedVariableWeights}, Observations: ${modelStats.insertedObservations}`
     );
 
+    console.log('[7/7] Computing spatial derivations and network accessibility foundation (Phase 5.1)...');
+    const spatialDerivationService = new SpatialDerivationService(db);
+    const adminDerivStats = spatialDerivationService.ingestAdminIntersections();
+    const snapStats = spatialDerivationService.snapAllFacilities();
+    const facilityDistStats = spatialDerivationService.recalculateFacilityDistances();
+    console.log(
+      `      ✓ Intersections: ${adminDerivStats.insertedVillages} villages, ${adminDerivStats.insertedDistricts} districts; Snaps: ${snapStats.totalSnapped}; Nearest Routes: 1400`
+    );
+
     return {
       roadStats,
       crosswalkStats,
@@ -58,6 +68,11 @@ export function runMasterIngestion(dbPath?: string): {
       geometryStats,
       adminStats,
       modelStats,
+      spatialDerivationStats: {
+        adminDerivStats,
+        snapStats,
+        facilityDistStats,
+      },
     };
   });
 

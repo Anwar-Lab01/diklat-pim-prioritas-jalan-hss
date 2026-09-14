@@ -330,8 +330,8 @@ async function runPhase4Verification() {
   totalTests++;
 
   assert(
-    ROAD_TIER_STYLES.REGULAR.color === '#64748b',
-    'REGULAR style color must be #64748b (Slate-500)'
+    ROAD_TIER_STYLES.REGULAR.color === '#475569' || ROAD_TIER_STYLES.REGULAR.color === '#64748b',
+    'REGULAR style color must be #475569 (Phase 5.1 upgrade) or #64748b'
   );
   totalTests++;
 

@@ -61,6 +61,11 @@ export const SEED_FILES = {
     SEED_BASE_DIR,
     'priority/priority_baseline_normative_canonical.csv'
   ),
+  roadVillageIntersectionsCsv: path.resolve(SEED_BASE_DIR, 'context/road_village_intersections.csv'),
+  roadDistrictIntersectionsCsv: path.resolve(SEED_BASE_DIR, 'context/road_district_intersections.csv'),
+  roadAdminSummaryCsv: path.resolve(SEED_BASE_DIR, 'context/road_admin_overlay_summary.csv'),
+  networkAnalysisGeoJson: path.resolve(SEED_BASE_DIR, 'spatial/network_analysis.geojson'),
+  roadContextHistoryCsv: path.resolve(SEED_BASE_DIR, 'context/road_context_history_noncondition_source.csv'),
 };
 
 export const AUTHORITY_INVARIANTS = {

@@ -29,13 +29,31 @@ export const ROAD_TIER_STYLES = {
     zIndex: 600,
   },
   REGULAR: {
-    color: '#64748b', // Slate-500
-    weight: 2.0,
-    opacity: 0.65,
-    label: 'Reguler Jaringan (Rank 106–350)',
+    color: '#475569', // Slate-600 (distinct across Neutral, OSM, and Satellite basemaps)
+    weight: 3.0,
+    opacity: 0.90,
+    label: 'Ruas Kabupaten Lainnya / Di Luar Prioritas Utama',
     badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
     zIndex: 400,
   },
+};
+
+export const ROUTE_TRACING_STYLE = {
+  color: '#8b5cf6', // Violet-500
+  weight: 4.5,
+  opacity: 0.95,
+  dashArray: '6, 6',
+  lineCap: 'round',
+  lineJoin: 'round',
+};
+
+export const ROUTE_ACCESS_POINT_STYLE = {
+  radius: 6,
+  fillColor: '#06b6d4', // Cyan-500
+  color: '#ffffff',
+  weight: 2,
+  opacity: 1,
+  fillOpacity: 1,
 };
 
 export const SELECTION_HALO_STYLE = {
