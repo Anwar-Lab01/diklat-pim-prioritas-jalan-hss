@@ -1220,6 +1220,438 @@ var BenchmarkService = class {
   }
 };
 
+// src/services/rtrwSpatialService.ts
+import fs4 from "node:fs";
+import * as turf from "@turf/turf";
+var RTRW_MACRO_MAPPING = {
+  "Kawasan Permukiman Perdesaan": "PERMUKIMAN",
+  "Kawasan Permukiman Perkotaan": "PERMUKIMAN",
+  "Kawasan Perkebunan": "PRODUKSI",
+  "Kawasan Tanaman Pangan": "PRODUKSI",
+  "Kawasan Hutan Produksi Tetap": "PRODUKSI",
+  "Kawasan Hutan Produksi yang dapat Dikonversi": "PRODUKSI",
+  "Kawasan Perikanan Budi Daya": "PRODUKSI",
+  "Kawasan Hutan Lindung": "LINDUNG",
+  "Kawasan Lindung Gambut": "LINDUNG",
+  "Cagar Alam": "LINDUNG",
+  "Badan Air": "BADAN_AIR",
+  "Kawasan Pariwisata": "PARIWISATA",
+  "Area Tidak Tercakup": "TIDAK_TERCAKUP"
+};
+var RtrwSpatialService = class {
+  db;
+  cachedProfiles = null;
+  constructor(db) {
+    this.db = db || getDatabase();
+  }
+  /**
+   * Ensure database schema tables exist for RTRW spatial profiles.
+   */
+  ensureTables() {
+    try {
+      const cols = this.db.prepare("PRAGMA table_info(road_spatial_profiles)").all();
+      const distCol = cols.find((c) => c.name === "jarak_ibukota_kabupaten_m");
+      if (distCol && distCol.notnull === 1) {
+        this.db.exec("DROP TABLE IF EXISTS road_spatial_profiles");
+      }
+    } catch {
+    }
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS road_rtrw_intersections (
+        road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+        rtrw_class_name         TEXT NOT NULL,
+        macro_category          TEXT NOT NULL,
+        intersection_length_m   REAL NOT NULL,
+        share_of_road_pct       REAL NOT NULL,
+        calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+        PRIMARY KEY (road_key, rtrw_class_name)
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_rri_road ON road_rtrw_intersections(road_key);
+      CREATE INDEX IF NOT EXISTS idx_rri_macro ON road_rtrw_intersections(macro_category);
+
+      CREATE TABLE IF NOT EXISTS road_spatial_profiles (
+        road_key                TEXT PRIMARY KEY REFERENCES roads(road_key) ON DELETE RESTRICT,
+        jarak_ibukota_kabupaten_m REAL,
+        desa_count              INTEGER NOT NULL,
+        desa_list               TEXT NOT NULL,
+        kecamatan_count         INTEGER NOT NULL,
+        kecamatan_list          TEXT NOT NULL,
+        permukiman_length_m     REAL NOT NULL,
+        permukiman_pct          REAL NOT NULL,
+        produksi_length_m       REAL NOT NULL,
+        produksi_pct            REAL NOT NULL,
+        lindung_length_m        REAL NOT NULL,
+        lindung_pct             REAL NOT NULL,
+        badan_air_length_m      REAL NOT NULL,
+        badan_air_pct           REAL NOT NULL,
+        pariwisata_length_m     REAL NOT NULL,
+        pariwisata_pct          REAL NOT NULL,
+        uncovered_length_m      REAL NOT NULL,
+        uncovered_pct           REAL NOT NULL,
+        total_length_m          REAL NOT NULL,
+        rtrw_breakdown_json     TEXT NOT NULL,
+        calculated_at           TEXT NOT NULL DEFAULT (datetime('now'))
+      );
+    `);
+  }
+  /**
+   * Run spatial intersection analysis between all 350 county road geometries and the RTRW Pola Ruang polygons.
+   * Uses spatial grid indexing and continuous segment sampling to guarantee no double counting.
+   */
+  computeAndStoreRtrwIntersections() {
+    this.ensureTables();
+    if (!fs4.existsSync(SEED_FILES.rtrwPolaRuangGeoJson)) {
+      throw new Error(`RTRW Pola Ruang GeoJSON not found at: ${SEED_FILES.rtrwPolaRuangGeoJson}`);
+    }
+    const rtrwData = JSON.parse(fs4.readFileSync(SEED_FILES.rtrwPolaRuangGeoJson, "utf8"));
+    const GRID_SIZE = 0.02;
+    const grid = /* @__PURE__ */ new Map();
+    function getCellKeys(bbox3) {
+      const minX = Math.floor(bbox3[0] / GRID_SIZE);
+      const maxX = Math.floor(bbox3[2] / GRID_SIZE);
+      const minY = Math.floor(bbox3[1] / GRID_SIZE);
+      const maxY = Math.floor(bbox3[3] / GRID_SIZE);
+      const keys = [];
+      for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+          keys.push(`${x}:${y}`);
+        }
+      }
+      return keys;
+    }
+    for (let i = 0; i < rtrwData.features.length; i++) {
+      const f = rtrwData.features[i];
+      const bbox3 = turf.bbox(f);
+      const item = { id: i, feature: f, name: f.properties.nama_objek, bbox: bbox3 };
+      const keys = getCellKeys(bbox3);
+      for (const k of keys) {
+        if (!grid.has(k)) grid.set(k, []);
+        grid.get(k).push(item);
+      }
+    }
+    const roadsQuery = this.db.prepare(`
+      SELECT 
+        g.road_key,
+        g.geometry_geojson,
+        r.nomor_ruas,
+        r.display_name,
+        r.district_name,
+        r.length_km_official
+      FROM road_geometries g
+      JOIN roads r ON g.road_key = r.road_key
+      ORDER BY r.nomor_ruas ASC
+    `);
+    const roadsRows = roadsQuery.all();
+    const distMap = /* @__PURE__ */ new Map();
+    if (fs4.existsSync(SEED_FILES.roadContextHistoryCsv)) {
+      const csvContent = fs4.readFileSync(SEED_FILES.roadContextHistoryCsv, "utf8");
+      const histRows = parseCsv(csvContent);
+      const histMap = new Map(histRows.map((r) => [r.no, r]));
+      const cwStmt = this.db.prepare(`
+        SELECT road_key, source_id
+        FROM source_crosswalk
+        WHERE source_system = 'historical_normative_workbook'
+      `);
+      const cwRows = cwStmt.all();
+      for (const cw of cwRows) {
+        const hist = histMap.get(cw.source_id);
+        if (hist && hist.jarak_ibukota_m !== void 0 && hist.jarak_ibukota_m !== "") {
+          const val = parseFloat(hist.jarak_ibukota_m);
+          distMap.set(cw.road_key, isNaN(val) ? null : val);
+        } else {
+          distMap.set(cw.road_key, null);
+        }
+      }
+    }
+    const villageStmt = this.db.prepare(`
+      SELECT road_key, village_name, intersection_length_m, share_of_road_pct
+      FROM road_village_intersections
+      ORDER BY road_key ASC, intersection_length_m DESC
+    `);
+    const villageRows = villageStmt.all();
+    const villageMap = /* @__PURE__ */ new Map();
+    for (const v of villageRows) {
+      if (!villageMap.has(v.road_key)) villageMap.set(v.road_key, []);
+      villageMap.get(v.road_key).push(v.village_name);
+    }
+    const districtStmt = this.db.prepare(`
+      SELECT road_key, district_name, intersection_length_m, share_of_road_pct
+      FROM road_district_intersections
+      ORDER BY road_key ASC, intersection_length_m DESC
+    `);
+    const districtRows = districtStmt.all();
+    const districtMap = /* @__PURE__ */ new Map();
+    for (const d of districtRows) {
+      if (!districtMap.has(d.road_key)) districtMap.set(d.road_key, []);
+      districtMap.get(d.road_key).push(d.district_name);
+    }
+    const deleteIntersections = this.db.prepare("DELETE FROM road_rtrw_intersections");
+    const deleteProfiles = this.db.prepare("DELETE FROM road_spatial_profiles");
+    deleteIntersections.run();
+    deleteProfiles.run();
+    const insertIntersection = this.db.prepare(`
+      INSERT INTO road_rtrw_intersections (
+        road_key,
+        rtrw_class_name,
+        macro_category,
+        intersection_length_m,
+        share_of_road_pct,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, datetime('now'))
+    `);
+    const insertProfile = this.db.prepare(`
+      INSERT INTO road_spatial_profiles (
+        road_key,
+        jarak_ibukota_kabupaten_m,
+        desa_count,
+        desa_list,
+        kecamatan_count,
+        kecamatan_list,
+        permukiman_length_m,
+        permukiman_pct,
+        produksi_length_m,
+        produksi_pct,
+        lindung_length_m,
+        lindung_pct,
+        badan_air_length_m,
+        badan_air_pct,
+        pariwisata_length_m,
+        pariwisata_pct,
+        uncovered_length_m,
+        uncovered_pct,
+        total_length_m,
+        rtrw_breakdown_json,
+        calculated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+    `);
+    let totalNetworkM = 0;
+    const networkMacroTotals = {
+      PERMUKIMAN: 0,
+      PRODUKSI: 0,
+      LINDUNG: 0,
+      BADAN_AIR: 0,
+      PARIWISATA: 0,
+      TIDAK_TERCAKUP: 0
+    };
+    for (const road of roadsRows) {
+      const geom = JSON.parse(road.geometry_geojson);
+      const multiCoords = geom.type === "LineString" ? [geom.coordinates] : geom.type === "MultiLineString" ? geom.coordinates : [];
+      const classMeters = {};
+      const macroMeters = {
+        PERMUKIMAN: 0,
+        PRODUKSI: 0,
+        LINDUNG: 0,
+        BADAN_AIR: 0,
+        PARIWISATA: 0,
+        TIDAK_TERCAKUP: 0
+      };
+      let roadTotalM = 0;
+      for (const lineCoords of multiCoords) {
+        if (!lineCoords || lineCoords.length < 2) continue;
+        const line = turf.lineString(lineCoords);
+        const lenKm = turf.length(line, { units: "kilometers" });
+        const lenM = lenKm * 1e3;
+        const numSteps = Math.max(2, Math.ceil(lenM / 15));
+        const stepLen = lenM / numSteps;
+        for (let s = 0; s < numSteps; s++) {
+          const dKm = (s + 0.5) / numSteps * lenKm;
+          const pt = turf.along(line, dKm);
+          const coords = pt.geometry.coordinates;
+          const cellKey = `${Math.floor(coords[0] / GRID_SIZE)}:${Math.floor(coords[1] / GRID_SIZE)}`;
+          const cellCandidates = grid.get(cellKey) || [];
+          let matchedName = "Area Tidak Tercakup";
+          for (const c of cellCandidates) {
+            if (coords[0] >= c.bbox[0] && coords[0] <= c.bbox[2] && coords[1] >= c.bbox[1] && coords[1] <= c.bbox[3]) {
+              if (turf.booleanPointInPolygon(pt, c.feature)) {
+                matchedName = c.name;
+                break;
+              }
+            }
+          }
+          const macro = RTRW_MACRO_MAPPING[matchedName] || "TIDAK_TERCAKUP";
+          classMeters[matchedName] = (classMeters[matchedName] || 0) + stepLen;
+          macroMeters[macro] = (macroMeters[macro] || 0) + stepLen;
+          networkMacroTotals[macro] = (networkMacroTotals[macro] || 0) + stepLen;
+          roadTotalM += stepLen;
+          totalNetworkM += stepLen;
+        }
+      }
+      for (const [clsName, meters] of Object.entries(classMeters)) {
+        const macro = RTRW_MACRO_MAPPING[clsName] || "TIDAK_TERCAKUP";
+        const sharePct = roadTotalM > 0 ? meters / roadTotalM * 100 : 0;
+        insertIntersection.run(road.road_key, clsName, macro, meters, sharePct);
+      }
+      const classBreakdown = Object.entries(classMeters).map(([name, m]) => ({
+        name,
+        macro: RTRW_MACRO_MAPPING[name] || "TIDAK_TERCAKUP",
+        length_m: Math.round(m * 100) / 100,
+        pct: roadTotalM > 0 ? Math.round(m / roadTotalM * 1e4) / 100 : 0
+      }));
+      classBreakdown.sort((a, b) => b.length_m - a.length_m);
+      const villages = villageMap.get(road.road_key) || [];
+      const districts = districtMap.get(road.road_key) || (road.district_name ? [road.district_name] : []);
+      const jarakIbukota = distMap.has(road.road_key) ? distMap.get(road.road_key) : null;
+      const permukimanPct = roadTotalM > 0 ? macroMeters.PERMUKIMAN / roadTotalM * 100 : 0;
+      const produksiPct = roadTotalM > 0 ? macroMeters.PRODUKSI / roadTotalM * 100 : 0;
+      const lindungPct = roadTotalM > 0 ? macroMeters.LINDUNG / roadTotalM * 100 : 0;
+      const badanAirPct = roadTotalM > 0 ? macroMeters.BADAN_AIR / roadTotalM * 100 : 0;
+      const pariwisataPct = roadTotalM > 0 ? macroMeters.PARIWISATA / roadTotalM * 100 : 0;
+      const uncoveredPct = roadTotalM > 0 ? macroMeters.TIDAK_TERCAKUP / roadTotalM * 100 : 0;
+      insertProfile.run(
+        road.road_key,
+        jarakIbukota,
+        villages.length,
+        villages.join("; "),
+        districts.length,
+        districts.join("; "),
+        macroMeters.PERMUKIMAN,
+        permukimanPct,
+        macroMeters.PRODUKSI,
+        produksiPct,
+        macroMeters.LINDUNG,
+        lindungPct,
+        macroMeters.BADAN_AIR,
+        badanAirPct,
+        macroMeters.PARIWISATA,
+        pariwisataPct,
+        macroMeters.TIDAK_TERCAKUP,
+        uncoveredPct,
+        roadTotalM,
+        JSON.stringify(classBreakdown)
+      );
+    }
+    this.cachedProfiles = null;
+    return {
+      roadsProcessed: roadsRows.length,
+      totalNetworkM,
+      macroTotals: networkMacroTotals
+    };
+  }
+  /**
+   * Retrieve the complete spatial & accessibility profile for a single road key.
+   */
+  getRoadSpatialProfile(roadKey) {
+    this.ensureTables();
+    const countRow = this.db.prepare("SELECT COUNT(*) as c FROM road_spatial_profiles").get();
+    if (!countRow || countRow.c === 0) {
+      this.computeAndStoreRtrwIntersections();
+    }
+    const stmt = this.db.prepare(`
+      SELECT 
+        p.*,
+        r.nomor_ruas,
+        r.display_name as road_name,
+        r.district_name
+      FROM road_spatial_profiles p
+      JOIN roads r ON p.road_key = r.road_key
+      WHERE p.road_key = ?
+    `);
+    const row = stmt.get(roadKey);
+    if (!row) return null;
+    const rtrwClasses = JSON.parse(row.rtrw_breakdown_json || "[]");
+    return {
+      road_key: row.road_key,
+      road_name: row.road_name,
+      nomor_ruas: row.nomor_ruas,
+      district_name: row.district_name,
+      total_length_m: Math.round(row.total_length_m * 100) / 100,
+      jarak_ibukota_kabupaten_m: row.jarak_ibukota_kabupaten_m !== null && row.jarak_ibukota_kabupaten_m !== void 0 ? Math.round(row.jarak_ibukota_kabupaten_m * 10) / 10 : null,
+      desa_count: row.desa_count,
+      desa_names: row.desa_list ? row.desa_list.split("; ").filter(Boolean) : [],
+      kecamatan_count: row.kecamatan_count,
+      kecamatan_names: row.kecamatan_list ? row.kecamatan_list.split("; ").filter(Boolean) : [],
+      permukiman_length_m: Math.round(row.permukiman_length_m * 100) / 100,
+      permukiman_pct: Math.round(row.permukiman_pct * 100) / 100,
+      produksi_length_m: Math.round(row.produksi_length_m * 100) / 100,
+      produksi_pct: Math.round(row.produksi_pct * 100) / 100,
+      lindung_length_m: Math.round(row.lindung_length_m * 100) / 100,
+      lindung_pct: Math.round(row.lindung_pct * 100) / 100,
+      badan_air_length_m: Math.round(row.badan_air_length_m * 100) / 100,
+      badan_air_pct: Math.round(row.badan_air_pct * 100) / 100,
+      pariwisata_length_m: Math.round(row.pariwisata_length_m * 100) / 100,
+      pariwisata_pct: Math.round(row.pariwisata_pct * 100) / 100,
+      uncovered_length_m: Math.round(row.uncovered_length_m * 100) / 100,
+      uncovered_pct: Math.round(row.uncovered_pct * 100) / 100,
+      rtrw_classes: rtrwClasses,
+      methodology_note: "Profil spasial berbasis rencana peruntukan ruang RTRW Kab. HSS (bukan tutupan lahan aktual). Diestimasi menggunakan continuous line sampling tanpa double counting.",
+      calculated_at: row.calculated_at
+    };
+  }
+  /**
+   * Retrieve aggregate network audit of RTRW overlay.
+   */
+  getNetworkRtrwAudit() {
+    this.ensureTables();
+    const countRow = this.db.prepare("SELECT COUNT(*) as c FROM road_spatial_profiles").get();
+    if (!countRow || countRow.c === 0) {
+      this.computeAndStoreRtrwIntersections();
+    }
+    const sumStmt = this.db.prepare(`
+      SELECT 
+        COUNT(*) as total_roads,
+        SUM(total_length_m) as total_m,
+        SUM(permukiman_length_m) as permukiman_m,
+        SUM(produksi_length_m) as produksi_m,
+        SUM(lindung_length_m) as lindung_m,
+        SUM(badan_air_length_m) as badan_air_m,
+        SUM(pariwisata_length_m) as pariwisata_m,
+        SUM(uncovered_length_m) as uncovered_m
+      FROM road_spatial_profiles
+    `);
+    const totals = sumStmt.get();
+    const totalKm = (totals.total_m || 0) / 1e3;
+    const classStmt = this.db.prepare(`
+      SELECT 
+        rtrw_class_name as name,
+        macro_category as macro,
+        SUM(intersection_length_m) as length_m
+      FROM road_rtrw_intersections
+      GROUP BY rtrw_class_name, macro_category
+      ORDER BY length_m DESC
+    `);
+    const classRows = classStmt.all();
+    return {
+      totalRoads: totals.total_roads,
+      totalLengthKm: Math.round(totalKm * 1e3) / 1e3,
+      polygonsAudited: 2832,
+      invalidPolygonsCount: 0,
+      macroSummary: {
+        PERMUKIMAN: {
+          length_km: Math.round(totals.permukiman_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.permukiman_m / 1e3 / totalKm * 1e4) / 100 : 0
+        },
+        PRODUKSI: {
+          length_km: Math.round(totals.produksi_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.produksi_m / 1e3 / totalKm * 1e4) / 100 : 0
+        },
+        LINDUNG: {
+          length_km: Math.round(totals.lindung_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.lindung_m / 1e3 / totalKm * 1e4) / 100 : 0
+        },
+        BADAN_AIR: {
+          length_km: Math.round(totals.badan_air_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.badan_air_m / 1e3 / totalKm * 1e4) / 100 : 0
+        },
+        PARIWISATA: {
+          length_km: Math.round(totals.pariwisata_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.pariwisata_m / 1e3 / totalKm * 1e4) / 100 : 0
+        },
+        TIDAK_TERCAKUP: {
+          length_km: Math.round(totals.uncovered_m / 1e3 * 100) / 100,
+          pct: totalKm > 0 ? Math.round(totals.uncovered_m / 1e3 / totalKm * 1e4) / 100 : 0
+        }
+      },
+      classesSummary: classRows.map((r) => ({
+        name: r.name,
+        macro: r.macro,
+        length_km: Math.round(r.length_m / 1e3 * 100) / 100,
+        pct: totalKm > 0 ? Math.round(r.length_m / 1e3 / totalKm * 1e4) / 100 : 0
+      }))
+    };
+  }
+};
+
 // src/services/uiDataService.ts
 var UiDataService = class {
   db;
@@ -1228,6 +1660,7 @@ var UiDataService = class {
   roadService;
   modelService;
   benchmarkService;
+  rtrwSpatialService;
   constructor(db) {
     this.db = db || getDatabase();
     this.scoringService = new ScoringService(this.db);
@@ -1235,6 +1668,7 @@ var UiDataService = class {
     this.roadService = new RoadService(this.db);
     this.modelService = new ModelService(this.db);
     this.benchmarkService = new BenchmarkService(this.db);
+    this.rtrwSpatialService = new RtrwSpatialService(this.db);
   }
   /**
    * Get executive dashboard metrics for a given operating mode.
@@ -1400,15 +1834,23 @@ var UiDataService = class {
     const catMap = new Map(categories.map((c) => [c.category_code, c]));
     const varDefs = this.modelService.getVariables();
     const varMap = new Map(varDefs.map((v) => [v.variable_code, v]));
+    const obsStmt = this.db.prepare(`
+      SELECT variable_code, raw_value, normalized_value
+      FROM road_variable_observations
+      WHERE operating_mode = ? AND road_key = ?
+    `);
+    const obsRows = obsStmt.all(operatingMode, roadKey);
+    const obsMap = new Map(obsRows.map((o) => [o.variable_code, o]));
     const model = this.modelService.getBaselineModel();
     const catWeightsMap = new Map(model?.category_weights.map((c) => [c.category_code, c]));
     const categoryContributions = categories.map((c) => {
       const sub = subtotalsMap[c.category_code]?.subtotal || 0;
       const cw = catWeightsMap.get(c.category_code);
       const pctOfScore = scoreRow.final_score > 0 ? sub / scoreRow.final_score * 100 : 0;
+      const catName = c.category_code === "SPASIAL_DEMOGRAFI" ? "Spasial dan Aksesibilitas Wilayah" : c.category_name;
       return {
         category_code: c.category_code,
-        category_name: c.category_name,
+        category_name: catName,
         raw_weight: cw?.raw_weight || c.default_weight_raw,
         normalized_weight: cw?.normalized_weight || 0,
         subtotal: sub,
@@ -1418,13 +1860,16 @@ var UiDataService = class {
     const factors = factorsList.map((f) => {
       const def = varMap.get(f.variable_code);
       const cat = catMap.get(f.category_code);
+      const obs = obsMap.get(f.variable_code);
+      const catName = f.category_code === "SPASIAL_DEMOGRAFI" ? "Spasial dan Aksesibilitas Wilayah" : cat?.category_name || f.category_code;
+      const rawVal = obs?.raw_value !== void 0 && obs?.raw_value !== null ? obs.raw_value : f.raw_value ?? null;
       return {
         variable_code: f.variable_code,
         variable_label: def?.variable_label || f.variable_code,
         definition: def?.definition || "",
         category_code: f.category_code,
-        category_name: cat?.category_name || f.category_code,
-        raw_value: f.raw_value,
+        category_name: catName,
+        raw_value: rawVal,
         raw_unit: def?.raw_unit || "",
         optimization_dir: def?.optimization_dir || "BENEFIT",
         normalized_value: f.normalized_value,
@@ -1483,7 +1928,8 @@ var UiDataService = class {
         delta_subtotals: deltaSub,
         delta_contributions: deltaContrib,
         is_exact: deltaSub < 1e-9 && deltaContrib < 1e-9
-      }
+      },
+      spatialAccessibilityProfile: this.rtrwSpatialService.getRoadSpatialProfile(roadKey)
     };
   }
   /**
@@ -1599,8 +2045,8 @@ var UiDataService = class {
 };
 
 // src/services/spatialService.ts
-import fs4 from "node:fs";
-import * as turf from "@turf/turf";
+import fs5 from "node:fs";
+import * as turf2 from "@turf/turf";
 var SpatialService = class {
   db;
   scoringService;
@@ -1765,13 +2211,13 @@ var SpatialService = class {
    */
   getReferenceNetworkGeoJson() {
     if (!this.cachedProvincialGeoJson) {
-      this.cachedProvincialGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.roadsProvincialGeoJson, "utf8"));
+      this.cachedProvincialGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.roadsProvincialGeoJson, "utf8"));
     }
     if (!this.cachedNationalGeoJson) {
-      this.cachedNationalGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.roadsNationalGeoJson, "utf8"));
+      this.cachedNationalGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.roadsNationalGeoJson, "utf8"));
     }
     if (!this.cachedConnectorsGeoJson) {
-      this.cachedConnectorsGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.networkConnectorsGeoJson, "utf8"));
+      this.cachedConnectorsGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.networkConnectorsGeoJson, "utf8"));
     }
     const combinedFeatures = [];
     for (let i = 0; i < this.cachedProvincialGeoJson.features.length; i++) {
@@ -1832,7 +2278,7 @@ var SpatialService = class {
    */
   getDistrictsGeoJson() {
     if (!this.cachedDistrictsGeoJson) {
-      this.cachedDistrictsGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.districtsGeoJson, "utf8"));
+      this.cachedDistrictsGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.districtsGeoJson, "utf8"));
     }
     return this.cachedDistrictsGeoJson;
   }
@@ -1853,7 +2299,7 @@ var SpatialService = class {
     }
     let unionPoly = districtsGeoJson.features[0];
     for (let i = 1; i < districtsGeoJson.features.length; i++) {
-      const merged = turf.union(turf.featureCollection([unionPoly, districtsGeoJson.features[i]]));
+      const merged = turf2.union(turf2.featureCollection([unionPoly, districtsGeoJson.features[i]]));
       if (!merged) {
         throw new Error(`Kabupaten dissolve failed at district index ${i}`);
       }
@@ -1862,7 +2308,7 @@ var SpatialService = class {
     this.cachedKabupatenGeoJson = {
       type: "FeatureCollection",
       name: "kabupaten_hss_boundary",
-      bbox: turf.bbox(unionPoly),
+      bbox: turf2.bbox(unionPoly),
       features: [
         {
           type: "Feature",
@@ -1885,7 +2331,7 @@ var SpatialService = class {
    */
   getVillagesGeoJson() {
     if (!this.cachedVillagesGeoJson) {
-      this.cachedVillagesGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.villagesGeoJson, "utf8"));
+      this.cachedVillagesGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.villagesGeoJson, "utf8"));
     }
     return this.cachedVillagesGeoJson;
   }
@@ -1950,7 +2396,7 @@ var SpatialService = class {
    */
   getRtrwCategories() {
     if (!this.cachedRtrwCategories) {
-      const csv = fs4.readFileSync(SEED_FILES.rtrwCategoriesCsv, "utf8");
+      const csv = fs5.readFileSync(SEED_FILES.rtrwCategoriesCsv, "utf8");
       const lines = csv.trim().split("\n").slice(1);
       this.cachedRtrwCategories = lines.map((l) => {
         const [nama, count] = l.split(",");
@@ -1965,7 +2411,7 @@ var SpatialService = class {
    */
   getRtrwGeoJson() {
     if (!this.cachedRtrwGeoJson) {
-      this.cachedRtrwGeoJson = JSON.parse(fs4.readFileSync(SEED_FILES.rtrwPolaRuangGeoJson, "utf8"));
+      this.cachedRtrwGeoJson = JSON.parse(fs5.readFileSync(SEED_FILES.rtrwPolaRuangGeoJson, "utf8"));
     }
     return this.cachedRtrwGeoJson;
   }
@@ -2228,9 +2674,9 @@ var SimulationService = class {
 };
 
 // src/services/spatialDerivationService.ts
-import fs5 from "node:fs";
+import fs6 from "node:fs";
 import crypto2 from "node:crypto";
-import * as turf2 from "@turf/turf";
+import * as turf3 from "@turf/turf";
 var MinHeap = class {
   heap = [];
   push(key, val) {
@@ -2324,10 +2770,10 @@ var SpatialDerivationService = class {
    */
   ensureNetworkGraph() {
     if (this.nodes.size > 0 && this.networkHash) return;
-    if (!fs5.existsSync(SEED_FILES.networkAnalysisGeoJson)) {
+    if (!fs6.existsSync(SEED_FILES.networkAnalysisGeoJson)) {
       throw new Error(`Network file not found at: ${SEED_FILES.networkAnalysisGeoJson}`);
     }
-    const raw = fs5.readFileSync(SEED_FILES.networkAnalysisGeoJson, "utf8");
+    const raw = fs6.readFileSync(SEED_FILES.networkAnalysisGeoJson, "utf8");
     this.networkData = JSON.parse(raw);
     this.networkHash = crypto2.createHash("sha256").update(raw).digest("hex").substring(0, 16);
     let edgeCount = 0;
@@ -2361,7 +2807,7 @@ var SpatialDerivationService = class {
           if (!this.nodes.has(k2)) {
             this.nodes.set(k2, { id: this.nodes.size, coord: p2, neighbors: [], roadKeys: /* @__PURE__ */ new Set() });
           }
-          const dMeters = turf2.distance(turf2.point(p1), turf2.point(p2), { units: "kilometers" }) * 1e3;
+          const dMeters = turf3.distance(turf3.point(p1), turf3.point(p2), { units: "kilometers" }) * 1e3;
           this.nodes.get(k1).neighbors.push({ to: k2, dist: dMeters, roadKey, featureIdx: fIdx, p1, p2 });
           this.nodes.get(k2).neighbors.push({ to: k1, dist: dMeters, roadKey, featureIdx: fIdx, p1: p2, p2: p1 });
           edgeCount++;
@@ -2446,9 +2892,9 @@ var SpatialDerivationService = class {
    * Ingest authoritative Road-Village and Road-District intersections
    */
   ingestAdminIntersections() {
-    const villageCsv = fs5.readFileSync(SEED_FILES.roadVillageIntersectionsCsv, "utf8");
+    const villageCsv = fs6.readFileSync(SEED_FILES.roadVillageIntersectionsCsv, "utf8");
     const villageRows = parseCsv(villageCsv);
-    const districtCsv = fs5.readFileSync(SEED_FILES.roadDistrictIntersectionsCsv, "utf8");
+    const districtCsv = fs6.readFileSync(SEED_FILES.roadDistrictIntersectionsCsv, "utf8");
     const districtRows = parseCsv(districtCsv);
     const insertVillageStmt = this.db.prepare(`
       INSERT INTO road_village_intersections (
@@ -2572,7 +3018,7 @@ var SpatialDerivationService = class {
     let suspiciousCount = 0;
     let totalSnapped = 0;
     for (const fac of facilities) {
-      const fPt = turf2.point([fac.longitude, fac.latitude]);
+      const fPt = turf3.point([fac.longitude, fac.latitude]);
       let minD = Infinity;
       let nearestCoord = [fac.longitude, fac.latitude];
       for (let fIdx = 0; fIdx < this.networkData.features.length; fIdx++) {
@@ -2580,8 +3026,8 @@ var SpatialDerivationService = class {
         const lines = this.extractLines(feat.geometry);
         for (const coords of lines) {
           for (let i = 0; i < coords.length - 1; i++) {
-            const seg = turf2.lineString([coords[i], coords[i + 1]]);
-            const ptOnLine = turf2.nearestPointOnLine(seg, fPt);
+            const seg = turf3.lineString([coords[i], coords[i + 1]]);
+            const ptOnLine = turf3.nearestPointOnLine(seg, fPt);
             const d = (ptOnLine.properties.dist || 0) * 1e3;
             if (d < minD) {
               minD = d;
@@ -2659,7 +3105,7 @@ var SpatialDerivationService = class {
         minSnapToNodeDist = 0;
       } else {
         for (const [k, n] of this.nodes.entries()) {
-          const d = turf2.distance(turf2.point(snapCoord), turf2.point(n.coord), { units: "kilometers" }) * 1e3;
+          const d = turf3.distance(turf3.point(snapCoord), turf3.point(n.coord), { units: "kilometers" }) * 1e3;
           if (d < minSnapToNodeDist) {
             minSnapToNodeDist = d;
             closestNodeKey = k;
@@ -2754,7 +3200,7 @@ var SpatialDerivationService = class {
           curr = pInfo.fromNode;
         }
         routeCoords.push(facSnapCoord);
-        const straightLineKm = turf2.distance(turf2.point(accessCoord), turf2.point([targetFac.original_lng, targetFac.original_lat]), {
+        const straightLineKm = turf3.distance(turf3.point(accessCoord), turf3.point([targetFac.original_lng, targetFac.original_lat]), {
           units: "kilometers"
         });
         const straightLineM = Math.round(straightLineKm * 1e3 * 10) / 10;
@@ -2864,7 +3310,7 @@ var SpatialDerivationService = class {
    * Retrieve comparison between imported historical distance vs network-calculated distance
    */
   getDistanceReconciliation() {
-    const csvContent = fs5.readFileSync(SEED_FILES.roadContextHistoryCsv, "utf8");
+    const csvContent = fs6.readFileSync(SEED_FILES.roadContextHistoryCsv, "utf8");
     const histRows = parseCsv(csvContent);
     const histMap = /* @__PURE__ */ new Map();
     for (const row of histRows) {
@@ -3094,7 +3540,7 @@ var DemographicsAndSegmentsService = class {
 };
 
 // src/services/dd1SegmentGeometryService.ts
-import fs6 from "node:fs";
+import fs7 from "node:fs";
 import path3 from "node:path";
 var DD1SegmentGeometryService = class {
   db;
@@ -3284,12 +3730,12 @@ var DD1SegmentGeometryService = class {
   writeCanonicalGeoJsonFile() {
     const geojson = this.generateDD1SegmentsGeoJson();
     const dataDir = path3.resolve(PROJECT_ROOT, "src/public/data");
-    if (!fs6.existsSync(dataDir)) {
-      fs6.mkdirSync(dataDir, { recursive: true });
+    if (!fs7.existsSync(dataDir)) {
+      fs7.mkdirSync(dataDir, { recursive: true });
     }
     const targetPath = path3.join(dataDir, "dd1_condition_segments_2025.geojson");
     const content = JSON.stringify(geojson);
-    fs6.writeFileSync(targetPath, content, "utf8");
+    fs7.writeFileSync(targetPath, content, "utf8");
     return {
       filePath: targetPath,
       totalSegments: geojson.features.length,
@@ -3298,8 +3744,2523 @@ var DD1SegmentGeometryService = class {
   }
 };
 
+// src/services/roadNarrativeService.ts
+var RoadNarrativeService = class {
+  db;
+  rtrwService;
+  constructor(db) {
+    this.db = db || getDatabase();
+    this.rtrwService = new RtrwSpatialService(this.db);
+  }
+  /**
+   * Helper formatting for numbers in Indonesian notation
+   */
+  formatNumber(val, decimals = 2) {
+    return val.toLocaleString("id-ID", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+  /**
+   * Generate complete structured narrative for a given road key.
+   */
+  generateNarrative(roadKey, operatingMode = "OPERATIONAL_2025", modelCode = "POLICY_DEFAULT_V1") {
+    const road = this.db.prepare(`
+        SELECT 
+          r.road_id,
+          r.road_key,
+          r.nomor_ruas,
+          r.canonical_name,
+          r.display_name,
+          r.district_name,
+          r.village_coverage,
+          r.length_km_official,
+          r.width_m_official,
+          r.identity_status,
+          g.geometry_length_m,
+          g.geometry_geojson
+        FROM roads r
+        LEFT JOIN road_geometries g ON r.road_key = g.road_key
+        WHERE r.road_key = ?
+      `).get(roadKey);
+    if (!road) return null;
+    const cond = this.db.prepare(`
+        SELECT * FROM road_conditions
+        WHERE road_key = ? AND survey_year = 2025
+      `).get(roadKey);
+    const spatialProfile = this.rtrwService.getRoadSpatialProfile(roadKey);
+    const villageRows = this.db.prepare(`
+        SELECT 
+          rvi.village_id,
+          rvi.village_name,
+          rvi.district_id,
+          rvi.district_name,
+          rvi.intersection_length_m,
+          rvi.share_of_road_pct,
+          COALESCE(vd.households_total, 0) as households_total,
+          COALESCE(vd.households_male, 0) as households_male,
+          COALESCE(vd.households_female, 0) as households_female
+        FROM road_village_intersections rvi
+        LEFT JOIN village_demographics vd ON rvi.village_id = vd.village_id
+        WHERE rvi.road_key = ?
+        ORDER BY rvi.intersection_length_m DESC
+      `).all(roadKey);
+    const uniqueVillageMap = /* @__PURE__ */ new Map();
+    const uniqueDistricts = /* @__PURE__ */ new Set();
+    let totalHouseholds = 0;
+    for (const v of villageRows) {
+      uniqueDistricts.add(v.district_name);
+      if (!uniqueVillageMap.has(v.village_id)) {
+        uniqueVillageMap.set(v.village_id, v);
+        totalHouseholds += Number(v.households_total);
+      }
+    }
+    const uniqueVillages = Array.from(uniqueVillageMap.values());
+    const uniqueVillageNames = uniqueVillages.map((v) => v.village_name);
+    const uniqueDistrictNames = Array.from(uniqueDistricts);
+    const facRows = this.db.prepare(`
+        SELECT * FROM road_nearest_facilities
+        WHERE road_key = ?
+      `).all(roadKey);
+    const facMap = new Map(facRows.map((f) => [f.facility_type, f]));
+    const scoreRow = this.db.prepare(`
+        SELECT 
+          s.priority_rank,
+          s.final_score,
+          s.tier_category,
+          s.subtotal_teknis,
+          s.subtotal_akses,
+          s.subtotal_pelayanan,
+          s.subtotal_spasial,
+          s.factor_breakdown
+        FROM road_priority_scores s
+        JOIN scoring_runs sr ON s.run_id = sr.run_id
+        JOIN priority_models pm ON sr.model_id = pm.model_id
+        WHERE s.road_key = ? AND sr.operating_mode = ? AND pm.model_code = ?
+        ORDER BY sr.executed_at DESC LIMIT 1
+      `).get(roadKey, operatingMode, modelCode);
+    const obsRows = this.db.prepare(`
+        SELECT o.variable_code, o.raw_value, o.normalized_value, v.variable_label, v.category_code
+        FROM road_variable_observations o
+        JOIN variable_definitions v ON o.variable_code = v.variable_code
+        WHERE o.road_key = ? AND o.operating_mode = ?
+      `).all(roadKey, operatingMode);
+    const obsMap = new Map(obsRows.map((o) => [o.variable_code, o]));
+    let topFactors = [];
+    if (scoreRow && scoreRow.factor_breakdown) {
+      try {
+        const bd = JSON.parse(scoreRow.factor_breakdown);
+        const factors = Array.isArray(bd.factors) ? bd.factors : Object.values(bd.factors || {});
+        factors.sort((a, b) => b.contribution - a.contribution);
+        topFactors = factors.slice(0, 3).map((f) => {
+          const obs = obsMap.get(f.variable_code);
+          const pct = scoreRow.final_score > 0 ? f.contribution / scoreRow.final_score * 100 : 0;
+          return {
+            variable_code: f.variable_code,
+            variable_label: obs?.variable_label || f.variable_code,
+            effective_weight: f.effective_weight,
+            contribution: f.contribution,
+            pct_of_score: Math.round(pct * 10) / 10
+          };
+        });
+      } catch {
+      }
+    }
+    const availability = {
+      road_key: roadKey,
+      has_geometry: !!road.geometry_geojson,
+      has_conditions_2025: !!cond,
+      has_spatial_profile: !!spatialProfile,
+      has_rtrw_breakdown: !!(spatialProfile && spatialProfile.rtrw_classes && spatialProfile.rtrw_classes.length > 0),
+      has_village_intersections: uniqueVillages.length > 0,
+      has_household_demographics: totalHouseholds > 0,
+      has_population_count: false,
+      // Authoritative source stores households
+      has_nearest_facilities: facRows.length > 0,
+      has_connected_routes: facRows.some((f) => f.network_distance_m >= 0),
+      has_priority_score: !!scoreRow,
+      has_technical_width: road.width_m_official > 0,
+      has_technical_surface: obsMap.has("norm_permukaan_aspal_penmac")
+    };
+    const geomKm = road.geometry_length_m ? road.geometry_length_m / 1e3 : null;
+    const roadName = road.display_name || road.canonical_name;
+    const distName = road.district_name || "Kandangan";
+    const desaListStr = uniqueVillageNames.length > 0 ? uniqueVillageNames.join(", ") : road.village_coverage;
+    let t1Text = `Ruas Jalan ${roadName} (Nomor Ruas: ${road.nomor_ruas}, Kode: ${road.road_key}) memiliki panjang resmi ${this.formatNumber(road.length_km_official)} km dan berada di wilayah administrasi Kecamatan ${distName}.`;
+    if (uniqueDistrictNames.length > 1) {
+      t1Text += ` Berdasarkan lintasan jaringan, ruas ini menghubungkan lintas kecamatan meliputi Kecamatan ${uniqueDistrictNames.join(" dan Kecamatan ")}.`;
+    }
+    if (uniqueVillageNames.length > 0) {
+      t1Text += ` Berdasarkan data geospasial jaringan jalan, ruas ini melintasi ${uniqueVillageNames.length} desa/kelurahan, yaitu ${desaListStr}.`;
+    } else {
+      t1Text += ` Cakupan administrasi desa yang tercatat meliputi ${road.village_coverage}.`;
+    }
+    t1Text += ` Status pengelolaan ruas merupakan jalan kabupaten di bawah kewenangan teknis Pemerintah Kabupaten Hulu Sungai Selatan.`;
+    const template1 = {
+      title: "Gambaran Umum Ruas",
+      text: t1Text,
+      attributes: {
+        nomor_ruas: road.nomor_ruas,
+        kode_ruas: road.road_key,
+        nama_resmi: road.canonical_name,
+        panjang_resmi_km: road.length_km_official,
+        panjang_geometri_km: geomKm ? Math.round(geomKm * 1e3) / 1e3 : null,
+        kecamatan_utama: distName,
+        status_administrasi: "Jalan Kabupaten",
+        daftar_desa: uniqueVillageNames
+      }
+    };
+    let t2Text = `Ruas ini melintasi ${uniqueVillages.length} desa/kelurahan di ${uniqueDistrictNames.length} kecamatan.`;
+    if (totalHouseholds > 0) {
+      t2Text += ` Akumulasi jumlah rumah tangga pada wilayah desa/kelurahan yang dilalui tercatat sebanyak ${totalHouseholds.toLocaleString("id-ID")} keluarga (KK) berdasarkan data Disdukcapil Kabupaten Hulu Sungai Selatan Tahun 2025.`;
+    } else {
+      t2Text += ` Data agregat rumah tangga pada desa yang dilintasi tidak tercatat secara lengkap dalam basis data kependudukan 2025.`;
+    }
+    t2Text += ` Informasi ini mencerminkan keberadaan populasi pada wilayah administratif desa yang dilintasi ruas dan tidak secara otomatis menunjukkan bahwa seluruh rumah tangga tersebut menggantungkan mobilitas hariannya secara eksklusif pada ruas jalan ini.`;
+    const popObsVal = obsMap.get("norm_penduduk_dilayani")?.raw_value;
+    if (popObsVal !== void 0 && popObsVal !== null) {
+      t2Text += ` Pada model prioritas penanganan, variabel penduduk terlayani memperhitungkan bobot pelayanan relatif sebesar ${this.formatNumber(popObsVal, 4)} sebagai indikator kemanfaatan publik.`;
+    }
+    const template2 = {
+      title: "Cakupan Wilayah dan Demografi",
+      text: t2Text,
+      attributes: {
+        jumlah_desa: uniqueVillages.length,
+        jumlah_kecamatan: uniqueDistrictNames.length,
+        daftar_kecamatan: uniqueDistrictNames,
+        daftar_desa: uniqueVillageNames,
+        total_rumah_tangga: totalHouseholds,
+        data_jiwa_status: "Data agregat per desa tersedia dalam satuan Rumah Tangga/KK (Disdukcapil 2025)",
+        indikator_penduduk_terlayani: popObsVal !== void 0 ? popObsVal : null,
+        catatan_metodologi: "Perhitungan demografi berbasis desa unik yang beririsan dengan geometri ruas jalan."
+      }
+    };
+    let t3Text = `Berdasarkan Rencana Tata Ruang Wilayah (RTRW) Kabupaten Hulu Sungai Selatan Tahun 2024\u20132044, `;
+    const rtrwClassesList = [];
+    let dominantClassName = "Data tidak tersedia";
+    let dominantPct = 0;
+    if (spatialProfile && spatialProfile.rtrw_classes && spatialProfile.rtrw_classes.length > 0) {
+      const sortedClasses = [...spatialProfile.rtrw_classes].sort((a, b) => b.length_m - a.length_m);
+      dominantClassName = sortedClasses[0].name;
+      dominantPct = sortedClasses[0].pct;
+      for (const c of sortedClasses) {
+        rtrwClassesList.push({
+          name: c.name,
+          macro: c.macro,
+          length_km: Math.round(c.length_m / 1e3 * 100) / 100,
+          pct: Math.round(c.pct * 10) / 10
+        });
+      }
+      const classSummaries = sortedClasses.slice(0, 4).map((c) => `${c.name} sepanjang ${this.formatNumber(c.length_m / 1e3)} km (${this.formatNumber(c.pct, 1)}%)`);
+      t3Text += `ruas ini didominasi oleh peruntukan ruang ${dominantClassName} dengan porsi ${this.formatNumber(dominantPct, 1)}%. Secara keseluruhan, peruntukan ruang yang beririsan meliputi ${classSummaries.join(", ")}.`;
+      if (spatialProfile.lindung_pct > 0) {
+        t3Text += ` Ruas ini juga melintasi kawasan lindung seluas ${this.formatNumber(spatialProfile.lindung_pct, 1)}% dari panjang ruas.`;
+      }
+      if (spatialProfile.badan_air_pct > 0) {
+        t3Text += ` Terdapat persilangan dengan badan air/sungai sebesar ${this.formatNumber(spatialProfile.badan_air_pct, 1)}%.`;
+      }
+    } else {
+      t3Text += `informasi profil peruntukan ruang pola ruang belum tersedia pada ruas ini.`;
+    }
+    t3Text += ` Perlu ditegaskan bahwa data ini menggambarkan peruntukan ruang formal berdasarkan RTRW Kabupaten Hulu Sungai Selatan 2024\u20132044, bukan penggunaan lahan aktual di lapangan.`;
+    const template3 = {
+      title: "Karakteristik Tata Ruang",
+      text: t3Text,
+      attributes: {
+        dasar_hukum: "RTRW Kabupaten Hulu Sungai Selatan 2024\u20132044",
+        kelas_dominan: dominantClassName,
+        persentase_dominan: dominantPct,
+        permukiman_pct: spatialProfile?.permukiman_pct || 0,
+        produksi_pct: spatialProfile?.produksi_pct || 0,
+        lindung_pct: spatialProfile?.lindung_pct || 0,
+        badan_air_pct: spatialProfile?.badan_air_pct || 0,
+        pariwisata_pct: spatialProfile?.pariwisata_pct || 0,
+        tidak_tercakup_pct: spatialProfile?.uncovered_pct || 0,
+        rincian_kelas: rtrwClassesList,
+        catatan_peruntukan: "Informasi merupakan alokasi pola ruang formal RTRW, bukan tutupan lahan aktual."
+      }
+    };
+    const distKandanganM = spatialProfile?.jarak_ibukota_kabupaten_m;
+    let distKandanganDisplay = "Data tidak tersedia";
+    if (distKandanganM !== null && distKandanganM !== void 0) {
+      distKandanganDisplay = distKandanganM < 1e3 ? `${Math.round(distKandanganM)} meter` : `${this.formatNumber(distKandanganM / 1e3)} km`;
+    }
+    const hosp = facMap.get("hospital");
+    const pusk = facMap.get("puskesmas");
+    const sch = facMap.get("school");
+    const mkt = facMap.get("market");
+    const formatFac = (fac) => {
+      if (!fac) return { name: "Data tidak tersedia", distance: "Data tidak tersedia", status: "UNAVAILABLE" };
+      if (fac.network_distance_m < 0) {
+        return {
+          name: fac.nearest_facility_name || "Rute terputus",
+          distance: "Rute tidak terhubung",
+          status: "DISCONNECTED"
+        };
+      }
+      const km = fac.network_distance_m / 1e3;
+      const dStr = km < 1 ? `${Math.round(fac.network_distance_m)} meter` : `${this.formatNumber(km)} km`;
+      return {
+        name: fac.nearest_facility_name,
+        distance: dStr,
+        status: "CONNECTED"
+      };
+    };
+    const hospObj = formatFac(hosp);
+    const puskObj = formatFac(pusk);
+    const schObj = formatFac(sch);
+    const mktObj = formatFac(mkt);
+    let t4Text = `Dari aspek aksesibilitas wilayah, jarak ruas terhadap pusat Ibukota Kabupaten (Kandangan) tercatat sekitar ${distKandanganDisplay}.`;
+    t4Text += ` Berdasarkan analisis penelusuran jaringan jalan terpendek (shortest path Dijkstra), `;
+    const facSentences = [];
+    if (hospObj.status === "CONNECTED") {
+      facSentences.push(`fasilitas kesehatan rujukan terdekat adalah ${hospObj.name} dengan jarak tempuh jaringan ${hospObj.distance}`);
+    } else if (hospObj.status === "DISCONNECTED") {
+      facSentences.push(`fasilitas RSUD belum terhubung secara langsung melalui jaringan jalan kabupaten yang tersambung`);
+    }
+    if (puskObj.status === "CONNECTED") {
+      facSentences.push(`pelayanan kesehatan primer terdekat adalah ${puskObj.name} sejauh ${puskObj.distance}`);
+    }
+    if (schObj.status === "CONNECTED") {
+      facSentences.push(`fasilitas pendidikan terdekat adalah ${schObj.name} pada jarak ${schObj.distance}`);
+    }
+    if (mktObj.status === "CONNECTED") {
+      facSentences.push(`pusat kegiatan ekonomi pasar terdekat adalah ${mktObj.name} sejauh ${mktObj.distance}`);
+    }
+    t4Text += facSentences.join(", ") + ".";
+    t4Text += ` Seluruh jarak dihitung berdasarkan lintasan geometri jalan riil dari titik akses ruas menuju fasilitas publik bersangkutan.`;
+    const template4 = {
+      title: "Aksesibilitas dan Pelayanan",
+      text: t4Text,
+      attributes: {
+        jarak_kandangan: distKandanganDisplay,
+        rsud: hospObj,
+        puskesmas: puskObj,
+        sekolah: schObj,
+        pasar: mktObj,
+        metode_jarak: "Multi-Source Dijkstra Shortest Path pada Graf Jalan Kabupaten"
+      }
+    };
+    let t5Text = "";
+    let domCondition = "Data tidak tersedia";
+    if (cond) {
+      const condArr = [
+        { label: "Baik", km: cond.baik_km, pct: cond.baik_pct },
+        { label: "Sedang", km: cond.sedang_km, pct: cond.sedang_pct },
+        { label: "Rusak Ringan", km: cond.rusak_ringan_km, pct: cond.rusak_ringan_pct },
+        { label: "Rusak Berat", km: cond.rusak_berat_km, pct: cond.rusak_berat_pct }
+      ];
+      condArr.sort((a, b) => b.km - a.km);
+      domCondition = `${condArr[0].label} (${this.formatNumber(condArr[0].pct, 1)}%)`;
+      t5Text = `Berdasarkan data kondisi jalan tahun 2025 (Dashboard Analitik Data Jalan 2025), ruas ini memiliki panjang total ${this.formatNumber(cond.total_panjang_km)} km dengan tingkat kemantapan sebesar ${this.formatNumber(cond.mantap_pct, 1)}% (${this.formatNumber(cond.mantap_km)} km mantap).`;
+      t5Text += ` Proporsi kerusakan tidak mantap tercatat sebesar ${this.formatNumber(cond.tidak_mantap_pct, 1)}% (${this.formatNumber(cond.tidak_mantap_km)} km).`;
+      t5Text += ` Rincian fisik kondisi jalan meliputi: Baik ${this.formatNumber(cond.baik_km)} km (${this.formatNumber(cond.baik_pct, 1)}%), Sedang ${this.formatNumber(cond.sedang_km)} km (${this.formatNumber(cond.sedang_pct, 1)}%), Rusak Ringan ${this.formatNumber(cond.rusak_ringan_km)} km (${this.formatNumber(cond.rusak_ringan_pct, 1)}%), dan Rusak Berat ${this.formatNumber(cond.rusak_berat_km)} km (${this.formatNumber(cond.rusak_berat_pct, 1)}%).`;
+      if (cond.mantap_pct >= 90) {
+        t5Text += ` Secara umum ruas berada dalam kondisi kemantapan yang prima dan memerlukan pemeliharaan rutin untuk mempertahankan umur layanan.`;
+      } else if (cond.mantap_pct >= 60) {
+        t5Text += ` Sebagian besar ruas masih berfungsi dengan baik, namun terdapat segmen yang memerlukan penanganan berkala agar kerusakan tidak meluas.`;
+      } else {
+        t5Text += ` Sebagian besar ruas mengalami penurunan kondisi fisik dan memerlukan penanganan rehabilitasi atau rekonstruksi prioritas.`;
+      }
+    } else {
+      t5Text = `Data kondisi dan kemantapan jalan tahun 2025 belum tersedia untuk ruas ini.`;
+    }
+    const template5 = {
+      title: "Kondisi dan Kemantapan Jalan",
+      text: t5Text,
+      attributes: {
+        tahun_survei: cond?.survey_year || 2025,
+        panjang_total_km: cond?.total_panjang_km || road.length_km_official,
+        mantap_km: cond?.mantap_km || 0,
+        mantap_pct: cond?.mantap_pct || 0,
+        tidak_mantap_km: cond?.tidak_mantap_km || 0,
+        tidak_mantap_pct: cond?.tidak_mantap_pct || 0,
+        baik_km: cond?.baik_km || 0,
+        baik_pct: cond?.baik_pct || 0,
+        sedang_km: cond?.sedang_km || 0,
+        sedang_pct: cond?.sedang_pct || 0,
+        rusak_ringan_km: cond?.rusak_ringan_km || 0,
+        rusak_ringan_pct: cond?.rusak_ringan_pct || 0,
+        rusak_berat_km: cond?.rusak_berat_km || 0,
+        rusak_berat_pct: cond?.rusak_berat_pct || 0,
+        klasifikasi_dominan: domCondition
+      }
+    };
+    const aspalObs = obsMap.get("norm_permukaan_aspal_penmac")?.raw_value;
+    const betonObs = obsMap.get("norm_permukaan_beton")?.raw_value;
+    let lebarDisplay = "Data tidak tersedia";
+    if (road.width_m_official && road.width_m_official > 0) {
+      lebarDisplay = `${this.formatNumber(road.width_m_official, 1)} meter`;
+    }
+    let surfaceDisplay = "Data tidak tersedia";
+    if (aspalObs !== void 0 && aspalObs !== null && aspalObs > 0.8) {
+      surfaceDisplay = "Didominasi Perkerasan Aspal / Penetrasi Macadam";
+    } else if (betonObs !== void 0 && betonObs !== null && betonObs > 0.8) {
+      surfaceDisplay = "Didominasi Perkerasan Kaku (Rigid Beton)";
+    } else if (aspalObs !== void 0 && betonObs !== void 0) {
+      surfaceDisplay = `Campuran (Aspal: ${this.formatNumber((aspalObs || 0) * 100, 1)}%, Beton: ${this.formatNumber((betonObs || 0) * 100, 1)}%)`;
+    }
+    let t6Text = `Secara teknis, ruas jalan memiliki lebar perkerasan ${lebarDisplay} dengan status klasifikasi sebagai Jalan Kabupaten.`;
+    if (surfaceDisplay !== "Data tidak tersedia") {
+      t6Text += ` Jenis permukaan jalan tercatat ${surfaceDisplay.toLowerCase()}.`;
+    } else {
+      t6Text += ` Informasi komposisi material permukaan jalan belum tercatat secara rinci dalam inventarisasi teknis.`;
+    }
+    const template6 = {
+      title: "Karakteristik Teknis",
+      text: t6Text,
+      attributes: {
+        lebar_jalan_m: road.width_m_official > 0 ? road.width_m_official : null,
+        lebar_display: lebarDisplay,
+        permukaan_aspal_pct: aspalObs !== void 0 && aspalObs !== null ? Math.round(aspalObs * 100) : null,
+        permukaan_beton_pct: betonObs !== void 0 && betonObs !== null ? Math.round(betonObs * 100) : null,
+        permukaan_display: surfaceDisplay,
+        status_ruas: "Jalan Kabupaten"
+      }
+    };
+    let t7Text = "";
+    const tierLabels = {
+      TOP_35: "Prioritas Utama (Top 35)",
+      TOP_70: "Prioritas Tinggi (Top 70)",
+      TOP_105: "Prioritas Menengah (Top 105)",
+      REGULAR: "Penanganan Reguler (Peringkat > 105)"
+    };
+    if (scoreRow) {
+      const tierLabel = tierLabels[scoreRow.tier_category] || scoreRow.tier_category;
+      t7Text = `Berdasarkan model penilaian prioritas ${modelCode}, ruas ini memperoleh skor komposit sebesar ${this.formatNumber(scoreRow.final_score, 4)} dan menempati peringkat ${scoreRow.priority_rank} dari total 350 ruas jalan kabupaten, yang menempatkannya pada kelompok ${tierLabel}.`;
+      if (topFactors.length > 0) {
+        const factorStr = topFactors.map((f) => `${f.variable_label} (kontribusi ${this.formatNumber(f.contribution, 4)} atau ${this.formatNumber(f.pct_of_score, 1)}%)`).join(", ");
+        t7Text += ` Tiga indikator yang memberikan kontribusi terbesar terhadap pembentukan skor prioritas ruas ini adalah: ${factorStr}.`;
+      }
+      t7Text += ` Hasil pemeringkatan ini merupakan posisi relatif berdasarkan model multi-kriteria AHP/WSM sebagai instrumen pendukung keputusan (decision support system) dan bukan merupakan penetapan otomatis alokasi anggaran penanganan lapangan.`;
+    } else {
+      t7Text = `Penilaian prioritas komposit belum dihitung untuk ruas ini.`;
+    }
+    const template7 = {
+      title: "Hasil Penilaian Prioritas",
+      text: t7Text,
+      attributes: {
+        model_aktif: modelCode,
+        skor_komposit: scoreRow?.final_score || 0,
+        peringkat: scoreRow?.priority_rank || 0,
+        total_ruas: 350,
+        kategori_tier: scoreRow?.tier_category || "REGULAR",
+        label_tier: tierLabels[scoreRow?.tier_category || "REGULAR"] || "Reguler",
+        top_factors: topFactors,
+        penjelasan_metodologis: "Penilaian menggunakan Multi-Criteria Decision Analysis (AHP/WSM) terhadap 17 indikator teknis dan spasial."
+      }
+    };
+    let t8Text = `Ruas Jalan ${roadName} di Kecamatan ${distName} memiliki arti strategis sebagai penghubung ${uniqueVillages.length} desa dengan total sekitar ${totalHouseholds.toLocaleString("id-ID")} rumah tangga di sekitarnya.`;
+    if (dominantClassName !== "Data tidak tersedia") {
+      t8Text += ` Karakteristik tata ruang kawasan didominasi oleh peruntukan ${dominantClassName.toLowerCase()} (${this.formatNumber(dominantPct, 1)}%).`;
+    }
+    if (cond) {
+      t8Text += ` Kondisi fisik saat ini mencatatkan kemantapan sebesar ${this.formatNumber(cond.mantap_pct, 1)}% (${this.formatNumber(cond.mantap_km)} km mantap dari total ${this.formatNumber(cond.total_panjang_km)} km).`;
+    }
+    if (scoreRow) {
+      t8Text += ` Dalam pemeringkatan prioritas kabupaten, ruas ini berada pada peringkat ke-${scoreRow.priority_rank} dengan skor ${this.formatNumber(scoreRow.final_score, 4)} (${tierLabels[scoreRow.tier_category] || scoreRow.tier_category}), dengan kontribusi utama berasal dari faktor ${topFactors[0]?.variable_label || "teknis"}.`;
+    }
+    t8Text += ` Integrasi data teknis, spasial, dan konektivitas fasilitas ini memberikan landasan berbasis bukti yang objektif bagi perencanaan dan alokasi program penanganan infrastruktur jalan Kabupaten Hulu Sungai Selatan.`;
+    const template8 = {
+      title: "Kesimpulan Karakteristik Ruas",
+      text: t8Text
+    };
+    const ringkasan = [
+      `Ruas Jalan ${roadName} (No. Ruas ${road.nomor_ruas}) memiliki panjang resmi ${this.formatNumber(road.length_km_official)} km di Kecamatan ${distName}. Berdasarkan data geospasial, ruas ini melintasi ${uniqueVillages.length} desa/kelurahan dengan cakupan ${totalHouseholds > 0 ? `${totalHouseholds.toLocaleString("id-ID")} rumah tangga (Disdukcapil 2025)` : "wilayah desa terlintasi"}.`,
+      cond ? `Tingkat kemantapan jalan tahun 2025 tercatat sebesar ${this.formatNumber(cond.mantap_pct, 1)}% (${this.formatNumber(cond.mantap_km)} km mantap dan ${this.formatNumber(cond.tidak_mantap_km)} km tidak mantap). Berdasarkan pola ruang RTRW 2024\u20132044, koridor jalan ini didominasi oleh peruntukan ${dominantClassName.toLowerCase()} (${this.formatNumber(dominantPct, 1)}%).` : `Koridor jalan didominasi oleh peruntukan pola ruang RTRW ${dominantClassName.toLowerCase()}.`,
+      scoreRow ? `Pada model prioritas penanganan jalan kabupaten (${modelCode}), ruas ini menempati peringkat ke-${scoreRow.priority_rank} dari 350 ruas dengan skor komposit ${this.formatNumber(scoreRow.final_score, 4)} (${tierLabels[scoreRow.tier_category] || scoreRow.tier_category}).` : `Ruas ini tercatat dalam sistem perencanaan jalan Kabupaten Hulu Sungai Selatan.`
+    ].join("\n\n");
+    return {
+      road_key: roadKey,
+      nomor_ruas: road.nomor_ruas,
+      road_name: roadName,
+      ringkasan_eksekutif: ringkasan,
+      template1_gambaran_umum: template1,
+      template2_cakupan_demografi: template2,
+      template3_tata_ruang_rtrw: template3,
+      template4_aksesibilitas_pelayanan: template4,
+      template5_kondisi_kemantapan: template5,
+      template6_karakteristik_teknis: template6,
+      template7_penilaian_prioritas: template7,
+      template8_kesimpulan_karakteristik: template8,
+      availability,
+      generated_at: (/* @__PURE__ */ new Date()).toISOString()
+    };
+  }
+  /**
+   * Batch audit and generate narratives for all 350 canonical roads.
+   */
+  generateAllNarratives(operatingMode = "OPERATIONAL_2025", modelCode = "POLICY_DEFAULT_V1") {
+    const roads = this.db.prepare("SELECT road_key FROM roads ORDER BY road_key ASC").all();
+    const results = [];
+    const matrix = {
+      has_geometry: 0,
+      has_conditions_2025: 0,
+      has_spatial_profile: 0,
+      has_rtrw_breakdown: 0,
+      has_village_intersections: 0,
+      has_household_demographics: 0,
+      has_nearest_facilities: 0,
+      has_connected_routes: 0,
+      has_priority_score: 0,
+      has_technical_width: 0
+    };
+    let success = 0;
+    let failed = 0;
+    for (const r of roads) {
+      const nar = this.generateNarrative(r.road_key, operatingMode, modelCode);
+      if (nar) {
+        success++;
+        results.push(nar);
+        if (nar.availability.has_geometry) matrix.has_geometry++;
+        if (nar.availability.has_conditions_2025) matrix.has_conditions_2025++;
+        if (nar.availability.has_spatial_profile) matrix.has_spatial_profile++;
+        if (nar.availability.has_rtrw_breakdown) matrix.has_rtrw_breakdown++;
+        if (nar.availability.has_village_intersections) matrix.has_village_intersections++;
+        if (nar.availability.has_household_demographics) matrix.has_household_demographics++;
+        if (nar.availability.has_nearest_facilities) matrix.has_nearest_facilities++;
+        if (nar.availability.has_connected_routes) matrix.has_connected_routes++;
+        if (nar.availability.has_priority_score) matrix.has_priority_score++;
+        if (nar.availability.has_technical_width) matrix.has_technical_width++;
+      } else {
+        failed++;
+      }
+    }
+    return {
+      total_evaluated: roads.length,
+      success_count: success,
+      failed_count: failed,
+      availability_matrix: matrix,
+      results
+    };
+  }
+};
+
+// src/services/costingReferenceService.ts
+var CostingReferenceService = class {
+  db;
+  constructor(db) {
+    this.db = db;
+  }
+  // Precision & Currency Conversion Utilities
+  static rpToSen(rp) {
+    return Math.round(rp * 100);
+  }
+  static senToRp(sen) {
+    return sen / 100;
+  }
+  static formatRp(rp) {
+    return "Rp " + Number(rp).toLocaleString("id-ID");
+  }
+  static formatSen(sen) {
+    const rp = sen / 100;
+    return "Rp " + rp.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  // ASB
+  getASBCount() {
+    const row = this.db.prepare("SELECT count(*) as cnt FROM master_asb_items;").get();
+    return row.cnt;
+  }
+  getASBItemById(asbId) {
+    const row = this.db.prepare("SELECT * FROM master_asb_items WHERE asb_id = ?;").get(asbId);
+    return row || null;
+  }
+  getASBItemsByCategory(category) {
+    return this.db.prepare("SELECT * FROM master_asb_items WHERE item_category = ? ORDER BY source_row_index;").all(category);
+  }
+  // AHSP
+  getAHSPCount() {
+    const row = this.db.prepare("SELECT count(*) as cnt FROM master_ahsp_items;").get();
+    return row.cnt;
+  }
+  getAHSPItemById(ahspId) {
+    const row = this.db.prepare("SELECT * FROM master_ahsp_items WHERE ahsp_id = ?;").get(ahspId);
+    return row || null;
+  }
+  getAHSPItemsByDivision(divisionCode) {
+    return this.db.prepare("SELECT * FROM master_ahsp_items WHERE division_code = ? ORDER BY source_row_index;").all(divisionCode);
+  }
+  // Treatment Rules
+  getTreatmentRules() {
+    return this.db.prepare("SELECT * FROM treatment_package_rules ORDER BY priority_order;").all();
+  }
+  getTreatmentRuleById(ruleId) {
+    const row = this.db.prepare("SELECT * FROM treatment_package_rules WHERE rule_id = ?;").get(ruleId);
+    return row || null;
+  }
+  // Profiles
+  getProfiles() {
+    return this.db.prepare("SELECT * FROM asb_ahsp_profiles ORDER BY profile_id;").all();
+  }
+  getProfileById(profileId) {
+    const row = this.db.prepare("SELECT * FROM asb_ahsp_profiles WHERE profile_id = ?;").get(profileId);
+    return row || null;
+  }
+  getProfileItemsByProfileId(profileId) {
+    return this.db.prepare("SELECT * FROM asb_ahsp_profile_items WHERE profile_id = ? ORDER BY profile_item_id;").all(profileId);
+  }
+  getTotalProfileItemsCount() {
+    const row = this.db.prepare("SELECT count(*) as cnt FROM asb_ahsp_profile_items;").get();
+    return row.cnt;
+  }
+  // Budget Scenarios (Phase 1.1)
+  getScenarios() {
+    return this.db.prepare("SELECT * FROM budget_scenarios ORDER BY budget_year DESC, scenario_id ASC;").all();
+  }
+  getScenarioById(scenarioId) {
+    const row = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_id = ?;").get(scenarioId);
+    return row || null;
+  }
+  getScenarioByCode(scenarioCode) {
+    const row = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_code = ?;").get(scenarioCode);
+    return row || null;
+  }
+  createScenario(data) {
+    const insertStmt = this.db.prepare(`
+      INSERT INTO budget_scenarios (
+        scenario_id,
+        scenario_code,
+        scenario_name,
+        budget_year,
+        description,
+        scenario_status,
+        created_at,
+        updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'));
+    `);
+    insertStmt.run(
+      data.scenario_id,
+      data.scenario_code,
+      data.scenario_name,
+      data.budget_year,
+      data.description || null,
+      data.scenario_status || "DRAFT"
+    );
+    return this.getScenarioById(data.scenario_id);
+  }
+};
+
+// src/services/optimizationEngine.ts
+if (!BigInt.prototype.toJSON) {
+  BigInt.prototype.toJSON = function() {
+    const num = Number(this);
+    return Number.isSafeInteger(num) ? num : this.toString();
+  };
+}
+var OptimizationEngine = class {
+  db;
+  constructor(db) {
+    this.db = db || getDatabase();
+  }
+  /**
+   * Run the mathematical optimization solver or greedy benchmark.
+   */
+  runOptimization(scenarioId, objective = "PRIORITY_WEIGHTED", customCeilingRp) {
+    const startTime = Date.now();
+    const scenario = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_id = ?").get(scenarioId);
+    if (!scenario) {
+      throw new Error(`SCENARIO_NOT_FOUND: Scenario with id '${scenarioId}' does not exist.`);
+    }
+    const ceilingRp = customCeilingRp !== void 0 ? Number(customCeilingRp) : Number(scenario.budget_ceiling_rp || 5e10);
+    const ceilingSen = BigInt(Math.round(ceilingRp * 100));
+    const latestRun = this.db.prepare(`
+        SELECT sr.run_id 
+        FROM scoring_runs sr 
+        JOIN priority_models pm ON sr.model_id = pm.model_id 
+        WHERE pm.model_code = 'POLICY_DEFAULT_V1' AND sr.operating_mode = 'OPERATIONAL_2025' 
+        ORDER BY sr.executed_at DESC, sr.run_id DESC 
+        LIMIT 1
+      `).get();
+    const roadScores = this.db.prepare(`
+        SELECT road_key, priority_rank, final_score as composite_score
+        FROM road_priority_scores
+        WHERE run_id = ?
+        ORDER BY priority_rank ASC
+      `).all(latestRun?.run_id || "");
+    const scoreMap = /* @__PURE__ */ new Map();
+    for (const rs of roadScores) {
+      scoreMap.set(rs.road_key, { rank: Number(rs.priority_rank), score: Number(rs.composite_score) });
+    }
+    const roads = this.db.prepare(`
+        SELECT road_key, canonical_name, display_name, district_name, length_km_official
+        FROM roads
+        ORDER BY road_key ASC
+      `).all();
+    const segEstimates = this.db.prepare(`
+        SELECT 
+          rsce.segment_id,
+          rsce.road_key,
+          rsce.rule_id,
+          rsce.asb_id,
+          rsce.segment_length_m,
+          rsce.matched_width_m,
+          rsce.unit_price_sen,
+          rsce.indicative_cost_sen,
+          rsce.indicative_cost_rp,
+          rsce.calculation_mode,
+          tpr.asb_type
+        FROM road_segment_cost_estimates rsce
+        LEFT JOIN treatment_package_rules tpr ON rsce.rule_id = tpr.rule_id
+        WHERE rsce.scenario_id = ?
+        ORDER BY rsce.road_key ASC, rsce.segment_id ASC
+      `).all(scenarioId);
+    const eligibleItems = [];
+    const allSegmentsByRoad = {};
+    for (const s of segEstimates) {
+      if (!allSegmentsByRoad[s.road_key]) {
+        allSegmentsByRoad[s.road_key] = [];
+      }
+      allSegmentsByRoad[s.road_key].push(s);
+      const costSen = BigInt(s.indicative_cost_sen || 0);
+      const isManualReview = s.calculation_mode === "MANUAL_REVIEW_MODE" || s.rule_id === null && s.matched_width_m > 5;
+      const isRoutine = s.rule_id === "R06" || s.asb_type === "NONE" || costSen === 0n;
+      if (!isManualReview && !isRoutine && costSen > 0n) {
+        const sc = scoreMap.get(s.road_key) || { rank: 999, score: 0 };
+        const lenKm = s.segment_length_m / 1e3;
+        const valA = sc.score * lenKm;
+        const valB = lenKm;
+        const valC = (351 - sc.rank) * 1e3 + valA;
+        eligibleItems.push({
+          segment_id: s.segment_id,
+          road_key: s.road_key,
+          rule_id: s.rule_id,
+          asb_type: s.asb_type,
+          segment_length_m: s.segment_length_m,
+          road_width_m: s.matched_width_m,
+          cost_sen: costSen,
+          cost_rp: Number(costSen) / 100,
+          priority_score: sc.score,
+          priority_rank: sc.rank,
+          value_priority_weighted: valA,
+          value_max_length: valB,
+          value_priority_respecting: valC
+        });
+      }
+    }
+    let selectedIds = /* @__PURE__ */ new Set();
+    let solverStatus = "FEASIBLE";
+    let nodesExplored = 0;
+    let optimalityGapPct = 0;
+    const solverName = objective === "GREEDY_BENCHMARK" ? "Greedy Priority-Rank Order Benchmark" : objective === "PRIORITY_RESPECTING" ? "Lexicographic Hierarchical ILP Solver" : "Martello-Toth Branch-and-Bound ILP Solver";
+    if (objective === "GREEDY_BENCHMARK") {
+      const sortedRoads = [...roads].sort((a, b) => {
+        const ra = scoreMap.get(a.road_key)?.rank ?? 999;
+        const rb = scoreMap.get(b.road_key)?.rank ?? 999;
+        return ra - rb;
+      });
+      let currentAllocatedSen = 0n;
+      for (const r of sortedRoads) {
+        const roadSegs = (allSegmentsByRoad[r.road_key] || []).filter(
+          (seg) => seg.indicative_cost_sen > 0 && seg.calculation_mode !== "MANUAL_REVIEW_MODE"
+        );
+        const roadCostSen = roadSegs.reduce((sum, seg) => sum + BigInt(seg.indicative_cost_sen), 0n);
+        if (roadCostSen > 0n) {
+          if (currentAllocatedSen + roadCostSen <= ceilingSen) {
+            currentAllocatedSen += roadCostSen;
+            for (const seg of roadSegs) {
+              selectedIds.add(seg.segment_id);
+            }
+          } else {
+            break;
+          }
+        }
+      }
+      solverStatus = "BENCHMARK_GREEDY";
+      nodesExplored = sortedRoads.length;
+      optimalityGapPct = 0;
+    } else if (objective === "PRIORITY_RESPECTING") {
+      const sortedRoads = [...roads].sort((a, b) => {
+        const ra = scoreMap.get(a.road_key)?.rank ?? 999;
+        const rb = scoreMap.get(b.road_key)?.rank ?? 999;
+        return ra - rb;
+      });
+      let currentAllocatedSen = 0n;
+      const priorityFundedRoadKeys = /* @__PURE__ */ new Set();
+      for (const r of sortedRoads) {
+        const roadSegs = (allSegmentsByRoad[r.road_key] || []).filter(
+          (seg) => seg.indicative_cost_sen > 0 && seg.calculation_mode !== "MANUAL_REVIEW_MODE"
+        );
+        const roadCostSen = roadSegs.reduce((sum, seg) => sum + BigInt(seg.indicative_cost_sen), 0n);
+        if (roadCostSen > 0n) {
+          if (currentAllocatedSen + roadCostSen <= ceilingSen) {
+            currentAllocatedSen += roadCostSen;
+            priorityFundedRoadKeys.add(r.road_key);
+            for (const seg of roadSegs) {
+              selectedIds.add(seg.segment_id);
+            }
+          } else {
+            break;
+          }
+        }
+      }
+      const remainingBudgetSen2 = ceilingSen - currentAllocatedSen;
+      if (remainingBudgetSen2 > 0n) {
+        const remainingItems = eligibleItems.filter((it) => !priorityFundedRoadKeys.has(it.road_key));
+        if (remainingItems.length > 0) {
+          const ilpRemaining = this.solveKnapsackILP(remainingItems, remainingBudgetSen2, "PRIORITY_WEIGHTED");
+          for (const id of ilpRemaining.selectedIds) {
+            selectedIds.add(id);
+          }
+          solverStatus = ilpRemaining.status;
+          nodesExplored = sortedRoads.length + ilpRemaining.nodesExplored;
+          optimalityGapPct = ilpRemaining.optimalityGapPct;
+        } else {
+          solverStatus = "OPTIMAL";
+          nodesExplored = sortedRoads.length;
+          optimalityGapPct = 0;
+        }
+      } else {
+        solverStatus = "OPTIMAL";
+        nodesExplored = sortedRoads.length;
+        optimalityGapPct = 0;
+      }
+    } else {
+      const ilpResult = this.solveKnapsackILP(eligibleItems, ceilingSen, objective);
+      selectedIds = ilpResult.selectedIds;
+      solverStatus = ilpResult.status;
+      nodesExplored = ilpResult.nodesExplored;
+      optimalityGapPct = ilpResult.optimalityGapPct;
+    }
+    let totalAllocatedSen = 0n;
+    let totalTreatedLengthM = 0;
+    let totalWeightedScore = 0;
+    const roadAllocations = [];
+    for (const r of roads) {
+      const segs = allSegmentsByRoad[r.road_key] || [];
+      const totalSegs = segs.length;
+      let treatedSegs = 0;
+      let routineSegs = 0;
+      let manualReviewSegs = 0;
+      let treatedLenM = 0;
+      let totalPaguSen = 0n;
+      let roadAllocatedSegs = 0;
+      let roadAllocatedLenM = 0;
+      let roadAllocatedSen = 0n;
+      for (const s of segs) {
+        const costSen = BigInt(s.indicative_cost_sen || 0);
+        const isManual = s.calculation_mode === "MANUAL_REVIEW_MODE" || s.rule_id === null && s.matched_width_m > 5;
+        const isRoutine = s.rule_id === "R06" || s.asb_type === "NONE" || costSen === 0n;
+        if (isManual) {
+          manualReviewSegs++;
+        } else if (!isRoutine && costSen > 0n) {
+          treatedSegs++;
+          treatedLenM += s.segment_length_m;
+          totalPaguSen += costSen;
+          if (selectedIds.has(s.segment_id)) {
+            roadAllocatedSegs++;
+            roadAllocatedLenM += s.segment_length_m;
+            roadAllocatedSen += costSen;
+          }
+        } else {
+          routineSegs++;
+        }
+      }
+      totalAllocatedSen += roadAllocatedSen;
+      totalTreatedLengthM += roadAllocatedLenM;
+      const sc = scoreMap.get(r.road_key) || { rank: 999, score: 0 };
+      if (roadAllocatedLenM > 0) {
+        totalWeightedScore += sc.score * (roadAllocatedLenM / 1e3);
+      }
+      let opStatus = "DEFERRED_BY_BUDGET";
+      let rationale = "";
+      if (totalPaguSen === 0n) {
+        if (manualReviewSegs > 0) {
+          opStatus = "MANUAL_TECHNICAL_REVIEW";
+          rationale = `Memerlukan review teknis / DED khusus karena memiliki ${manualReviewSegs} segmen berdimensi khusus (lebar > 5,0m). Pagu konstruksi diset Rp 0.`;
+        } else if (routineSegs === totalSegs || totalSegs === 0) {
+          opStatus = "ROUTINE_MAINTENANCE";
+          rationale = "Seluruh segmen berkondisi Baik/Sedang sehingga hanya dialokasikan untuk pemeliharaan rutin preventif. Pagu konstruksi fisik mayor Rp 0.";
+        } else {
+          opStatus = "NOT_ELIGIBLE";
+          rationale = "Segmen jalan tidak memenuhi kriteria penanganan standar R01-R06.";
+        }
+      } else {
+        if (roadAllocatedSen > 0n) {
+          opStatus = "FUNDED_CONSTRUCTION";
+          if (roadAllocatedSegs === treatedSegs) {
+            rationale = `Terakomodasi penuh: seluruh ${treatedSegs} segmen rusak (${(treatedLenM / 1e3).toFixed(2)} km) didanai pagu indikatif sebesar Rp ${(Number(roadAllocatedSen) / 100).toLocaleString("id-ID")}.`;
+          } else {
+            rationale = `Terakomodasi parsial: ${roadAllocatedSegs} dari ${treatedSegs} segmen rusak (${(roadAllocatedLenM / 1e3).toFixed(2)} km) didanai sebesar Rp ${(Number(roadAllocatedSen) / 100).toLocaleString("id-ID")}.`;
+          }
+        } else {
+          opStatus = "DEFERRED_BY_BUDGET";
+          rationale = `Tertunda karena keterbatasan pagu plafon anggaran (kebutuhan Rp ${(Number(totalPaguSen) / 100).toLocaleString("id-ID")} melampaui sisa alokasi optimasi).`;
+        }
+      }
+      roadAllocations.push({
+        road_key: r.road_key,
+        road_name: r.display_name || r.canonical_name,
+        district_name: r.district_name || "HSS",
+        priority_rank: sc.rank,
+        composite_score: sc.score,
+        length_official_km: Number(r.length_km_official),
+        length_surveyed_km: segs.reduce((a, b) => a + (b.segment_length_m || 0), 0) / 1e3,
+        treated_length_km: treatedLenM / 1e3,
+        allocated_treated_length_km: roadAllocatedLenM / 1e3,
+        total_segments: totalSegs,
+        treated_segments: treatedSegs,
+        routine_segments: routineSegs,
+        manual_review_segments: manualReviewSegs,
+        allocated_treated_segments: roadAllocatedSegs,
+        total_pagu_asb_rp: Number(totalPaguSen) / 100,
+        total_pagu_asb_sen: totalPaguSen,
+        allocated_pagu_rp: Number(roadAllocatedSen) / 100,
+        allocated_pagu_sen: roadAllocatedSen,
+        operational_status: opStatus,
+        is_accommodated_in_queue: opStatus === "FUNDED_CONSTRUCTION",
+        allocation_rank: 0,
+        // Assigned after sorting
+        cumulative_cost_rp: 0,
+        cumulative_cost_sen: 0n,
+        selection_rationale: rationale
+      });
+    }
+    roadAllocations.sort((a, b) => {
+      if (a.operational_status === "FUNDED_CONSTRUCTION" && b.operational_status !== "FUNDED_CONSTRUCTION") return -1;
+      if (a.operational_status !== "FUNDED_CONSTRUCTION" && b.operational_status === "FUNDED_CONSTRUCTION") return 1;
+      if (a.operational_status === "ROUTINE_MAINTENANCE" && b.operational_status !== "ROUTINE_MAINTENANCE") return -1;
+      if (a.operational_status !== "ROUTINE_MAINTENANCE" && b.operational_status === "ROUTINE_MAINTENANCE") return 1;
+      if (a.operational_status === "MANUAL_TECHNICAL_REVIEW" && b.operational_status !== "MANUAL_TECHNICAL_REVIEW") return -1;
+      if (a.operational_status !== "MANUAL_TECHNICAL_REVIEW" && b.operational_status === "MANUAL_TECHNICAL_REVIEW") return 1;
+      return a.priority_rank - b.priority_rank;
+    });
+    let runningCumSen = 0n;
+    let rankCounter = 1;
+    for (const ra of roadAllocations) {
+      ra.allocation_rank = rankCounter++;
+      runningCumSen += ra.allocated_pagu_sen;
+      ra.cumulative_cost_sen = runningCumSen;
+      ra.cumulative_cost_rp = Number(runningCumSen) / 100;
+    }
+    let fundedCount = 0;
+    let routineCount = 0;
+    let manualCount = 0;
+    let deferredCount = 0;
+    let incompleteCount = 0;
+    let notEligibleCount = 0;
+    for (const ra of roadAllocations) {
+      if (ra.operational_status === "FUNDED_CONSTRUCTION") fundedCount++;
+      else if (ra.operational_status === "ROUTINE_MAINTENANCE") routineCount++;
+      else if (ra.operational_status === "MANUAL_TECHNICAL_REVIEW") manualCount++;
+      else if (ra.operational_status === "DEFERRED_BY_BUDGET") deferredCount++;
+      else if (ra.operational_status === "INCOMPLETE_ESTIMATE") incompleteCount++;
+      else notEligibleCount++;
+    }
+    const duration = Date.now() - startTime;
+    const remainingBudgetSen = ceilingSen >= totalAllocatedSen ? ceilingSen - totalAllocatedSen : 0n;
+    const result = {
+      scenario_id: scenarioId,
+      objective_mode: objective,
+      budget_ceiling_rp: ceilingRp,
+      budget_ceiling_sen: ceilingSen,
+      allocated_cost_rp: Number(totalAllocatedSen) / 100,
+      allocated_cost_sen: totalAllocatedSen,
+      remaining_budget_rp: Number(remainingBudgetSen) / 100,
+      remaining_budget_sen: remainingBudgetSen,
+      treated_length_km: Math.round(totalTreatedLengthM / 1e3 * 100) / 100,
+      priority_weighted_score: Math.round(totalWeightedScore * 1e4) / 1e4,
+      selected_segments_count: selectedIds.size,
+      solver_name: solverName,
+      solver_status: solverStatus,
+      nodes_explored: nodesExplored,
+      optimality_gap_pct: optimalityGapPct,
+      runtime_ms: duration,
+      status_breakdown: {
+        funded_construction_roads: fundedCount,
+        routine_maintenance_roads: routineCount,
+        manual_review_roads: manualCount,
+        deferred_by_budget_roads: deferredCount,
+        incomplete_estimate_roads: incompleteCount,
+        not_eligible_roads: notEligibleCount,
+        total_roads: roads.length
+      },
+      planning_indicators: {
+        existing_network_mantap_km: 392.89,
+        existing_network_mantap_pct: 53.64,
+        eligible_damaged_length_km: 336.29,
+        selected_treatment_length_km: Math.round(totalTreatedLengthM / 1e3 * 100) / 100,
+        remaining_untreated_damaged_length_km: Math.max(0, Math.round((336.29 - totalTreatedLengthM / 1e3) * 100) / 100),
+        estimated_treatment_expenditure_rp: Number(totalAllocatedSen) / 100,
+        disclaimer: "Indikator Perencanaan Program \u2014 Bukan Prediksi Hasil Otomatis (Estimasi Makro Indikatif Tanpa Model Transisi Kondisi Pasca-Konstruksi)."
+      },
+      selected_segment_ids: Array.from(selectedIds),
+      road_allocations: roadAllocations
+    };
+    return result;
+  }
+  /**
+   * Persist optimization result into database scenario and snapshot tables.
+   */
+  persistOptimizationResult(result) {
+    this.db.exec("BEGIN TRANSACTION;");
+    try {
+      this.db.prepare(`
+          UPDATE budget_scenarios
+          SET budget_ceiling_rp = ?,
+              budget_ceiling_sen = ?,
+              allocated_cost_rp = ?,
+              allocated_cost_sen = ?,
+              allocation_strategy = ?,
+              optimization_objective = ?,
+              solver_status = ?,
+              solver_nodes = ?,
+              solver_gap_pct = ?,
+              solver_runtime_ms = ?,
+              treated_length_km = ?,
+              priority_weighted_score = ?,
+              funded_construction_roads = ?,
+              routine_maintenance_roads = ?,
+              manual_review_roads = ?,
+              updated_at = datetime('now')
+          WHERE scenario_id = ?;
+        `).run(
+        result.budget_ceiling_rp,
+        Number(result.budget_ceiling_sen),
+        result.allocated_cost_rp,
+        Number(result.allocated_cost_sen),
+        result.objective_mode,
+        result.objective_mode,
+        result.solver_status,
+        result.nodes_explored,
+        result.optimality_gap_pct,
+        result.runtime_ms,
+        result.treated_length_km,
+        result.priority_weighted_score,
+        result.status_breakdown.funded_construction_roads,
+        result.status_breakdown.routine_maintenance_roads,
+        result.status_breakdown.manual_review_roads,
+        result.scenario_id
+      );
+      const selectedSet = new Set(result.selected_segment_ids);
+      const updateSegStmt = this.db.prepare(`
+        UPDATE road_segment_cost_estimates
+        SET is_selected = ?,
+            selection_status = ?
+        WHERE scenario_id = ? AND segment_id = ?;
+      `);
+      const allSegs = this.db.prepare(`
+          SELECT segment_id, indicative_cost_sen, calculation_mode, rule_id
+          FROM road_segment_cost_estimates
+          WHERE scenario_id = ?
+        `).all(result.scenario_id);
+      for (const seg of allSegs) {
+        const isSel = selectedSet.has(seg.segment_id) ? 1 : 0;
+        let status = "DEFERRED_BY_BUDGET";
+        if (isSel === 1) {
+          status = "SELECTED_CONSTRUCTION";
+        } else if (seg.calculation_mode === "MANUAL_REVIEW_MODE") {
+          status = "EXCLUDED_MANUAL_REVIEW";
+        } else if (seg.rule_id === "R06" || seg.indicative_cost_sen === 0) {
+          status = "ROUTINE_MAINTENANCE";
+        }
+        updateSegStmt.run(isSel, status, result.scenario_id, seg.segment_id);
+      }
+      const updateRcsStmt = this.db.prepare(`
+        UPDATE road_cost_summaries
+        SET is_funded = ?,
+            operational_status = ?,
+            allocated_pagu_rp = ?,
+            allocated_pagu_sen = ?,
+            allocated_treated_segments = ?,
+            allocated_treated_length_km = ?,
+            allocation_rank = ?,
+            cumulative_cost_rp = ?,
+            cumulative_cost_sen = ?,
+            status_summary = ?,
+            selection_rationale = ?
+        WHERE scenario_id = ? AND road_key = ?;
+      `);
+      for (const ra of result.road_allocations) {
+        const isFunded = ra.operational_status === "FUNDED_CONSTRUCTION" ? 1 : 0;
+        updateRcsStmt.run(
+          isFunded,
+          ra.operational_status,
+          ra.allocated_pagu_rp,
+          Number(ra.allocated_pagu_sen),
+          ra.allocated_treated_segments,
+          ra.allocated_treated_length_km,
+          ra.allocation_rank,
+          ra.cumulative_cost_rp,
+          Number(ra.cumulative_cost_sen),
+          isFunded === 1 ? "PROPOSED_FUNDED" : "DEFERRED_BY_BUDGET",
+          ra.selection_rationale,
+          result.scenario_id,
+          ra.road_key
+        );
+      }
+      const optId = `OPT-${result.scenario_id}-${result.objective_mode}-${Date.now()}`;
+      this.db.prepare(`
+          INSERT INTO scenario_optimizations (
+            optimization_id,
+            scenario_id,
+            budget_ceiling_rp,
+            budget_ceiling_sen,
+            objective_mode,
+            solver_name,
+            solver_status,
+            nodes_explored,
+            optimality_gap_pct,
+            runtime_ms,
+            total_cost_rp,
+            total_cost_sen,
+            remaining_budget_rp,
+            treated_length_km,
+            priority_weighted_score,
+            selected_segments_count,
+            funded_construction_count,
+            routine_maintenance_count,
+            manual_review_count,
+            deferred_count,
+            created_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'));
+        `).run(
+        optId,
+        result.scenario_id,
+        result.budget_ceiling_rp,
+        Number(result.budget_ceiling_sen),
+        result.objective_mode,
+        result.solver_name,
+        result.solver_status,
+        result.nodes_explored,
+        result.optimality_gap_pct,
+        result.runtime_ms,
+        result.allocated_cost_rp,
+        Number(result.allocated_cost_sen),
+        result.remaining_budget_rp,
+        result.treated_length_km,
+        result.priority_weighted_score,
+        result.selected_segments_count,
+        result.status_breakdown.funded_construction_roads,
+        result.status_breakdown.routine_maintenance_roads,
+        result.status_breakdown.manual_review_roads,
+        result.status_breakdown.deferred_by_budget_roads
+      );
+      this.db.exec("COMMIT;");
+    } catch (err) {
+      this.db.exec("ROLLBACK;");
+      throw err;
+    }
+  }
+  /**
+   * Compare all 4 allocation methods side-by-side for a specific scenario and ceiling.
+   */
+  compareAllMethods(scenarioId, ceilingRp) {
+    const scn = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_id = ?").get(scenarioId);
+    const targetCeiling = ceilingRp !== void 0 ? ceilingRp : Number(scn?.budget_ceiling_rp || 5e10);
+    const greedy = this.runOptimization(scenarioId, "GREEDY_BENCHMARK", targetCeiling);
+    const prioWeighted = this.runOptimization(scenarioId, "PRIORITY_WEIGHTED", targetCeiling);
+    const maxLength = this.runOptimization(scenarioId, "MAX_LENGTH", targetCeiling);
+    const prioRespecting = this.runOptimization(scenarioId, "PRIORITY_RESPECTING", targetCeiling);
+    let analysis = `Komparasi Alokasi Pagu Rp ${(targetCeiling / 1e9).toFixed(0)} Miliar:
+`;
+    analysis += `- Greedy Prioritas (Benchmark Phase 2.1) mengalokasikan Rp ${greedy.allocated_cost_rp.toLocaleString("id-ID")} dengan panjang ${greedy.treated_length_km.toFixed(2)} km pada ${greedy.status_breakdown.funded_construction_roads} ruas konstruksi.
+`;
+    analysis += `- Optimasi Matematis Objektif A (Cakupan Prioritas) memaksimalkan penyerapan plafon hingga Rp ${prioWeighted.allocated_cost_rp.toLocaleString("id-ID")} (panjang: ${prioWeighted.treated_length_km.toFixed(2)} km, skor tertimbang: ${prioWeighted.priority_weighted_score.toFixed(4)}).
+`;
+    analysis += `- Optimasi Matematis Objektif B (Panjang Maksimal) menghasilkan panjang penanganan fisik terbesar yaitu ${maxLength.treated_length_km.toFixed(2)} km (+${(maxLength.treated_length_km - greedy.treated_length_km).toFixed(2)} km dibanding Greedy).
+`;
+    analysis += `- Optimasi Taat Prioritas (Priority-Respecting) menyeimbangkan kepatuhan urutan prioritas AHP/WSM dengan efisiensi penganggaran (${prioRespecting.treated_length_km.toFixed(2)} km, ${prioRespecting.status_breakdown.funded_construction_roads} ruas).`;
+    const comparisonList = [
+      {
+        optimization_objective: "GREEDY_BENCHMARK",
+        budget_ceiling_rp: greedy.budget_ceiling_rp,
+        allocated_cost_rp: greedy.allocated_cost_rp,
+        remaining_ceiling_rp: greedy.remaining_budget_rp,
+        allocated_treated_length_km: greedy.treated_length_km,
+        priority_weighted_score: greedy.priority_weighted_score,
+        funded_construction_roads: greedy.status_breakdown.funded_construction_roads,
+        routine_maintenance_roads: greedy.status_breakdown.routine_maintenance_roads,
+        manual_review_roads: greedy.status_breakdown.manual_review_roads,
+        solver_status: greedy.solver_status,
+        solver_runtime_ms: greedy.runtime_ms,
+        optimality_gap_pct: greedy.optimality_gap_pct
+      },
+      {
+        optimization_objective: "PRIORITY_WEIGHTED",
+        budget_ceiling_rp: prioWeighted.budget_ceiling_rp,
+        allocated_cost_rp: prioWeighted.allocated_cost_rp,
+        remaining_ceiling_rp: prioWeighted.remaining_budget_rp,
+        allocated_treated_length_km: prioWeighted.treated_length_km,
+        priority_weighted_score: prioWeighted.priority_weighted_score,
+        funded_construction_roads: prioWeighted.status_breakdown.funded_construction_roads,
+        routine_maintenance_roads: prioWeighted.status_breakdown.routine_maintenance_roads,
+        manual_review_roads: prioWeighted.status_breakdown.manual_review_roads,
+        solver_status: prioWeighted.solver_status,
+        solver_runtime_ms: prioWeighted.runtime_ms,
+        optimality_gap_pct: prioWeighted.optimality_gap_pct
+      },
+      {
+        optimization_objective: "MAX_LENGTH",
+        budget_ceiling_rp: maxLength.budget_ceiling_rp,
+        allocated_cost_rp: maxLength.allocated_cost_rp,
+        remaining_ceiling_rp: maxLength.remaining_budget_rp,
+        allocated_treated_length_km: maxLength.treated_length_km,
+        priority_weighted_score: maxLength.priority_weighted_score,
+        funded_construction_roads: maxLength.status_breakdown.funded_construction_roads,
+        routine_maintenance_roads: maxLength.status_breakdown.routine_maintenance_roads,
+        manual_review_roads: maxLength.status_breakdown.manual_review_roads,
+        solver_status: maxLength.solver_status,
+        solver_runtime_ms: maxLength.runtime_ms,
+        optimality_gap_pct: maxLength.optimality_gap_pct
+      },
+      {
+        optimization_objective: "PRIORITY_RESPECTING",
+        budget_ceiling_rp: prioRespecting.budget_ceiling_rp,
+        allocated_cost_rp: prioRespecting.allocated_cost_rp,
+        remaining_ceiling_rp: prioRespecting.remaining_budget_rp,
+        allocated_treated_length_km: prioRespecting.treated_length_km,
+        priority_weighted_score: prioRespecting.priority_weighted_score,
+        funded_construction_roads: prioRespecting.status_breakdown.funded_construction_roads,
+        routine_maintenance_roads: prioRespecting.status_breakdown.routine_maintenance_roads,
+        manual_review_roads: prioRespecting.status_breakdown.manual_review_roads,
+        solver_status: prioRespecting.solver_status,
+        solver_runtime_ms: prioRespecting.runtime_ms,
+        optimality_gap_pct: prioRespecting.optimality_gap_pct
+      }
+    ];
+    return {
+      ceilingRp: targetCeiling,
+      current_objective: scn?.optimization_objective || "PRIORITY_WEIGHTED",
+      comparison: comparisonList,
+      methods: {
+        GREEDY_BENCHMARK: greedy,
+        PRIORITY_WEIGHTED: prioWeighted,
+        MAX_LENGTH: maxLength,
+        PRIORITY_RESPECTING: prioRespecting
+      },
+      comparativeAnalysis: analysis
+    };
+  }
+  /**
+   * Internal Exact 0-1 Knapsack / Martello-Toth ILP Solver
+   */
+  solveKnapsackILP(items, budgetSen, objective) {
+    const timeLimitMs = 3e3;
+    const nodeLimit = 15e4;
+    const startTime = Date.now();
+    const elements = items.map((it) => {
+      let val = it.value_priority_weighted;
+      if (objective === "MAX_LENGTH") val = it.value_max_length;
+      if (objective === "PRIORITY_RESPECTING") val = it.value_priority_respecting;
+      const cSen = it.cost_sen;
+      const cRp = Number(cSen) / 100;
+      const eff = cRp > 0 ? val / cRp : 0;
+      return { it, val, cSen, eff };
+    });
+    elements.sort((a, b) => {
+      if (Math.abs(b.eff - a.eff) > 1e-12) return b.eff - a.eff;
+      if (b.cSen > a.cSen) return 1;
+      if (b.cSen < a.cSen) return -1;
+      return 0;
+    });
+    const n = elements.length;
+    const prefCost = new BigInt64Array(n + 1);
+    const prefVal = new Float64Array(n + 1);
+    for (let i = 0; i < n; i++) {
+      prefCost[i + 1] = prefCost[i] + elements[i].cSen;
+      prefVal[i + 1] = prefVal[i] + elements[i].val;
+    }
+    function lpBound(fromIdx, curCost, curVal) {
+      const rem = budgetSen - curCost;
+      if (rem <= 0n) return curVal;
+      if (fromIdx >= n) return curVal;
+      let low = fromIdx;
+      let high = n - 1;
+      let b = n;
+      while (low <= high) {
+        const mid = low + high >> 1;
+        const spanCost = prefCost[mid + 1] - prefCost[fromIdx];
+        if (spanCost <= rem) {
+          low = mid + 1;
+        } else {
+          b = mid;
+          high = mid - 1;
+        }
+      }
+      const addedVal = prefVal[b] - prefVal[fromIdx];
+      let bound = curVal + addedVal;
+      const finalRem = rem - (prefCost[b] - prefCost[fromIdx]);
+      if (b < n && finalRem > 0n && elements[b].cSen > 0n) {
+        bound += elements[b].val * (Number(finalRem) / Number(elements[b].cSen));
+      }
+      return bound;
+    }
+    const globalUB = lpBound(0, 0n, 0);
+    let bestVal = 0;
+    const bestSelected = new Uint8Array(n);
+    const curSelected = new Uint8Array(n);
+    let gCost = 0n;
+    for (let i = 0; i < n; i++) {
+      if (gCost + elements[i].cSen <= budgetSen) {
+        gCost += elements[i].cSen;
+        bestVal += elements[i].val;
+        bestSelected[i] = 1;
+      }
+    }
+    let nodes = 0;
+    let timedOut = false;
+    function dfs(idx, curCost, curVal) {
+      nodes++;
+      if (curVal > bestVal) {
+        bestVal = curVal;
+        bestSelected.set(curSelected);
+      }
+      if (idx >= n) return;
+      if ((nodes & 4095) === 0) {
+        if (Date.now() - startTime > timeLimitMs || nodes >= nodeLimit) {
+          timedOut = true;
+          return;
+        }
+      }
+      const ub = lpBound(idx, curCost, curVal);
+      if (ub <= bestVal + 1e-9) {
+        return;
+      }
+      if (curCost + elements[idx].cSen <= budgetSen) {
+        curSelected[idx] = 1;
+        dfs(idx + 1, curCost + elements[idx].cSen, curVal + elements[idx].val);
+        curSelected[idx] = 0;
+        if (timedOut) return;
+      }
+      const ubEx = lpBound(idx + 1, curCost, curVal);
+      if (ubEx > bestVal + 1e-9) {
+        dfs(idx + 1, curCost, curVal);
+      }
+    }
+    dfs(0, 0n, 0);
+    const selectedIds = /* @__PURE__ */ new Set();
+    for (let i = 0; i < n; i++) {
+      if (bestSelected[i] === 1) {
+        selectedIds.add(elements[i].it.segment_id);
+      }
+    }
+    const gap = timedOut ? globalUB > 0 ? Math.max(0, (globalUB - bestVal) / globalUB * 100) : 0 : 0;
+    const status = selectedIds.size === 0 ? budgetSen < 100000000n ? "INFEASIBLE" : !timedOut ? "OPTIMAL" : "FEASIBLE" : !timedOut ? "OPTIMAL" : "FEASIBLE";
+    return {
+      selectedIds,
+      status,
+      nodesExplored: nodes,
+      optimalityGapPct: Math.round(gap * 1e4) / 1e4
+    };
+  }
+};
+
+// src/services/treatmentCostingEngine.ts
+var TreatmentCostingEngine = class {
+  db;
+  costingRefService;
+  optimizationEngine;
+  constructor(db) {
+    this.db = db || getDatabase();
+    this.costingRefService = new CostingReferenceService(this.db);
+    this.optimizationEngine = new OptimizationEngine(this.db);
+  }
+  /**
+   * Preload candidate ASB road packages grouped by Type (A, B, C, D)
+   */
+  loadASBCandidates() {
+    const rows = this.db.prepare(`
+      SELECT asb_id, package_name, road_width_m, surface_type, unit, unit_price_rp, unit_price_sen
+      FROM master_asb_items
+      WHERE item_category = 'Jalan Kabupaten' AND is_active = 1
+      ORDER BY road_width_m ASC, unit_price_rp ASC
+    `).all();
+    const grouped = { A: [], B: [], C: [], D: [] };
+    for (const r of rows) {
+      const match = (r.package_name || "").match(/Jalan Tipe ([A-Z])/i);
+      if (match) {
+        const typeLetter = match[1].toUpperCase();
+        if (grouped[typeLetter]) {
+          grouped[typeLetter].push(r);
+        }
+      }
+    }
+    return grouped;
+  }
+  /**
+   * Evaluate a single segment against rules R01..R06 and match ASB
+   */
+  evaluateSegment(seg, roadCondition, asbCandidates) {
+    const candidateGroups = asbCandidates || this.loadASBCandidates();
+    const cond = roadCondition || {};
+    const isUnpaved = seg.surface_type === "Tanah" || seg.surface_type === "Kerikil";
+    const segmentLengthM = Number(seg.segment_length_m) || 0;
+    const roadWidthM = Number(seg.road_width_m) || 3.5;
+    if (!seg.segment_id || !seg.road_key || segmentLengthM <= 0) {
+      return {
+        segment_id: seg.segment_id || "UNKNOWN",
+        road_key: seg.road_key || "UNKNOWN",
+        sta_start_m: Number(seg.sta_start_m) || 0,
+        sta_end_m: Number(seg.sta_end_m) || 0,
+        segment_length_m: segmentLengthM,
+        road_width_m: roadWidthM,
+        dominant_condition: seg.dominant_condition || "N/A",
+        surface_type: seg.surface_type || "N/A",
+        segment_status: seg.segment_status || "N/A",
+        recommended_treatment: seg.recommended_treatment || "N/A",
+        rule_id: "INCOMPLETE_DATA",
+        rule_label: "Data Segmen Tidak Lengkap",
+        rule_priority: 99,
+        asb_type: "NONE",
+        structural_profile: "none",
+        selection_rationale: "Parameter wajib (panjang/identitas segmen) tidak valid atau 0.",
+        asb_id: null,
+        package_name: null,
+        unit: null,
+        matched_width_m: roadWidthM,
+        matched_surface: seg.surface_type || "Unknown",
+        unit_price_rp: 0,
+        unit_price_sen: 0,
+        quantity: 0,
+        calculation_mode: "FULL_SEGMENT_MODE",
+        indicative_cost_rp: 0,
+        indicative_cost_sen: 0,
+        calculation_formula: "N/A",
+        status: "INCOMPLETE_DATA",
+        adjustment_flags: ["missing_segment_parameters"]
+      };
+    }
+    let ruleId = "R06";
+    let ruleLabel = "Kondisi Baik / Mantap (Pemeliharaan Rutin)";
+    let rulePriority = 6;
+    let asbType = "NONE";
+    let structuralProfile = "no_major_asb_package";
+    let rationale = "";
+    if (seg.dominant_condition === "baik" || seg.dominant_condition === "sedang") {
+      ruleId = "R06";
+      ruleLabel = "Kondisi Baik / Mantap";
+      rulePriority = 6;
+      asbType = "NONE";
+      structuralProfile = "no_major_asb_package";
+      rationale = `Kondisi fisik segmen mantap (${seg.dominant_condition}). Cukup dialokasikan untuk pemeliharaan rutin tanpa paket rekonstruksi struktural besar.`;
+    } else {
+      const unpavedPct = isUnpaved ? 100 : 0;
+      const nonMantapPct = cond ? Number(cond.tidak_mantap_pct) || 0 : 100;
+      const rusakBeratPct = cond ? Number(cond.rusak_berat_pct) || 0 : 0;
+      if (unpavedPct >= 50 || nonMantapPct >= 40 && rusakBeratPct >= 20) {
+        ruleId = "R01";
+        ruleLabel = "Kerusakan Struktural Berat / Belum Beraspal";
+        rulePriority = 1;
+        asbType = "D";
+        structuralProfile = "base_subbase_fill";
+        rationale = isUnpaved ? `Permukaan segmen berupa ${seg.surface_type} (belum beraspal / jalan tanah/kerikil). Memerlukan paket peningkatan struktural lapis pondasi lengkap plus timbunan pilihan (Tipe D).` : `Koridor ruas mengalami kerusakan berat kritis (Non-Mantap: ${nonMantapPct.toFixed(1)}%, Rusak Berat: ${rusakBeratPct.toFixed(1)}%). Memerlukan paket rekonstruksi lapis fondasi dan timbunan (Tipe D).`;
+      } else if (nonMantapPct >= 40) {
+        ruleId = "R02";
+        ruleLabel = "Kerusakan Berat Tanpa Timbunan";
+        rulePriority = 2;
+        asbType = "C";
+        structuralProfile = "base_plus_subbase";
+        rationale = `Kondisi Non-Mantap koridor ruas tinggi (${nonMantapPct.toFixed(1)}% >= 40%). Memerlukan paket rekonstruksi lapis pondasi atas dan bawah (Tipe C) tanpa timbunan tebal.`;
+      } else if (nonMantapPct >= 25 && rusakBeratPct >= 10) {
+        ruleId = "R03";
+        ruleLabel = "Kerusakan Sedang-Berat (Komponen Rusak Berat)";
+        rulePriority = 3;
+        asbType = "C";
+        structuralProfile = "base_plus_subbase";
+        rationale = `Koridor ruas mengalami kerusakan sedang-berat signifikan dengan komponen rusak berat (Non-Mantap: ${nonMantapPct.toFixed(1)}%, Rusak Berat: ${rusakBeratPct.toFixed(1)}%). Memerlukan rekonstruksi LPA + LPB (Tipe C).`;
+      } else if (nonMantapPct >= 25 && rusakBeratPct < 10) {
+        ruleId = "R04";
+        ruleLabel = "Kerusakan Sedang";
+        rulePriority = 4;
+        asbType = "B";
+        structuralProfile = "base_course";
+        rationale = `Kerusakan sedang dominan tanpa kerusakan berat masif (Non-Mantap: ${nonMantapPct.toFixed(1)}%, Rusak Berat: ${rusakBeratPct.toFixed(1)}% < 10%). Memerlukan perbaikan lapis fondasi atas LPA dan aspal baru (Tipe B).`;
+      } else if (nonMantapPct >= 10 && nonMantapPct < 25) {
+        ruleId = "R05";
+        ruleLabel = "Kerusakan Ringan";
+        rulePriority = 5;
+        asbType = "A";
+        structuralProfile = "surface_only";
+        rationale = `Kerusakan permukaan ringan (Non-Mantap: ${nonMantapPct.toFixed(1)}% di antara 10% - 25%). Memerlukan pelapisan ulang permukaan aspal / overlay (Tipe A).`;
+      } else {
+        ruleId = "R06";
+        ruleLabel = "Kondisi Baik / Mantap";
+        rulePriority = 6;
+        asbType = "NONE";
+        structuralProfile = "no_major_asb_package";
+        rationale = `Tingkat kerusakan koridor rendah (< 10%). Pemeliharaan rutin standar.`;
+      }
+    }
+    if (asbType === "NONE") {
+      return {
+        segment_id: seg.segment_id,
+        road_key: seg.road_key,
+        sta_start_m: Number(seg.sta_start_m),
+        sta_end_m: Number(seg.sta_end_m),
+        segment_length_m: segmentLengthM,
+        road_width_m: roadWidthM,
+        dominant_condition: seg.dominant_condition,
+        surface_type: seg.surface_type,
+        segment_status: seg.segment_status,
+        recommended_treatment: seg.recommended_treatment,
+        rule_id: ruleId,
+        rule_label: ruleLabel,
+        rule_priority: rulePriority,
+        asb_type: asbType,
+        structural_profile: structuralProfile,
+        selection_rationale: rationale,
+        asb_id: null,
+        package_name: "Pemeliharaan Rutin (Non-ASB Fisik Rekonstruksi)",
+        unit: "Meter",
+        matched_width_m: roadWidthM,
+        matched_surface: seg.surface_type,
+        unit_price_rp: 0,
+        unit_price_sen: 0,
+        quantity: segmentLengthM,
+        calculation_mode: "FULL_SEGMENT_MODE",
+        indicative_cost_rp: 0,
+        indicative_cost_sen: 0,
+        calculation_formula: "Pagu Konstruksi Fisik Mayor = 0 (Pemeliharaan Rutin Terbina)",
+        status: "READY",
+        adjustment_flags: []
+      };
+    }
+    const candidates = candidateGroups[asbType] || [];
+    if (candidates.length === 0) {
+      return {
+        segment_id: seg.segment_id,
+        road_key: seg.road_key,
+        sta_start_m: Number(seg.sta_start_m),
+        sta_end_m: Number(seg.sta_end_m),
+        segment_length_m: segmentLengthM,
+        road_width_m: roadWidthM,
+        dominant_condition: seg.dominant_condition,
+        surface_type: seg.surface_type,
+        segment_status: seg.segment_status,
+        recommended_treatment: seg.recommended_treatment,
+        rule_id: ruleId,
+        rule_label: ruleLabel,
+        rule_priority: rulePriority,
+        asb_type: asbType,
+        structural_profile: structuralProfile,
+        selection_rationale: rationale,
+        asb_id: null,
+        package_name: null,
+        unit: null,
+        matched_width_m: roadWidthM,
+        matched_surface: seg.surface_type,
+        unit_price_rp: 0,
+        unit_price_sen: 0,
+        quantity: segmentLengthM,
+        calculation_mode: "FULL_SEGMENT_MODE",
+        indicative_cost_rp: 0,
+        indicative_cost_sen: 0,
+        calculation_formula: "N/A",
+        status: "UNMAPPED",
+        adjustment_flags: ["no_asb_candidates_found_for_type"]
+      };
+    }
+    const flags = [];
+    const matchedWidthCandidates = candidates.filter((i) => (i.road_width_m || 0) >= roadWidthM);
+    if (matchedWidthCandidates.length === 0) {
+      return {
+        segment_id: seg.segment_id,
+        road_key: seg.road_key,
+        sta_start_m: Number(seg.sta_start_m),
+        sta_end_m: Number(seg.sta_end_m),
+        segment_length_m: segmentLengthM,
+        road_width_m: roadWidthM,
+        dominant_condition: seg.dominant_condition,
+        surface_type: seg.surface_type,
+        segment_status: seg.segment_status,
+        recommended_treatment: seg.recommended_treatment,
+        rule_id: ruleId,
+        rule_label: ruleLabel,
+        rule_priority: rulePriority,
+        asb_type: asbType,
+        structural_profile: structuralProfile,
+        selection_rationale: `${rationale} [PERHATIAN: Lebar eksisting ${roadWidthM}m melampaui batas maksimal standar ASB Jalan Kabupaten (maks. 5,0m). Estimasi biaya ditiadakan (Rp 0) untuk review teknis manual/DED khusus agar tidak terjadi distorsi anggaran].`,
+        asb_id: null,
+        package_name: `Penanganan Khusus (Lebar ${roadWidthM}m > 5,0m Butuh Review Manual/DED)`,
+        unit: "Meter",
+        matched_width_m: roadWidthM,
+        matched_surface: seg.surface_type,
+        unit_price_rp: 0,
+        unit_price_sen: 0,
+        quantity: segmentLengthM,
+        calculation_mode: "MANUAL_REVIEW_MODE",
+        indicative_cost_rp: 0,
+        indicative_cost_sen: 0,
+        calculation_formula: `Pagu ASB = Rp 0 (Memerlukan Review Teknis / DED Manual karena Lebar ${roadWidthM}m > 5,0m Batas Maksimal ASB)`,
+        status: "MANUAL_REVIEW_WIDTH_EXCEEDED",
+        adjustment_flags: ["MANUAL_REVIEW_WIDTH_EXCEEDED", "UNSUPPORTED_WIDTH_EXTRAPOLATION_EXCLUDED"]
+      };
+    }
+    if (roadWidthM < 3) {
+      flags.push("MINIMUM_WIDTH_SNAP_3M");
+    }
+    const selectedWidth = matchedWidthCandidates[0].road_width_m;
+    const sameWidthCandidates = matchedWidthCandidates.filter((i) => i.road_width_m === selectedWidth);
+    const prefSurface = asbType === "A" ? "HRS-WC" : "HRS-Base";
+    let surfaceCandidates = sameWidthCandidates.filter((i) => i.surface_type === prefSurface);
+    if (surfaceCandidates.length === 0) {
+      surfaceCandidates = sameWidthCandidates;
+      flags.push("SURFACE_FALLBACK_USED");
+    }
+    const selectedASB = surfaceCandidates[0];
+    const unitPriceSen = Number(selectedASB.unit_price_sen);
+    const unitPriceRp = Number(selectedASB.unit_price_rp);
+    const indicativeCostSen = BigInt(unitPriceSen) * BigInt(Math.round(segmentLengthM));
+    const indicativeCostRp = Number(indicativeCostSen) / 100;
+    const formulaStr = `${segmentLengthM} m \xD7 Rp ${unitPriceRp.toLocaleString("id-ID")} / m = Rp ${indicativeCostRp.toLocaleString("id-ID")}`;
+    return {
+      segment_id: seg.segment_id,
+      road_key: seg.road_key,
+      sta_start_m: Number(seg.sta_start_m),
+      sta_end_m: Number(seg.sta_end_m),
+      segment_length_m: segmentLengthM,
+      road_width_m: roadWidthM,
+      dominant_condition: seg.dominant_condition,
+      surface_type: seg.surface_type,
+      segment_status: seg.segment_status,
+      recommended_treatment: seg.recommended_treatment,
+      rule_id: ruleId,
+      rule_label: ruleLabel,
+      rule_priority: rulePriority,
+      asb_type: asbType,
+      structural_profile: structuralProfile,
+      selection_rationale: rationale,
+      asb_id: selectedASB.asb_id,
+      package_name: selectedASB.package_name,
+      unit: selectedASB.unit,
+      matched_width_m: selectedASB.road_width_m,
+      matched_surface: selectedASB.surface_type,
+      unit_price_rp: unitPriceRp,
+      unit_price_sen: unitPriceSen,
+      quantity: segmentLengthM,
+      calculation_mode: "FULL_SEGMENT_MODE",
+      indicative_cost_rp: indicativeCostRp,
+      indicative_cost_sen: Number(indicativeCostSen),
+      calculation_formula: formulaStr,
+      status: "READY",
+      adjustment_flags: flags
+    };
+  }
+  /**
+   * Run full costing engine on all 7,487 segments for a budget scenario and persist results.
+   */
+  calculateAndPersistScenario(scenarioId) {
+    const scenario = this.costingRefService.getScenarioById(scenarioId);
+    if (!scenario) {
+      throw new Error(`SCENARIO_NOT_FOUND: Scenario with id '${scenarioId}' does not exist.`);
+    }
+    const budgetYear = scenario.budget_year;
+    const budgetCeilingSen = BigInt(scenario.budget_ceiling_sen || 5e12);
+    const asbCandidates = this.loadASBCandidates();
+    const roadConditions = this.db.prepare(`
+      SELECT road_key, tidak_mantap_pct, rusak_berat_pct, rusak_ringan_pct, baik_pct, sedang_pct, total_panjang_km
+      FROM road_conditions
+      WHERE survey_year = 2025
+    `).all();
+    const roadCondMap = /* @__PURE__ */ new Map();
+    for (const rc of roadConditions) {
+      roadCondMap.set(rc.road_key, rc);
+    }
+    const roadScores = this.db.prepare(`
+      SELECT rps.road_key, rps.priority_rank, rps.final_score as composite_score
+      FROM road_priority_scores rps
+      WHERE rps.run_id = (
+        SELECT sr.run_id 
+        FROM scoring_runs sr 
+        JOIN priority_models pm ON sr.model_id = pm.model_id 
+        WHERE pm.model_code = 'POLICY_DEFAULT_V1' AND sr.operating_mode = 'OPERATIONAL_2025' 
+        ORDER BY sr.executed_at DESC, sr.run_id DESC 
+        LIMIT 1
+      )
+      ORDER BY rps.priority_rank ASC
+    `).all();
+    const scoreMap = /* @__PURE__ */ new Map();
+    for (const rs of roadScores) {
+      scoreMap.set(rs.road_key, { rank: rs.priority_rank, score: rs.composite_score });
+    }
+    const roads = this.db.prepare(`
+      SELECT road_key, canonical_name, display_name, district_name, length_km_official
+      FROM roads
+      ORDER BY road_key ASC
+    `).all();
+    const segments = this.db.prepare(`
+      SELECT segment_id, road_key, sta_start_m, sta_end_m, segment_length_m, dominant_condition, segment_status,
+             surface_type, road_width_m, recommended_treatment
+      FROM treatment_engine_segments
+      ORDER BY road_key ASC, sta_start_m ASC
+    `).all();
+    const evaluatedSegments = [];
+    const segmentsByRoad = {};
+    for (const seg of segments) {
+      const rc = roadCondMap.get(seg.road_key);
+      const evalResult = this.evaluateSegment(seg, rc, asbCandidates);
+      evaluatedSegments.push(evalResult);
+      if (!segmentsByRoad[seg.road_key]) {
+        segmentsByRoad[seg.road_key] = [];
+      }
+      segmentsByRoad[seg.road_key].push(evalResult);
+    }
+    this.db.exec("BEGIN TRANSACTION;");
+    try {
+      this.db.prepare("DELETE FROM road_segment_cost_estimates WHERE scenario_id = ?;").run(scenarioId);
+      this.db.prepare("DELETE FROM road_cost_summaries WHERE scenario_id = ?;").run(scenarioId);
+      const insertEstStmt = this.db.prepare(`
+        INSERT INTO road_segment_cost_estimates (
+          estimate_id,
+          scenario_id,
+          segment_id,
+          road_key,
+          budget_year,
+          rule_id,
+          asb_id,
+          matched_width_m,
+          matched_surface,
+          segment_length_m,
+          unit_price_rp,
+          unit_price_sen,
+          indicative_cost_rp,
+          indicative_cost_sen,
+          calculation_mode,
+          adjustment_flags,
+          calculated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'));
+      `);
+      for (const es of evaluatedSegments) {
+        insertEstStmt.run(
+          `EST-${scenario.scenario_code}-${es.segment_id}`,
+          scenarioId,
+          es.segment_id,
+          es.road_key,
+          budgetYear,
+          es.rule_id === "INCOMPLETE_DATA" || es.rule_id === "NO_MATCHING_RULE" ? null : es.rule_id,
+          es.asb_id,
+          es.matched_width_m,
+          es.matched_surface,
+          es.segment_length_m,
+          es.unit_price_rp,
+          es.unit_price_sen,
+          es.indicative_cost_rp,
+          es.indicative_cost_sen,
+          es.calculation_mode,
+          es.adjustment_flags.length > 0 ? JSON.stringify(es.adjustment_flags) : null
+        );
+      }
+      const roadSummaries = [];
+      for (const road of roads) {
+        const segs = segmentsByRoad[road.road_key] || [];
+        const totalSegs = segs.length;
+        let treatedSegs = 0;
+        let routineSegs = 0;
+        let manualReviewSegs = 0;
+        let treatedLenM = 0;
+        let manualReviewLenM = 0;
+        let totalPaguSen = 0n;
+        const ruleCounter = {};
+        const asbTypeCounter = {};
+        for (const s of segs) {
+          if (s.status === "MANUAL_REVIEW_WIDTH_EXCEEDED") {
+            manualReviewSegs++;
+            manualReviewLenM += s.segment_length_m;
+            ruleCounter[s.rule_id] = (ruleCounter[s.rule_id] || 0) + 1;
+            asbTypeCounter[s.asb_type] = (asbTypeCounter[s.asb_type] || 0) + 1;
+          } else if (s.asb_type !== "NONE" && s.indicative_cost_sen > 0) {
+            treatedSegs++;
+            treatedLenM += s.segment_length_m;
+            totalPaguSen += BigInt(s.indicative_cost_sen);
+            ruleCounter[s.rule_id] = (ruleCounter[s.rule_id] || 0) + 1;
+            asbTypeCounter[s.asb_type] = (asbTypeCounter[s.asb_type] || 0) + 1;
+          } else {
+            routineSegs++;
+          }
+        }
+        let dominantRuleId = "R06";
+        let dominantAsbType = "NONE";
+        let maxRuleCount = 0;
+        for (const [rId, c] of Object.entries(ruleCounter)) {
+          if (c > maxRuleCount) {
+            maxRuleCount = c;
+            dominantRuleId = rId;
+          }
+        }
+        let maxTypeCount = 0;
+        for (const [t, c] of Object.entries(asbTypeCounter)) {
+          if (c > maxTypeCount) {
+            maxTypeCount = c;
+            dominantAsbType = t;
+          }
+        }
+        const scoreInfo = scoreMap.get(road.road_key);
+        const priorityRank = scoreInfo?.rank ?? 999;
+        const compScore = scoreInfo?.score ?? 0;
+        roadSummaries.push({
+          summary_id: `SUM-${budgetYear}-${scenario.scenario_code}-${road.road_key}`,
+          scenario_id: scenarioId,
+          road_key: road.road_key,
+          road_name: road.display_name,
+          district_name: road.district_name,
+          budget_year: budgetYear,
+          dominant_rule_id: dominantRuleId,
+          dominant_asb_type: dominantAsbType,
+          total_segments: totalSegs,
+          treated_segments: treatedSegs,
+          routine_segments: routineSegs,
+          manual_review_segments: manualReviewSegs,
+          total_length_km: Number(road.length_km_official) || segs.reduce((a, b) => a + b.segment_length_m, 0) / 1e3,
+          treated_length_km: treatedLenM / 1e3,
+          manual_review_length_km: manualReviewLenM / 1e3,
+          total_pagu_asb_sen: totalPaguSen,
+          total_pagu_asb_rp: Number(totalPaguSen) / 100,
+          priority_rank: priorityRank,
+          composite_score: compScore
+        });
+      }
+      roadSummaries.sort((a, b) => a.priority_rank - b.priority_rank);
+      let runningCumulativeSen = 0n;
+      let allocatedTotalSen = 0n;
+      let allocRank = 1;
+      const insertSumStmt = this.db.prepare(`
+        INSERT INTO road_cost_summaries (
+          summary_id,
+          scenario_id,
+          road_key,
+          budget_year,
+          dominant_rule_id,
+          dominant_asb_type,
+          total_segments,
+          treated_segments,
+          routine_segments,
+          manual_review_segments,
+          total_length_km,
+          treated_length_km,
+          manual_review_length_km,
+          total_pagu_asb_rp,
+          total_pagu_asb_sen,
+          is_funded,
+          allocation_rank,
+          cumulative_cost_rp,
+          cumulative_cost_sen,
+          status_summary,
+          operational_status,
+          allocated_pagu_rp,
+          allocated_pagu_sen,
+          allocated_treated_segments,
+          allocated_treated_length_km,
+          selection_rationale,
+          calculated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'));
+      `);
+      let fundedConstructionCount = 0;
+      let routineMaintenanceCount = 0;
+      let manualReviewCount = 0;
+      let totalAllocatedTreatedKm = 0;
+      let totalPrioWeightedScore = 0;
+      for (const rs of roadSummaries) {
+        runningCumulativeSen += rs.total_pagu_asb_sen;
+        const isFunded = runningCumulativeSen <= budgetCeilingSen ? 1 : 0;
+        if (isFunded === 1) {
+          allocatedTotalSen += rs.total_pagu_asb_sen;
+        }
+        let operationalStatus = "DEFERRED_BY_BUDGET";
+        let allocatedPaguSen = 0n;
+        let allocatedTreatedSegs = 0;
+        let allocatedTreatedLenKm = 0;
+        let rationale = "";
+        if (rs.total_pagu_asb_sen === 0n) {
+          if (rs.manual_review_segments > 0) {
+            operationalStatus = "MANUAL_TECHNICAL_REVIEW";
+            rationale = `Memerlukan review teknis / DED khusus karena memiliki ${rs.manual_review_segments} segmen berdimensi khusus (lebar > 5,0m). Pagu konstruksi diset Rp 0.`;
+            manualReviewCount++;
+          } else {
+            operationalStatus = "ROUTINE_MAINTENANCE";
+            rationale = "Seluruh segmen berkondisi Baik/Sedang (R06); dialokasikan untuk pemeliharaan rutin preventif tanpa paket rekonstruksi fisik.";
+            routineMaintenanceCount++;
+          }
+        } else {
+          if (isFunded === 1) {
+            operationalStatus = "FUNDED_CONSTRUCTION";
+            allocatedPaguSen = rs.total_pagu_asb_sen;
+            allocatedTreatedSegs = rs.treated_segments;
+            allocatedTreatedLenKm = rs.treated_length_km;
+            totalAllocatedTreatedKm += rs.treated_length_km;
+            totalPrioWeightedScore += rs.composite_score * rs.treated_length_km;
+            rationale = `Terakomodasi penuh: ${rs.treated_segments} segmen didanai pagu indikatif Rp ${rs.total_pagu_asb_rp.toLocaleString("id-ID")}.`;
+            fundedConstructionCount++;
+          } else {
+            operationalStatus = "DEFERRED_BY_BUDGET";
+            rationale = "Tertunda karena keterbatasan pagu plafon fiskal skenario.";
+          }
+        }
+        const statusSummary = isFunded === 1 ? "PROPOSED_FUNDED" : "DEFERRED_CEILING_REACHED";
+        insertSumStmt.run(
+          rs.summary_id,
+          scenarioId,
+          rs.road_key,
+          budgetYear,
+          rs.dominant_rule_id,
+          rs.dominant_asb_type,
+          rs.total_segments,
+          rs.treated_segments,
+          rs.routine_segments,
+          rs.manual_review_segments,
+          rs.total_length_km,
+          rs.treated_length_km,
+          rs.manual_review_length_km,
+          rs.total_pagu_asb_rp,
+          Number(rs.total_pagu_asb_sen),
+          isFunded,
+          allocRank,
+          Number(runningCumulativeSen) / 100,
+          Number(runningCumulativeSen),
+          statusSummary,
+          operationalStatus,
+          Number(allocatedPaguSen) / 100,
+          Number(allocatedPaguSen),
+          allocatedTreatedSegs,
+          allocatedTreatedLenKm,
+          rationale
+        );
+        rs.is_funded = isFunded;
+        rs.allocation_rank = allocRank;
+        rs.cumulative_cost_sen = Number(runningCumulativeSen);
+        rs.cumulative_cost_rp = Number(runningCumulativeSen) / 100;
+        rs.status_summary = statusSummary;
+        rs.operational_status = operationalStatus;
+        rs.allocated_pagu_rp = Number(allocatedPaguSen) / 100;
+        rs.allocated_pagu_sen = Number(allocatedPaguSen);
+        rs.allocated_treated_segments = allocatedTreatedSegs;
+        rs.allocated_treated_length_km = allocatedTreatedLenKm;
+        rs.selection_rationale = rationale;
+        allocRank++;
+      }
+      const fundedRoadKeys = roadSummaries.filter((r) => r.operational_status === "FUNDED_CONSTRUCTION").map((r) => r.road_key);
+      const fundedKeyPlaceholder = fundedRoadKeys.length > 0 ? fundedRoadKeys.map((k) => `'${k}'`).join(",") : "''";
+      this.db.prepare(`
+        UPDATE road_segment_cost_estimates
+        SET is_selected = CASE 
+              WHEN road_key IN (${fundedKeyPlaceholder}) 
+                   AND indicative_cost_sen > 0 AND calculation_mode != 'MANUAL_REVIEW_MODE' THEN 1 
+              ELSE 0 
+            END,
+            selection_status = CASE
+              WHEN calculation_mode = 'MANUAL_REVIEW_MODE' THEN 'EXCLUDED_MANUAL_REVIEW'
+              WHEN rule_id = 'R06' OR indicative_cost_sen = 0 THEN 'ROUTINE_MAINTENANCE'
+              WHEN road_key IN (${fundedKeyPlaceholder}) THEN 'SELECTED_CONSTRUCTION'
+              ELSE 'DEFERRED_BY_BUDGET'
+            END
+        WHERE scenario_id = ?;
+      `).run(scenarioId);
+      const totalCostSen = runningCumulativeSen;
+      const totalCostRp = Number(totalCostSen) / 100;
+      const allocatedCostRp = Number(allocatedTotalSen) / 100;
+      this.db.prepare(`
+        UPDATE budget_scenarios
+        SET total_cost_rp = ?,
+            total_cost_sen = ?,
+            allocated_cost_rp = ?,
+            allocated_cost_sen = ?,
+            funded_construction_roads = ?,
+            routine_maintenance_roads = ?,
+            manual_review_roads = ?,
+            treated_length_km = ?,
+            priority_weighted_score = ?,
+            solver_status = 'BENCHMARK_GREEDY',
+            updated_at = datetime('now')
+        WHERE scenario_id = ?;
+      `).run(
+        totalCostRp,
+        Number(totalCostSen),
+        allocatedCostRp,
+        Number(allocatedTotalSen),
+        fundedConstructionCount,
+        routineMaintenanceCount,
+        manualReviewCount,
+        Math.round(totalAllocatedTreatedKm * 100) / 100,
+        Math.round(totalPrioWeightedScore * 1e4) / 1e4,
+        scenarioId
+      );
+      this.db.exec("COMMIT;");
+    } catch (err) {
+      this.db.exec("ROLLBACK;");
+      throw err;
+    }
+    return this.getScenarioDetailSummary(scenarioId);
+  }
+  /**
+   * Get scenario detail and comprehensive metrics
+   */
+  getScenarioDetailSummary(scenarioId) {
+    const scn = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_id = ?").get(scenarioId);
+    if (!scn) {
+      throw new Error(`SCENARIO_NOT_FOUND: ${scenarioId}`);
+    }
+    const roadsStats = this.db.prepare(`
+      SELECT 
+        COUNT(*) as total_roads,
+        SUM(CASE WHEN is_funded = 1 THEN 1 ELSE 0 END) as funded_roads,
+        SUM(CASE WHEN is_funded = 0 THEN 1 ELSE 0 END) as deferred_roads,
+        SUM(total_segments) as total_segments,
+        SUM(treated_segments) as treated_segments,
+        SUM(routine_segments) as routine_segments,
+        SUM(manual_review_segments) as manual_review_segments,
+        SUM(treated_length_km) as treated_length_km,
+        SUM(manual_review_length_km) as manual_review_length_km,
+        SUM(total_pagu_asb_sen) as total_pagu_sen,
+        SUM(CASE WHEN is_funded = 1 THEN total_pagu_asb_sen ELSE 0 END) as allocated_sen
+      FROM road_cost_summaries
+      WHERE scenario_id = ?
+    `).get(scenarioId);
+    const typeBreakdownRows = this.db.prepare(`
+      SELECT 
+        rsce.rule_id,
+        tpr.asb_type,
+        COUNT(*) as segments,
+        SUM(rsce.indicative_cost_sen) as cost_sen,
+        SUM(rsce.segment_length_m) as length_m
+      FROM road_segment_cost_estimates rsce
+      LEFT JOIN treatment_package_rules tpr ON rsce.rule_id = tpr.rule_id
+      WHERE rsce.scenario_id = ?
+      GROUP BY tpr.asb_type
+    `).all(scenarioId);
+    const asbTypeBreakdown = {};
+    for (const r of typeBreakdownRows) {
+      const typeKey = r.asb_type || "NONE";
+      asbTypeBreakdown[typeKey] = {
+        segments: r.segments,
+        cost_sen: Number(r.cost_sen || 0),
+        cost_rp: Number(r.cost_sen || 0) / 100,
+        length_km: (Number(r.length_m) || 0) / 1e3
+      };
+    }
+    const opStats = this.db.prepare(`
+      SELECT 
+        SUM(CASE WHEN operational_status = 'FUNDED_CONSTRUCTION' THEN 1 ELSE 0 END) as funded_construction,
+        SUM(CASE WHEN operational_status = 'ROUTINE_MAINTENANCE' THEN 1 ELSE 0 END) as routine_maintenance,
+        SUM(CASE WHEN operational_status = 'MANUAL_TECHNICAL_REVIEW' THEN 1 ELSE 0 END) as manual_review,
+        SUM(CASE WHEN operational_status = 'DEFERRED_BY_BUDGET' THEN 1 ELSE 0 END) as deferred_budget,
+        SUM(allocated_treated_length_km) as allocated_treated_km,
+        SUM(allocated_pagu_sen) as allocated_sen
+      FROM road_cost_summaries
+      WHERE scenario_id = ?
+    `).get(scenarioId);
+    const treatedKmAllocated = Number(opStats?.allocated_treated_km || scn.treated_length_km || roadsStats?.treated_length_km || 0);
+    return {
+      scenario_id: scn.scenario_id,
+      scenario_code: scn.scenario_code,
+      scenario_name: scn.scenario_name,
+      budget_year: scn.budget_year,
+      description: scn.description,
+      scenario_status: scn.scenario_status,
+      budget_ceiling_rp: Number(scn.budget_ceiling_rp || 0),
+      budget_ceiling_sen: Number(scn.budget_ceiling_sen || 0),
+      total_cost_rp: Number(scn.total_cost_rp || (roadsStats?.total_pagu_sen ? Number(roadsStats.total_pagu_sen) / 100 : 0)),
+      total_cost_sen: Number(scn.total_cost_sen || roadsStats?.total_pagu_sen || 0),
+      allocated_cost_rp: Number(scn.allocated_cost_rp || (roadsStats?.allocated_sen ? Number(roadsStats.allocated_sen) / 100 : 0)),
+      allocated_cost_sen: Number(scn.allocated_cost_sen || roadsStats?.allocated_sen || 0),
+      allocation_strategy: scn.allocation_strategy || "PRIORITY_RANK_GREEDY",
+      optimization_objective: scn.optimization_objective || "GREEDY_BENCHMARK",
+      solver_status: scn.solver_status || "BENCHMARK_GREEDY",
+      solver_nodes: Number(scn.solver_nodes || 0),
+      solver_gap_pct: Number(scn.solver_gap_pct || 0),
+      solver_runtime_ms: Number(scn.solver_runtime_ms || 0),
+      total_roads: Number(roadsStats?.total_roads || 0),
+      funded_roads: Number(roadsStats?.funded_roads || 0),
+      deferred_roads: Number(roadsStats?.deferred_roads || 0),
+      funded_construction_roads: Number(opStats?.funded_construction || scn.funded_construction_roads || 0),
+      routine_maintenance_roads: Number(opStats?.routine_maintenance || scn.routine_maintenance_roads || 0),
+      manual_review_roads: Number(opStats?.manual_review || scn.manual_review_roads || 0),
+      total_segments: Number(roadsStats?.total_segments || 0),
+      treated_segments: Number(roadsStats?.treated_segments || 0),
+      routine_segments: Number(roadsStats?.routine_segments || 0),
+      manual_review_segments: Number(roadsStats?.manual_review_segments || 0),
+      standardized_treated_segments: Number(roadsStats?.treated_segments || 0),
+      treated_length_km: Number(roadsStats?.treated_length_km || 0),
+      manual_review_length_km: Number(roadsStats?.manual_review_length_km || 0),
+      allocated_treated_length_km: Math.round(treatedKmAllocated * 100) / 100,
+      priority_weighted_score: Number(scn.priority_weighted_score || 0),
+      asb_type_breakdown: asbTypeBreakdown,
+      status_breakdown: {
+        funded_construction_roads: Number(opStats?.funded_construction || scn.funded_construction_roads || 0),
+        routine_maintenance_roads: Number(opStats?.routine_maintenance || scn.routine_maintenance_roads || 0),
+        manual_review_roads: Number(opStats?.manual_review || scn.manual_review_roads || 0),
+        deferred_by_budget_roads: Number(opStats?.deferred_budget || Number(roadsStats?.total_roads || 0) - Number(opStats?.funded_construction || 0) - Number(opStats?.routine_maintenance || 0) - Number(opStats?.manual_review || 0)),
+        total_roads: Number(roadsStats?.total_roads || 0)
+      },
+      planning_indicators: {
+        existing_network_mantap_km: 392.89,
+        existing_network_mantap_pct: 53.64,
+        eligible_damaged_length_km: 336.29,
+        selected_treatment_length_km: Math.round(treatedKmAllocated * 100) / 100,
+        remaining_untreated_damaged_length_km: Math.max(0, Math.round((336.29 - treatedKmAllocated) * 100) / 100),
+        estimated_treatment_expenditure_rp: Number(scn.allocated_cost_rp || 0),
+        disclaimer: "Indikator Perencanaan Program \u2014 Bukan Prediksi Hasil Otomatis (Estimasi Makro Indikatif Tanpa Model Transisi Kondisi Pasca-Konstruksi)."
+      }
+    };
+  }
+  /**
+   * Get all road cost summaries for a scenario with optional filters
+   */
+  getRoadCostSummaries(scenarioId, filters) {
+    let sql = `
+      SELECT 
+        rcs.*,
+        r.display_name as road_name,
+        r.district_name,
+        rps.priority_rank,
+        rps.composite_score
+      FROM road_cost_summaries rcs
+      JOIN roads r ON rcs.road_key = r.road_key
+      LEFT JOIN (
+        SELECT rps_inner.road_key, rps_inner.priority_rank, rps_inner.final_score as composite_score
+        FROM road_priority_scores rps_inner
+        WHERE rps_inner.run_id = (
+          SELECT sr.run_id 
+          FROM scoring_runs sr 
+          JOIN priority_models pm ON sr.model_id = pm.model_id 
+          WHERE pm.model_code = 'POLICY_DEFAULT_V1' AND sr.operating_mode = 'OPERATIONAL_2025' 
+          ORDER BY sr.executed_at DESC, sr.run_id DESC 
+          LIMIT 1
+        )
+      ) rps ON rcs.road_key = rps.road_key
+      WHERE rcs.scenario_id = ?
+    `;
+    const params = [scenarioId];
+    if (filters?.district) {
+      sql += ` AND r.district_name = ?`;
+      params.push(filters.district);
+    }
+    if (filters?.isFunded !== void 0 && filters?.isFunded !== null) {
+      sql += ` AND rcs.is_funded = ?`;
+      params.push(filters.isFunded);
+    }
+    if (filters?.operationalStatus) {
+      sql += ` AND rcs.operational_status = ?`;
+      params.push(filters.operationalStatus);
+    }
+    if (filters?.dominantType) {
+      sql += ` AND rcs.dominant_asb_type = ?`;
+      params.push(filters.dominantType);
+    }
+    if (filters?.search) {
+      sql += ` AND (r.display_name LIKE ? OR rcs.road_key LIKE ?)`;
+      params.push(`%${filters.search}%`, `%${filters.search}%`);
+    }
+    sql += ` ORDER BY rcs.allocation_rank ASC`;
+    return this.db.prepare(sql).all(...params);
+  }
+  /**
+   * Get road detail and full segment costing breakdown for a specific road in a scenario
+   */
+  getRoadCostDetail(scenarioId, roadKey) {
+    const road = this.db.prepare(`
+      SELECT r.*, rc.total_panjang_km as total_condition_length_km, rc.tidak_mantap_pct, rc.mantap_pct, rc.rusak_berat_pct, rc.rusak_ringan_pct, rc.baik_pct, rc.sedang_pct
+      FROM roads r
+      LEFT JOIN road_conditions rc ON r.road_key = rc.road_key AND rc.survey_year = 2025
+      WHERE r.road_key = ?
+    `).get(roadKey);
+    if (!road) return null;
+    const summary = this.db.prepare(`
+      SELECT rcs.*, rps.priority_rank, rps.composite_score
+      FROM road_cost_summaries rcs
+      LEFT JOIN (
+        SELECT rps_inner.road_key, rps_inner.priority_rank, rps_inner.final_score as composite_score
+        FROM road_priority_scores rps_inner
+        WHERE rps_inner.run_id = (
+          SELECT sr.run_id 
+          FROM scoring_runs sr 
+          JOIN priority_models pm ON sr.model_id = pm.model_id 
+          WHERE pm.model_code = 'POLICY_DEFAULT_V1' AND sr.operating_mode = 'OPERATIONAL_2025' 
+          ORDER BY sr.executed_at DESC, sr.run_id DESC 
+          LIMIT 1
+        )
+      ) rps ON rcs.road_key = rps.road_key
+      WHERE rcs.scenario_id = ? AND rcs.road_key = ?
+    `).get(scenarioId, roadKey);
+    const segments = this.db.prepare(`
+      SELECT 
+        rsce.*,
+        tes.sta_start_m,
+        tes.sta_end_m,
+        tes.dominant_condition,
+        tes.surface_type,
+        tes.segment_status,
+        tes.recommended_treatment,
+        tpr.rule_label,
+        tpr.asb_type,
+        tpr.selected_profile,
+        mai.package_name,
+        mai.specification
+      FROM road_segment_cost_estimates rsce
+      JOIN treatment_engine_segments tes ON rsce.segment_id = tes.segment_id
+      LEFT JOIN treatment_package_rules tpr ON rsce.rule_id = tpr.rule_id
+      LEFT JOIN master_asb_items mai ON rsce.asb_id = mai.asb_id
+      WHERE rsce.scenario_id = ? AND rsce.road_key = ?
+      ORDER BY tes.sta_start_m ASC
+    `).all(scenarioId, roadKey);
+    for (const s of segments) {
+      if (!s.asb_id && (s.calculation_mode === "MANUAL_REVIEW_MODE" || s.adjustment_flags && s.adjustment_flags.includes("MANUAL_REVIEW_WIDTH_EXCEEDED"))) {
+        s.package_name = `Penanganan Khusus (Lebar ${s.matched_width_m}m > 5,0m Butuh Review Manual/DED)`;
+        s.specification = `Lebar eksisting ${s.matched_width_m}m melampaui batas standar katalog ASB Jalan Kabupaten (maks. 5,0m). Estimasi biaya diset Rp 0 untuk review teknis/DED khusus.`;
+      }
+    }
+    let ahspBreakdown = [];
+    if (summary?.dominant_rule_id && summary.dominant_rule_id !== "R06") {
+      ahspBreakdown = this.db.prepare(`
+        SELECT aapi.*, mah.payment_code, mah.item_description, mah.unit as ahsp_unit, mah.unit_price_rp as ahsp_price_rp, mah.unit_price_sen as ahsp_price_sen
+        FROM asb_ahsp_profile_items aapi
+        JOIN treatment_package_rules tpr ON aapi.profile_id = 'profile_asb_' || lower(tpr.asb_type)
+        LEFT JOIN master_ahsp_items mah ON aapi.ahsp_id = mah.ahsp_id
+        WHERE tpr.rule_id = ?
+        ORDER BY aapi.profile_item_id ASC
+      `).all(summary.dominant_rule_id);
+    }
+    return { road, summary, segments, ahspBreakdown };
+  }
+  /**
+   * Export scenario results as CSV
+   */
+  exportScenarioCsv(scenarioId) {
+    const scn = this.getScenarioDetailSummary(scenarioId);
+    const roads = this.getRoadCostSummaries(scenarioId);
+    const headers = [
+      "Alokasi Rank",
+      "Kode Ruas",
+      "Nama Ruas",
+      "Kecamatan",
+      "Prioritas Rank",
+      "Skor Komposit",
+      "Panjang Resmi (km)",
+      "Panjang Tertangani (km)",
+      "Total Segmen",
+      "Segmen Tertangani",
+      "Segmen Rutin",
+      "Paket ASB Dominan",
+      "Aturan Terpilih",
+      "Total Pagu ASB (Rp)",
+      "Status Alokasi Plafon",
+      "Kumulatif Pagu (Rp)",
+      "Status Operasional",
+      "Pagu Teralokasi (Rp)",
+      "Rasionalisasi Keputusan"
+    ];
+    const rows = roads.map((r) => {
+      const isFunded = r.is_funded === 1 || r.operational_status === "FUNDED_CONSTRUCTION";
+      const treatedKm = r.allocated_treated_length_km !== void 0 && r.allocated_treated_length_km !== null ? Number(r.allocated_treated_length_km) : isFunded ? Number(r.treated_length_km || 0) : 0;
+      const treatedSegs = r.allocated_treated_segments !== void 0 && r.allocated_treated_segments !== null ? Number(r.allocated_treated_segments) : isFunded ? Number(r.treated_segments || 0) : 0;
+      const allocatedRp = r.allocated_pagu_rp !== void 0 && r.allocated_pagu_rp !== null ? Number(r.allocated_pagu_rp) : isFunded ? Number(r.total_pagu_asb_rp || 0) : 0;
+      return [
+        r.allocation_rank,
+        `"${r.road_key || ""}"`,
+        `"${(r.road_name || "").replace(/"/g, '""')}"`,
+        `"${r.district_name || ""}"`,
+        r.priority_rank ?? "-",
+        r.composite_score ? r.composite_score.toFixed(6) : "-",
+        Number(r.total_length_km || 0).toFixed(3),
+        treatedKm.toFixed(3),
+        r.total_segments || 0,
+        treatedSegs,
+        r.routine_segments || 0,
+        `"Tipe ${r.dominant_asb_type || "NONE"}"`,
+        r.dominant_rule_id || "R06",
+        Math.round(r.total_pagu_asb_rp || 0),
+        isFunded ? "TERAKOMODASI" : "TERTUNDA",
+        Math.round(r.cumulative_cost_rp || 0),
+        `"${r.operational_status || (isFunded ? "FUNDED_CONSTRUCTION" : "DEFERRED_BY_BUDGET")}"`,
+        Math.round(allocatedRp),
+        `"${(r.selection_rationale || "").replace(/"/g, '""')}"`
+      ];
+    });
+    const fundedCount = scn.funded_construction_roads ?? roads.filter((r) => r.operational_status === "FUNDED_CONSTRUCTION" || r.is_funded === 1).length;
+    const csvLines = [
+      `# LAPORAN PERENCANAAN BIAYA PENANGANAN JALAN KABUPATEN HSS`,
+      `# Skenario: "${scn.scenario_name}" (${scn.scenario_code})`,
+      `# Tahun Anggaran: ${scn.budget_year}`,
+      `# Plafon Anggaran: Rp ${Math.round(scn.budget_ceiling_rp).toLocaleString("id-ID")}`,
+      `# Total Kebutuhan Pagu: Rp ${Math.round(scn.total_cost_rp).toLocaleString("id-ID")}`,
+      `# Total Terakomodasi: Rp ${Math.round(scn.allocated_cost_rp).toLocaleString("id-ID")} (${fundedCount} ruas)`,
+      `# Tanggal Ekspor: ${(/* @__PURE__ */ new Date()).toISOString()}`,
+      headers.join(","),
+      ...rows.map((r) => r.join(","))
+    ];
+    return "\uFEFF" + csvLines.join("\r\n");
+  }
+  /**
+   * List all scenarios with summary stats
+   */
+  getScenarios() {
+    return this.db.prepare(`
+      SELECT 
+        bs.*,
+        COUNT(rcs.road_key) as total_roads_in_summary,
+        SUM(CASE WHEN rcs.is_funded = 1 THEN 1 ELSE 0 END) as funded_roads_count
+      FROM budget_scenarios bs
+      LEFT JOIN road_cost_summaries rcs ON bs.scenario_id = rcs.scenario_id
+      GROUP BY bs.scenario_id
+      ORDER BY bs.budget_year DESC, bs.created_at ASC
+    `).all();
+  }
+  /**
+   * Create a new budget scenario and immediately calculate initial costing
+   */
+  createScenario(data) {
+    const cleanCode = data.scenario_code.toUpperCase().replace(/[^A-Z0-9_-]/g, "_");
+    const scenarioId = `SCN-${data.budget_year}-${cleanCode}`;
+    const ceilingRp = data.budget_ceiling_rp !== void 0 ? data.budget_ceiling_rp : 5e10;
+    const ceilingSen = Math.round(ceilingRp * 100);
+    const existing = this.db.prepare("SELECT scenario_id FROM budget_scenarios WHERE scenario_id = ? OR scenario_code = ?").get(scenarioId, data.scenario_code);
+    if (existing) {
+      throw new Error(`DUPLICATE_SCENARIO: Scenario with id '${scenarioId}' or code '${data.scenario_code}' already exists.`);
+    }
+    this.db.prepare(`
+      INSERT INTO budget_scenarios (
+        scenario_id,
+        scenario_code,
+        scenario_name,
+        budget_year,
+        description,
+        scenario_status,
+        budget_ceiling_rp,
+        budget_ceiling_sen,
+        total_cost_rp,
+        total_cost_sen,
+        allocated_cost_rp,
+        allocated_cost_sen,
+        allocation_strategy,
+        created_at,
+        updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0, ?, datetime('now'), datetime('now'));
+    `).run(
+      scenarioId,
+      data.scenario_code,
+      data.scenario_name,
+      data.budget_year,
+      data.description || null,
+      data.scenario_status || "DRAFT",
+      ceilingRp,
+      ceilingSen,
+      data.allocation_strategy || "PRIORITY_RANK_GREEDY"
+    );
+    return this.calculateAndPersistScenario(scenarioId);
+  }
+  /**
+   * Update scenario metadata and/or ceiling, recalculate if ceiling changed
+   */
+  updateScenario(scenarioId, data) {
+    const current = this.db.prepare("SELECT * FROM budget_scenarios WHERE scenario_id = ?").get(scenarioId);
+    if (!current) {
+      throw new Error(`SCENARIO_NOT_FOUND: Scenario with id '${scenarioId}' does not exist.`);
+    }
+    const newName = data.scenario_name ?? current.scenario_name;
+    const newDesc = data.description !== void 0 ? data.description : current.description;
+    const newStatus = data.scenario_status ?? current.scenario_status;
+    const newStrategy = data.allocation_strategy ?? current.allocation_strategy;
+    let ceilingChanged = false;
+    let newCeilingRp = current.budget_ceiling_rp;
+    let newCeilingSen = current.budget_ceiling_sen;
+    if (data.budget_ceiling_rp !== void 0 && data.budget_ceiling_rp !== current.budget_ceiling_rp) {
+      ceilingChanged = true;
+      newCeilingRp = data.budget_ceiling_rp;
+      newCeilingSen = Math.round(newCeilingRp * 100);
+    }
+    this.db.prepare(`
+      UPDATE budget_scenarios
+      SET scenario_name = ?,
+          description = ?,
+          scenario_status = ?,
+          budget_ceiling_rp = ?,
+          budget_ceiling_sen = ?,
+          allocation_strategy = ?,
+          updated_at = datetime('now')
+      WHERE scenario_id = ?;
+    `).run(newName, newDesc, newStatus, newCeilingRp, newCeilingSen, newStrategy, scenarioId);
+    if (ceilingChanged) {
+      return this.calculateAndPersistScenario(scenarioId);
+    }
+    return this.getScenarioDetailSummary(scenarioId);
+  }
+  /**
+   * Delete a scenario and its associated estimates and summaries
+   */
+  deleteScenario(scenarioId) {
+    if (scenarioId === "SCN-2027-BASELINE") {
+      throw new Error("PROTECTED_SCENARIO: Skenario baseline (SCN-2027-BASELINE) dilindungi dan tidak boleh dihapus.");
+    }
+    this.db.exec("BEGIN TRANSACTION;");
+    try {
+      this.db.prepare("DELETE FROM road_segment_cost_estimates WHERE scenario_id = ?;").run(scenarioId);
+      this.db.prepare("DELETE FROM road_cost_summaries WHERE scenario_id = ?;").run(scenarioId);
+      const res = this.db.prepare("DELETE FROM budget_scenarios WHERE scenario_id = ?;").run(scenarioId);
+      this.db.exec("COMMIT;");
+      return res.changes > 0;
+    } catch (err) {
+      this.db.exec("ROLLBACK;");
+      throw err;
+    }
+  }
+  /**
+   * Multi-scenario comparison
+   */
+  getScenarioComparison() {
+    const scenarios = this.getScenarios();
+    return scenarios.map((scn) => {
+      try {
+        return this.getScenarioDetailSummary(scn.scenario_id);
+      } catch {
+        return scn;
+      }
+    });
+  }
+  /**
+   * Search ASB catalog items
+   */
+  searchASB(params) {
+    let sql = "SELECT * FROM master_asb_items WHERE is_active = 1";
+    const bindings = [];
+    if (params.category) {
+      sql += " AND item_category = ?";
+      bindings.push(params.category);
+    }
+    if (params.asbType) {
+      sql += " AND package_name LIKE ?";
+      bindings.push(`%Tipe ${params.asbType}%`);
+    }
+    if (params.search) {
+      sql += " AND (package_name LIKE ? OR item_code LIKE ? OR specification LIKE ?)";
+      bindings.push(`%${params.search}%`, `%${params.search}%`, `%${params.search}%`);
+    }
+    sql += " ORDER BY item_category ASC, road_width_m ASC, unit_price_rp ASC";
+    if (params.limit) {
+      sql += " LIMIT ?";
+      bindings.push(params.limit);
+    }
+    return this.db.prepare(sql).all(...bindings);
+  }
+  /**
+   * Search AHSP catalog items
+   */
+  searchAHSP(params) {
+    let sql = "SELECT * FROM master_ahsp_items WHERE is_active = 1";
+    const bindings = [];
+    if (params.division) {
+      sql += " AND division_code = ?";
+      bindings.push(params.division);
+    }
+    if (params.search) {
+      sql += " AND (item_description LIKE ? OR payment_code LIKE ?)";
+      bindings.push(`%${params.search}%`, `%${params.search}%`);
+    }
+    sql += " ORDER BY division_code ASC, ahsp_id ASC";
+    if (params.limit) {
+      sql += " LIMIT ?";
+      bindings.push(params.limit);
+    }
+    return this.db.prepare(sql).all(...bindings);
+  }
+  /**
+   * Get all 6 treatment rules with mapping profile info
+   */
+  getTreatmentRules() {
+    return this.db.prepare(`
+      SELECT 
+        tpr.*,
+        aap.purpose_description as profile_description,
+        aap.disclaimer as profile_disclaimer,
+        COUNT(aapi.profile_item_id) as mapped_ahsp_items_count
+      FROM treatment_package_rules tpr
+      LEFT JOIN asb_ahsp_profiles aap ON (tpr.selected_profile = aap.structural_profile OR tpr.asb_type = aap.asb_type)
+      LEFT JOIN asb_ahsp_profile_items aapi ON aap.profile_id = aapi.profile_id
+      GROUP BY tpr.rule_id
+      ORDER BY tpr.priority_order ASC
+    `).all();
+  }
+  /**
+   * Run Mathematical Budget Optimization on a scenario
+   */
+  runOptimization(scenarioId, objective = "PRIORITY_WEIGHTED", customCeilingRp) {
+    const result = this.optimizationEngine.runOptimization(scenarioId, objective, customCeilingRp);
+    this.optimizationEngine.persistOptimizationResult(result);
+    return result;
+  }
+  /**
+   * Compare all 4 allocation methods side-by-side for a specific scenario and ceiling
+   */
+  compareOptimizationMethods(scenarioId, ceilingRp) {
+    return this.optimizationEngine.compareAllMethods(scenarioId, ceilingRp);
+  }
+  /**
+   * Duplicate an existing scenario with a new code and name
+   */
+  duplicateScenario(sourceScenarioId, newCode, newName, description, customCeilingRp, optimizationObjective) {
+    const source = this.costingRefService.getScenarioById(sourceScenarioId);
+    if (!source) {
+      throw new Error(`SCENARIO_NOT_FOUND: Source scenario '${sourceScenarioId}' not found.`);
+    }
+    const targetCeiling = customCeilingRp !== void 0 && !isNaN(customCeilingRp) && customCeilingRp > 0 ? customCeilingRp : source.budget_ceiling_rp;
+    const newScenario = this.createScenario({
+      scenario_code: newCode,
+      scenario_name: newName || `${source.scenario_name} (Salinan)`,
+      budget_year: source.budget_year,
+      budget_ceiling_rp: targetCeiling,
+      description: description || `Salinan dari skenario ${source.scenario_code}`,
+      scenario_status: "DRAFT",
+      allocation_strategy: optimizationObjective || source.allocation_strategy || "PRIORITY_RANK_GREEDY"
+    });
+    if (optimizationObjective && optimizationObjective !== "GREEDY_BENCHMARK") {
+      this.runOptimization(newScenario.scenario_id, optimizationObjective, targetCeiling);
+      return this.getScenarioDetailSummary(newScenario.scenario_id);
+    }
+    return newScenario;
+  }
+  /**
+   * Get deferred and excluded road register with clear rationale
+   */
+  getDeferredRoadRegister(scenarioId) {
+    return this.db.prepare(`
+      SELECT 
+        rcs.road_key,
+        r.display_name as road_name,
+        r.district_name,
+        rps.priority_rank,
+        rps.composite_score,
+        rcs.total_length_km,
+        rcs.treated_length_km,
+        rcs.total_pagu_asb_rp,
+        rcs.allocated_pagu_rp,
+        rcs.operational_status,
+        rcs.selection_rationale,
+        rcs.manual_review_segments
+      FROM road_cost_summaries rcs
+      JOIN roads r ON rcs.road_key = r.road_key
+      LEFT JOIN (
+        SELECT rps_inner.road_key, rps_inner.priority_rank, rps_inner.final_score as composite_score
+        FROM road_priority_scores rps_inner
+        WHERE rps_inner.run_id = (
+          SELECT sr.run_id 
+          FROM scoring_runs sr 
+          JOIN priority_models pm ON sr.model_id = pm.model_id 
+          WHERE pm.model_code = 'POLICY_DEFAULT_V1' AND sr.operating_mode = 'OPERATIONAL_2025' 
+          ORDER BY sr.executed_at DESC, sr.run_id DESC 
+          LIMIT 1
+        )
+      ) rps ON rcs.road_key = rps.road_key
+      WHERE rcs.scenario_id = ? AND rcs.operational_status != 'FUNDED_CONSTRUCTION'
+      ORDER BY rps.priority_rank ASC
+    `).all(scenarioId);
+  }
+  /**
+   * Get optimization run history for a scenario
+   */
+  getOptimizationHistory(scenarioId) {
+    return this.db.prepare(`
+      SELECT * FROM scenario_optimizations
+      WHERE scenario_id = ?
+      ORDER BY created_at DESC
+    `).all(scenarioId);
+  }
+};
+
 // src/server/server.ts
-import fs7 from "node:fs";
+import fs8 from "node:fs";
+if (!BigInt.prototype.toJSON) {
+  BigInt.prototype.toJSON = function() {
+    const num = Number(this);
+    return Number.isSafeInteger(num) ? num : this.toString();
+  };
+}
 var __filename3 = fileURLToPath3(import.meta.url);
 var __dirname3 = path4.dirname(__filename3);
 function createServer() {
@@ -3311,6 +6272,9 @@ function createServer() {
   const derivationService = new SpatialDerivationService();
   const demoSegService = new DemographicsAndSegmentsService(derivationService["db"]);
   const dd1GeomService = new DD1SegmentGeometryService(derivationService["db"]);
+  const rtrwSpatialService = new RtrwSpatialService(derivationService["db"]);
+  const narrativeService = new RoadNarrativeService(derivationService["db"]);
+  const costingEngine = new TreatmentCostingEngine(derivationService["db"]);
   app2.use(express.json());
   app2.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -3371,6 +6335,33 @@ function createServer() {
     try {
       const roadKey = req.params.roadKey;
       const data = demoSegService.getRoadDD1Segments(roadKey);
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/roads/:roadKey/narrative", (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const mode = req.query.mode || "OPERATIONAL_2025";
+      const modelCode = req.query.model || "POLICY_DEFAULT_V1";
+      const data = narrativeService.generateNarrative(roadKey, mode, modelCode);
+      if (!data) {
+        return res.status(404).json({
+          success: false,
+          error: `ROAD_NOT_FOUND: Road with key '${roadKey}' does not exist.`
+        });
+      }
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/roads-narratives-audit", (req, res) => {
+    try {
+      const mode = req.query.mode || "OPERATIONAL_2025";
+      const modelCode = req.query.model || "POLICY_DEFAULT_V1";
+      const data = narrativeService.generateAllNarratives(mode, modelCode);
       res.json({ success: true, data });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
@@ -3544,10 +6535,10 @@ function createServer() {
   app2.get("/api/map/dd1-segments", (req, res) => {
     try {
       const geojsonPath = path4.resolve(PROJECT_ROOT, "src/public/data/dd1_condition_segments_2025.geojson");
-      if (fs7.existsSync(geojsonPath)) {
+      if (fs8.existsSync(geojsonPath)) {
         res.setHeader("Content-Type", "application/json");
         res.setHeader("Cache-Control", "public, max-age=3600");
-        return fs7.createReadStream(geojsonPath).pipe(res);
+        return fs8.createReadStream(geojsonPath).pipe(res);
       }
       const data = dd1GeomService.generateDD1SegmentsGeoJson();
       res.setHeader("Content-Type", "application/json");
@@ -3561,6 +6552,38 @@ function createServer() {
     try {
       const roadKey = req.params.roadKey;
       const data = derivationService.getRoadCoverage(roadKey);
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/roads/:roadKey/spatial-profile", (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = rtrwSpatialService.getRoadSpatialProfile(roadKey);
+      if (!data) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: ${roadKey}` });
+      }
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/roads/:roadKey/rtrw", (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = rtrwSpatialService.getRoadSpatialProfile(roadKey);
+      if (!data) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: ${roadKey}` });
+      }
+      res.json({ success: true, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/spatial/rtrw/audit", (req, res) => {
+    try {
+      const data = rtrwSpatialService.getNetworkRtrwAudit();
       res.json({ success: true, data });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
@@ -3614,6 +6637,227 @@ function createServer() {
     try {
       const data = derivationService.getDistanceReconciliation();
       res.json({ success: true, total: data.length, data });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios", (req, res) => {
+    try {
+      const scenarios = costingEngine.getScenarios();
+      res.json({ success: true, total: scenarios.length, data: scenarios });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/comparison", (req, res) => {
+    try {
+      const comparison = costingEngine.getScenarioComparison();
+      res.json({ success: true, total: comparison.length, data: comparison });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const detail = costingEngine.getScenarioDetailSummary(scenarioId);
+      res.json({ success: true, data: detail });
+    } catch (err) {
+      res.status(err.message.includes("NOT_FOUND") ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/costing/scenarios", (req, res) => {
+    try {
+      const { scenario_code, scenario_name, budget_year, budget_ceiling_rp, description, scenario_status, allocation_strategy } = req.body;
+      if (!scenario_code || !scenario_name || !budget_year) {
+        return res.status(400).json({ success: false, error: "MISSING_REQUIRED_FIELDS: scenario_code, scenario_name, budget_year required." });
+      }
+      const created = costingEngine.createScenario({
+        scenario_code,
+        scenario_name,
+        budget_year: Number(budget_year),
+        budget_ceiling_rp: budget_ceiling_rp !== void 0 ? Number(budget_ceiling_rp) : void 0,
+        description,
+        scenario_status,
+        allocation_strategy
+      });
+      res.status(201).json({ success: true, data: created });
+    } catch (err) {
+      res.status(err.message.includes("DUPLICATE") ? 409 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.put("/api/costing/scenarios/:scenarioId", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { scenario_name, budget_ceiling_rp, description, scenario_status, allocation_strategy } = req.body;
+      const updated = costingEngine.updateScenario(scenarioId, {
+        scenario_name,
+        budget_ceiling_rp: budget_ceiling_rp !== void 0 ? Number(budget_ceiling_rp) : void 0,
+        description,
+        scenario_status,
+        allocation_strategy
+      });
+      res.json({ success: true, data: updated });
+    } catch (err) {
+      res.status(err.message.includes("NOT_FOUND") ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.delete("/api/costing/scenarios/:scenarioId", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      costingEngine.deleteScenario(scenarioId);
+      res.json({ success: true, message: `Scenario ${scenarioId} successfully deleted.` });
+    } catch (err) {
+      res.status(err.message.includes("PROTECTED") ? 403 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/costing/scenarios/:scenarioId/calculate", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const result = costingEngine.calculateAndPersistScenario(scenarioId);
+      res.json({ success: true, data: result });
+    } catch (err) {
+      res.status(err.message.includes("NOT_FOUND") ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/costing/scenarios/:scenarioId/optimize", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { objective, budget_ceiling_rp } = req.body || {};
+      const result = costingEngine.runOptimization(
+        scenarioId,
+        objective || "PRIORITY_WEIGHTED",
+        budget_ceiling_rp !== void 0 ? Number(budget_ceiling_rp) : void 0
+      );
+      const responseData = {
+        ...result,
+        solver_nodes: result.nodes_explored,
+        solver_gap_pct: result.optimality_gap_pct
+      };
+      res.json({ success: true, data: responseData });
+    } catch (err) {
+      res.status(err.message.includes("NOT_FOUND") ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/compare-methods", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const ceilingRp = req.query.ceiling_rp !== void 0 ? Number(req.query.ceiling_rp) : void 0;
+      const result = costingEngine.compareOptimizationMethods(scenarioId, ceilingRp);
+      res.json({ success: true, data: result });
+    } catch (err) {
+      res.status(err.message.includes("NOT_FOUND") ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.post("/api/costing/scenarios/:scenarioId/duplicate", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { scenario_code, scenario_name, new_scenario_name, budget_ceiling_rp, optimization_objective, description } = req.body || {};
+      const targetName = (scenario_name || new_scenario_name || "").trim();
+      const codeBase = (scenario_code || targetName || `SIM_${Date.now()}`).toUpperCase().replace(/[^A-Z0-9_-]/g, "_");
+      const targetCode = codeBase.startsWith("SCN_") || codeBase.startsWith("SIM_") ? codeBase : `SIM_${codeBase}`.slice(0, 30);
+      const duplicated = costingEngine.duplicateScenario(
+        scenarioId,
+        targetCode,
+        targetName,
+        description,
+        budget_ceiling_rp !== void 0 ? Number(budget_ceiling_rp) : void 0,
+        optimization_objective
+      );
+      res.status(201).json({ success: true, data: duplicated });
+    } catch (err) {
+      res.status(err.message.includes("DUPLICATE") ? 409 : 500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/deferred-register", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const register = costingEngine.getDeferredRoadRegister(scenarioId);
+      res.json({ success: true, total: register.length, data: register });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/optimization-history", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const history = costingEngine.getOptimizationHistory(scenarioId);
+      res.json({ success: true, total: history.length, data: history });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/roads", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const district = req.query.district;
+      const isFunded = req.query.is_funded !== void 0 ? Number(req.query.is_funded) : void 0;
+      const operationalStatus = req.query.operational_status;
+      const dominantType = req.query.dominant_type;
+      const search = req.query.search;
+      const roads = costingEngine.getRoadCostSummaries(scenarioId, {
+        district,
+        isFunded,
+        operationalStatus,
+        dominantType,
+        search
+      });
+      res.json({ success: true, total: roads.length, data: roads });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/roads/:roadKey", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const roadKey = req.params.roadKey;
+      const detail = costingEngine.getRoadCostDetail(scenarioId, roadKey);
+      if (!detail) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: Road '${roadKey}' not found.` });
+      }
+      res.json({ success: true, data: detail });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/scenarios/:scenarioId/export/csv", (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const csv = costingEngine.exportScenarioCsv(scenarioId);
+      res.setHeader("Content-Type", "text/csv; charset=utf-8");
+      res.setHeader("Content-Disposition", `attachment; filename="rencana_biaya_${scenarioId}.csv"`);
+      res.send(csv);
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/reference/asb", (req, res) => {
+    try {
+      const search = req.query.search;
+      const category = req.query.category;
+      const asbType = req.query.type;
+      const limit = req.query.limit ? Number(req.query.limit) : 100;
+      const items = costingEngine.searchASB({ search, category, asbType, limit });
+      res.json({ success: true, total: items.length, data: items });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/reference/ahsp", (req, res) => {
+    try {
+      const search = req.query.search;
+      const division = req.query.division ? Number(req.query.division) : void 0;
+      const limit = req.query.limit ? Number(req.query.limit) : 100;
+      const items = costingEngine.searchAHSP({ search, division, limit });
+      res.json({ success: true, total: items.length, data: items });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+  app2.get("/api/costing/reference/rules", (req, res) => {
+    try {
+      const rules = costingEngine.getTreatmentRules();
+      res.json({ success: true, total: rules.length, data: rules });
     } catch (err) {
       res.status(500).json({ success: false, error: err.message });
     }

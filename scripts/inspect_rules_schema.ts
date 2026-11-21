@@ -1,0 +1,14 @@
+import { DatabaseSync } from 'node:sqlite';
+const db = new DatabaseSync('data/diklat_pim.db');
+const cols = db.prepare("PRAGMA table_info('treatment_package_rules')").all() as any[];
+console.log('Columns of treatment_package_rules:', cols.map(c => c.name));
+const rules = db.prepare('SELECT * FROM treatment_package_rules').all();
+console.log('Rules:', rules);
+const profCols = db.prepare("PRAGMA table_info('asb_ahsp_profiles')").all() as any[];
+console.log('Columns of asb_ahsp_profiles:', profCols.map(c => c.name));
+const profs = db.prepare('SELECT * FROM asb_ahsp_profiles').all();
+console.log('asb_ahsp_profiles count:', profs.length);
+const profItemCols = db.prepare("PRAGMA table_info('asb_ahsp_profile_items')").all() as any[];
+console.log('Columns of asb_ahsp_profile_items:', profItemCols.map(c => c.name));
+const profItems = db.prepare('SELECT * FROM asb_ahsp_profile_items').all();
+console.log('asb_ahsp_profile_items count:', profItems.length);

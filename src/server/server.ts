@@ -9,7 +9,18 @@ import { SimulationService } from '../services/simulationService.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 import { DemographicsAndSegmentsService } from '../services/demographicsAndSegmentsService.ts';
 import { DD1SegmentGeometryService } from '../services/dd1SegmentGeometryService.ts';
+import { RtrwSpatialService } from '../services/rtrwSpatialService.ts';
+import { RoadNarrativeService } from '../services/roadNarrativeService.ts';
+import { TreatmentCostingEngine } from '../services/treatmentCostingEngine.ts';
 import fs from 'node:fs';
+
+// Global BigInt JSON serialization support for Express res.json
+if (!(BigInt.prototype as any).toJSON) {
+  (BigInt.prototype as any).toJSON = function () {
+    const num = Number(this);
+    return Number.isSafeInteger(num) ? num : this.toString();
+  };
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +34,9 @@ export function createServer() {
   const derivationService = new SpatialDerivationService();
   const demoSegService = new DemographicsAndSegmentsService(derivationService['db']);
   const dd1GeomService = new DD1SegmentGeometryService(derivationService['db']);
+  const rtrwSpatialService = new RtrwSpatialService(derivationService['db']);
+  const narrativeService = new RoadNarrativeService(derivationService['db']);
+  const costingEngine = new TreatmentCostingEngine(derivationService['db']);
 
   app.use(express.json());
 
@@ -96,6 +110,37 @@ export function createServer() {
     try {
       const roadKey = req.params.roadKey;
       const data = demoSegService.getRoadDD1Segments(roadKey);
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 3C. Road Narrative API (PROFIL DAN KARAKTERISTIK RUAS JALAN)
+  app.get('/api/roads/:roadKey/narrative', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const mode = (req.query.mode as any) || 'OPERATIONAL_2025';
+      const modelCode = (req.query.model as string) || 'POLICY_DEFAULT_V1';
+      const data = narrativeService.generateNarrative(roadKey, mode, modelCode);
+      if (!data) {
+        return res.status(404).json({
+          success: false,
+          error: `ROAD_NOT_FOUND: Road with key '${roadKey}' does not exist.`,
+        });
+      }
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 3D. Batch Road Narratives Audit & Availability Matrix API
+  app.get('/api/roads-narratives-audit', (req, res) => {
+    try {
+      const mode = (req.query.mode as any) || 'OPERATIONAL_2025';
+      const modelCode = (req.query.model as string) || 'POLICY_DEFAULT_V1';
+      const data = narrativeService.generateAllNarratives(mode, modelCode);
       res.json({ success: true, data });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
@@ -329,6 +374,44 @@ export function createServer() {
     }
   });
 
+  // 7A-1. Unified Spatial Profile (Task 1: SPASIAL DAN AKSESIBILITAS WILAYAH)
+  app.get('/api/spatial/roads/:roadKey/spatial-profile', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = rtrwSpatialService.getRoadSpatialProfile(roadKey);
+      if (!data) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: ${roadKey}` });
+      }
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7A-2. Road RTRW Profile & Macro Breakdown
+  app.get('/api/spatial/roads/:roadKey/rtrw', (req, res) => {
+    try {
+      const roadKey = req.params.roadKey;
+      const data = rtrwSpatialService.getRoadSpatialProfile(roadKey);
+      if (!data) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: ${roadKey}` });
+      }
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 7A-3. Aggregate Network RTRW Overlay Audit
+  app.get('/api/spatial/rtrw/audit', (req, res) => {
+    try {
+      const data = rtrwSpatialService.getNetworkRtrwAudit();
+      res.json({ success: true, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   // 7B. Road Nearest Facilities & Route Geometries
   app.get('/api/spatial/roads/:roadKey/nearest-facilities', (req, res) => {
     try {
@@ -386,6 +469,270 @@ export function createServer() {
     try {
       const data = derivationService.getDistanceReconciliation();
       res.json({ success: true, total: data.length, data });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // ====================================================================
+  // 8. ASB TREATMENT SELECTION & COSTING PLANNING API (PHASE 2)
+  // ====================================================================
+
+  // 8A. List All Scenarios
+  app.get('/api/costing/scenarios', (req, res) => {
+    try {
+      const scenarios = costingEngine.getScenarios();
+      res.json({ success: true, total: scenarios.length, data: scenarios });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8B. Scenario Comparison
+  app.get('/api/costing/scenarios/comparison', (req, res) => {
+    try {
+      const comparison = costingEngine.getScenarioComparison();
+      res.json({ success: true, total: comparison.length, data: comparison });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8C. Get Scenario Detail & Aggregated Metrics
+  app.get('/api/costing/scenarios/:scenarioId', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const detail = costingEngine.getScenarioDetailSummary(scenarioId);
+      res.json({ success: true, data: detail });
+    } catch (err: any) {
+      res.status(err.message.includes('NOT_FOUND') ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8D. Create New Budget Scenario
+  app.post('/api/costing/scenarios', (req, res) => {
+    try {
+      const { scenario_code, scenario_name, budget_year, budget_ceiling_rp, description, scenario_status, allocation_strategy } = req.body;
+      if (!scenario_code || !scenario_name || !budget_year) {
+        return res.status(400).json({ success: false, error: 'MISSING_REQUIRED_FIELDS: scenario_code, scenario_name, budget_year required.' });
+      }
+      const created = costingEngine.createScenario({
+        scenario_code,
+        scenario_name,
+        budget_year: Number(budget_year),
+        budget_ceiling_rp: budget_ceiling_rp !== undefined ? Number(budget_ceiling_rp) : undefined,
+        description,
+        scenario_status,
+        allocation_strategy
+      });
+      res.status(201).json({ success: true, data: created });
+    } catch (err: any) {
+      res.status(err.message.includes('DUPLICATE') ? 409 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8E. Update Budget Scenario
+  app.put('/api/costing/scenarios/:scenarioId', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { scenario_name, budget_ceiling_rp, description, scenario_status, allocation_strategy } = req.body;
+      const updated = costingEngine.updateScenario(scenarioId, {
+        scenario_name,
+        budget_ceiling_rp: budget_ceiling_rp !== undefined ? Number(budget_ceiling_rp) : undefined,
+        description,
+        scenario_status,
+        allocation_strategy
+      });
+      res.json({ success: true, data: updated });
+    } catch (err: any) {
+      res.status(err.message.includes('NOT_FOUND') ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8F. Delete Budget Scenario
+  app.delete('/api/costing/scenarios/:scenarioId', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      costingEngine.deleteScenario(scenarioId);
+      res.json({ success: true, message: `Scenario ${scenarioId} successfully deleted.` });
+    } catch (err: any) {
+      res.status(err.message.includes('PROTECTED') ? 403 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G. Recalculate Scenario Costing
+  app.post('/api/costing/scenarios/:scenarioId/calculate', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const result = costingEngine.calculateAndPersistScenario(scenarioId);
+      res.json({ success: true, data: result });
+    } catch (err: any) {
+      res.status(err.message.includes('NOT_FOUND') ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G-2. Run Mathematical Budget Optimization (Phase 3)
+  app.post('/api/costing/scenarios/:scenarioId/optimize', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { objective, budget_ceiling_rp } = req.body || {};
+      const result = costingEngine.runOptimization(
+        scenarioId,
+        objective || 'PRIORITY_WEIGHTED',
+        budget_ceiling_rp !== undefined ? Number(budget_ceiling_rp) : undefined
+      );
+      // Attach aliases for frontend compatibility
+      const responseData = {
+        ...result,
+        solver_nodes: result.nodes_explored,
+        solver_gap_pct: result.optimality_gap_pct,
+      };
+      res.json({ success: true, data: responseData });
+    } catch (err: any) {
+      res.status(err.message.includes('NOT_FOUND') ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G-3. Compare All 4 Allocation Methods (Phase 3)
+  app.get('/api/costing/scenarios/:scenarioId/compare-methods', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const ceilingRp = req.query.ceiling_rp !== undefined ? Number(req.query.ceiling_rp) : undefined;
+      const result = costingEngine.compareOptimizationMethods(scenarioId, ceilingRp);
+      res.json({ success: true, data: result });
+    } catch (err: any) {
+      res.status(err.message.includes('NOT_FOUND') ? 404 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G-4. Duplicate Scenario (Phase 3)
+  app.post('/api/costing/scenarios/:scenarioId/duplicate', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const { scenario_code, scenario_name, new_scenario_name, budget_ceiling_rp, optimization_objective, description } = req.body || {};
+      const targetName = (scenario_name || new_scenario_name || '').trim();
+      const codeBase = (scenario_code || targetName || `SIM_${Date.now()}`).toUpperCase().replace(/[^A-Z0-9_-]/g, '_');
+      const targetCode = codeBase.startsWith('SCN_') || codeBase.startsWith('SIM_') ? codeBase : `SIM_${codeBase}`.slice(0, 30);
+
+      const duplicated = costingEngine.duplicateScenario(
+        scenarioId,
+        targetCode,
+        targetName,
+        description,
+        budget_ceiling_rp !== undefined ? Number(budget_ceiling_rp) : undefined,
+        optimization_objective
+      );
+      res.status(201).json({ success: true, data: duplicated });
+    } catch (err: any) {
+      res.status(err.message.includes('DUPLICATE') ? 409 : 500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G-5. Deferred and Excluded Road Register (Phase 3)
+  app.get('/api/costing/scenarios/:scenarioId/deferred-register', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const register = costingEngine.getDeferredRoadRegister(scenarioId);
+      res.json({ success: true, total: register.length, data: register });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8G-6. Optimization Run History (Phase 3)
+  app.get('/api/costing/scenarios/:scenarioId/optimization-history', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const history = costingEngine.getOptimizationHistory(scenarioId);
+      res.json({ success: true, total: history.length, data: history });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8H. List Road Cost Summaries for Scenario
+  app.get('/api/costing/scenarios/:scenarioId/roads', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const district = req.query.district as string | undefined;
+      const isFunded = req.query.is_funded !== undefined ? Number(req.query.is_funded) : undefined;
+      const operationalStatus = req.query.operational_status as string | undefined;
+      const dominantType = req.query.dominant_type as string | undefined;
+      const search = req.query.search as string | undefined;
+
+      const roads = costingEngine.getRoadCostSummaries(scenarioId, {
+        district,
+        isFunded,
+        operationalStatus,
+        dominantType,
+        search
+      });
+      res.json({ success: true, total: roads.length, data: roads });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8I. Single Road Cost Detail & Segment Breakdown
+  app.get('/api/costing/scenarios/:scenarioId/roads/:roadKey', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const roadKey = req.params.roadKey;
+      const detail = costingEngine.getRoadCostDetail(scenarioId, roadKey);
+      if (!detail) {
+        return res.status(404).json({ success: false, error: `ROAD_NOT_FOUND: Road '${roadKey}' not found.` });
+      }
+      res.json({ success: true, data: detail });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8J. Export Scenario to CSV
+  app.get('/api/costing/scenarios/:scenarioId/export/csv', (req, res) => {
+    try {
+      const scenarioId = req.params.scenarioId;
+      const csv = costingEngine.exportScenarioCsv(scenarioId);
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename="rencana_biaya_${scenarioId}.csv"`);
+      res.send(csv);
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8K. Reference: Master ASB Catalog Search
+  app.get('/api/costing/reference/asb', (req, res) => {
+    try {
+      const search = req.query.search as string | undefined;
+      const category = req.query.category as string | undefined;
+      const asbType = req.query.type as string | undefined;
+      const limit = req.query.limit ? Number(req.query.limit) : 100;
+      const items = costingEngine.searchASB({ search, category, asbType, limit });
+      res.json({ success: true, total: items.length, data: items });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8L. Reference: Master AHSP Catalog Search
+  app.get('/api/costing/reference/ahsp', (req, res) => {
+    try {
+      const search = req.query.search as string | undefined;
+      const division = req.query.division ? Number(req.query.division) : undefined;
+      const limit = req.query.limit ? Number(req.query.limit) : 100;
+      const items = costingEngine.searchAHSP({ search, division, limit });
+      res.json({ success: true, total: items.length, data: items });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
+  // 8M. Reference: Treatment Rules R01..R06 & Profiles
+  app.get('/api/costing/reference/rules', (req, res) => {
+    try {
+      const rules = costingEngine.getTreatmentRules();
+      res.json({ success: true, total: rules.length, data: rules });
     } catch (err: any) {
       res.status(500).json({ success: false, error: err.message });
     }

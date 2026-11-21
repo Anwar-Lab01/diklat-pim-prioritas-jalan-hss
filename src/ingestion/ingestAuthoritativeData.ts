@@ -8,6 +8,8 @@ import { seedModelDefinitions } from './seedModelDefinitions.ts';
 import { SpatialDerivationService } from '../services/spatialDerivationService.ts';
 import { ingestDemographics } from './ingestDemographics.ts';
 import { ingestTreatmentSegments } from './ingestTreatmentSegments.ts';
+import { RtrwSpatialService } from '../services/rtrwSpatialService.ts';
+import { runCostingReferenceIngestion } from './ingestCostingReference.ts';
 
 export function runMasterIngestion(dbPath?: string): {
   success: boolean;
@@ -70,6 +72,16 @@ export function runMasterIngestion(dbPath?: string): {
       `      ✓ Demographics: ${demographicStats.insertedVillages} villages, ${demographicStats.totalHouseholds} households; Segments: ${treatmentSegmentStats.insertedSegments} DD1 segments (${treatmentSegmentStats.totalLengthM} m)`
     );
 
+    console.log('[9/10] Computing RTRW spatial overlay & regional accessibility profiles (Task 1)...');
+    const rtrwSpatialService = new RtrwSpatialService(db);
+    const rtrwStats = rtrwSpatialService.computeAndStoreRtrwIntersections();
+    console.log(
+      `      ✓ RTRW Profiles: ${rtrwStats.roadsProcessed} roads (${(rtrwStats.totalNetworkM / 1000).toFixed(2)} km), Permukiman: ${(rtrwStats.macroTotals.PERMUKIMAN / 1000).toFixed(2)} km, Produksi: ${(rtrwStats.macroTotals.PRODUKSI / 1000).toFixed(2)} km`
+    );
+
+    console.log('[10/10] Ingesting costing & budgeting reference data (Phase 1)...');
+    const costingRefStats = runCostingReferenceIngestion(db);
+
     return {
       roadStats,
       crosswalkStats,
@@ -84,6 +96,8 @@ export function runMasterIngestion(dbPath?: string): {
       },
       demographicStats,
       treatmentSegmentStats,
+      rtrwStats,
+      costingRefStats,
     };
   });
 

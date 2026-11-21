@@ -444,5 +444,279 @@ CREATE TABLE IF NOT EXISTS treatment_engine_segments (
 CREATE INDEX IF NOT EXISTS idx_tes_road_key ON treatment_engine_segments(road_key);
 CREATE INDEX IF NOT EXISTS idx_tes_condition ON treatment_engine_segments(dominant_condition);
 CREATE INDEX IF NOT EXISTS idx_tes_status ON treatment_engine_segments(segment_status);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_tes_segment_road ON treatment_engine_segments(segment_id, road_key);
+
+-- --------------------------------------------------------------------
+-- LAYER 6: SPATIAL CRITERIA RESTRUCTURING & RTRW PROFILES (TASK 1)
+-- Kelompok Kriteria: SPASIAL DAN AKSESIBILITAS WILAYAH
+-- --------------------------------------------------------------------
+
+-- 24. Interseksi Spasial Ruas - Pola Ruang RTRW Otoritatif (Line-Polygon)
+CREATE TABLE IF NOT EXISTS road_rtrw_intersections (
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    rtrw_class_name         TEXT NOT NULL,
+    macro_category          TEXT NOT NULL, -- 'PERMUKIMAN', 'PRODUKSI', 'LINDUNG', 'BADAN_AIR', 'PARIWISATA', 'TIDAK_TERCAKUP'
+    intersection_length_m   REAL NOT NULL,
+    share_of_road_pct       REAL NOT NULL,
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    PRIMARY KEY (road_key, rtrw_class_name)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rri_road ON road_rtrw_intersections(road_key);
+CREATE INDEX IF NOT EXISTS idx_rri_macro ON road_rtrw_intersections(macro_category);
+
+-- 25. Profil Spasial dan Aksesibilitas Wilayah per Ruas Jalan (5 Indikator Evaluasi)
+CREATE TABLE IF NOT EXISTS road_spatial_profiles (
+    road_key                TEXT PRIMARY KEY REFERENCES roads(road_key) ON DELETE RESTRICT,
+    jarak_ibukota_kabupaten_m REAL,
+    desa_count              INTEGER NOT NULL,
+    desa_list               TEXT NOT NULL,
+    kecamatan_count         INTEGER NOT NULL,
+    kecamatan_list          TEXT NOT NULL,
+    permukiman_length_m     REAL NOT NULL,
+    permukiman_pct          REAL NOT NULL,
+    produksi_length_m       REAL NOT NULL,
+    produksi_pct            REAL NOT NULL,
+    lindung_length_m        REAL NOT NULL,
+    lindung_pct             REAL NOT NULL,
+    badan_air_length_m      REAL NOT NULL,
+    badan_air_pct           REAL NOT NULL,
+    pariwisata_length_m     REAL NOT NULL,
+    pariwisata_pct          REAL NOT NULL,
+    uncovered_length_m      REAL NOT NULL,
+    uncovered_pct           REAL NOT NULL,
+    total_length_m          REAL NOT NULL,
+    rtrw_breakdown_json     TEXT NOT NULL,
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- --------------------------------------------------------------------
+-- LAYER 7: COSTING & BUDGETING REFERENCE (PHASE 1)
+-- Independent Costing, ASB/AHSP Master, Treatment Rules & Profiling
+-- --------------------------------------------------------------------
+
+-- 26. Master ASB Items (Analisis Standar Belanja Fisik Bina Marga 2027)
+CREATE TABLE IF NOT EXISTS master_asb_items (
+    asb_id                  TEXT PRIMARY KEY,                     -- 'asb_0001' s.d. 'asb_1010'
+    source_row_index        INTEGER NOT NULL,
+    item_category           TEXT NOT NULL,                        -- 'Jalan Kabupaten', 'Jembatan pada Jalan Kabupaten'
+    item_code               TEXT NOT NULL,                        -- '1.3.04.01.01.0003'
+    package_name            TEXT NOT NULL,                        -- 'Jalan Tipe A1'
+    specification           TEXT NOT NULL,                        -- Rincian spesifikasi lapis
+    unit                    TEXT NOT NULL,                        -- 'Meter', 'Unit'
+    unit_price_rp           REAL NOT NULL,                        -- Harga satuan rupiah
+    unit_price_sen          INTEGER,                              -- Harga satuan dalam sen (1 Rp = 100 sen) untuk presisi eksak
+    expenditure_group       TEXT NOT NULL,                        -- 'Belanja Modal Jalan Kabupaten', dll
+    treatment_family        TEXT,
+    surface_type            TEXT,                                 -- 'HRS-Base', 'HRS-WC', 'Rigid'
+    road_width_m            REAL,                                 -- 1.0 s.d. 5.0
+    surface_thickness_cm    REAL,                                 -- Tebal lapis permukaan (cm)
+    budget_year             INTEGER NOT NULL DEFAULT 2027,
+    source_document         TEXT NOT NULL DEFAULT 'ASB BM 2027.xlsx',
+    source_reference        TEXT,
+    source_file             TEXT,
+    is_active               INTEGER NOT NULL DEFAULT 1,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_asb_category ON master_asb_items(item_category);
+CREATE INDEX IF NOT EXISTS idx_asb_width ON master_asb_items(road_width_m);
+CREATE INDEX IF NOT EXISTS idx_asb_surface ON master_asb_items(surface_type);
+
+-- 27. Master AHSP Items (Analisis Harga Satuan Pekerjaan Bina Marga 2025)
+CREATE TABLE IF NOT EXISTS master_ahsp_items (
+    ahsp_id                 TEXT PRIMARY KEY,                     -- 'hps_0001' s.d. 'hps_0483'
+    source_row_index        INTEGER NOT NULL,
+    division_code           INTEGER NOT NULL,                     -- 1 s.d. 10
+    division_name           TEXT NOT NULL,                        -- 'UMUM', 'DRAINASE', 'PERKERASAN ASPAL', dll
+    payment_code            TEXT,                                 -- '1.20.(1)', '6.3.(3a)', dll
+    item_description        TEXT NOT NULL,                        -- Uraian pekerjaan satuan
+    unit                    TEXT,                                 -- 'M1', 'M2', 'M3', 'Ton', dll (null pada item bahan olahan tertentu)
+    original_unit           TEXT,
+    unit_price_rp           REAL NOT NULL,                        -- Harga satuan rupiah
+    unit_price_sen          INTEGER,                              -- Harga satuan dalam sen (1 Rp = 100 sen) untuk presisi eksak
+    work_category           TEXT NOT NULL,                        -- 'asphalt_pavement', 'drainage', dll
+    quantity_basis          TEXT NOT NULL,                        -- 'length_m', 'area_m2', 'volume_m3', dll
+    is_support_item         INTEGER NOT NULL DEFAULT 0,           -- 1 = item pendukung, 0 = item utama
+    price_year              INTEGER NOT NULL DEFAULT 2025,
+    source_document         TEXT NOT NULL DEFAULT 'SE DJBK No. 182/SE/Dk/2025',
+    source_reference        TEXT,
+    source_file             TEXT,
+    is_active               INTEGER NOT NULL DEFAULT 1,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_ahsp_div ON master_ahsp_items(division_code);
+CREATE INDEX IF NOT EXISTS idx_ahsp_payment_code ON master_ahsp_items(payment_code);
+
+-- 28. Aturan Pemilihan Paket Penanganan ASB (Rules R01..R06)
+CREATE TABLE IF NOT EXISTS treatment_package_rules (
+    rule_id                 TEXT PRIMARY KEY,                     -- 'R01' s.d. 'R06'
+    priority_order          INTEGER NOT NULL UNIQUE,              -- 1 s.d. 6
+    rule_label              TEXT NOT NULL,                        -- Label aturan
+    selected_profile        TEXT NOT NULL,                        -- 'base_subbase_fill', 'base_plus_subbase', dll
+    asb_type                TEXT NOT NULL,                        -- 'D', 'C', 'B', 'A', 'NONE'
+    condition_logic         TEXT NOT NULL,                        -- JSON logika kondisi kriteria
+    rationale               TEXT,                                 -- Rationale teknis aturan
+    is_active               INTEGER NOT NULL DEFAULT 1,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- 29. Profil Pemetaan ASB–AHSP (11 Profil Struktural & Pendukung)
+CREATE TABLE IF NOT EXISTS asb_ahsp_profiles (
+    profile_id              TEXT PRIMARY KEY,                     -- 'profile_asb_a', dll
+    asb_type                TEXT NOT NULL,                        -- 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'SUPPORT'
+    structural_profile      TEXT NOT NULL,                        -- 'surface_only', 'base_course', dll
+    purpose_description     TEXT NOT NULL,                        -- Deskripsi tujuan profil
+    disclaimer              TEXT,                                 -- Disclaimer teknis
+    is_active               INTEGER NOT NULL DEFAULT 1,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- 30. Rincian Item pada Profil Pemetaan ASB–AHSP (35 Aturan Rincian)
+CREATE TABLE IF NOT EXISTS asb_ahsp_profile_items (
+    profile_item_id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    profile_id              TEXT NOT NULL REFERENCES asb_ahsp_profiles(profile_id) ON DELETE CASCADE,
+    ahsp_id                 TEXT REFERENCES master_ahsp_items(ahsp_id) ON DELETE RESTRICT,
+    rule_identifier         TEXT NOT NULL,                        -- ID aturan item
+    item_role               TEXT NOT NULL,                        -- 'primary', 'support', 'optional'
+    quantity_basis          TEXT NOT NULL,                        -- 'length_m', 'width_factor', dll
+    description             TEXT NOT NULL,
+    division_code           INTEGER NOT NULL,
+    is_active               INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE INDEX IF NOT EXISTS idx_aapi_profile ON asb_ahsp_profile_items(profile_id);
+CREATE INDEX IF NOT EXISTS idx_aapi_ahsp ON asb_ahsp_profile_items(ahsp_id);
+
+-- 31. Master Skenario Anggaran (Budget Scenarios - Phase 1.1 / Phase 2)
+CREATE TABLE IF NOT EXISTS budget_scenarios (
+    scenario_id             TEXT PRIMARY KEY,                     -- 'SCN-2027-BASELINE', 'SCN-2027-OPTIMAL', dll
+    scenario_code           TEXT NOT NULL UNIQUE,                -- 'BASELINE_2027', dll
+    scenario_name           TEXT NOT NULL,                       -- 'Skenario Pagu Indikatif Baseline 2027'
+    budget_year             INTEGER NOT NULL,                    -- 2027
+    description             TEXT,                                 -- Keterangan skenario perencanaan
+    scenario_status         TEXT NOT NULL DEFAULT 'DRAFT',       -- 'DRAFT', 'ACTIVE', 'ARCHIVED'
+    budget_ceiling_rp       REAL DEFAULT 50000000000,            -- Plafon anggaran rupiah (default Rp 50 Miliar)
+    budget_ceiling_sen      INTEGER DEFAULT 5000000000000,       -- Plafon anggaran dalam sen
+    total_cost_rp           REAL DEFAULT 0,                      -- Total pagu kebutuhan kalkulasi ASB
+    total_cost_sen          INTEGER DEFAULT 0,                   -- Total pagu kebutuhan dalam sen
+    allocated_cost_rp       REAL DEFAULT 0,                      -- Total biaya terakomodasi dalam plafon
+    allocated_cost_sen      INTEGER DEFAULT 0,                   -- Total biaya terakomodasi dalam sen
+    allocation_strategy     TEXT DEFAULT 'PRIORITY_RANK_GREEDY', -- Strategi alokasi pagu
+    optimization_objective  TEXT DEFAULT 'GREEDY_BENCHMARK',    -- 'GREEDY_BENCHMARK', 'PRIORITY_WEIGHTED', 'MAX_LENGTH', 'PRIORITY_RESPECTING'
+    solver_status           TEXT DEFAULT 'BENCHMARK_GREEDY',    -- 'OPTIMAL', 'FEASIBLE', 'INFEASIBLE', 'BENCHMARK_GREEDY'
+    solver_nodes            INTEGER DEFAULT 0,
+    solver_gap_pct          REAL DEFAULT 0,
+    solver_runtime_ms       INTEGER DEFAULT 0,
+    treated_length_km       REAL DEFAULT 0,
+    priority_weighted_score REAL DEFAULT 0,
+    funded_construction_roads INTEGER DEFAULT 0,
+    routine_maintenance_roads INTEGER DEFAULT 0,
+    manual_review_roads     INTEGER DEFAULT 0,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_bs_year ON budget_scenarios(budget_year);
+CREATE INDEX IF NOT EXISTS idx_bs_status ON budget_scenarios(scenario_status);
+
+-- 32. Estimasi Biaya Indikatif per Segmen (Struktur Skema Phase 1.1 / Phase 3)
+CREATE TABLE IF NOT EXISTS road_segment_cost_estimates (
+    estimate_id             TEXT PRIMARY KEY,                     -- 'EST-HSS-KAB-xxx-SEG-xxxx'
+    scenario_id             TEXT NOT NULL REFERENCES budget_scenarios(scenario_id) ON DELETE CASCADE,
+    segment_id              TEXT NOT NULL,
+    road_key                TEXT NOT NULL,
+    budget_year             INTEGER NOT NULL,
+    rule_id                 TEXT REFERENCES treatment_package_rules(rule_id) ON DELETE RESTRICT,
+    asb_id                  TEXT REFERENCES master_asb_items(asb_id) ON DELETE RESTRICT,
+    matched_width_m         REAL NOT NULL,
+    matched_surface         TEXT NOT NULL,
+    segment_length_m        REAL NOT NULL,
+    unit_price_rp           REAL NOT NULL,
+    unit_price_sen          INTEGER NOT NULL,                     -- Presisi integer dalam satuan sen (Rp * 100)
+    indicative_cost_rp      REAL NOT NULL,
+    indicative_cost_sen     INTEGER NOT NULL,                     -- Presisi integer dalam satuan sen (Rp * 100)
+    calculation_mode        TEXT NOT NULL,
+    adjustment_flags        TEXT,                                 -- 'MANUAL_REVIEW_WIDTH_EXCEEDED', dll
+    is_selected             INTEGER NOT NULL DEFAULT 0,           -- 1 = Dipilih untuk perlakuan fisik
+    selection_status        TEXT NOT NULL DEFAULT 'UNSELECTED',   -- 'SELECTED_CONSTRUCTION', 'ROUTINE_MAINTENANCE', 'EXCLUDED_MANUAL_REVIEW', 'DEFERRED_BY_BUDGET'
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (segment_id, road_key) REFERENCES treatment_engine_segments(segment_id, road_key) ON DELETE RESTRICT,
+    FOREIGN KEY (road_key) REFERENCES roads(road_key) ON DELETE RESTRICT,
+    CONSTRAINT uq_rsce_scenario_segment UNIQUE (scenario_id, segment_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rsce_scenario ON road_segment_cost_estimates(scenario_id);
+CREATE INDEX IF NOT EXISTS idx_rsce_road ON road_segment_cost_estimates(road_key);
+CREATE INDEX IF NOT EXISTS idx_rsce_segment ON road_segment_cost_estimates(segment_id);
+
+-- 33. Rekapitulasi Biaya per Ruas Jalan (Struktur Skema Phase 1.1 / Phase 2.1 / Phase 3)
+CREATE TABLE IF NOT EXISTS road_cost_summaries (
+    summary_id              TEXT PRIMARY KEY,                     -- 'SUM-2027-HSS-KAB-xxx'
+    scenario_id             TEXT NOT NULL REFERENCES budget_scenarios(scenario_id) ON DELETE CASCADE,
+    road_key                TEXT NOT NULL REFERENCES roads(road_key) ON DELETE RESTRICT,
+    budget_year             INTEGER NOT NULL,
+    dominant_rule_id        TEXT REFERENCES treatment_package_rules(rule_id) ON DELETE RESTRICT,
+    dominant_asb_type       TEXT,
+    total_segments          INTEGER NOT NULL,
+    treated_segments        INTEGER NOT NULL,
+    routine_segments        INTEGER NOT NULL,
+    manual_review_segments  INTEGER NOT NULL DEFAULT 0,
+    total_length_km         REAL NOT NULL,
+    treated_length_km       REAL NOT NULL,
+    manual_review_length_km REAL NOT NULL DEFAULT 0,
+    total_pagu_asb_rp       REAL NOT NULL,
+    total_pagu_asb_sen      INTEGER NOT NULL,                     -- Presisi integer dalam satuan sen (Rp * 100)
+    ahsp_reference_rp       REAL,
+    ahsp_reference_sen      INTEGER,                              -- Presisi integer dalam satuan sen (Rp * 100)
+    is_funded               INTEGER NOT NULL DEFAULT 0,           -- 1 = Terakomodasi dalam antrean prioritas, 0 = Tertunda
+    allocation_rank         INTEGER,                              -- Urutan ranking alokasi
+    cumulative_cost_rp      REAL DEFAULT 0,                       -- Akumulasi biaya rupiah
+    cumulative_cost_sen     INTEGER DEFAULT 0,                    -- Akumulasi biaya sen
+    status_summary          TEXT NOT NULL,
+    operational_status      TEXT NOT NULL DEFAULT 'DEFERRED_BY_BUDGET', -- 'FUNDED_CONSTRUCTION', 'ROUTINE_MAINTENANCE', 'MANUAL_TECHNICAL_REVIEW', 'DEFERRED_BY_BUDGET', 'INCOMPLETE_ESTIMATE', 'NOT_ELIGIBLE'
+    allocated_pagu_rp       REAL DEFAULT 0,
+    allocated_pagu_sen      INTEGER DEFAULT 0,
+    allocated_treated_segments INTEGER DEFAULT 0,
+    allocated_treated_length_km REAL DEFAULT 0,
+    selection_rationale     TEXT,
+    calculated_at           TEXT NOT NULL DEFAULT (datetime('now')),
+    CONSTRAINT uq_rcs_scenario_road UNIQUE (scenario_id, road_key)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rcs_scenario ON road_cost_summaries(scenario_id);
+CREATE INDEX IF NOT EXISTS idx_rcs_road ON road_cost_summaries(road_key);
+CREATE INDEX IF NOT EXISTS idx_rcs_year ON road_cost_summaries(budget_year);
+
+-- 34. Tabel Riwayat & Komparasi Optimasi Skenario (Phase 3)
+CREATE TABLE IF NOT EXISTS scenario_optimizations (
+    optimization_id         TEXT PRIMARY KEY,
+    scenario_id             TEXT NOT NULL REFERENCES budget_scenarios(scenario_id) ON DELETE CASCADE,
+    budget_ceiling_rp       REAL NOT NULL,
+    budget_ceiling_sen      INTEGER NOT NULL,
+    objective_mode          TEXT NOT NULL,
+    solver_name             TEXT NOT NULL,
+    solver_status           TEXT NOT NULL,
+    nodes_explored          INTEGER NOT NULL DEFAULT 0,
+    optimality_gap_pct      REAL NOT NULL DEFAULT 0,
+    runtime_ms              INTEGER NOT NULL DEFAULT 0,
+    total_cost_rp           REAL NOT NULL,
+    total_cost_sen          INTEGER NOT NULL,
+    remaining_budget_rp     REAL NOT NULL,
+    treated_length_km       REAL NOT NULL,
+    priority_weighted_score REAL NOT NULL,
+    selected_segments_count INTEGER NOT NULL,
+    funded_construction_count INTEGER NOT NULL,
+    routine_maintenance_count INTEGER NOT NULL,
+    manual_review_count     INTEGER NOT NULL,
+    deferred_count          INTEGER NOT NULL,
+    created_at              TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_scn_opt_scenario ON scenario_optimizations(scenario_id);
+
+
+
 
 

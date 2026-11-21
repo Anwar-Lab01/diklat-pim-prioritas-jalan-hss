@@ -55,6 +55,17 @@ async function main() {
     'road_nearest_facilities',
     'village_demographics',
     'treatment_engine_segments',
+    'road_rtrw_intersections',
+    'road_spatial_profiles',
+    'master_asb_items',
+    'master_ahsp_items',
+    'treatment_package_rules',
+    'asb_ahsp_profiles',
+    'asb_ahsp_profile_items',
+    'budget_scenarios',
+    'road_segment_cost_estimates',
+    'road_cost_summaries',
+    'scenario_optimizations',
   ];
 
   for (const table of fullCopyTables) {

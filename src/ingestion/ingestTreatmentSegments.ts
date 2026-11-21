@@ -66,7 +66,13 @@ export function ingestTreatmentSegments(db: DatabaseSync): {
     throw new Error(`SEGMENT_COUNT_MISMATCH: expected 7,487 segments, got ${segments.length}`);
   }
 
-  // Clear existing
+  // Clear existing (including dependent costing estimates if present)
+  try {
+    db.exec('DELETE FROM road_segment_cost_estimates;');
+    db.exec('DELETE FROM road_cost_summaries;');
+  } catch (_) {
+    // Ignore if Layer 7 tables do not exist yet
+  }
   db.exec('DELETE FROM treatment_engine_segments;');
 
   const insertStmt = db.prepare(`

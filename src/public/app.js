@@ -18,9 +18,19 @@ import {
   DD1_SEGMENT_STYLES,
   getDD1SegmentFullMapStyle,
 } from './mapStyle.js';
+import { readPlanningWorkspace, summarizeRankSensitivity, writePlanningWorkspace } from './planningWorkspace.js';
+
+function getSavedWorkspace() {
+  try { return readPlanningWorkspace(window.localStorage); }
+  catch { return readPlanningWorkspace({ getItem: () => null }); }
+}
+
+const initialWorkspace = getSavedWorkspace();
+let drawerReturnFocus = null;
 
 const state = {
-  mode: 'OPERATIONAL_2025',
+  mode: initialWorkspace.draft.mode || 'OPERATIONAL_2025',
+  modelCode: 'POLICY_DEFAULT_V1',
   currentView: 'dashboard',
   roads: [],
   filteredRoads: [],
@@ -62,6 +72,10 @@ const state = {
     routeTrace: null,
     dd1Segments: null,
   },
+  isInteractiveDetailMode: false,
+  interactiveDetailRoadKey: null,
+  inspectorRequest: 0,
+  facilityRequest: 0,
   currentRoadNearestFacilities: [],
   currentRoadDemographics: null,
   currentRoadDD1Segments: null,
@@ -99,6 +113,8 @@ const state = {
   // --- Phase 5: Policy Weight Scenario Simulation State ---
   simulation: {
     initialized: false,
+    contextMode: null,
+    scenarioId: '',
     simConfig: null,
     featureVectors: null,
     baselineScores: null,
@@ -116,7 +132,9 @@ const state = {
     pageSize: 25,
     mapColorSource: 'BASELINE', // 'BASELINE' | 'SIMULATION'
     selectedRoadExplainKey: null,
+    scenarioName: '',
   },
+  workspace: initialWorkspace,
 };
 
 window.appState = state;
@@ -129,44 +147,101 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', handleRouting);
 });
 
+function syncDrawerAccessibility(drawer) {
+  const modeless = drawer.classList.contains('drawer-map-mode') && window.matchMedia('(min-width: 1024px)').matches;
+  drawer.setAttribute('aria-modal', String(!modeless));
+  if (!modeless && !drawer.classList.contains('hidden') && !drawer.contains(document.activeElement)) {
+    document.getElementById('btn-close-drawer')?.focus({ preventScroll: true });
+  }
+  return !modeless;
+}
+
 function initEventListeners() {
+  initMobileNavigation();
+  initPlanningWorkspace();
+  document.addEventListener('keydown', (event) => {
+    const drawer = document.getElementById('road-detail-drawer');
+    if (!drawer || drawer.classList.contains('hidden')) {
+      if (event.key === 'Escape' && state.currentView === 'peta' && state.isInteractiveDetailMode && !event.defaultPrevented) {
+        if (state.activeTracedFacilityType) document.getElementById('btn-close-route-hud')?.click();
+        else document.getElementById('hud-btn-close')?.click();
+      }
+      return;
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeDetailDrawer();
+      return;
+    }
+    if (event.key !== 'Tab' || !syncDrawerAccessibility(drawer)) return;
+    const focusable = [...drawer.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !drawer.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !drawer.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
   // Mode Selector
   const modeSelect = document.getElementById('mode-select');
   modeSelect.addEventListener('change', (e) => {
     state.mode = e.target.value;
+    state.simulation.initialized = false;
+    state.simulation.contextMode = null;
+    state.simulation.scenarioId = '';
+    state.simulation.scenarioName = isBaselineSimulationConfig(state.simulation.simConfig) ? '' : 'Skenario saat ini';
+    state.workspace.draft.scenario_name = '';
     updateModeVisuals();
+    savePlanningWorkspace('Konteks draf diperbarui');
+    writeRouteContext();
     reloadActiveData();
   });
 
   // Restore Operational Mode button in warning banner
   document.getElementById('btn-restore-operational').addEventListener('click', () => {
     state.mode = 'OPERATIONAL_2025';
+    state.simulation.initialized = false;
+    state.simulation.contextMode = null;
+    state.simulation.scenarioId = '';
+    state.simulation.scenarioName = isBaselineSimulationConfig(state.simulation.simConfig) ? '' : 'Skenario saat ini';
+    state.workspace.draft.scenario_name = '';
     modeSelect.value = 'OPERATIONAL_2025';
     updateModeVisuals();
+    savePlanningWorkspace('Konteks draf diperbarui');
+    writeRouteContext();
     reloadActiveData();
   });
 
   // Table Search & Filters
   document.getElementById('table-search').addEventListener('input', (e) => {
     state.search = e.target.value.trim().toLowerCase();
+    syncSharedRoadFilters('table');
     state.page = 1;
     applyTableFilters();
   });
 
   document.getElementById('filter-district').addEventListener('change', (e) => {
     state.district = e.target.value;
+    syncSharedRoadFilters('table');
     state.page = 1;
     applyTableFilters();
   });
 
   document.getElementById('filter-tier').addEventListener('change', (e) => {
     state.tier = e.target.value;
+    syncSharedRoadFilters('table');
     state.page = 1;
     applyTableFilters();
   });
 
   document.getElementById('filter-condition').addEventListener('change', (e) => {
     state.condition = e.target.value;
+    syncSharedRoadFilters('table');
     state.page = 1;
     applyTableFilters();
   });
@@ -188,7 +263,9 @@ function initEventListeners() {
     state.condition = 'ALL';
     state.sort = 'rank_asc';
     state.page = 1;
+    syncSharedRoadFilters('table');
     applyTableFilters();
+    applyMapFilters();
   });
 
   document.getElementById('page-size-select').addEventListener('change', (e) => {
@@ -214,15 +291,506 @@ function initEventListeners() {
   // Phase 5 Simulation listeners
   initSimulationEventListeners();
 
-  // Phase 5.1 Route Tracing listeners
+  // Phase 5.1 Route Tracing listeners (Drawer & Card 5 Overlay)
   document.getElementById('btn-trace-puskesmas')?.addEventListener('click', () => traceNearestFacilityRoute('puskesmas'));
   document.getElementById('btn-trace-school')?.addEventListener('click', () => traceNearestFacilityRoute('school'));
   document.getElementById('btn-trace-hospital')?.addEventListener('click', () => traceNearestFacilityRoute('hospital'));
   document.getElementById('btn-trace-market')?.addEventListener('click', () => traceNearestFacilityRoute('market'));
-  document.getElementById('btn-clear-route-trace')?.addEventListener('click', clearRouteTrace);
+  document.getElementById('btn-clear-route-trace')?.addEventListener('click', () => clearRouteTrace());
+
+  // Interactive Road Detail Card 5 Facility Route listeners
+  document.getElementById('btn-card-trace-puskesmas')?.addEventListener('click', () => traceNearestFacilityRoute('puskesmas'));
+  document.getElementById('btn-card-trace-school')?.addEventListener('click', () => traceNearestFacilityRoute('school'));
+  document.getElementById('btn-card-trace-hospital')?.addEventListener('click', () => traceNearestFacilityRoute('hospital'));
+  document.getElementById('btn-card-trace-market')?.addEventListener('click', () => traceNearestFacilityRoute('market'));
+  document.getElementById('btn-close-route-hud')?.addEventListener('click', () => {
+    const type = state.activeTracedFacilityType;
+    clearRouteTrace();
+    document.getElementById(`btn-card-trace-${type}`)?.focus({ preventScroll: true });
+  });
+  document.getElementById('hud-btn-close')?.addEventListener('click', () => {
+    exitInteractiveSpatialProfile();
+    document.getElementById('hss-map')?.focus({ preventScroll: true });
+  });
+  document.getElementById('inspector-rtrw-layer')?.addEventListener('click', () => {
+    document.getElementById('layer-rtrw')?.click();
+  });
+
+  // Toggle Road Narrative 8 Dimensions in Inspector
+  document.getElementById('btn-toggle-narrative-full')?.addEventListener('click', () => {
+    const box = document.getElementById('inspector-narrative-full-box');
+    const icon = document.getElementById('btn-toggle-narrative-icon');
+    const btn = document.getElementById('btn-toggle-narrative-full');
+    if (!box || !btn) return;
+    const isHidden = box.classList.contains('hidden');
+    if (isHidden) {
+      box.classList.remove('hidden');
+      if (icon) icon.textContent = '▴ Ciutkan';
+      btn.setAttribute('aria-expanded', 'true');
+    } else {
+      box.classList.add('hidden');
+      if (icon) icon.textContent = '▾ Buka';
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
 
   // Phase 5.1A Segment toggle listener
   document.getElementById('btn-toggle-dd1-segments')?.addEventListener('click', toggleDD1SegmentsOnMap);
+}
+
+function initMobileNavigation() {
+  const toggle = document.getElementById('btn-mobile-nav');
+  const panel = document.getElementById('mobile-navigation');
+  if (!toggle || !panel) return;
+
+  toggle.addEventListener('click', () => {
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    setMobileNavigationOpen(!isExpanded);
+  });
+
+  panel.addEventListener('click', (event) => {
+    const link = event.target.closest('a[data-view]');
+    if (!link) return;
+
+    const currentHash = (window.location.hash || '#dashboard').split('?')[0];
+    if (currentHash === link.getAttribute('href')) {
+      event.preventDefault();
+      setMobileNavigationOpen(false, { restoreFocus: true });
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+      event.preventDefault();
+      setMobileNavigationOpen(false, { restoreFocus: true });
+    }
+  });
+
+  document.addEventListener('pointerdown', (event) => {
+    if (
+      toggle.getAttribute('aria-expanded') === 'true' &&
+      !panel.contains(event.target) &&
+      !toggle.contains(event.target)
+    ) {
+      setMobileNavigationOpen(false);
+    }
+  });
+
+  const desktopQuery = window.matchMedia('(min-width: 768px)');
+  desktopQuery.addEventListener?.('change', (event) => {
+    if (event.matches) setMobileNavigationOpen(false);
+  });
+}
+
+function setMobileNavigationOpen(isOpen, { restoreFocus = false } = {}) {
+  const toggle = document.getElementById('btn-mobile-nav');
+  const panel = document.getElementById('mobile-navigation');
+  if (!toggle || !panel) return;
+
+  panel.classList.toggle('hidden', !isOpen);
+  toggle.setAttribute('aria-expanded', String(isOpen));
+  toggle.setAttribute('aria-label', isOpen ? 'Tutup navigasi utama' : 'Buka navigasi utama');
+
+  if (isOpen) {
+    panel.querySelector('a[data-view]')?.focus({ preventScroll: true });
+  } else if (restoreFocus) {
+    toggle.focus({ preventScroll: true });
+  }
+}
+
+function initPlanningWorkspace() {
+  document.getElementById('compare-shortlist-clear-button')?.addEventListener('click', () => {
+    state.workspace.draft.roads = [];
+    savePlanningWorkspace('Daftar pilihan dikosongkan');
+    renderPlanningWorkspace();
+  });
+  document.getElementById('proposal-name-input')?.addEventListener('input', (event) => {
+    state.workspace.draft.title = event.target.value;
+    savePlanningWorkspace();
+  });
+  document.getElementById('proposal-planning-period')?.addEventListener('input', (event) => {
+    state.workspace.draft.planning_period = event.target.value;
+    savePlanningWorkspace();
+  });
+  document.getElementById('proposal-rationale-input')?.addEventListener('input', (event) => {
+    state.workspace.draft.rationale = event.target.value;
+    savePlanningWorkspace();
+  });
+  document.getElementById('proposal-save-rationale')?.addEventListener('click', () => {
+    state.workspace.draft.rationale = document.getElementById('proposal-rationale-input')?.value || '';
+    savePlanningWorkspace('Catatan draf tersimpan di perangkat ini');
+  });
+  document.getElementById('proposal-save-button')?.addEventListener('click', saveProposalDraft);
+  document.getElementById('scenario-save-button')?.addEventListener('click', saveScenario);
+  document.getElementById('scenario-load-button')?.addEventListener('click', loadSelectedScenario);
+  document.getElementById('sensitivity-run-button')?.addEventListener('click', runRankSensitivity);
+  document.getElementById('proposal-brief-button')?.addEventListener('click', renderProposalBrief);
+
+  document.addEventListener('click', (event) => {
+    const action = event.target.closest('[data-action]');
+    if (!action) return;
+    const key = action.dataset.roadKey;
+    switch (action.dataset.action) {
+      case 'add-to-shortlist':
+        event.preventDefault();
+        event.stopPropagation();
+        addRoadToProposal(key);
+        break;
+      case 'remove-from-shortlist':
+        state.workspace.draft.roads = state.workspace.draft.roads.filter((road) => road.road_key !== key);
+        savePlanningWorkspace('Ruas dihapus dari draf');
+        renderPlanningWorkspace();
+        break;
+      case 'toggle-map-view': {
+        const view = action.dataset.viewTarget === 'peta' ? 'peta' : 'prioritas';
+        writeRouteContext({ view });
+        switchView(view);
+        break;
+      }
+      case 'reopen-proposal':
+        reopenSavedProposal(action.dataset.proposalId);
+        break;
+      case 'print-proposal-brief':
+        printProposalBrief();
+        break;
+      default:
+        break;
+    }
+  });
+
+  document.addEventListener('input', (event) => {
+    const field = event.target.dataset.roadField;
+    const road = state.workspace.draft.roads.find((item) => item.road_key === event.target.dataset.roadKey);
+    if (!road || !['rationale', 'decision_note'].includes(field)) return;
+    road[field] = event.target.value;
+    savePlanningWorkspace();
+  });
+  document.addEventListener('change', (event) => {
+    const field = event.target.dataset.roadField;
+    const road = state.workspace.draft.roads.find((item) => item.road_key === event.target.dataset.roadKey);
+    if (!road) return;
+    if (field === 'recommendation') road.recommendation = event.target.value === 'defer' ? 'defer' : 'propose';
+    else if (field === 'recorded_decision') {
+      road.recorded_decision = ['approved', 'deferred', 'not_selected'].includes(event.target.value) ? event.target.value : 'unrecorded';
+      if (road.recorded_decision === 'unrecorded') road.decision_date = '';
+    } else if (field === 'decision_date') {
+      road.decision_date = /^\d{4}-\d{2}-\d{2}$/.test(event.target.value) ? event.target.value : '';
+    } else return;
+    savePlanningWorkspace('Catatan keputusan diperbarui');
+    renderPlanningWorkspace();
+  });
+  renderPlanningWorkspace();
+}
+
+function savePlanningWorkspace(notice = '') {
+  const currentScenarioName = state.simulation.scenarioName || (state.workspace.draft.mode === state.mode ? state.workspace.draft.scenario_name : '');
+  state.workspace.draft.mode = state.mode;
+  if (state.simulation.simConfig) state.workspace.draft.config = state.simulation.simConfig;
+  state.workspace.draft.scenario_name = currentScenarioName;
+  let saved = false;
+  try { saved = writePlanningWorkspace(window.localStorage, state.workspace); } catch { /* Local storage may be blocked by browser policy. */ }
+  const status = document.getElementById('proposal-draft-status');
+  if (status) status.textContent = saved ? (notice || 'Tersimpan di perangkat ini') : 'Penyimpanan lokal tidak tersedia';
+  if (saved) state.workspace = readPlanningWorkspace(window.localStorage);
+  return saved;
+}
+
+function renderPlanningWorkspace() {
+  const draft = state.workspace.draft;
+  const proposalName = document.getElementById('proposal-name-input');
+  const planningPeriod = document.getElementById('proposal-planning-period');
+  const proposalRationale = document.getElementById('proposal-rationale-input');
+  if (proposalName && document.activeElement !== proposalName) proposalName.value = draft.title;
+  if (planningPeriod && document.activeElement !== planningPeriod) planningPeriod.value = draft.planning_period || '';
+  if (proposalRationale && document.activeElement !== proposalRationale) proposalRationale.value = draft.rationale;
+
+  const compareList = document.getElementById('compare-shortlist-list');
+  const compareCount = document.getElementById('compare-shortlist-count');
+  const compareEmpty = document.getElementById('compare-shortlist-empty');
+  const proposalList = document.getElementById('proposal-items-list');
+  const proposalCount = document.getElementById('proposal-items-count');
+  const proposalEmpty = document.getElementById('proposal-items-empty');
+  const roads = draft.roads || [];
+  if (compareCount) compareCount.textContent = String(roads.length);
+  if (proposalCount) proposalCount.textContent = String(roads.length);
+  compareEmpty?.classList.toggle('hidden', roads.length > 0);
+  proposalEmpty?.classList.toggle('hidden', roads.length > 0);
+  const rendered = roads.map((road) => {
+    const evidence = road.evidence || {};
+    const rankMode = evidence.rank_mode === 'BENCHMARK_2024' ? 'audit 2024' : evidence.rank_mode === 'OPERATIONAL_2025' ? 'operasional 2025' : 'konteks belum tercatat';
+    const rankText = Number.isInteger(evidence.rank) ? `Peringkat #${evidence.rank} (${rankMode})` : 'Peringkat belum tersedia';
+    const mantapText = Number.isFinite(evidence.mantap_pct) ? `${formatId(evidence.mantap_pct, 1)}% mantap` : 'Kondisi belum tercatat';
+    const driverText = evidence.key_factors?.length
+      ? `<div class="mt-2 text-[11px] text-slate-600"><span class="font-semibold">Kontribusi skor terbesar:</span> ${evidence.key_factors.map((factor) => `${escapeHtml(factor.label)} (${formatId(factor.contribution, 4)})`).join(', ')}</div>`
+      : '';
+    return `<li class="rounded-lg border border-slate-200 bg-white p-3">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0"><button type="button" class="text-left font-semibold text-sky-900 hover:underline" onclick="openRoadDetail('${escapeHtml(road.road_key)}')">${escapeHtml(evidence.display_name || road.road_key)}</button>
+          <div class="mt-0.5 text-[11px] text-slate-500">${escapeHtml(evidence.district_name || 'Kecamatan belum tersedia')} · ${rankText} · kondisi ${escapeHtml(String(evidence.condition_year || 2025))}: ${mantapText}</div>
+          ${evidence.condition ? `<div class="mt-1 text-[11px] text-slate-500">Baik ${formatId(evidence.condition.baik_pct ?? 0, 1)}% · Sedang ${formatId(evidence.condition.sedang_pct ?? 0, 1)}% · Rusak ringan ${formatId(evidence.condition.rusak_ringan_pct ?? 0, 1)}% · Rusak berat ${formatId(evidence.condition.rusak_berat_pct ?? 0, 1)}%</div>` : ''}
+          ${driverText}
+        </div>
+        <button type="button" data-action="remove-from-shortlist" data-road-key="${escapeHtml(road.road_key)}" class="shrink-0 rounded px-2 py-1 text-[11px] font-semibold text-rose-700 hover:bg-rose-50" aria-label="Hapus ${escapeHtml(evidence.display_name || road.road_key)} dari draf">Hapus</button>
+      </div>
+      <div class="mt-3 grid gap-2 sm:grid-cols-2">
+        <label class="text-[11px] font-semibold text-slate-600">Catatan: <select data-road-field="recommendation" data-road-key="${escapeHtml(road.road_key)}" class="ml-1 rounded border border-slate-300 bg-white px-2 py-1 font-normal"><option value="propose" ${road.recommendation !== 'defer' ? 'selected' : ''}>Diusulkan untuk ditinjau</option><option value="defer" ${road.recommendation === 'defer' ? 'selected' : ''}>Ditunda untuk ditinjau</option></select></label>
+        <label class="text-[11px] font-semibold text-slate-600">Hasil aktual (opsional): <select data-road-field="recorded_decision" data-road-key="${escapeHtml(road.road_key)}" class="ml-1 rounded border border-slate-300 bg-white px-2 py-1 font-normal"><option value="unrecorded" ${road.recorded_decision === 'unrecorded' ? 'selected' : ''}>Belum dicatat</option><option value="approved" ${road.recorded_decision === 'approved' ? 'selected' : ''}>Disetujui</option><option value="deferred" ${road.recorded_decision === 'deferred' ? 'selected' : ''}>Ditunda</option><option value="not_selected" ${road.recorded_decision === 'not_selected' ? 'selected' : ''}>Tidak dipilih</option></select></label>
+      </div>
+      ${road.recorded_decision !== 'unrecorded' ? `<label class="mt-2 block text-[11px] font-semibold text-slate-600">Tanggal keputusan (isi dari dokumen rujukan)<input data-road-field="decision_date" data-road-key="${escapeHtml(road.road_key)}" type="date" value="${escapeHtml(road.decision_date || '')}" class="ml-2 rounded border border-slate-300 px-2 py-1 font-normal"></label>` : ''}
+      <label class="mt-2 block text-[11px] font-semibold text-slate-600">Alasan / pertanyaan yang perlu ditindaklanjuti<textarea data-road-field="rationale" data-road-key="${escapeHtml(road.road_key)}" rows="2" maxlength="1000" class="mt-1 w-full rounded border border-slate-300 px-2.5 py-2 font-normal" placeholder="Apa dasar usulan atau hal yang perlu diperiksa?">${escapeHtml(road.rationale)}</textarea></label>
+      <label class="mt-2 block text-[11px] font-semibold text-slate-600">Catatan hasil keputusan, jika sudah ada<textarea data-road-field="decision_note" data-road-key="${escapeHtml(road.road_key)}" rows="1" maxlength="1000" class="mt-1 w-full rounded border border-slate-300 px-2.5 py-2 font-normal" placeholder="Jangan isi sebelum ada keputusan yang dapat dirujuk">${escapeHtml(road.decision_note)}</textarea></label>
+    </li>`;
+  }).join('');
+  if (compareList) compareList.innerHTML = rendered;
+  if (proposalList) proposalList.innerHTML = rendered;
+
+  const scenarioSelect = document.getElementById('scenario-load-select');
+  if (scenarioSelect) {
+    const current = scenarioSelect.value;
+    scenarioSelect.innerHTML = '<option value="">Pilih skenario</option>' + state.workspace.scenarios.map((scenario) => `<option value="${escapeHtml(scenario.id)}">${escapeHtml(scenario.name)} · ${scenario.mode === 'BENCHMARK_2024' ? 'Audit 2024' : 'Operasional 2025'}</option>`).join('');
+    if (state.workspace.scenarios.some((scenario) => scenario.id === current)) scenarioSelect.value = current;
+  }
+  const savedScenarios = document.getElementById('scenario-saved-list');
+  if (savedScenarios) savedScenarios.innerHTML = state.workspace.scenarios.length
+    ? state.workspace.scenarios.map((scenario) => `<li class="rounded border border-slate-200 bg-white px-2.5 py-2">${escapeHtml(scenario.name)} <span class="text-slate-400">· ${scenario.mode === 'BENCHMARK_2024' ? 'Audit 2024' : 'Operasional 2025'}</span></li>`).join('')
+    : '<li class="text-slate-400">Belum ada skenario tersimpan.</li>';
+  const savedProposals = document.getElementById('proposal-saved-list');
+  if (savedProposals) savedProposals.innerHTML = state.workspace.proposals.length
+    ? [...state.workspace.proposals].reverse().map((proposal) => `<li class="flex items-center justify-between gap-2 rounded border border-slate-200 bg-white px-2.5 py-2"><span class="min-w-0 truncate">${escapeHtml(proposal.title)} <span class="text-slate-400">· draf · ${escapeHtml(proposal.created_at.slice(0, 10))}</span></span><button type="button" data-action="reopen-proposal" data-proposal-id="${escapeHtml(proposal.id)}" class="shrink-0 font-semibold text-sky-700 hover:underline">Buka</button></li>`).join('')
+    : '<li class="text-slate-400">Belum ada draf usulan tersimpan.</li>';
+}
+
+function formatId(value, digits = 2) {
+  return Number(value).toLocaleString('id-ID', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+}
+
+function cloneConfig(config) {
+  return config ? JSON.parse(JSON.stringify(config)) : null;
+}
+
+function hydrateConfig(config) {
+  if (!config) return getInitialSimConfig();
+  const base = getInitialSimConfig();
+  const categories = new Map(config.categories.map((item) => [item.category_code, item.raw_weight]));
+  const variables = new Map(config.variables.map((item) => [item.variable_code, item.local_weight]));
+  base.categories.forEach((item) => { if (categories.has(item.category_code)) item.raw_weight = categories.get(item.category_code); });
+  base.variables.forEach((item) => { if (variables.has(item.variable_code)) item.local_weight = variables.get(item.variable_code); });
+  return base;
+}
+
+function isBaselineSimulationConfig(config) {
+  if (!config) return true;
+  const baseline = getInitialSimConfig();
+  return baseline.categories.every((item) => Math.abs(item.raw_weight - (config.categories.find((value) => value.category_code === item.category_code)?.raw_weight ?? -1)) < 1e-9)
+    && baseline.variables.every((item) => Math.abs(item.local_weight - (config.variables.find((value) => value.variable_code === item.variable_code)?.local_weight ?? -1)) < 1e-9);
+}
+
+async function addRoadToProposal(roadKey) {
+  if (!/^HSS-KAB-\d{3}$/.test(roadKey || '')) return;
+  const draft = state.workspace.draft;
+  const existing = draft.roads.find((road) => road.road_key === roadKey);
+  if (existing) {
+    document.getElementById('proposal-draft-status')?.replaceChildren(document.createTextNode('Ruas ini sudah ada dalam draf.'));
+    return;
+  }
+  let evidence = state.roads.find((road) => road.road_key === roadKey) || null;
+  let detail = state.selectedRoadDetail?.identity?.road_key === roadKey ? state.selectedRoadDetail : null;
+  try {
+    if (!detail) {
+      const response = await fetch(`/api/roads/${encodeURIComponent(roadKey)}?mode=${encodeURIComponent(state.mode)}&model=${encodeURIComponent(state.modelCode)}`);
+      const json = await response.json();
+      if (!json.success) throw new Error(json.error || 'Data ruas tidak tersedia.');
+      detail = json.data;
+    }
+  } catch (error) {
+    if (!evidence) {
+      document.getElementById('proposal-draft-status')?.replaceChildren(document.createTextNode('Ruas belum dapat dimuat; coba lagi setelah data tersedia.'));
+      return;
+    }
+  }
+  const identity = detail?.identity;
+  const condition = detail?.condition2025;
+  const rank = detail?.priorityResult?.priority_rank ?? evidence?.priority_rank ?? null;
+  draft.roads.push({
+    road_key: roadKey,
+    recommendation: 'propose',
+    rationale: '',
+    recorded_decision: 'unrecorded',
+    decision_note: '',
+    decision_date: '',
+    evidence: {
+      display_name: identity?.display_name || evidence?.display_name || roadKey,
+      district_name: identity?.district_name || evidence?.district_name || '',
+      rank,
+      mantap_pct: condition?.mantap_pct ?? evidence?.mantap_pct ?? null,
+      final_score: detail?.priorityResult?.final_score ?? evidence?.final_score ?? null,
+      length_km: identity?.length_km_official ?? evidence?.length_km_official ?? null,
+      condition_year: 2025,
+      condition_source: condition?.source_filename || 'Sumber kondisi tahun 2025; periksa katalog sumber.',
+      rank_mode: state.mode,
+      rank_model: state.modelCode,
+      condition: condition ? { baik_pct: condition.baik_pct, sedang_pct: condition.sedang_pct, rusak_ringan_pct: condition.rusak_ringan_pct, rusak_berat_pct: condition.rusak_berat_pct } : null,
+      key_factors: detail?.factors?.filter((factor) => Number.isFinite(factor.contribution)).sort((a, b) => b.contribution - a.contribution).slice(0, 3).map((factor) => ({ label: factor.variable_label, contribution: factor.contribution })) || [],
+    },
+  });
+  savePlanningWorkspace('Ruas ditambahkan ke draf');
+  renderPlanningWorkspace();
+}
+
+function saveScenario() {
+  if (!state.simulation.simConfig) {
+    document.getElementById('scenario-name-input')?.focus();
+    return;
+  }
+  const name = document.getElementById('scenario-name-input')?.value.trim().slice(0, 100);
+  if (!name) {
+    document.getElementById('scenario-name-input')?.setCustomValidity('Beri nama skenario agar dapat dibuka kembali.');
+    document.getElementById('scenario-name-input')?.reportValidity();
+    document.getElementById('scenario-name-input')?.addEventListener('input', (event) => event.target.setCustomValidity(''), { once: true });
+    return;
+  }
+  const scenario = { id: crypto.randomUUID(), name, mode: state.mode, created_at: new Date().toISOString(), config: cloneConfig(state.simulation.simConfig) };
+  state.workspace.scenarios.push(scenario);
+  state.simulation.scenarioId = scenario.id;
+  state.simulation.scenarioName = name;
+  state.workspace.draft.scenario_name = name;
+  savePlanningWorkspace('Skenario tersimpan di perangkat ini');
+  updateSimulationContextStatus('Skenario tersimpan');
+  writeRouteContext({ view: 'simulasi' });
+  renderPlanningWorkspace();
+}
+
+async function loadSelectedScenario() {
+  const id = document.getElementById('scenario-load-select')?.value;
+  const scenario = state.workspace.scenarios.find((item) => item.id === id);
+  if (!scenario) return;
+  state.mode = scenario.mode;
+  const modeSelect = document.getElementById('mode-select');
+  if (modeSelect) modeSelect.value = state.mode;
+  state.simulation.initialized = false;
+  state.simulation.contextMode = null;
+  state.simulation.simConfig = hydrateConfig(scenario.config);
+  state.simulation.scenarioId = scenario.id;
+  state.simulation.scenarioName = scenario.name;
+  state.workspace.draft.mode = state.mode;
+  state.workspace.draft.scenario_name = scenario.name;
+  state.workspace.draft.config = cloneConfig(state.simulation.simConfig);
+  updateModeVisuals();
+  writeRouteContext({ view: 'simulasi' });
+  await loadSimulation();
+  renderPlanningWorkspace();
+}
+
+async function runRankSensitivity() {
+  if (!state.simulation.initialized || state.simulation.contextMode !== state.mode || !state.simulation.featureVectors) await loadSimulation();
+  const output = document.getElementById('sensitivity-results');
+  if (!state.simulation.initialized || state.simulation.contextMode !== state.mode || !state.simulation.featureVectors || !output) {
+    if (output) output.textContent = 'Analisis belum dapat dijalankan karena data peringkat untuk konteks ini belum tersedia.';
+    return;
+  }
+  const configs = [
+    ['Baseline terkonfigurasi', getInitialSimConfig()],
+    [state.simulation.scenarioName || 'Skenario saat ini', cloneConfig(state.simulation.simConfig)],
+    ['Tekankan kerusakan berat', buildSensitivityPreset('KERUSAKAN')],
+    ['Tekankan koneksi jalan provinsi', buildSensitivityPreset('AKSES')],
+  ];
+  const results = configs.map(([name, config]) => ({ name, roads: simRankRoads(state.simulation.featureVectors, config).map((road) => ({ road_key: road.road_key, priority_rank: road.priority_rank })) }));
+  const sensitivity = summarizeRankSensitivity(results.map((item) => item.roads), 35).slice(0, 8);
+  output.innerHTML = `<p class="font-semibold text-slate-800">Sensitivitas terhadap Asumsi · kelompok peringkat 1–35 pada ${results.length} skenario yang ditampilkan</p>
+    <p class="mt-1 text-[11px] text-slate-500">Dihitung ulang secara deterministik untuk konteks ${state.mode === 'BENCHMARK_2024' ? 'audit 2024' : 'operasional 2025'}. Angka menunjukkan kemunculan pada skenario, bukan probabilitas atau kepastian kebutuhan.</p>
+    <p class="mt-2 text-[11px] text-slate-600">${results.map((item) => escapeHtml(item.name)).join(' · ')}</p>
+    <ul class="mt-2 space-y-1.5">${sensitivity.map((item) => { const road = state.simulation.featureVectors.find((feature) => feature.road_key === item.road_key); return `<li class="flex items-center justify-between gap-2 rounded border border-slate-200 bg-white px-2.5 py-2"><span><strong>${escapeHtml(road?.display_name || item.road_key)}</strong><span class="block text-[10px] text-slate-500">#${item.min_rank}–#${item.max_rank} · kandidat ${item.candidate_count}/${item.scenario_count} skenario</span></span><button type="button" data-action="add-to-shortlist" data-road-key="${escapeHtml(item.road_key)}" class="rounded border border-sky-200 px-2 py-1 text-[10px] font-semibold text-sky-800">Tambahkan</button></li>`; }).join('')}</ul>`;
+}
+
+function buildSensitivityPreset(kind) {
+  const config = getInitialSimConfig();
+  if (kind === 'KERUSAKAN') {
+    config.categories = simRebalanceCategorySiblings(config.categories, 'TEKNIS_JALAN', 0.55);
+    config.variables = simRebalanceVariableSiblings(config.variables, 'TEKNIS_JALAN', 'norm_rusak_berat', 0.35);
+  } else {
+    config.categories = simRebalanceCategorySiblings(config.categories, 'AKSESIBILITAS', 0.45);
+    config.variables = simRebalanceVariableSiblings(config.variables, 'AKSESIBILITAS', 'norm_koneksi_jalan_provinsi', 0.40);
+  }
+  return config;
+}
+
+function saveProposalDraft() {
+  const draft = state.workspace.draft;
+  draft.title = document.getElementById('proposal-name-input')?.value.trim().slice(0, 100) || 'Usulan penanganan jalan';
+  draft.rationale = document.getElementById('proposal-rationale-input')?.value || '';
+  draft.planning_period = document.getElementById('proposal-planning-period')?.value || '';
+  if (!draft.roads.length) {
+    document.getElementById('proposal-draft-status')?.replaceChildren(document.createTextNode('Tambahkan ruas sebelum menyimpan draf usulan.'));
+    return;
+  }
+  const now = new Date().toISOString();
+  const existingIndex = state.workspace.proposals.findIndex((proposal) => proposal.id === draft.id);
+  const existing = existingIndex >= 0 ? state.workspace.proposals[existingIndex] : null;
+  const snapshot = { id: draft.id || crypto.randomUUID(), title: draft.title, rationale: draft.rationale, planning_period: draft.planning_period, status: 'DRAFT', mode: state.mode, model: state.modelCode, scenario_name: state.simulation.scenarioName || (draft.mode === state.mode ? draft.scenario_name : ''), created_at: existing?.created_at || now, updated_at: now, config: cloneConfig(state.simulation.simConfig || draft.config), roads: cloneConfig(draft.roads) };
+  if (existingIndex >= 0) state.workspace.proposals[existingIndex] = snapshot;
+  else state.workspace.proposals.push(snapshot);
+  draft.id = snapshot.id;
+  savePlanningWorkspace('Draf tersimpan di perangkat ini');
+  renderPlanningWorkspace();
+}
+
+function reopenSavedProposal(id) {
+  const saved = state.workspace.proposals.find((proposal) => proposal.id === id);
+  if (!saved) return;
+  state.workspace.draft = { id: saved.id, title: saved.title, rationale: saved.rationale, planning_period: saved.planning_period || '', mode: saved.mode, roads: cloneConfig(saved.roads), scenario_name: saved.scenario_name, config: cloneConfig(saved.config) };
+  state.mode = saved.mode;
+  const modeSelect = document.getElementById('mode-select');
+  if (modeSelect) modeSelect.value = saved.mode;
+  state.simulation.initialized = false;
+  state.simulation.contextMode = null;
+  state.simulation.simConfig = saved.config ? hydrateConfig(saved.config) : null;
+  state.simulation.scenarioName = saved.scenario_name;
+  updateModeVisuals();
+  writeRouteContext({ view: 'simulasi' });
+  switchView('simulasi');
+  savePlanningWorkspace('Draf dibuka kembali');
+  renderPlanningWorkspace();
+}
+
+function renderProposalBrief() {
+  const preview = document.getElementById('proposal-brief-preview');
+  if (!preview) return;
+  const draft = state.workspace.draft;
+  if (!draft.roads.length) {
+    preview.classList.remove('hidden');
+    preview.textContent = 'Tambahkan setidaknya satu ruas dan lengkapi alasan sebelum menyiapkan ringkasan.';
+    return;
+  }
+  const context = { title: document.getElementById('proposal-name-input')?.value.trim() || draft.title, planning_period: document.getElementById('proposal-planning-period')?.value.trim() || draft.planning_period || '', rationale: document.getElementById('proposal-rationale-input')?.value || draft.rationale, mode: state.mode, model: state.modelCode, scenario: state.simulation.scenarioName || (draft.mode === state.mode ? draft.scenario_name : '') || 'Baseline terkonfigurasi', roads: cloneConfig(draft.roads), date: new Date().toLocaleDateString('id-ID', { dateStyle: 'long' }) };
+  savePlanningWorkspace();
+  preview.dataset.brief = JSON.stringify(context);
+  preview.classList.remove('hidden');
+  preview.innerHTML = `<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2"><div><h3 class="font-bold text-slate-900">${escapeHtml(context.title)}</h3><p class="text-[10px] text-slate-500">Draf kajian · disiapkan ${context.date} · periode rencana ${escapeHtml(context.planning_period || 'belum ditetapkan')} · ${context.mode === 'BENCHMARK_2024' ? 'Audit 2024' : 'Operasional 2025'} · ${escapeHtml(context.scenario)}</p></div><button type="button" data-action="print-proposal-brief" class="rounded bg-sky-700 px-3 py-1.5 text-[11px] font-semibold text-white">Cetak / simpan PDF</button></div>
+    <p class="mt-2"><strong>Catatan usulan:</strong> ${escapeHtml(context.rationale || 'Belum ada catatan umum.')}</p>
+    <ul class="mt-2 space-y-2">${context.roads.map((road) => {
+      const evidence = road.evidence || {};
+      const condition = evidence.condition;
+      const rankContext = evidence.rank_mode === 'BENCHMARK_2024' ? 'audit 2024' : evidence.rank_mode === 'OPERATIONAL_2025' ? 'operasional 2025' : 'konteks belum tercatat';
+      const conditionText = condition
+        ? `Mantap ${Number.isFinite(evidence.mantap_pct) ? `${formatId(evidence.mantap_pct, 1)}%` : 'tidak tercatat'} · baik ${formatId(condition.baik_pct ?? 0, 1)}% · sedang ${formatId(condition.sedang_pct ?? 0, 1)}% · rusak ringan ${formatId(condition.rusak_ringan_pct ?? 0, 1)}% · rusak berat ${formatId(condition.rusak_berat_pct ?? 0, 1)}%`
+        : 'Rincian kondisi fisik tidak tersimpan';
+      return `<li class="break-inside-avoid rounded border border-slate-200 bg-white p-2.5"><strong>${escapeHtml(evidence.display_name || road.road_key)}</strong> · ${escapeHtml(evidence.district_name || 'Kecamatan belum tercatat')} · ${escapeHtml(road.road_key)}<div class="mt-0.5 text-[11px] text-slate-600">${road.recommendation === 'defer' ? 'Ditunda untuk ditinjau' : 'Diusulkan untuk ditinjau'} · peringkat #${evidence.rank ?? '—'} (${rankContext}, ${escapeHtml(evidence.rank_model || context.model)}) · panjang ${Number.isFinite(evidence.length_km) ? `${formatId(evidence.length_km, 3)} km` : 'tidak tercatat'}</div><div class="mt-1 text-[11px] text-slate-700">${conditionText} · sumber kondisi ${evidence.condition_year || 'tahun tidak tercatat'}: ${escapeHtml(evidence.condition_source || 'tidak tercatat')} (tanggal publikasi tidak tersedia)</div><div class="mt-1"><strong>Alasan:</strong> ${escapeHtml(road.rationale || 'Belum dicatat.')}</div>${evidence.key_factors?.length ? `<div class="mt-1 text-[10px] text-slate-500"><strong>Kontribusi skor utama:</strong> ${evidence.key_factors.map((factor) => escapeHtml(factor.label)).join(', ')}</div>` : ''}<div class="mt-1 text-[10px] text-slate-600"><strong>Hasil aktual yang dicatat:</strong> ${escapeHtml(decisionLabel(road.recorded_decision))}${road.decision_date ? ` · ${escapeHtml(road.decision_date)}` : ''}${road.decision_note ? ` · ${escapeHtml(road.decision_note)}` : ''}</div></li>`;
+    }).join('')}</ul>
+    <div class="mt-3 rounded border border-amber-200 bg-amber-50 p-2.5 text-[10px] text-amber-900"><strong>Batas penggunaan:</strong> Ini draf bahan kajian, bukan persetujuan kegiatan, alokasi anggaran, atau izin pengadaan. Kondisi fisik mengacu pada data 2025; hasil peringkat mengikuti konteks mode/model di atas dan beberapa input model operasional memiliki tahun sumber historis. Verifikasi lapangan, kemutakhiran bukti, kesiapan teknis, manfaat, dan kewenangan anggaran tetap diperlukan.</div>
+    <p class="mt-2 text-[10px] text-slate-500">Identitas ruas mengikuti daftar resmi. Kondisi dan nama berkas sumber disimpan saat ruas ditambahkan ke draf; tanggal publikasi berkas tidak tersedia. Persetujuan kebijakan model tidak tercatat dalam aplikasi.</p>`;
+}
+
+function decisionLabel(value) {
+  return ({ approved: 'disetujui', deferred: 'ditunda', not_selected: 'tidak dipilih' })[value] || 'belum dicatat';
+}
+
+function printProposalBrief() {
+  const preview = document.getElementById('proposal-brief-preview');
+  if (!preview?.dataset.brief) return;
+  document.body.classList.add('printing-proposal-brief');
+  const cleanup = () => document.body.classList.remove('printing-proposal-brief');
+  window.addEventListener('afterprint', cleanup, { once: true });
+  window.print();
 }
 
 function updateModeVisuals() {
@@ -250,7 +818,7 @@ function reloadActiveData() {
     if (state.mapInitialized) {
       loadMapCountyRoads();
     }
-  } else if (state.currentView === 'simulasi') {
+  } else if (state.currentView === 'simulasi' || state.currentView === 'usulan') {
     loadSimulation();
   }
   if (state.selectedRoadDetail) {
@@ -263,22 +831,68 @@ function reloadActiveData() {
 function handleRouting() {
   const hash = window.location.hash || '#dashboard';
   const [baseHash, query] = hash.split('?');
+  const params = new URLSearchParams(query || '');
+
+  if (['OPERATIONAL_2025', 'BENCHMARK_2024'].includes(params.get('mode'))) {
+    state.mode = params.get('mode');
+    const modeSelect = document.getElementById('mode-select');
+    if (modeSelect) modeSelect.value = state.mode;
+    state.simulation.initialized = false;
+    updateModeVisuals();
+  } else {
+    const modeSelect = document.getElementById('mode-select');
+    if (modeSelect) modeSelect.value = state.mode;
+    updateModeVisuals();
+  }
+  const linkedScenario = state.workspace.scenarios.find((scenario) => scenario.id === params.get('scenario'));
+  if (linkedScenario) {
+    state.mode = linkedScenario.mode;
+    state.simulation.scenarioId = linkedScenario.id;
+    state.simulation.scenarioName = linkedScenario.name;
+    state.simulation.simConfig = hydrateConfig(linkedScenario.config);
+    state.simulation.initialized = false;
+    state.simulation.contextMode = null;
+    const modeSelect = document.getElementById('mode-select');
+    if (modeSelect) modeSelect.value = state.mode;
+    updateModeVisuals();
+  } else if (state.workspace.draft.mode === state.mode && state.workspace.draft.config) {
+    state.simulation.simConfig = hydrateConfig(state.workspace.draft.config);
+    state.simulation.scenarioName = state.workspace.draft.scenario_name || '';
+  }
+  state.search = (params.get('search') || '').trim().toLowerCase();
+  state.district = params.get('district') || 'ALL';
+  state.tier = params.get('tier') || 'ALL';
+  state.condition = params.get('condition') || 'ALL';
+  state.mapFilters = { search: state.search, district: state.district, tier: state.tier, condition: state.condition };
+  syncSharedRoadFilters('state', false);
 
   const viewMap = {
     '#dashboard': 'dashboard',
     '#prioritas': 'prioritas',
     '#peta': 'peta',
+    '#jelajahi': 'prioritas',
+    '#usulan': 'simulasi',
+    '#data-metode': 'data-sumber',
     '#data-sumber': 'data-sumber',
-    '#model': 'model',
+    '#model': 'data-sumber',
     '#simulasi': 'simulasi',
+    '#asb-costing': 'asb-costing',
+    '#biaya': 'asb-costing',
+    '#perencanaan-asb': 'asb-costing',
   };
 
   const targetView = viewMap[baseHash] || 'dashboard';
+  const drawer = document.getElementById('road-detail-drawer');
+  if (!params.get('road') && drawer && !drawer.classList.contains('hidden')) {
+    drawer.classList.add('hidden');
+    drawer.classList.remove('drawer-map-mode');
+    state.selectedRoadDetail = null;
+    clearDD1SegmentsLayer();
+  }
   switchView(targetView);
 
   // Check for deep link to road detail: e.g. #prioritas?road=HSS-KAB-025 or #peta?road=HSS-KAB-025
   if (query) {
-    const params = new URLSearchParams(query);
     const roadKey = params.get('road');
     if (roadKey) {
       openRoadDetail(roadKey);
@@ -287,25 +901,53 @@ function handleRouting() {
       }
     }
   }
+  writeRouteContext({ view: targetView, road: params.get('road') || '' });
 }
 
 function switchView(viewName) {
+  const mobileNav = document.getElementById('mobile-navigation');
+  const focusIsInMobileNav = Boolean(mobileNav && mobileNav.contains(document.activeElement));
+  const mobileNavIsOpen = Boolean(mobileNav && !mobileNav.classList.contains('hidden'));
+  if (viewName !== 'peta' && state.isInteractiveDetailMode) exitInteractiveSpatialProfile();
   state.currentView = viewName;
+  document.querySelectorAll('[data-action="toggle-map-view"]').forEach((button) => {
+    const selected = button.dataset.viewTarget === (viewName === 'peta' ? 'peta' : 'prioritas');
+    button.setAttribute('aria-pressed', String(selected));
+    button.classList.toggle('bg-sky-600', selected);
+    button.classList.toggle('text-white', selected);
+    button.classList.toggle('text-slate-600', !selected);
+  });
 
   // Toggle active views
   document.querySelectorAll('main > section').forEach((sec) => sec.classList.add('hidden'));
   const activeSec = document.getElementById(`view-${viewName}`);
   if (activeSec) activeSec.classList.remove('hidden');
+  if (viewName === 'data-sumber') document.getElementById('view-model')?.classList.remove('hidden');
 
-  // Toggle nav link highlights
+  // Toggle visual and announced navigation state across desktop and mobile links.
   document.querySelectorAll('.nav-link').forEach((link) => {
-    link.classList.remove('bg-sky-50', 'text-sky-700', 'font-semibold');
-    link.classList.add('text-slate-700');
+    link.classList.remove('bg-sky-50', 'text-sky-700', 'font-semibold', 'text-slate-700', 'text-slate-200');
+    link.removeAttribute('aria-current');
+    link.classList.add(link.classList.contains('mobile-nav-link') ? 'text-slate-200' : 'text-slate-700');
   });
-  const activeLink = document.getElementById(`nav-${viewName}`);
-  if (activeLink) {
-    activeLink.classList.add('bg-sky-50', 'text-sky-700', 'font-semibold');
-    activeLink.classList.remove('text-slate-700');
+  const navView = viewName === 'peta' || viewName === 'model' ? (viewName === 'peta' ? 'prioritas' : 'data-sumber') : viewName;
+  document.querySelectorAll(`.nav-link[data-view="${navView}"]`).forEach((link) => {
+    link.setAttribute('aria-current', 'page');
+    if (!link.classList.contains('mobile-nav-link')) {
+      link.classList.add('bg-sky-50', 'text-sky-700', 'font-semibold');
+      link.classList.remove('text-slate-700');
+    }
+  });
+
+  if (mobileNavIsOpen) {
+    setMobileNavigationOpen(false);
+    if (focusIsInMobileNav) {
+      const heading = activeSec?.querySelector('h1');
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.focus();
+      }
+    }
   }
 
   // Load view data
@@ -333,13 +975,87 @@ function switchView(viewName) {
   } else if (viewName === 'data-sumber') {
     drawerEl?.classList.remove('drawer-map-mode');
     loadProvenance();
+    loadModel();
   } else if (viewName === 'model') {
     drawerEl?.classList.remove('drawer-map-mode');
     loadModel();
   } else if (viewName === 'simulasi') {
     drawerEl?.classList.remove('drawer-map-mode');
     loadSimulation();
+  } else if (viewName === 'usulan') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    loadSimulation();
+  } else if (viewName === 'asb-costing') {
+    drawerEl?.classList.remove('drawer-map-mode');
+    if (window.AsbCostingModule && window.AsbCostingModule.init) {
+      window.AsbCostingModule.init();
+    }
   }
+  if (drawerEl && !drawerEl.classList.contains('hidden')) syncDrawerAccessibility(drawerEl);
+
+  if (viewName === 'simulasi' || viewName === 'usulan') renderPlanningWorkspace();
+}
+
+function syncSharedRoadFilters(source = 'state', updateUrl = true) {
+  if (source === 'table') {
+    state.search = document.getElementById('table-search')?.value.trim().toLowerCase() ?? state.search;
+    state.district = document.getElementById('filter-district')?.value ?? state.district;
+    state.tier = document.getElementById('filter-tier')?.value ?? state.tier;
+    state.condition = document.getElementById('filter-condition')?.value ?? state.condition;
+    state.mapFilters = { search: state.search, district: state.district, tier: state.tier, condition: state.condition };
+  } else if (source === 'map') {
+    state.mapFilters.search = document.getElementById('map-search-input')?.value.trim().toLowerCase() ?? state.mapFilters.search;
+    state.mapFilters.district = document.getElementById('map-filter-district')?.value ?? state.mapFilters.district;
+    state.mapFilters.tier = document.getElementById('map-filter-tier')?.value ?? state.mapFilters.tier;
+    state.mapFilters.condition = document.getElementById('map-filter-condition')?.value ?? state.mapFilters.condition;
+    state.search = state.mapFilters.search;
+    state.district = state.mapFilters.district;
+    state.tier = state.mapFilters.tier;
+    state.condition = state.mapFilters.condition;
+  }
+
+  const fields = [
+    ['table-search', 'map-search-input', 'search', ''],
+    ['filter-district', 'map-filter-district', 'district', 'ALL'],
+    ['filter-tier', 'map-filter-tier', 'tier', 'ALL'],
+    ['filter-condition', 'map-filter-condition', 'condition', 'ALL'],
+  ];
+  for (const [tableId, mapId, key, fallback] of fields) {
+    const value = state[key] || fallback;
+    const table = document.getElementById(tableId);
+    const map = document.getElementById(mapId);
+    if (key === 'search') {
+      if (table) table.value = value;
+      if (map) map.value = value;
+    } else {
+      setSelectValue(table, value);
+      setSelectValue(map, value);
+    }
+  }
+  if (updateUrl) writeRouteContext();
+}
+
+function setSelectValue(select, value) {
+  if (!select || !value) return;
+  if (![...select.options].some((option) => option.value === value)) {
+    select.add(new Option(value, value));
+  }
+  select.value = value;
+}
+
+function writeRouteContext({ road = state.selectedRoadDetail?.identity?.road_key ?? '', view = state.currentView } = {}) {
+  const hashes = { dashboard: '#dashboard', prioritas: '#prioritas', peta: '#peta', 'data-sumber': '#data-metode', model: '#data-metode', simulasi: '#usulan', usulan: '#usulan' };
+  const params = new URLSearchParams();
+  params.set('mode', state.mode);
+  params.set('model', state.modelCode);
+  if (state.search) params.set('search', state.search);
+  if (state.district !== 'ALL') params.set('district', state.district);
+  if (state.tier !== 'ALL') params.set('tier', state.tier);
+  if (state.condition !== 'ALL') params.set('condition', state.condition);
+  if (road) params.set('road', road);
+  if (state.simulation.scenarioId) params.set('scenario', state.simulation.scenarioId);
+  const hash = `${hashes[view] || '#dashboard'}?${params}`;
+  history.replaceState(null, '', hash);
 }
 
 // --- VIEW 1: DASHBOARD ---
@@ -360,29 +1076,29 @@ function renderDashboard(data) {
   // 1. KPI Cards
   const kpiContainer = document.getElementById('kpi-cards-container');
   kpiContainer.innerHTML = `
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Total Ruas Kanonikal</div>
-      <div class="text-2xl font-black text-slate-900 mt-1">${data.kpis.totalRoads} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
+    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Ruas Kanonikal</div>
+      <div class="text-xl sm:text-2xl font-black text-slate-900 mt-1">${data.kpis.totalRoads} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
       <div class="text-[10px] text-emerald-600 font-semibold mt-1">✓ SK Bupati Otoritatif</div>
     </div>
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Total Panjang Jaringan</div>
-      <div class="text-2xl font-black text-slate-900 mt-1">${data.kpis.totalLengthKm.toFixed(3)} <span class="text-xs font-normal text-slate-500">km</span></div>
+    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Panjang Jaringan</div>
+      <div class="text-xl sm:text-2xl font-black text-slate-900 mt-1">${data.kpis.totalLengthKm.toFixed(3)} <span class="text-xs font-normal text-slate-500">km</span></div>
       <div class="text-[10px] text-slate-400 mt-1">Ruas Kabupaten HSS</div>
     </div>
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Kondisi Mantap</div>
-      <div class="text-2xl font-black text-emerald-600 mt-1">${data.kpis.mantapPct}%</div>
+    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Kondisi Mantap</div>
+      <div class="text-xl sm:text-2xl font-black text-emerald-600 mt-1">${data.kpis.mantapPct}%</div>
       <div class="text-[10px] text-slate-500 mt-1">${data.kpis.mantapKm.toFixed(3)} km (Baik + Sedang)</div>
     </div>
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Prioritas Sangat Mendesak</div>
-      <div class="text-2xl font-black text-rose-600 mt-1">${data.kpis.top35Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
-      <div class="text-[10px] text-rose-600 font-medium mt-1">Tier 1: TOP_35 (Top 10%)</div>
+    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Kelompok peringkat 1–35</div>
+      <div class="text-xl sm:text-2xl font-black text-rose-600 mt-1">${data.kpis.top35Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
+      <div class="text-[10px] text-rose-600 font-medium mt-1">Kelompok relatif model; bukan tingkat kegawatan</div>
     </div>
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Prioritas Kebijakan</div>
-      <div class="text-2xl font-black text-sky-700 mt-1">${data.kpis.top105Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
+    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Dalam peringkat 1–105</div>
+      <div class="text-xl sm:text-2xl font-black text-sky-700 mt-1">${data.kpis.top105Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
       <div class="text-[10px] text-sky-600 font-medium mt-1">Band Top 30% Jaringan</div>
     </div>
   `;
@@ -395,7 +1111,7 @@ function renderDashboard(data) {
     <div>
       <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
         <span>${c.category_name}</span>
-        <span class="font-bold text-slate-900">${c.normalized_pct}% (${c.raw_weight.toFixed(6)})</span>
+        <span class="font-bold text-slate-900">${formatId(c.normalized_pct, 2)}% (${formatId(c.raw_weight, 4)})</span>
       </div>
       <div class="w-full bg-slate-100 rounded-full h-2">
         <div class="bg-sky-600 h-2 rounded-full" style="width: ${c.normalized_pct}%"></div>
@@ -408,6 +1124,8 @@ function renderDashboard(data) {
   // 3. Condition Breakdown
   const condContainer = document.getElementById('condition-breakdown-container');
   const cond = data.conditionBreakdown;
+  const mantapFooter = document.getElementById('dashboard-mantap-footer');
+  if (mantapFooter) mantapFooter.textContent = `${data.kpis.mantapPct}%`;
   condContainer.innerHTML = `
     <div class="w-full bg-slate-100 rounded-lg h-5 flex overflow-hidden border border-slate-200 text-[10px] font-bold text-white text-center leading-5">
       <div style="width: ${cond.baik_pct}%" class="bg-emerald-500" title="Baik: ${cond.baik_km} km">${cond.baik_pct > 5 ? cond.baik_pct + '%' : ''}</div>
@@ -452,7 +1170,7 @@ function renderDashboard(data) {
   top10Tbody.innerHTML = data.top10
     .map(
       (r) => `
-    <tr class="hover:bg-slate-50 transition-colors cursor-pointer" onclick="openRoadDetail('${r.road_key}')">
+    <tr class="hover:bg-slate-50 transition-colors cursor-pointer" onclick="if (!event.target.closest('[data-action]')) openRoadDetail('${r.road_key}')">
       <td class="py-2.5 px-3 font-bold text-slate-900">#${r.priority_rank}</td>
       <td class="py-2.5 px-3 font-mono text-xs text-slate-500">${r.nomor_ruas}</td>
       <td class="py-2.5 px-3 font-semibold text-sky-900 hover:text-sky-600">${escapeHtml(r.display_name)}</td>
@@ -467,7 +1185,7 @@ function renderDashboard(data) {
             : 'bg-rose-100 text-rose-800'
         }">${r.mantap_pct.toFixed(1)}%</span>
       </td>
-      <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${r.final_score.toFixed(6)}</td>
+      <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${formatId(r.final_score, 4)}</td>
       <td class="py-2.5 px-3 text-center">${renderTierBadge(r.tier_category)}</td>
       <td class="py-2.5 px-3 text-center whitespace-nowrap">
         <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition mr-1" onclick="event.stopPropagation(); viewRoadOnMap('${r.road_key}')">
@@ -476,6 +1194,7 @@ function renderDashboard(data) {
         <button class="text-xs bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 font-semibold px-2 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
           Detail
         </button>
+        <button type="button" data-action="add-to-shortlist" data-road-key="${r.road_key}" class="mt-1 text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition">+ Usulan</button>
       </td>
     </tr>
   `
@@ -592,7 +1311,7 @@ function renderPriorityTable() {
   tbody.innerHTML = pageItems
     .map(
       (r) => `
-    <tr class="hover:bg-slate-50 transition-colors cursor-pointer" onclick="openRoadDetail('${r.road_key}')">
+    <tr class="hover:bg-slate-50 transition-colors cursor-pointer" onclick="if (!event.target.closest('[data-action]')) openRoadDetail('${r.road_key}')">
       <td class="py-2.5 px-3 font-bold text-slate-900">#${r.priority_rank}</td>
       <td class="py-2.5 px-3 font-mono text-xs text-slate-500">${r.nomor_ruas}</td>
       <td class="py-2.5 px-3">
@@ -610,7 +1329,7 @@ function renderPriorityTable() {
             : 'bg-rose-100 text-rose-800'
         }">${r.mantap_pct.toFixed(1)}%</span>
       </td>
-      <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${r.final_score.toFixed(6)}</td>
+      <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">${formatId(r.final_score, 4)}</td>
       <td class="py-2.5 px-3 text-center">${renderTierBadge(r.tier_category)}</td>
       <td class="py-2.5 px-3 text-center whitespace-nowrap">
         <button class="text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition mr-1" onclick="event.stopPropagation(); viewRoadOnMap('${r.road_key}')">
@@ -619,6 +1338,7 @@ function renderPriorityTable() {
         <button class="text-xs bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 font-semibold px-2 py-1 rounded transition" onclick="event.stopPropagation(); openRoadDetail('${r.road_key}')">
           Detail
         </button>
+        <button type="button" data-action="add-to-shortlist" data-road-key="${r.road_key}" class="mt-1 text-xs bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 font-semibold px-2 py-1 rounded transition">+ Usulan</button>
       </td>
     </tr>
   `
@@ -671,6 +1391,16 @@ async function initMap() {
     minZoom: 9,
     maxZoom: 18,
     attributionControl: true,
+  });
+
+  state.map.on('tooltipopen', (event) => {
+    if (!event.tooltip.options.className?.includes('road-map-tooltip')) return;
+    const previousTooltip = state.activeRoadTooltip;
+    state.activeRoadTooltip = event.tooltip;
+    if (previousTooltip && previousTooltip !== event.tooltip) state.map.closeTooltip(previousTooltip);
+  });
+  state.map.on('tooltipclose', (event) => {
+    if (state.activeRoadTooltip === event.tooltip) state.activeRoadTooltip = null;
   });
 
   // Ensure local vendored leaflet image asset path is authoritative
@@ -761,7 +1491,7 @@ async function initMap() {
   setTimeout(() => {
     if (state.map) {
       state.map.invalidateSize({ pan: false });
-      fitHssBounds();
+      if (!state.isInteractiveDetailMode) fitHssBounds();
     }
   }, 100);
 }
@@ -786,6 +1516,9 @@ function initMapControls() {
     if (condEl) condEl.value = 'ALL';
 
     state.mapFilters = { search: '', district: 'ALL', tier: 'ALL', condition: 'ALL' };
+    syncSharedRoadFilters('map');
+    state.page = 1;
+    applyTableFilters();
     applyMapFilters();
   };
 
@@ -799,6 +1532,9 @@ function initMapControls() {
   searchInput?.addEventListener('input', (e) => {
     const q = e.target.value.trim().toLowerCase();
     state.mapFilters.search = q;
+    syncSharedRoadFilters('map');
+    state.page = 1;
+    applyTableFilters();
     handleMapSearchAutocomplete(q);
     applyMapFilters();
   });
@@ -845,16 +1581,25 @@ function initMapControls() {
   // District, Tier, Condition Filter dropdowns
   document.getElementById('map-filter-district')?.addEventListener('change', (e) => {
     state.mapFilters.district = e.target.value;
+    syncSharedRoadFilters('map');
+    state.page = 1;
+    applyTableFilters();
     applyMapFilters();
   });
 
   document.getElementById('map-filter-tier')?.addEventListener('change', (e) => {
     state.mapFilters.tier = e.target.value;
+    syncSharedRoadFilters('map');
+    state.page = 1;
+    applyTableFilters();
     applyMapFilters();
   });
 
   document.getElementById('map-filter-condition')?.addEventListener('change', (e) => {
     state.mapFilters.condition = e.target.value;
+    syncSharedRoadFilters('map');
+    state.page = 1;
+    applyTableFilters();
     applyMapFilters();
   });
 
@@ -865,6 +1610,7 @@ function initMapControls() {
 
   const toggleGisPanel = () => {
     gisSidePanel?.classList.toggle('hidden');
+    layersBtn?.setAttribute('aria-expanded', String(!gisSidePanel?.classList.contains('hidden')));
     setTimeout(() => {
       state.map?.invalidateSize({ pan: false });
     }, 50);
@@ -873,6 +1619,7 @@ function initMapControls() {
   layersBtn?.addEventListener('click', toggleGisPanel);
   closeLayersBtn?.addEventListener('click', () => {
     gisSidePanel?.classList.add('hidden');
+    layersBtn?.setAttribute('aria-expanded', 'false');
     setTimeout(() => {
       state.map?.invalidateSize({ pan: false });
     }, 50);
@@ -965,6 +1712,7 @@ function initMapControls() {
 
   // RTRW layer toggle (on-demand loading)
   document.getElementById('layer-rtrw')?.addEventListener('change', async (e) => {
+    document.getElementById('inspector-rtrw-layer')?.setAttribute('aria-pressed', String(e.target.checked));
     if (e.target.checked) {
       if (!state.mapData.rtrw) {
         await loadRtrwLayer();
@@ -1175,7 +1923,7 @@ async function applyMapPreset(preset) {
 async function loadMapData() {
   try {
     const [roadsRes, refRes, facRes, distRes, vilRes, kabRes] = await Promise.all([
-      fetch(`/api/map/roads?mode=${state.mode}`).then((r) => r.json()),
+      fetch(`/api/map/roads?mode=${state.mode}&model=${encodeURIComponent(state.modelCode)}`).then((r) => r.json()),
       fetch('/api/map/reference-network').then((r) => r.json()),
       fetch('/api/map/facilities').then((r) => r.json()),
       fetch('/api/map/districts').then((r) => r.json()),
@@ -1211,8 +1959,8 @@ async function loadMapData() {
 
     if (roadsRes.success) {
       state.mapData.countyRoads = roadsRes.data;
-      renderThematicRoads(roadsRes.data.features);
-      fitHssBounds();
+      applyMapFilters();
+      if (state.mapFilters.search === '' && state.mapFilters.district === 'ALL') fitHssBounds();
     }
 
     updateMapStatus();
@@ -1252,7 +2000,7 @@ function renderKabupaten(data) {
 
 async function loadMapCountyRoads() {
   try {
-    const roadsRes = await fetch(`/api/map/roads?mode=${state.mode}`).then((r) => r.json());
+    const roadsRes = await fetch(`/api/map/roads?mode=${state.mode}&model=${encodeURIComponent(state.modelCode)}`).then((r) => r.json());
     if (roadsRes.success) {
       state.mapData.countyRoads = roadsRes.data;
       applyMapFilters();
@@ -1283,8 +2031,8 @@ function renderThematicRoads(features) {
 
     let scoreInfo = `
       <div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between space-x-2">
-        <span class="font-bold text-slate-900">Rank: #${p.priority_rank}</span>
-        <span class="font-mono text-sky-800 font-semibold">Skor: ${p.final_score.toFixed(4)}</span>
+        <span class="font-bold text-slate-900">Peringkat: #${p.priority_rank}</span>
+        <span class="font-mono text-sky-800 font-semibold">Skor: ${formatId(p.final_score, 4)}</span>
       </div>
       <div class="mt-0.5 flex items-center justify-between space-x-2 text-[10px]">
         <span class="px-1.5 py-0.5 rounded font-semibold ${tierStyle.badgeClass}">${getTierDisplayName(activeTier)}</span>
@@ -1326,15 +2074,14 @@ function renderThematicRoads(features) {
     `;
     layer.bindTooltip(tooltipContent, {
       sticky: true,
-      className: 'shadow-md rounded-lg border border-slate-200',
+      className: 'road-map-tooltip shadow-md rounded-lg border border-slate-200',
     });
 
     layer.on('click', (e) => {
       if (e && e.originalEvent) {
         L.DomEvent.stopPropagation(e);
       }
-      selectRoadOnMap(p.road_key);
-      openRoadDetail(p.road_key);
+      showRoadQuickPopup(p.road_key, e.latlng || layer.getBounds().getCenter());
     });
   };
 
@@ -1420,7 +2167,7 @@ function setupDD1SegmentInteractivity(feature, layer) {
   const priorityBadge = p.priority_rank !== null
     ? `<div class="mt-1 pt-1 border-t border-slate-200 flex items-center justify-between text-[11px]">
          <span class="text-slate-500">Prioritas ruas:</span>
-         <span class="font-bold text-slate-800">#${p.priority_rank} <span class="text-[10px] text-slate-500">(${p.priority_tier || 'REGULAR'})</span></span>
+         <span class="font-bold text-slate-800">#${p.priority_rank} <span class="text-[10px] text-slate-500">(${getTierDisplayName(p.priority_tier || 'REGULAR')})</span></span>
        </div>`
     : '';
 
@@ -1450,15 +2197,14 @@ function setupDD1SegmentInteractivity(feature, layer) {
 
   layer.bindTooltip(tooltipContent, {
     sticky: true,
-    className: 'shadow-md rounded-lg border border-slate-200 dd1-segment-tooltip',
+    className: 'road-map-tooltip shadow-md rounded-lg border border-slate-200 dd1-segment-tooltip',
   });
 
   layer.on('click', (e) => {
     if (e && e.originalEvent) {
       L.DomEvent.stopPropagation(e);
     }
-    selectRoadOnMap(p.road_key);
-    openRoadDetail(p.road_key);
+    showRoadQuickPopup(p.road_key, e.latlng || layer.getBounds().getCenter());
   });
 }
 
@@ -1948,8 +2694,7 @@ window.selectFromMapAutocomplete = function (roadKey) {
   const box = document.getElementById('map-search-autocomplete');
   box?.classList.add('hidden');
   autocompleteSelectedIndex = -1;
-  selectRoadOnMap(roadKey);
-  openRoadDetail(roadKey);
+  enterInteractiveSpatialProfile(roadKey);
 };
 
 function populateMapDistrictFilter(districtsGeoJson) {
@@ -1968,9 +2713,10 @@ function populateMapDistrictFilter(districtsGeoJson) {
     opt.textContent = name;
     select.appendChild(opt);
   }
+  setSelectValue(select, state.mapFilters.district);
 }
 
-window.selectRoadOnMap = function (roadKey) {
+window.selectRoadOnMap = function (roadKey, { fit = true } = {}) {
   if (!state.mapData.countyRoads || !state.map) return;
 
   const feature = state.mapData.countyRoads.features.find((f) => f.properties.road_key === roadKey);
@@ -1989,12 +2735,13 @@ window.selectRoadOnMap = function (roadKey) {
   // Draw Cyan Selection Halo in selectionHaloPane
   state.mapLayers.selectionHalo = L.geoJSON(feature, {
     pane: 'selectionHaloPane',
+    interactive: false,
     style: SELECTION_HALO_STYLE,
   }).addTo(state.map);
 
   // Zoom to road with viewport padding accounting for drawer width on desktop
   const bounds = state.mapLayers.selectionHalo.getBounds();
-  if (bounds.isValid()) {
+  if (fit && bounds.isValid()) {
     const isDesktop = window.innerWidth >= 1024;
     const drawerEl = document.getElementById('road-detail-drawer');
     const isDrawerOpen = drawerEl && !drawerEl.classList.contains('hidden');
@@ -2009,6 +2756,10 @@ window.selectRoadOnMap = function (roadKey) {
 };
 
 window.clearRoadSelection = function () {
+  if (state.isInteractiveDetailMode) {
+    exitInteractiveSpatialProfile();
+    return;
+  }
   if (state.mapLayers.selectionHalo && state.map) {
     state.map.removeLayer(state.mapLayers.selectionHalo);
     state.mapLayers.selectionHalo = null;
@@ -2017,13 +2768,12 @@ window.clearRoadSelection = function () {
   state.selectedRoadKey = null;
   document.getElementById('map-btn-clear-selection')?.classList.add('hidden');
 
-  if (window.location.hash.startsWith('#peta')) {
-    history.replaceState(null, '', '#peta');
-  }
+  if (window.location.hash.startsWith('#peta')) writeRouteContext({ road: '' });
 };
 
 window.viewRoadOnMap = async function (roadKey) {
-  window.location.hash = `#peta?road=${roadKey}`;
+  if (!/^HSS-KAB-\d{3}$/.test(roadKey || '')) return;
+  writeRouteContext({ road: roadKey, view: 'peta' });
   switchView('peta');
 
   if (!state.mapInitialized) {
@@ -2032,11 +2782,331 @@ window.viewRoadOnMap = async function (roadKey) {
   [50, 150, 300].forEach((d) => setTimeout(() => state.map?.invalidateSize({ pan: false }), d));
 
   setTimeout(() => {
-    openRoadDetail(roadKey);
-    setTimeout(() => {
-      selectRoadOnMap(roadKey);
-    }, 50);
-  }, 150);
+    enterInteractiveSpatialProfile(roadKey);
+  }, 200);
+};
+
+// =============================================================================
+// Map road inspection
+// =============================================================================
+
+window.showRoadQuickPopup = function (roadKey, latlng) {
+  if (!state.map) return;
+  const feature = state.mapData.countyRoads?.features?.find((f) => f.properties.road_key === roadKey);
+  if (!feature) return;
+  if (state.isInteractiveDetailMode) {
+    if (state.interactiveDetailRoadKey !== roadKey) enterInteractiveSpatialProfile(roadKey);
+    return;
+  }
+  selectRoadOnMap(roadKey);
+  const p = feature.properties;
+
+  const isSimMode = state.currentSimulationResult !== null;
+  const simMap = isSimMode ? state.currentSimulationResult?.roadMap : null;
+  const activeTier = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_tier
+    : (p.tier_category || 'REGULAR');
+  const activeScore = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_score
+    : (p.final_score ?? 0);
+  const activeRank = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_rank
+    : (p.priority_rank ?? '—');
+
+  const popupHtml = `
+    <div class="road-quick-popup p-1 text-slate-800" style="min-width: 220px; font-family: inherit;">
+      <div class="flex items-center space-x-1.5 mb-1">
+        <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-300">${escapeHtml(p.road_key)}</span>
+        <span class="text-[11px] text-slate-500 font-mono">No. ${escapeHtml(p.nomor_ruas)}</span>
+      </div>
+      <div class="font-bold text-slate-900 text-xs leading-snug mb-1">${escapeHtml(p.display_name)}</div>
+      <div class="text-[11px] text-slate-600 mb-2">Kecamatan: <strong>${escapeHtml(p.district_name)}</strong></div>
+      <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-2 rounded-lg border border-slate-200 text-[10px] mb-2.5">
+        <div>Panjang: <strong>${(p.length_km || 0).toFixed(2)} km</strong></div>
+        <div>Peringkat: <strong class="text-rose-600 font-bold">#${activeRank}</strong></div>
+        <div>Skor: <strong class="font-mono">${Number(activeScore).toFixed(4)}</strong></div>
+        <div>Kemantapan: <strong>${(p.mantap_pct || 0).toFixed(0)}%</strong></div>
+      </div>
+      <button type="button" onclick="enterInteractiveSpatialProfile('${escapeHtml(p.road_key)}')" class="w-full py-1.5 px-3 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white font-bold text-xs rounded-lg shadow-sm flex items-center justify-center space-x-1.5 transition">
+        <span>🔍</span>
+        <span>Lihat Detail</span>
+      </button>
+    </div>
+  `;
+
+  L.popup({
+    className: 'road-interactive-popup shadow-xl rounded-xl',
+    offset: [0, -10],
+    autoPan: true,
+    autoPanPadding: [50, 50],
+  })
+    .setLatLng(latlng)
+    .setContent(popupHtml)
+    .openOn(state.map);
+};
+
+window.enterInteractiveSpatialProfile = async function (roadKey) {
+  if (!state.mapData.countyRoads || !state.map) return;
+  const feature = state.mapData.countyRoads.features.find((f) => f.properties.road_key === roadKey);
+  if (!feature) return;
+
+  const p = feature.properties;
+  const request = ++state.inspectorRequest;
+  const gisPanel = document.getElementById('gis-side-panel');
+  if (!state.isInteractiveDetailMode) {
+    state.inspectorLayersWereHidden = gisPanel.classList.contains('hidden');
+    gisPanel.classList.add('hidden');
+    document.getElementById('btn-toggle-layers').setAttribute('aria-expanded', 'false');
+  }
+  state.isInteractiveDetailMode = true;
+  state.interactiveDetailRoadKey = roadKey;
+  state.map.closePopup();
+  if (state.activeRoadTooltip) state.map.closeTooltip(state.activeRoadTooltip);
+  if (state.selectedRoadDetail && state.selectedRoadDetail.identity.road_key !== roadKey) closeDetailDrawer();
+  clearRouteTrace({ skipZoomReset: true });
+
+  const inspector = document.getElementById('road-inspector');
+  const container = document.getElementById('map-container');
+  inspector.classList.remove('hidden');
+  container.classList.add('inspection-open');
+  inspector.querySelector('.inspector-content').scrollTop = 0;
+  const rtrwLayer = document.getElementById('layer-rtrw');
+  document.getElementById('inspector-rtrw-layer').setAttribute('aria-pressed', String(rtrwLayer.checked));
+
+  state.map.invalidateSize({ pan: false });
+  selectRoadOnMap(roadKey, { fit: false });
+  fitInspectedRoad();
+  container.scrollIntoView({ block: 'nearest' });
+
+  const isSimMode = state.currentSimulationResult !== null;
+  const simMap = isSimMode ? state.currentSimulationResult?.roadMap : null;
+  const activeTier = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_tier
+    : (p.tier_category || 'REGULAR');
+  const activeScore = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_score
+    : (p.final_score ?? 0);
+  const activeRank = isSimMode && simMap?.get(roadKey)
+    ? simMap.get(roadKey).simulated_rank
+    : (p.priority_rank ?? '—');
+
+  const hudKey = document.getElementById('hud-road-key');
+  const hudNum = document.getElementById('hud-nomor-ruas');
+  const hudName = document.getElementById('hud-road-name');
+  const hudTier = document.getElementById('hud-tier-badge');
+  const hudRank = document.getElementById('hud-rank');
+  const hudLen = document.getElementById('hud-length');
+
+  if (hudKey) hudKey.textContent = p.road_key;
+  if (hudNum) hudNum.textContent = `No. ${p.nomor_ruas}`;
+  if (hudName) hudName.textContent = p.display_name;
+  if (hudTier) {
+    hudTier.textContent = getTierDisplayName(activeTier);
+    hudTier.className = `text-[10px] px-2 py-0.5 rounded-full font-bold ${
+      activeTier === 'TOP_35' ? 'bg-rose-900/90 text-rose-200 border border-rose-600' :
+      activeTier === 'TOP_70' ? 'bg-orange-900/90 text-orange-200 border border-orange-600' :
+      activeTier === 'TOP_105' ? 'bg-yellow-900/90 text-yellow-200 border border-yellow-600' :
+      'bg-slate-800 text-slate-300 border border-slate-700'
+    }`;
+  }
+  if (hudRank) hudRank.textContent = `#${activeRank}`;
+  if (hudLen) hudLen.textContent = `${(p.length_km || 0).toFixed(3)} km`;
+
+  hudName?.focus({ preventScroll: true });
+  document.getElementById('hud-btn-drawer').onclick = () => openRoadDetail(roadKey, { showFactors: true });
+  const idVillages = document.getElementById('card-id-villages');
+  document.getElementById('card-id-district').textContent = p.district_name || '—';
+  idVillages.textContent = 'Memuat data spasial…';
+  for (const field of document.querySelectorAll('#card-spasial dd')) field.textContent = '—';
+  document.getElementById('card-s-rtrw-breakdown').replaceChildren();
+
+  // 9. Populate Card 2 & 3: Kondisi & Kemantapan
+  const totalKm = p.length_km || 1;
+  const baikKm = p.baik_km || 0;
+  const sedangKm = p.sedang_km || 0;
+  const rrKm = p.rusak_ringan_km || 0;
+  const rbKm = p.rusak_berat_km || 0;
+
+  const baikPct = totalKm > 0 ? (baikKm / totalKm) * 100 : 0;
+  const sedangPct = totalKm > 0 ? (sedangKm / totalKm) * 100 : 0;
+  const rrPct = totalKm > 0 ? (rrKm / totalKm) * 100 : 0;
+  const rbPct = totalKm > 0 ? (rbKm / totalKm) * 100 : 0;
+
+  const mantapKm = baikKm + sedangKm;
+  const tidakMantapKm = rrKm + rbKm;
+  const mantapPct = totalKm > 0 ? (mantapKm / totalKm) * 100 : (p.mantap_pct || 0);
+  const tidakMantapPct = totalKm > 0 ? (tidakMantapKm / totalKm) * 100 : (p.tidak_mantap_pct || 0);
+
+  const barBaik = document.getElementById('bar-kondisi-baik');
+  const barSedang = document.getElementById('bar-kondisi-sedang');
+  const barRr = document.getElementById('bar-kondisi-rr');
+  const barRb = document.getElementById('bar-kondisi-rb');
+  if (barBaik) barBaik.style.width = `${baikPct}%`;
+  if (barSedang) barSedang.style.width = `${sedangPct}%`;
+  if (barRr) barRr.style.width = `${rrPct}%`;
+  if (barRb) barRb.style.width = `${rbPct}%`;
+
+  const cBaik = document.getElementById('card-c-baik');
+  const cSedang = document.getElementById('card-c-sedang');
+  const cRr = document.getElementById('card-c-rr');
+  const cRb = document.getElementById('card-c-rb');
+  if (cBaik) cBaik.textContent = `${baikKm.toFixed(2)} km (${baikPct.toFixed(0)}%)`;
+  if (cSedang) cSedang.textContent = `${sedangKm.toFixed(2)} km (${sedangPct.toFixed(0)}%)`;
+  if (cRr) cRr.textContent = `${rrKm.toFixed(2)} km (${rrPct.toFixed(0)}%)`;
+  if (cRb) cRb.textContent = `${rbKm.toFixed(2)} km (${rbPct.toFixed(0)}%)`;
+
+  const kMantap = document.getElementById('card-k-mantap');
+  const kTidakMantap = document.getElementById('card-k-tidak-mantap');
+  if (kMantap) kMantap.textContent = `${mantapKm.toFixed(2)} km (${mantapPct.toFixed(1)}%)`;
+  if (kTidakMantap) kTidakMantap.textContent = `${tidakMantapKm.toFixed(2)} km (${tidakMantapPct.toFixed(1)}%)`;
+
+  // 10. Populate Card 4: Karakteristik Teknis
+  const tLebar = document.getElementById('card-t-lebar');
+  if (tLebar) {
+    if (p.width_m !== null && p.width_m !== undefined && !isNaN(Number(p.width_m)) && Number(p.width_m) > 0) {
+      tLebar.textContent = `${Number(p.width_m).toFixed(1)} m`;
+    } else {
+      tLebar.textContent = 'Data tidak tersedia';
+    }
+  }
+  const tStatus = document.getElementById('card-t-status');
+  if (tStatus) {
+    tStatus.textContent = p.identity_status || 'Kabupaten';
+  }
+  const tAspalInit = document.getElementById('card-t-aspal');
+  const tBetonInit = document.getElementById('card-t-beton');
+  if (tAspalInit) tAspalInit.textContent = 'Memuat...';
+  if (tBetonInit) tBetonInit.textContent = 'Memuat...';
+
+  // 11. Populate Card 6: Informasi Prioritas
+  const pScore = document.getElementById('card-p-score');
+  const pSubTeknis = document.getElementById('card-p-sub-teknis');
+  const pSubAkses = document.getElementById('card-p-sub-akses');
+  const pSubPelayanan = document.getElementById('card-p-sub-pelayanan');
+  const pSubSpasial = document.getElementById('card-p-sub-spasial');
+
+  if (pScore) pScore.textContent = Number(activeScore).toFixed(6);
+  if (pSubTeknis) pSubTeknis.textContent = (p.subtotal_teknis || 0).toFixed(4);
+  if (pSubAkses) pSubAkses.textContent = (p.subtotal_akses || 0).toFixed(4);
+  if (pSubPelayanan) pSubPelayanan.textContent = (p.subtotal_pelayanan || 0).toFixed(4);
+  if (pSubSpasial) pSubSpasial.textContent = (p.subtotal_spasial || 0).toFixed(4);
+
+  loadRoadNearestFacilities(roadKey);
+  loadRoadNarrative(roadKey);
+  // 14. Asynchronously fetch full spatial profile & technical details (Task 1: SPASIAL DAN AKSESIBILITAS WILAYAH)
+  try {
+    const [detailRes, spatialRes] = await Promise.all([
+      fetch(`/api/roads/${roadKey}?mode=${state.mode}&model=${state.modelCode}`).then((r) => r.json()).catch(() => null),
+      fetch(`/api/spatial/roads/${roadKey}/spatial-profile`).then((r) => r.json()).catch(() => null),
+    ]);
+
+    if (request !== state.inspectorRequest) return;
+
+    // Update technical characteristics from detail factors
+    const tAspal = document.getElementById('card-t-aspal');
+    const tBeton = document.getElementById('card-t-beton');
+    if (detailRes?.success && detailRes.data) {
+      const d = detailRes.data;
+      const aspalFactor = d.factors?.find((f) => f.variable_code === 'norm_permukaan_aspal_penmac');
+      const betonFactor = d.factors?.find((f) => f.variable_code === 'norm_permukaan_beton');
+
+      if (tAspal) {
+        const rawA = aspalFactor?.raw_value;
+        if (rawA !== null && rawA !== undefined && !isNaN(Number(rawA))) {
+          tAspal.textContent = `${(Number(rawA) * 100).toFixed(0)}%`;
+        } else {
+          tAspal.textContent = 'Data tidak tersedia';
+        }
+      }
+      if (tBeton) {
+        const rawB = betonFactor?.raw_value;
+        if (rawB !== null && rawB !== undefined && !isNaN(Number(rawB))) {
+          tBeton.textContent = `${(Number(rawB) * 100).toFixed(0)}%`;
+        } else {
+          tBeton.textContent = 'Data tidak tersedia';
+        }
+      }
+    } else {
+      if (tAspal) tAspal.textContent = 'Data tidak tersedia';
+      if (tBeton) tBeton.textContent = 'Data tidak tersedia';
+    }
+
+    // Update Card 5: Spasial dan Aksesibilitas Wilayah
+    if (spatialRes?.success && spatialRes.data) {
+      const sp = spatialRes.data;
+      const sJarak = document.getElementById('card-s-jarak-ibukota');
+      const sDesa = document.getElementById('card-s-desa');
+      const sKec = document.getElementById('card-s-kecamatan');
+      const sPermukiman = document.getElementById('card-s-permukiman');
+      const sProduksi = document.getElementById('card-s-produksi');
+      const sLindung = document.getElementById('card-s-lindung');
+      const sBadanAir = document.getElementById('card-s-badan-air');
+      const sBreakdown = document.getElementById('card-s-rtrw-breakdown');
+
+      if (sJarak) {
+        if (
+          sp.jarak_ibukota_kabupaten_m !== null &&
+          sp.jarak_ibukota_kabupaten_m !== undefined &&
+          !isNaN(Number(sp.jarak_ibukota_kabupaten_m))
+        ) {
+          sJarak.textContent = `${(Number(sp.jarak_ibukota_kabupaten_m) / 1000).toFixed(2)} km`;
+        } else {
+          sJarak.textContent = 'Data tidak tersedia';
+        }
+      }
+      if (sDesa) sDesa.textContent = `${sp.desa_count} desa`;
+      if (sKec) sKec.textContent = `${sp.kecamatan_count} kec`;
+      if (sPermukiman) {
+        sPermukiman.textContent = `${sp.permukiman_pct.toFixed(1)}% (${(sp.permukiman_length_m / 1000).toFixed(2)} km)`;
+      }
+      if (sProduksi) {
+        sProduksi.textContent = `${sp.produksi_pct.toFixed(1)}% (${(sp.produksi_length_m / 1000).toFixed(2)} km)`;
+      }
+      if (sLindung) sLindung.textContent = `${sp.lindung_pct.toFixed(1)}%`;
+      if (sBadanAir) sBadanAir.textContent = `${sp.badan_air_pct.toFixed(1)}%`;
+
+      if (sBreakdown && Array.isArray(sp.rtrw_classes)) {
+        sBreakdown.innerHTML = sp.rtrw_classes
+          .map(
+            (c) =>
+              `<div class="flex justify-between gap-2 py-1.5"><span>${escapeHtml(
+                c.name
+              )}:</span><span class="shrink-0 font-semibold">${c.pct.toFixed(1)}% (${(c.length_m / 1000).toFixed(2)} km)</span></div>`
+          )
+          .join('') || 'Tidak ada irisan yang tercatat.';
+      }
+
+      idVillages.textContent = 'Nama desa tidak tersedia.';
+      // Update villages in Card 1
+      if (idVillages && sp.desa_names && sp.desa_names.length > 0) {
+        idVillages.textContent = `Desa: ${sp.desa_names.join(', ')}`;
+      }
+    } else {
+      idVillages.textContent = 'Data spasial tidak tersedia.';
+    }
+  } catch (err) {
+    if (request === state.inspectorRequest) idVillages.textContent = 'Gagal memuat data spasial.';
+    console.error('Error fetching spatial detail:', err);
+  }
+};
+
+function fitInspectedRoad() {
+  const bounds = state.mapLayers.selectionHalo?.getBounds();
+  if (!bounds?.isValid()) return;
+  state.map.fitBounds(bounds, { padding: [36, 36], maxZoom: 15 });
+}
+
+window.exitInteractiveSpatialProfile = function () {
+  state.inspectorRequest++;
+  state.isInteractiveDetailMode = false;
+  state.interactiveDetailRoadKey = null;
+  clearRouteTrace({ skipZoomReset: true });
+  document.getElementById('road-inspector').classList.add('hidden');
+  document.getElementById('map-container').classList.remove('inspection-open');
+  document.getElementById('gis-side-panel').classList.toggle('hidden', state.inspectorLayersWereHidden);
+  document.getElementById('btn-toggle-layers').setAttribute('aria-expanded', String(!state.inspectorLayersWereHidden));
+  clearRoadSelection();
+  state.map?.invalidateSize({ pan: false });
 };
 
 function fitHssBounds() {
@@ -2119,7 +3189,7 @@ function updateDynamicLegend() {
         <div class="space-y-1">
           <div class="flex items-center space-x-2">
             <span class="w-5 h-1.5 bg-rose-600 rounded-full inline-block"></span>
-            <span class="font-semibold text-rose-800">Top 35 (Sangat Mendesak)</span>
+            <span class="font-semibold text-rose-800">Peringkat 1–35</span>
           </div>
           <div class="flex items-center space-x-2">
             <span class="w-5 h-1 bg-orange-500 rounded-full inline-block"></span>
@@ -2295,7 +3365,7 @@ function renderProvenance(data) {
           item.status === 'VERIFIED'
             ? 'bg-emerald-100 text-emerald-800'
             : 'bg-rose-100 text-rose-800'
-        }">${item.status}</span>
+        }">${item.status === 'VERIFIED' ? 'Jumlah cocok' : 'Perlu diperiksa'}</span>
       </td>
     </tr>
   `
@@ -2374,26 +3444,38 @@ function renderModel(data) {
 }
 
 // --- ROAD DETAIL & EXPLAINABILITY DRAWER ---
-window.openRoadDetail = async function (roadKey) {
+window.openRoadDetail = async function (roadKey, { showFactors = false } = {}) {
+  if (!/^HSS-KAB-\d{3}$/.test(roadKey || '')) return;
+  const drawer = document.getElementById('road-detail-drawer');
+  const wasOpen = drawer && !drawer.classList.contains('hidden');
+  if (!wasOpen) drawerReturnFocus = document.activeElement;
+  const inspectorRequest = state.inspectorRequest;
   try {
-    const res = await fetch(`/api/roads/${roadKey}?mode=${state.mode}`);
+    const res = await fetch(`/api/roads/${encodeURIComponent(roadKey)}?mode=${encodeURIComponent(state.mode)}&model=${encodeURIComponent(state.modelCode)}`);
     const json = await res.json();
     if (!json.success) throw new Error(json.error);
 
+    if (showFactors && inspectorRequest !== state.inspectorRequest) return;
+    if (state.isInteractiveDetailMode && state.interactiveDetailRoadKey !== roadKey) exitInteractiveSpatialProfile();
     state.selectedRoadDetail = json.data;
     renderRoadDetailDrawer(json.data);
 
-    const drawer = document.getElementById('road-detail-drawer');
     if (state.currentView === 'peta') {
       drawer.classList.add('drawer-map-mode');
     } else {
       drawer.classList.remove('drawer-map-mode');
     }
     drawer.classList.remove('hidden');
+    syncDrawerAccessibility(drawer);
 
-    // Update URL hash parameter without triggering navigation
-    const currentBase = window.location.hash.split('?')[0] || '#prioritas';
-    history.replaceState(null, '', `${currentBase}?road=${roadKey}`);
+    writeRouteContext({ road: roadKey });
+    if (showFactors) {
+      document.getElementById('road-detail-evidence').open = true;
+      const factors = document.getElementById('drawer-factor-section');
+      const body = document.getElementById('drawer-scroll-body');
+      body.scrollTop += factors.getBoundingClientRect().top - body.getBoundingClientRect().top - 16;
+      factors.focus({ preventScroll: true });
+    } else if (!wasOpen) document.getElementById('btn-close-drawer')?.focus({ preventScroll: true });
   } catch (err) {
     console.error('Error opening road detail:', err);
   }
@@ -2403,12 +3485,12 @@ function closeDetailDrawer() {
   const drawer = document.getElementById('road-detail-drawer');
   drawer.classList.add('hidden');
   drawer.classList.remove('drawer-map-mode');
+  drawer.setAttribute('aria-modal', 'true');
   state.selectedRoadDetail = null;
   clearDD1SegmentsLayer();
-
-  // Clean URL query
-  const currentBase = window.location.hash.split('?')[0] || '#prioritas';
-  history.replaceState(null, '', currentBase);
+  writeRouteContext({ road: '' });
+  if (drawerReturnFocus?.isConnected) drawerReturnFocus.focus({ preventScroll: true });
+  drawerReturnFocus = null;
 }
 
 function renderRoadDetailDrawer(data) {
@@ -2439,7 +3521,7 @@ function renderRoadDetailDrawer(data) {
   document.getElementById('d-tidak-mantap-summary').textContent = `${cond.tidak_mantap_km.toFixed(3)} km (${cond.tidak_mantap_pct.toFixed(1)}%)`;
 
   // Section C: Priority Result
-  document.getElementById('d-final-score').textContent = res.final_score.toFixed(6);
+  document.getElementById('d-final-score').textContent = formatId(res.final_score, 4);
   document.getElementById('d-priority-rank').innerHTML = `#${res.priority_rank} <span class="text-sm font-normal text-slate-500">/ 350</span>`;
 
   const badgeEl = document.getElementById('d-tier-badge');
@@ -2448,12 +3530,28 @@ function renderRoadDetailDrawer(data) {
   )}`;
   badgeEl.textContent = getTierDisplayName(res.tier_category);
 
+  const addButton = document.getElementById('drawer-add-to-proposal-button');
+  if (addButton) addButton.dataset.roadKey = id.road_key;
+  const explanation = document.getElementById('drawer-explanation');
+  if (explanation) {
+    const drivers = [...data.factors].filter((factor) => Number.isFinite(factor.contribution)).sort((a, b) => b.contribution - a.contribution).slice(0, 3);
+    const conditionText = cond.mantap_pct >= 60
+      ? `Kondisi fisik tergolong mantap (${formatId(cond.mantap_pct, 1)}%); komposisinya ${formatId(cond.baik_pct, 1)}% baik dan ${formatId(cond.sedang_pct, 1)}% sedang.`
+      : `Kemantapan fisik tercatat ${formatId(cond.mantap_pct, 1)}%, dengan ${formatId(cond.rusak_ringan_pct + cond.rusak_berat_pct, 1)}% rusak ringan atau berat.`;
+    explanation.innerHTML = `<p><strong>${conditionText}</strong> Hasil ${res.operating_mode === 'BENCHMARK_2024' ? 'audit 2024' : 'operasional 2025'} menempatkan ruas ini pada peringkat <strong>#${res.priority_rank}</strong> (${getTierDisplayName(res.tier_category)}). Peringkat mengurutkan skor gabungan dan tidak menyatakan tingkat kerusakan atau keputusan pekerjaan.</p>
+      <p class="mt-1">Faktor dengan kontribusi terbesar pada skor ruas: ${drivers.map((factor) => `<strong>${escapeHtml(factor.variable_label)}</strong> (${formatId(factor.contribution, 4)})`).join(', ') || 'rincian kontribusi tidak tersedia'}.</p>
+      <p class="mt-1 text-[11px] text-slate-600">Kondisi fisik berasal dari ${escapeHtml(cond.source_filename || 'sumber kondisi tahun 2025')} (2025). Gunakan rincian perhitungan dan sumber untuk memeriksa bukti serta keterbatasannya.</p>`;
+  }
+
   // Section A.2: Spatial Administrative Coverage (Phase 5.1)
   loadRoadCoverage(id.road_key);
 
   // Section C.2: Nearest Facilities & Accessibility Tracing (Phase 5.1)
   loadRoadNearestFacilities(id.road_key);
   clearRouteTrace();
+
+  // Profil dan Karakteristik Ruas (Road Narrative Engine)
+  loadRoadNarrative(id.road_key);
 
   // Section F: Demografi Rumah Tangga Dilayani (Phase 5.1A)
   loadRoadDemographics(id.road_key);
@@ -2550,6 +3648,87 @@ async function loadRoadCoverage(roadKey) {
   }
 }
 
+async function loadRoadNarrative(roadKey) {
+  const inspectorSummary = document.getElementById('inspector-narrative-summary');
+  const drawerSummary = document.getElementById('drawer-narrative-summary');
+  const drawer8Dim = document.getElementById('drawer-narrative-8dim-content');
+
+  if (inspectorSummary) {
+    inspectorSummary.innerHTML = '<p class="text-slate-500 italic">Memuat profil dan narasi karakteristik ruas jalan…</p>';
+  }
+  if (drawerSummary) {
+    drawerSummary.innerHTML = '<p class="text-slate-500 italic">Memuat profil dan narasi karakteristik ruas jalan…</p>';
+  }
+
+  try {
+    const res = await fetch(`/api/roads/${encodeURIComponent(roadKey)}/narrative?mode=${encodeURIComponent(state.mode)}&model=${encodeURIComponent(state.modelCode)}`);
+    const json = await res.json();
+    if (!json.success || !json.data) throw new Error(json.error || 'Gagal memuat narasi');
+    const data = json.data;
+
+    // Render 1-3 paragraph summary
+    const paragraphsHtml = (data.ringkasan_eksekutif || '')
+      .split('\n\n')
+      .map((p) => `<p>${escapeHtml(p)}</p>`)
+      .join('');
+
+    if (inspectorSummary) inspectorSummary.innerHTML = paragraphsHtml;
+    if (drawerSummary) drawerSummary.innerHTML = paragraphsHtml;
+
+    // Populate Inspector 8 Dimension Templates
+    const t1 = document.getElementById('narrative-t1-text');
+    const t2 = document.getElementById('narrative-t2-text');
+    const t3 = document.getElementById('narrative-t3-text');
+    const t4 = document.getElementById('narrative-t4-text');
+    const t5 = document.getElementById('narrative-t5-text');
+    const t6 = document.getElementById('narrative-t6-text');
+    const t7 = document.getElementById('narrative-t7-text');
+    const t8 = document.getElementById('narrative-t8-text');
+
+    if (t1) t1.textContent = data.template1_gambaran_umum?.text || '—';
+    if (t2) t2.textContent = data.template2_cakupan_demografi?.text || '—';
+    if (t3) t3.textContent = data.template3_tata_ruang_rtrw?.text || '—';
+    if (t4) t4.textContent = data.template4_aksesibilitas_pelayanan?.text || '—';
+    if (t5) t5.textContent = data.template5_kondisi_kemantapan?.text || '—';
+    if (t6) t6.textContent = data.template6_karakteristik_teknis?.text || '—';
+    if (t7) t7.textContent = data.template7_penilaian_prioritas?.text || '—';
+    if (t8) t8.textContent = data.template8_kesimpulan_karakteristik?.text || '—';
+
+    // Populate Drawer 8 Dimension Templates
+    if (drawer8Dim) {
+      const dimensions = [
+        data.template1_gambaran_umum,
+        data.template2_cakupan_demografi,
+        data.template3_tata_ruang_rtrw,
+        data.template4_aksesibilitas_pelayanan,
+        data.template5_kondisi_kemantapan,
+        data.template6_karakteristik_teknis,
+        data.template7_penilaian_prioritas,
+        data.template8_kesimpulan_karakteristik,
+      ];
+      drawer8Dim.innerHTML = dimensions
+        .filter(Boolean)
+        .map(
+          (dim, idx) => `
+          <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-2xs">
+            <h4 class="font-bold text-sky-900 text-xs">${idx + 1}. ${escapeHtml(dim?.title || '')}</h4>
+            <p class="mt-1 text-slate-700 leading-relaxed text-xs">${escapeHtml(dim?.text || '')}</p>
+          </div>
+        `
+        )
+        .join('');
+    }
+  } catch (err) {
+    console.error('Error loading road narrative:', err);
+    if (inspectorSummary) {
+      inspectorSummary.innerHTML = '<p class="text-rose-600 text-xs">Gagal memuat profil narasi ruas jalan.</p>';
+    }
+    if (drawerSummary) {
+      drawerSummary.innerHTML = '<p class="text-rose-600 text-xs">Gagal memuat profil narasi ruas jalan.</p>';
+    }
+  }
+}
+
 const FACILITY_CARD_CONFIG = [
   { type: 'puskesmas', label: 'Puskesmas', icon: '🩺' },
   { type: 'school', label: 'Sekolah', icon: '🏫' },
@@ -2558,12 +3737,14 @@ const FACILITY_CARD_CONFIG = [
 ];
 
 async function loadRoadNearestFacilities(roadKey) {
+  if (state.currentRoadKey === roadKey && (state.nearestFacilitiesLoading || state.currentRoadNearestFacilities?.length)) return;
+  const request = ++state.facilityRequest;
   state.currentRoadKey = roadKey;
   state.currentRoadNearestFacilities = [];
   state.nearestFacilitiesLoading = true;
   state.nearestFacilitiesError = null;
 
-  // 1. Set explicit LOADING state: "Memuat data jarak..."
+  // 1. Set explicit LOADING state: "Memuat data jarak..." on both Drawer & Card 5 Overlay
   for (const cfg of FACILITY_CARD_CONFIG) {
     const b = document.getElementById(`badge-dist-${cfg.type}`);
     const n = document.getElementById(`name-dist-${cfg.type}`);
@@ -2579,6 +3760,11 @@ async function loadRoadNearestFacilities(roadKey) {
     if (s) {
       s.innerHTML = '<span>Memuat rute jaringan...</span>';
     }
+
+    const button = document.getElementById(`btn-card-trace-${cfg.type}`);
+    button.disabled = true;
+    document.getElementById(`card-badge-dist-${cfg.type}`).textContent = '…';
+    document.getElementById(`card-name-dist-${cfg.type}`).textContent = 'Memuat…';
   }
 
   try {
@@ -2587,6 +3773,7 @@ async function loadRoadNearestFacilities(roadKey) {
     const json = await res.json();
     if (!json.success) throw new Error(json.error || 'Gagal memuat');
 
+    if (request !== state.facilityRequest) return;
     state.currentRoadNearestFacilities = json.data || [];
     state.nearestFacilitiesLoading = false;
 
@@ -2596,6 +3783,14 @@ async function loadRoadNearestFacilities(roadKey) {
       const n = document.getElementById(`name-dist-${cfg.type}`);
       const s = document.getElementById(`status-dist-${cfg.type}`);
       const fac = state.currentRoadNearestFacilities.find((f) => f.facility_type === cfg.type);
+
+      const button = document.getElementById(`btn-card-trace-${cfg.type}`);
+      button.disabled = false;
+      const disconnected = fac && fac.network_distance_m < 0;
+      document.getElementById(`card-badge-dist-${cfg.type}`).textContent = !fac || disconnected ? '—' : `${(fac.network_distance_m / 1000).toFixed(2)} km`;
+      const name = document.getElementById(`card-name-dist-${cfg.type}`);
+      name.textContent = !fac ? 'Data belum tersedia' : disconnected ? 'Jaringan terputus' : fac.nearest_facility_name;
+      button.title = name.textContent;
 
       if (!fac) {
         // NO_FACILITY_DATA: "Data fasilitas belum tersedia"
@@ -2642,6 +3837,7 @@ async function loadRoadNearestFacilities(roadKey) {
       }
     }
   } catch (err) {
+    if (request !== state.facilityRequest) return;
     state.nearestFacilitiesLoading = false;
     state.nearestFacilitiesError = err.message;
     console.error('Error loading nearest facilities:', err);
@@ -2662,15 +3858,23 @@ async function loadRoadNearestFacilities(roadKey) {
       if (s) {
         s.innerHTML = '<span class="text-rose-500 font-medium">Periksa koneksi server</span>';
       }
+
+      document.getElementById(`btn-card-trace-${cfg.type}`).disabled = false;
+      document.getElementById(`card-badge-dist-${cfg.type}`).textContent = '—';
+      document.getElementById(`card-name-dist-${cfg.type}`).textContent = 'Gagal memuat';
     }
   }
 }
 
-function clearRouteTrace() {
+function clearRouteTrace(options = {}) {
   if (state.mapLayers.routeTrace && state.map) {
     state.map.removeLayer(state.mapLayers.routeTrace);
     state.mapLayers.routeTrace = null;
   }
+  state.isRouteTracingActive = false;
+  state.activeTracedFacilityType = null;
+
+  // Drawer elements
   const card = document.getElementById('route-trace-card');
   const btnClear = document.getElementById('btn-clear-route-trace');
   const unresMsg = document.getElementById('rtc-unresolved-msg');
@@ -2679,10 +3883,38 @@ function clearRouteTrace() {
   if (btnClear) btnClear.classList.add('hidden');
   if (unresMsg) unresMsg.classList.add('hidden');
   if (grid) grid.classList.remove('hidden');
+
+  // Interactive Overlay Route HUD
+  const routeHud = document.getElementById('interactive-route-hud');
+  if (routeHud) routeHud.classList.add('hidden');
+
+  for (const cfg of FACILITY_CARD_CONFIG) {
+    document.getElementById(`btn-card-trace-${cfg.type}`)?.setAttribute('aria-pressed', 'false');
+  }
+
+  if (!options.skipZoomReset && state.isInteractiveDetailMode) fitInspectedRoad();
+}
+
+function renderInspectorRoute(facilityType, facility) {
+  if (!state.isInteractiveDetailMode) return;
+  const connected = facility && facility.network_distance_m >= 0;
+  state.activeTracedFacilityType = facilityType;
+  document.getElementById(`btn-card-trace-${facilityType}`).setAttribute('aria-pressed', 'true');
+  document.getElementById('route-hud-type-badge').textContent = connected ? 'Rute jaringan terpendek · Dijkstra' : '';
+  document.getElementById('route-hud-facility-name').textContent = facility?.nearest_facility_name || '';
+  document.getElementById('route-hud-network-dist').textContent = connected
+    ? `${(facility.network_distance_m / 1000).toFixed(2)} km (${facility.network_distance_m.toFixed(0)} m)`
+    : facility ? 'Rute jaringan tidak terhubung' : state.nearestFacilitiesError ? 'Gagal memuat data rute' : 'Data fasilitas belum tersedia';
+  document.getElementById('route-hud-comparison').classList.toggle('hidden', !connected);
+  if (connected) {
+    document.getElementById('route-hud-straight-dist').textContent = facility.straight_line_distance_m == null ? '—' : `${(facility.straight_line_distance_m / 1000).toFixed(2)} km`;
+    document.getElementById('route-hud-snap-dist').textContent = `${facility.facility_snap_distance_m.toFixed(1)} m`;
+  }
+  document.getElementById('interactive-route-hud').classList.remove('hidden');
 }
 
 function traceNearestFacilityRoute(facilityType) {
-  clearRouteTrace();
+  clearRouteTrace({ skipZoomReset: true });
 
   const card = document.getElementById('route-trace-card');
   const btnClear = document.getElementById('btn-clear-route-trace');
@@ -2690,6 +3922,9 @@ function traceNearestFacilityRoute(facilityType) {
   const grid = document.getElementById('rtc-details-grid');
   const nameEl = document.getElementById('rtc-facility-name');
   const distEl = document.getElementById('rtc-network-dist');
+
+  const facRecord = (state.currentRoadNearestFacilities || []).find((f) => f.facility_type === facilityType);
+  if (!state.nearestFacilitiesLoading) renderInspectorRoute(facilityType, facRecord);
 
   // Guard: Loading state
   if (state.nearestFacilitiesLoading) {
@@ -2724,8 +3959,6 @@ function traceNearestFacilityRoute(facilityType) {
     }
     return;
   }
-
-  const facRecord = (state.currentRoadNearestFacilities || []).find((f) => f.facility_type === facilityType);
 
   // Guard: No data for this category
   if (!facRecord) {
@@ -2763,6 +3996,9 @@ function traceNearestFacilityRoute(facilityType) {
   }
 
   // AVAILABLE: Render route tracing on map
+  state.isRouteTracingActive = true;
+  state.activeTracedFacilityType = facilityType;
+
   // Ensure routeTracingPane exists
   if (state.map && !state.map.getPane('routeTracingPane')) {
     state.map.createPane('routeTracingPane');
@@ -2775,7 +4011,20 @@ function traceNearestFacilityRoute(facilityType) {
 
   const routeGroup = L.layerGroup();
 
-  // 1. Route line (violet #8b5cf6, weight 4.5, dashArray 6,6)
+  // 1a. Route line casing/glow for high contrast
+  const routeGlow = L.geoJSON(routeGeo, {
+    pane: 'routeTracingPane',
+    style: {
+      color: '#4338ca',
+      weight: 8,
+      opacity: 0.45,
+      lineCap: 'round',
+      lineJoin: 'round',
+    },
+  });
+  routeGroup.addLayer(routeGlow);
+
+  // 1b. Route line (violet #8b5cf6, weight 4.5, dashArray 6,6)
   const routeLine = L.geoJSON(routeGeo, {
     pane: 'routeTracingPane',
     style: ROUTE_TRACING_STYLE,
@@ -2813,14 +4062,17 @@ function traceNearestFacilityRoute(facilityType) {
     routeGroup.addTo(state.map);
     state.mapLayers.routeTrace = routeGroup;
 
-    // Fit bounds to route
+    // Fit bounds to route with generous padding
     const bounds = routeLine.getBounds();
     if (bounds.isValid()) {
-      state.map.fitBounds(bounds, { padding: [60, 60] });
+      state.map.fitBounds(bounds, {
+        padding: [36, 36],
+        maxZoom: 16,
+      });
     }
   }
 
-  // Update Route Trace Card
+  // Update Drawer Route Trace Card
   if (card) {
     nameEl.textContent = facRecord.nearest_facility_name;
     distEl.textContent = `${(facRecord.network_distance_m / 1000).toFixed(2)} km (${facRecord.network_distance_m.toFixed(0)} m)`;
@@ -2836,6 +4088,7 @@ function traceNearestFacilityRoute(facilityType) {
   if (btnClear) {
     btnClear.classList.remove('hidden');
   }
+
 }
 
 // ====================================================================
@@ -3212,15 +4465,17 @@ function renderMathAudit(data) {
   const isPrecise = state.precisionMode;
 
   const box = document.getElementById('d-math-audit-box');
+  const digits = isPrecise ? 10 : 4;
   box.innerHTML = `
     <div class="flex items-center justify-between font-bold">
-      <span>✓ AUDIT DEKOMPOSISI MATEMATIS PERSIS (ZERO DRIFT):</span>
-      <span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded text-[10px]">VERIFIED EXACT</span>
+      <span>Pemeriksaan aritmetika skor</span>
+      <span class="${audit.is_exact ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'} px-2 py-0.5 rounded text-[10px]">${audit.is_exact ? 'Konsisten dalam toleransi' : 'Perbedaan terdeteksi'}</span>
     </div>
-    <div class="text-[11px] text-emerald-800 mt-1 space-y-0.5">
-      <div>• Total Subtotal 4 Kategori : <strong>${isPrecise ? audit.sum_subtotals.toFixed(12) : audit.sum_subtotals.toFixed(6)}</strong> (Delta: 0.00000000)</div>
-      <div>• Total Kontribusi 17 Faktor : <strong>${isPrecise ? audit.sum_contributions.toFixed(12) : audit.sum_contributions.toFixed(6)}</strong> (Delta: 0.00000000)</div>
-      <div>• Skor Akhir Komposit       : <strong>${isPrecise ? audit.final_score.toFixed(12) : audit.final_score.toFixed(6)}</strong></div>
+    <div class="text-[11px] text-slate-700 mt-1 space-y-0.5">
+      <div>Subtotal 4 kategori: <strong>${formatId(audit.sum_subtotals, digits)}</strong> · selisih dari skor: ${formatId(audit.delta_subtotals, digits)}</div>
+      <div>Kontribusi 17 faktor: <strong>${formatId(audit.sum_contributions, digits)}</strong> · selisih dari skor: ${formatId(audit.delta_contributions, digits)}</div>
+      <div>Skor komposit: <strong>${formatId(audit.final_score, digits)}</strong></div>
+      <div class="text-[10px] text-slate-500">Pemeriksaan ini mencocokkan aritmetika, bukan keakuratan observasi atau persetujuan kebijakan.</div>
     </div>
   `;
 }
@@ -3250,14 +4505,14 @@ function getTierDisplayName(tier) {
   // STRICT RULE: Never label as 'Pemeliharaan Rutin' or 'Regular Maintenance'
   switch (tier) {
     case 'TOP_35':
-      return 'TOP_35 (Tier 1)';
+      return 'Peringkat 1–35';
     case 'TOP_70':
-      return 'TOP_70 (Tier 2)';
+      return 'Peringkat 36–70';
     case 'TOP_105':
-      return 'TOP_105 (Tier 3)';
+      return 'Peringkat 71–105';
     case 'REGULAR':
     default:
-      return 'Ruas Kabupaten Lainnya / Di Luar Prioritas Utama';
+      return 'Peringkat 106–350';
   }
 }
 
@@ -3279,7 +4534,7 @@ const SIM_BASELINE_CATEGORIES = [
   { category_code: 'TEKNIS_JALAN', category_name: 'Data Teknis Jalan', raw_weight: 0.378965 },
   { category_code: 'AKSESIBILITAS', category_name: 'Data Aksesibilitas', raw_weight: 0.283815 },
   { category_code: 'PELAYANAN_MASYARAKAT', category_name: 'Data Pelayanan Masyarakat', raw_weight: 0.192412 },
-  { category_code: 'SPASIAL_DEMOGRAFI', category_name: 'Data Spasial & Demografi', raw_weight: 0.144807 },
+  { category_code: 'SPASIAL_DEMOGRAFI', category_name: 'Spasial dan Aksesibilitas Wilayah', raw_weight: 0.144807 },
 ];
 
 const SIM_BASELINE_VARIABLES = [
@@ -3539,17 +4794,44 @@ function recalculateSimulation() {
   }
 }
 
+function updateSimulationContextStatus(message) {
+  const status = document.getElementById('sim-context-status');
+  if (!status) return;
+  const mode = state.mode === 'BENCHMARK_2024' ? 'Audit peringkat 2024' : 'Peringkat operasional 2025';
+  const scenario = state.simulation.scenarioName || 'Baseline terkonfigurasi';
+  status.textContent = `${message} · ${mode} · ${state.modelCode} · ${scenario}. Data kondisi profil yang ditampilkan tetap tahun 2025.`;
+}
+
 // Load Simulation Context from API
 async function loadSimulation() {
+  const requestedMode = state.mode;
   try {
-    if (!state.simulation.initialized) {
-      const res = await fetch(`/api/simulation/context?mode=${state.mode}`);
+    if (!state.simulation.initialized || state.simulation.contextMode !== requestedMode) {
+      const savedConfig = state.simulation.simConfig ? cloneConfig(state.simulation.simConfig) : null;
+      updateSimulationContextStatus('Memuat konteks peringkat');
+      state.simulation.initialized = false;
+      state.simulation.contextMode = null;
+      state.simulation.featureVectors = null;
+      state.simulation.baselineScores = null;
+      state.simulation.simulatedScores = null;
+      state.simulation.comparisons = [];
+      state.simulation.summary = null;
+      document.getElementById('sim-top10-body')?.replaceChildren();
+      document.getElementById('sim-table-body')?.replaceChildren();
+      const count = document.getElementById('sim-table-count');
+      if (count) count.textContent = '—';
+      const pageInfo = document.getElementById('sim-pagination-info');
+      if (pageInfo) pageInfo.textContent = 'Konteks sedang dimuat';
+      const sensitivity = document.getElementById('sensitivity-results');
+      if (sensitivity) sensitivity.textContent = 'Analisis sensitivitas akan tersedia setelah konteks peringkat dimuat.';
+      const res = await fetch(`/api/simulation/context?mode=${requestedMode}&model=${encodeURIComponent(state.modelCode)}`);
       const json = await res.json();
       if (!json.success) throw new Error(json.error);
+      if (requestedMode !== state.mode) return;
 
       state.simulation.featureVectors = json.data.featureVectors;
       state.simulation.baselineScores = json.data.baselineRankedScores;
-      state.simulation.simConfig = getInitialSimConfig();
+      state.simulation.simConfig = savedConfig ? hydrateConfig(savedConfig) : getInitialSimConfig();
 
       // Populate district filter
       const districtSelect = document.getElementById('sim-filter-district');
@@ -3561,7 +4843,11 @@ async function loadSimulation() {
         });
       }
 
+      state.simulation.contextMode = requestedMode;
       state.simulation.initialized = true;
+      updateSimulationContextStatus(`Konteks siap · ${json.data.featureVectors.length} ruas`);
+    } else {
+      updateSimulationContextStatus(`Konteks siap · ${state.simulation.featureVectors?.length || 0} ruas`);
     }
 
     renderSimulationCategories();
@@ -3569,6 +4855,12 @@ async function loadSimulation() {
     recalculateSimulation();
   } catch (err) {
     console.error('Error loading simulation workspace:', err);
+    state.simulation.initialized = false;
+    state.simulation.contextMode = null;
+    state.simulation.featureVectors = null;
+    const output = document.getElementById('sensitivity-results');
+    if (output) output.textContent = 'Data peringkat untuk konteks ini gagal dimuat. Periksa koneksi lalu buka kembali skenario.';
+    updateSimulationContextStatus('Konteks gagal dimuat; hasil lama tidak digunakan');
   }
 }
 
@@ -3854,6 +5146,8 @@ function renderSimulationTable() {
 // Window Event Callbacks for Category and Variable Sliders
 window.onCategoryWeightChange = function (categoryCode, value) {
   if (!state.simulation.simConfig) return;
+  state.simulation.scenarioId = '';
+  state.simulation.scenarioName = 'Skenario saat ini';
   state.simulation.simConfig.categories = simRebalanceCategorySiblings(
     state.simulation.simConfig.categories,
     categoryCode,
@@ -3861,11 +5155,14 @@ window.onCategoryWeightChange = function (categoryCode, value) {
   );
   renderSimulationCategories();
   renderSimulationVariables();
+  updateSimulationContextStatus('Asumsi diubah; skenario belum disimpan');
   recalculateSimulation();
 };
 
 window.onVariableWeightChange = function (categoryCode, variableCode, value) {
   if (!state.simulation.simConfig) return;
+  state.simulation.scenarioId = '';
+  state.simulation.scenarioName = 'Skenario saat ini';
   state.simulation.simConfig.variables = simRebalanceVariableSiblings(
     state.simulation.simConfig.variables,
     categoryCode,
@@ -3873,11 +5170,14 @@ window.onVariableWeightChange = function (categoryCode, variableCode, value) {
     parseFloat(value)
   );
   renderSimulationVariables();
+  updateSimulationContextStatus('Asumsi diubah; skenario belum disimpan');
   recalculateSimulation();
 };
 
 window.applySimulationPreset = function (presetType) {
   if (!state.simulation.simConfig) return;
+  state.simulation.scenarioId = '';
+  state.simulation.scenarioName = ({ BASELINE: '', PELAYANAN: 'Lebih dekat ke fasilitas layanan', AKSES: 'Tekankan koneksi jalan provinsi', KERUSAKAN: 'Tekankan kerusakan berat' })[presetType] || 'Skenario saat ini';
 
   if (presetType === 'BASELINE') {
     state.simulation.simConfig = getInitialSimConfig();
@@ -3924,6 +5224,7 @@ window.applySimulationPreset = function (presetType) {
 
   renderSimulationCategories();
   renderSimulationVariables();
+  updateSimulationContextStatus(presetType === 'BASELINE' ? 'Baseline dipulihkan' : 'Preset simulasi aktif; skenario belum disimpan');
   recalculateSimulation();
 };
 
@@ -4163,5 +5464,6 @@ window.setMapColorSource = setMapColorSource;
 window.appState = state;
 window.clearRouteTrace = clearRouteTrace;
 window.traceNearestFacilityRoute = traceNearestFacilityRoute;
+window.loadRoadNearestFacilities = loadRoadNearestFacilities;
 
 

@@ -1,0 +1,16 @@
+{
+  "fact_checks": {
+    "road_condition_2025_pct": "66,03%",
+    "road_condition_2025_km": "483,62 km",
+    "road_condition_net_improvement": "+10,77 km",
+    "road_treatment_output": "20,223 km",
+    "bridge_maintenance": "543,53 m / 114,67%",
+    "financial_realization": "70,30%",
+    "survey_coverage": "11 kecamatan / 350 ruas / 732,46 km",
+    "composite_indicator": "80,21%"
+  },
+  "publication_language": "Public-facing wording excludes audit, reconciliation, locked-authority, and internal-control terminology.",
+  "geometry_policy": "Map geometry is read directly from profile_book_map_data.json, sourced from the authoritative Diklat PIM spatial package.",
+  "image_generation_policy": "No image generation used for factual charts or map geometry.",
+  "contact_sheet": "09_qa/contact_sheet.png"
+}

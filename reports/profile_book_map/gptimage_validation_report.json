@@ -1,0 +1,85 @@
+{
+  "authority": "hss_profile_book_profile_book_300dpi.png and hss_profile_book_landscape_presentation_300dpi.png",
+  "accepted_policy": "Only non-geometric editorial treatment is retained from GPT Image.",
+  "rejected_policy": "Any GPT Image pixels inside locked map/reconciliation panels were rejected and replaced with authoritative source pixels.",
+  "outputs": [
+    {
+      "output": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hero_map_gptimage_v1.png",
+      "source": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hss_profile_book_landscape_presentation_300dpi.png",
+      "raw_candidate": "C:\\Users\\Windows 10\\.codex\\generated_images\\01a0edb5-cf85-7790-a0e8-9a0f014bcb65\\exec-28abc06b-22c8-4a9a-b1e1-9bf0e03f9cea.png",
+      "locked_boxes": [
+        [
+          150,
+          350,
+          2950,
+          2800
+        ],
+        [
+          3060,
+          350,
+          4050,
+          2800
+        ]
+      ],
+      "geometry_policy": "authoritative source pixels restored after GPT Image pass",
+      "visual_deviations": [
+        "GPT Image introduced editorial terrain/paper atmosphere outside locked map panels.",
+        "GPT Image added or restyled typography, stat cards, and framing outside locked panels.",
+        "Metric card wording for 68,80% was corrected to REALISASI ANGGARAN."
+      ],
+      "raw_candidate_workspace_copy": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hero_map_gptimage_v1_raw_candidate.png"
+    },
+    {
+      "output": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hero_map_gptimage_v2.png",
+      "source": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hss_profile_book_landscape_presentation_300dpi.png",
+      "raw_candidate": "C:\\Users\\Windows 10\\.codex\\generated_images\\01a0edb5-cf85-7790-a0e8-9a0f014bcb65\\exec-db51ea7f-fe23-4fe4-9866-7977535be614.png",
+      "locked_boxes": [
+        [
+          150,
+          350,
+          2950,
+          2800
+        ],
+        [
+          3060,
+          350,
+          4050,
+          2800
+        ]
+      ],
+      "geometry_policy": "authoritative source pixels restored after GPT Image pass",
+      "visual_deviations": [
+        "GPT Image introduced editorial terrain/paper atmosphere outside locked map panels.",
+        "GPT Image added or restyled typography, stat cards, and framing outside locked panels.",
+        "Metric card wording for 68,80% was corrected to REALISASI ANGGARAN."
+      ],
+      "raw_candidate_workspace_copy": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hero_map_gptimage_v2_raw_candidate.png"
+    },
+    {
+      "output": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\portrait_profile_map_gptimage.png",
+      "source": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\hss_profile_book_profile_book_300dpi.png",
+      "raw_candidate": "C:\\Users\\Windows 10\\.codex\\generated_images\\01a0edb5-cf85-7790-a0e8-9a0f014bcb65\\exec-5ff4f1a9-3ec5-4518-9a8e-80ca6d013577.png",
+      "locked_boxes": [
+        [
+          150,
+          470,
+          2850,
+          3140
+        ],
+        [
+          150,
+          3260,
+          2850,
+          4030
+        ]
+      ],
+      "geometry_policy": "authoritative source pixels restored after GPT Image pass",
+      "visual_deviations": [
+        "GPT Image introduced editorial terrain/paper atmosphere outside locked map panels.",
+        "GPT Image added or restyled typography, stat cards, and framing outside locked panels.",
+        "Metric card wording for 68,80% was corrected to REALISASI ANGGARAN."
+      ],
+      "raw_candidate_workspace_copy": "F:\\WebApps\\6.diklat_pim\\diklat_pim_working_bundle_v1\\reports\\profile_book_map\\portrait_profile_map_gptimage_raw_candidate.png"
+    }
+  ]
+}

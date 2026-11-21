@@ -182,6 +182,12 @@ test('app.js wires popup and tooltip control listeners in initMapControls', () =
   assert.ok(appJs.includes('updateTooltipVisibility'), 'Missing updateTooltipVisibility function');
 });
 
+test('Overlapping road tooltips close the previous road tooltip', () => {
+  assert.ok(appJs.includes("event.tooltip.options.className?.includes('road-map-tooltip')"), 'Road tooltip open handler is missing');
+  assert.ok(appJs.includes('state.map.closeTooltip(previousTooltip)'), 'Previous road tooltip is not closed');
+  assert.equal((appJs.match(/className: 'road-map-tooltip/g) || []).length, 2, 'Priority and DD1 road tooltips must share the exclusive behavior');
+});
+
 // -----------------------------------------------------------------------------
 // 4. INTERACTION ORDER & SELECTION INDEPENDENCE CONTRACTS
 // -----------------------------------------------------------------------------

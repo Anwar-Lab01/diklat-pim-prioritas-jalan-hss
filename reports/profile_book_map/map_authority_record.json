@@ -1,0 +1,22 @@
+{
+  "map_authority": "Existing Diklat PIM app spatial map",
+  "authoritative_road_network": "01_authoritative_seed/diklat_pim_data_seed_v5_authoritative_registry/spatial/roads_county.geojson",
+  "raw_source": "02_raw_sources/spatial_network/ruas_jalan_kabupaten.gpkg",
+  "canonical_identity": "road_key (HSS-KAB-001 to HSS-KAB-350)",
+  "road_feature_count": 350,
+  "district_feature_count": 11,
+  "geometry_policy": "All road paths are read directly from the authoritative GeoJSON coordinates; no geometry is recreated from screenshots.",
+  "rivers": "Omitted because no major-river layer is available in the supplied bundle.",
+  "project_mapping_policy": "Exact named matches only. Partial extents and missing package links are listed as unresolved.",
+  "outputs": [
+    "hss_profile_book_technical.svg",
+    "hss_profile_book_technical_300dpi.png",
+    "hss_profile_book_profile_book.svg",
+    "hss_profile_book_profile_book_300dpi.png",
+    "hss_profile_book_landscape_presentation.svg",
+    "hss_profile_book_landscape_presentation_300dpi.png",
+    "profile_book_map_preview.html",
+    "profile_book_map_data.json",
+    "strategic_project_reconciliation.csv"
+  ]
+}

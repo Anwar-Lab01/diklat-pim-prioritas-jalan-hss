@@ -6,6 +6,8 @@ Thumbs.db
 data/diklat_pim.db
 data/diklat_pim.db-wal
 data/diklat_pim.db-shm
+data/backups/
+temp_chrome*/
 !data/diklat_pim_deploy.db
 
 .vercel

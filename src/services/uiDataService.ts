@@ -5,6 +5,7 @@ import { ConditionService } from './conditionService.ts';
 import { RoadService } from './roadService.ts';
 import { ModelService } from './modelService.ts';
 import { BenchmarkService } from './benchmarkService.ts';
+import { RtrwSpatialService, type RoadSpatialProfileEntity } from './rtrwSpatialService.ts';
 
 export interface DashboardData {
   operatingMode: 'OPERATIONAL_2025' | 'BENCHMARK_2024';
@@ -148,6 +149,7 @@ export interface RoadDetailData {
     delta_contributions: number;
     is_exact: boolean;
   };
+  spatialAccessibilityProfile?: RoadSpatialProfileEntity | null;
 }
 
 export class UiDataService {
@@ -157,6 +159,7 @@ export class UiDataService {
   private roadService: RoadService;
   private modelService: ModelService;
   private benchmarkService: BenchmarkService;
+  private rtrwSpatialService: RtrwSpatialService;
 
   constructor(db?: DatabaseSync) {
     this.db = db || getDatabase();
@@ -165,6 +168,7 @@ export class UiDataService {
     this.roadService = new RoadService(this.db);
     this.modelService = new ModelService(this.db);
     this.benchmarkService = new BenchmarkService(this.db);
+    this.rtrwSpatialService = new RtrwSpatialService(this.db);
   }
 
   /**
@@ -373,6 +377,19 @@ export class UiDataService {
     const varDefs = this.modelService.getVariables();
     const varMap = new Map(varDefs.map((v) => [v.variable_code, v]));
 
+    // Fetch observation raw values for this road and operating mode
+    const obsStmt = this.db.prepare(`
+      SELECT variable_code, raw_value, normalized_value
+      FROM road_variable_observations
+      WHERE operating_mode = ? AND road_key = ?
+    `);
+    const obsRows = obsStmt.all(operatingMode, roadKey) as unknown as Array<{
+      variable_code: string;
+      raw_value: number | null;
+      normalized_value: number | null;
+    }>;
+    const obsMap = new Map(obsRows.map((o) => [o.variable_code, o]));
+
     // Model Category Weights
     const model = this.modelService.getBaselineModel();
     const catWeightsMap = new Map(model?.category_weights.map((c) => [c.category_code, c]));
@@ -382,9 +399,10 @@ export class UiDataService {
       const sub = subtotalsMap[c.category_code]?.subtotal || 0.0;
       const cw = catWeightsMap.get(c.category_code);
       const pctOfScore = scoreRow.final_score > 0 ? (sub / scoreRow.final_score) * 100 : 0;
+      const catName = c.category_code === 'SPASIAL_DEMOGRAFI' ? 'Spasial dan Aksesibilitas Wilayah' : c.category_name;
       return {
         category_code: c.category_code,
-        category_name: c.category_name,
+        category_name: catName,
         raw_weight: cw?.raw_weight || c.default_weight_raw,
         normalized_weight: cw?.normalized_weight || 0,
         subtotal: sub,
@@ -396,13 +414,16 @@ export class UiDataService {
     const factors = factorsList.map((f: any) => {
       const def = varMap.get(f.variable_code);
       const cat = catMap.get(f.category_code);
+      const obs = obsMap.get(f.variable_code);
+      const catName = f.category_code === 'SPASIAL_DEMOGRAFI' ? 'Spasial dan Aksesibilitas Wilayah' : (cat?.category_name || f.category_code);
+      const rawVal = obs?.raw_value !== undefined && obs?.raw_value !== null ? obs.raw_value : (f.raw_value ?? null);
       return {
         variable_code: f.variable_code,
         variable_label: def?.variable_label || f.variable_code,
         definition: def?.definition || '',
         category_code: f.category_code,
-        category_name: cat?.category_name || f.category_code,
-        raw_value: f.raw_value,
+        category_name: catName,
+        raw_value: rawVal,
         raw_unit: def?.raw_unit || '',
         optimization_dir: def?.optimization_dir || 'BENEFIT',
         normalized_value: f.normalized_value,
@@ -465,6 +486,7 @@ export class UiDataService {
         delta_contributions: deltaContrib,
         is_exact: deltaSub < 1e-9 && deltaContrib < 1e-9,
       },
+      spatialAccessibilityProfile: this.rtrwSpatialService.getRoadSpatialProfile(roadKey),
     };
   }
 
