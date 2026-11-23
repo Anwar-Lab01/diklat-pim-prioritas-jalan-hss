@@ -1076,35 +1076,45 @@ function renderDashboard(data) {
   // 1. KPI Cards
   const kpiContainer = document.getElementById('kpi-cards-container');
   kpiContainer.innerHTML = `
-    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Ruas Kabupaten</div>
-      <div class="text-xl sm:text-2xl font-black text-slate-900 mt-1">${data.kpis.totalRoads} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
-      <div class="text-[10px] text-emerald-600 font-semibold mt-1">Berdasarkan SK Bupati</div>
+    <div class="dashboard-kpi-card">
+      <div class="dashboard-kpi-card__content">
+        <div class="dashboard-kpi-card__label">Total Ruas Kabupaten</div>
+        <div class="dashboard-kpi-card__value">${formatId(data.kpis.totalRoads, 0)} <span class="dashboard-kpi-card__unit">ruas</span></div>
+        <div class="dashboard-kpi-card__detail">Berdasarkan SK Bupati</div>
+      </div>
+      <img class="dashboard-kpi-card__illustration" src="/assets/dashboard-kpis/ivory/road-network.webp" alt="" width="960" height="640" decoding="async">
     </div>
-    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Panjang Jaringan</div>
-      <div class="text-xl sm:text-2xl font-black text-slate-900 mt-1">${data.kpis.totalLengthKm.toFixed(3)} <span class="text-xs font-normal text-slate-500">km</span></div>
-      <div class="text-[10px] text-slate-400 mt-1">Ruas Kabupaten HSS</div>
+    <div class="dashboard-kpi-card">
+      <div class="dashboard-kpi-card__content">
+        <div class="dashboard-kpi-card__label">Total Panjang Jaringan</div>
+        <div class="dashboard-kpi-card__value">${formatId(data.kpis.totalLengthKm, 3)} <span class="dashboard-kpi-card__unit">km</span></div>
+        <div class="dashboard-kpi-card__detail">Ruas Kabupaten HSS</div>
+      </div>
+      <img class="dashboard-kpi-card__illustration" src="/assets/dashboard-kpis/ivory/bridge-distance.webp" alt="" width="960" height="640" decoding="async">
     </div>
-    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Kondisi Mantap</div>
-      <div class="text-xl sm:text-2xl font-black text-emerald-600 mt-1">${data.kpis.mantapPct}%</div>
-      <div class="text-[10px] text-slate-500 mt-1">${data.kpis.mantapKm.toFixed(3)} km (Baik + Sedang)</div>
+    <div class="dashboard-kpi-card dashboard-kpi-card--condition">
+      <div class="dashboard-kpi-card__content">
+        <div class="dashboard-kpi-card__label">Kondisi Mantap</div>
+        <div class="dashboard-kpi-card__value">${formatId(data.kpis.mantapPct)}%</div>
+        <div class="dashboard-kpi-card__detail">${formatId(data.kpis.mantapKm, 3)} km (Baik + Sedang)</div>
+      </div>
+      <img class="dashboard-kpi-card__illustration" src="/assets/dashboard-kpis/ivory/maintained-road.webp" alt="" width="960" height="640" decoding="async">
     </div>
   `;
 
   // 2. Category Weights
   const catContainer = document.getElementById('category-weights-container');
-  catContainer.innerHTML = data.categoryWeights
+  catContainer.innerHTML = [...data.categoryWeights]
+    .sort((a, b) => b.normalized_pct - a.normalized_pct)
     .map(
-      (c) => `
+      (c, index) => `
     <div>
-      <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
-        <span>${c.category_name}</span>
-        <span class="font-bold text-slate-900">${formatId(c.normalized_pct, 2)}%</span>
+      <div class="mb-1.5 flex justify-between gap-3 text-sm font-medium text-slate-700">
+        <span>${escapeHtml(c.category_name)}</span>
+        <span class="shrink-0 font-bold tabular-nums ${index === 0 ? 'text-sky-800' : 'text-slate-900'}">${formatId(c.normalized_pct, 2)}%</span>
       </div>
-      <div class="w-full bg-slate-100 rounded-full h-2">
-        <div class="bg-sky-600 h-2 rounded-full" style="width: ${c.normalized_pct}%"></div>
+      <div class="h-2 rounded-full bg-slate-100" aria-hidden="true">
+        <div class="h-full rounded-full ${index === 0 ? 'bg-sky-700' : 'bg-sky-400'}" style="width: ${c.normalized_pct}%"></div>
       </div>
     </div>
   `
@@ -1112,47 +1122,38 @@ function renderDashboard(data) {
     .join('');
 
   // 3. Condition Breakdown
-  const condContainer = document.getElementById('condition-breakdown-container');
   const cond = data.conditionBreakdown;
-  const mantapFooter = document.getElementById('dashboard-mantap-footer');
-  if (mantapFooter) mantapFooter.textContent = `${data.kpis.mantapPct}%`;
-  condContainer.innerHTML = `
-    <div class="w-full bg-slate-100 rounded-lg h-5 flex overflow-hidden border border-slate-200 text-[10px] font-bold text-white text-center leading-5">
-      <div style="width: ${cond.baik_pct}%" class="bg-emerald-500" title="Baik: ${cond.baik_km} km">${cond.baik_pct > 5 ? cond.baik_pct + '%' : ''}</div>
-      <div style="width: ${cond.sedang_pct}%" class="bg-sky-500" title="Sedang: ${cond.sedang_km} km">${cond.sedang_pct}%</div>
-      <div style="width: ${cond.rusak_ringan_pct}%" class="bg-amber-500 text-slate-900" title="Rusak Ringan: ${cond.rusak_ringan_km} km">${cond.rusak_ringan_pct}%</div>
-      <div style="width: ${cond.rusak_berat_pct}%" class="bg-rose-500" title="Rusak Berat: ${cond.rusak_berat_km} km">${cond.rusak_berat_pct > 3 ? cond.rusak_berat_pct + '%' : ''}</div>
+  const conditions = [
+    { label: 'Baik', color: 'bg-emerald-500', km: cond.baik_km, pct: cond.baik_pct },
+    { label: 'Sedang', color: 'bg-sky-500', km: cond.sedang_km, pct: cond.sedang_pct },
+    { label: 'Rusak Ringan', color: 'bg-amber-500', km: cond.rusak_ringan_km, pct: cond.rusak_ringan_pct },
+    { label: 'Rusak Berat', color: 'bg-rose-500', km: cond.rusak_berat_km, pct: cond.rusak_berat_pct },
+  ];
+  document.getElementById('dashboard-condition-summary').innerHTML = `
+    <div class="flex flex-wrap items-baseline gap-x-2">
+      <strong class="text-3xl font-extrabold tracking-tight text-emerald-800 tabular-nums">${formatId(data.kpis.mantapPct)}%</strong>
+      <span class="text-xs font-semibold text-emerald-800">jalan mantap</span>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs pt-1">
-      <div class="border border-slate-200 p-2 rounded bg-slate-50">
-        <div class="text-slate-500 text-[10px] flex items-center space-x-1">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-          <span>Baik</span>
-        </div>
-        <div class="font-bold text-slate-800 mt-0.5">${cond.baik_km.toFixed(3)} km (${cond.baik_pct}%)</div>
-      </div>
-      <div class="border border-slate-200 p-2 rounded bg-slate-50">
-        <div class="text-slate-500 text-[10px] flex items-center space-x-1">
-          <span class="w-2 h-2 rounded-full bg-sky-500 inline-block"></span>
-          <span>Sedang</span>
-        </div>
-        <div class="font-bold text-slate-800 mt-0.5">${cond.sedang_km.toFixed(3)} km (${cond.sedang_pct}%)</div>
-      </div>
-      <div class="border border-slate-200 p-2 rounded bg-slate-50">
-        <div class="text-slate-500 text-[10px] flex items-center space-x-1">
-          <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
-          <span>Rusak Ringan</span>
-        </div>
-        <div class="font-bold text-slate-800 mt-0.5">${cond.rusak_ringan_km.toFixed(3)} km (${cond.rusak_ringan_pct}%)</div>
-      </div>
-      <div class="border border-slate-200 p-2 rounded bg-slate-50">
-        <div class="text-slate-500 text-[10px] flex items-center space-x-1">
-          <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span>
-          <span>Rusak Berat</span>
-        </div>
-        <div class="font-bold text-slate-800 mt-0.5">${cond.rusak_berat_km.toFixed(3)} km (${cond.rusak_berat_pct}%)</div>
-      </div>
+    <p class="mt-0.5 text-xs text-slate-600">${formatId(data.kpis.mantapKm, 3)} dari ${formatId(data.kpis.totalLengthKm, 3)} km</p>
+  `;
+  document.getElementById('condition-breakdown-container').innerHTML = `
+    <div class="flex h-3 overflow-hidden rounded-full bg-slate-100" aria-hidden="true">
+      ${conditions.map(c => `<div class="${c.color}" style="width: ${c.pct}%"></div>`).join('')}
     </div>
+    <ul class="grid grid-cols-2 gap-2">
+      ${conditions.map(c => `
+        <li class="min-w-0 rounded-lg border border-slate-200/70 bg-white/70 px-2.5 py-1.5">
+          <div class="flex items-center gap-1.5 text-xs font-medium text-slate-700">
+            <span class="h-2 w-2 shrink-0 rounded-full ${c.color}" aria-hidden="true"></span>
+            ${c.label}
+          </div>
+          <div class="mt-0.5 flex flex-wrap items-baseline gap-x-1.5 text-xs tabular-nums">
+            <strong class="text-slate-900">${formatId(c.pct)}%</strong>
+            <span class="text-slate-600">${formatId(c.km, 3)} km</span>
+          </div>
+        </li>
+      `).join('')}
+    </ul>
   `;
 
   // 4. Top 10 Table
