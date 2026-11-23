@@ -521,7 +521,7 @@ function renderPlanningWorkspace() {
     const rankText = Number.isInteger(evidence.rank) ? `Peringkat #${evidence.rank} (${rankMode})` : 'Peringkat belum tersedia';
     const mantapText = Number.isFinite(evidence.mantap_pct) ? `${formatId(evidence.mantap_pct, 1)}% mantap` : 'Kondisi belum tercatat';
     const driverText = evidence.key_factors?.length
-      ? `<div class="mt-2 text-[11px] text-slate-600"><span class="font-semibold">Kontribusi skor terbesar:</span> ${evidence.key_factors.map((factor) => `${escapeHtml(factor.label)} (${formatId(factor.contribution, 4)})`).join(', ')}</div>`
+      ? `<div class="mt-2 text-[11px] text-slate-600"><span class="font-semibold">Kontribusi skor terbesar:</span> ${evidence.key_factors.map((factor) => escapeHtml(factor.label)).join(', ')}</div>`
       : '';
     return `<li class="rounded-lg border border-slate-200 bg-white p-3">
       <div class="flex items-start justify-between gap-3">
@@ -689,7 +689,7 @@ async function runRankSensitivity() {
     return;
   }
   const configs = [
-    ['Baseline terkonfigurasi', getInitialSimConfig()],
+    ['Model acuan', getInitialSimConfig()],
     [state.simulation.scenarioName || 'Skenario saat ini', cloneConfig(state.simulation.simConfig)],
     ['Tekankan kerusakan berat', buildSensitivityPreset('KERUSAKAN')],
     ['Tekankan koneksi jalan provinsi', buildSensitivityPreset('AKSES')],
@@ -761,7 +761,7 @@ function renderProposalBrief() {
     preview.textContent = 'Tambahkan setidaknya satu ruas dan lengkapi alasan sebelum menyiapkan ringkasan.';
     return;
   }
-  const context = { title: document.getElementById('proposal-name-input')?.value.trim() || draft.title, planning_period: document.getElementById('proposal-planning-period')?.value.trim() || draft.planning_period || '', rationale: document.getElementById('proposal-rationale-input')?.value || draft.rationale, mode: state.mode, model: state.modelCode, scenario: state.simulation.scenarioName || (draft.mode === state.mode ? draft.scenario_name : '') || 'Baseline terkonfigurasi', roads: cloneConfig(draft.roads), date: new Date().toLocaleDateString('id-ID', { dateStyle: 'long' }) };
+  const context = { title: document.getElementById('proposal-name-input')?.value.trim() || draft.title, planning_period: document.getElementById('proposal-planning-period')?.value.trim() || draft.planning_period || '', rationale: document.getElementById('proposal-rationale-input')?.value || draft.rationale, mode: state.mode, model: state.modelCode, scenario: state.simulation.scenarioName || (draft.mode === state.mode ? draft.scenario_name : '') || 'Model acuan', roads: cloneConfig(draft.roads), date: new Date().toLocaleDateString('id-ID', { dateStyle: 'long' }) };
   savePlanningWorkspace();
   preview.dataset.brief = JSON.stringify(context);
   preview.classList.remove('hidden');
@@ -774,7 +774,7 @@ function renderProposalBrief() {
       const conditionText = condition
         ? `Mantap ${Number.isFinite(evidence.mantap_pct) ? `${formatId(evidence.mantap_pct, 1)}%` : 'tidak tercatat'} · baik ${formatId(condition.baik_pct ?? 0, 1)}% · sedang ${formatId(condition.sedang_pct ?? 0, 1)}% · rusak ringan ${formatId(condition.rusak_ringan_pct ?? 0, 1)}% · rusak berat ${formatId(condition.rusak_berat_pct ?? 0, 1)}%`
         : 'Rincian kondisi fisik tidak tersimpan';
-      return `<li class="break-inside-avoid rounded border border-slate-200 bg-white p-2.5"><strong>${escapeHtml(evidence.display_name || road.road_key)}</strong> · ${escapeHtml(evidence.district_name || 'Kecamatan belum tercatat')} · ${escapeHtml(road.road_key)}<div class="mt-0.5 text-[11px] text-slate-600">${road.recommendation === 'defer' ? 'Ditunda untuk ditinjau' : 'Diusulkan untuk ditinjau'} · peringkat #${evidence.rank ?? '—'} (${rankContext}, ${escapeHtml(evidence.rank_model || context.model)}) · panjang ${Number.isFinite(evidence.length_km) ? `${formatId(evidence.length_km, 3)} km` : 'tidak tercatat'}</div><div class="mt-1 text-[11px] text-slate-700">${conditionText} · sumber kondisi ${evidence.condition_year || 'tahun tidak tercatat'}: ${escapeHtml(evidence.condition_source || 'tidak tercatat')} (tanggal publikasi tidak tersedia)</div><div class="mt-1"><strong>Alasan:</strong> ${escapeHtml(road.rationale || 'Belum dicatat.')}</div>${evidence.key_factors?.length ? `<div class="mt-1 text-[10px] text-slate-500"><strong>Kontribusi skor utama:</strong> ${evidence.key_factors.map((factor) => escapeHtml(factor.label)).join(', ')}</div>` : ''}<div class="mt-1 text-[10px] text-slate-600"><strong>Hasil aktual yang dicatat:</strong> ${escapeHtml(decisionLabel(road.recorded_decision))}${road.decision_date ? ` · ${escapeHtml(road.decision_date)}` : ''}${road.decision_note ? ` · ${escapeHtml(road.decision_note)}` : ''}</div></li>`;
+      return `<li class="break-inside-avoid rounded border border-slate-200 bg-white p-2.5"><strong>${escapeHtml(evidence.display_name || road.road_key)}</strong> · ${escapeHtml(evidence.district_name || 'Kecamatan belum tercatat')} · ${escapeHtml(road.road_key)}<div class="mt-0.5 text-[11px] text-slate-600">${road.recommendation === 'defer' ? 'Ditunda untuk ditinjau' : 'Diusulkan untuk ditinjau'} · peringkat #${evidence.rank ?? '—'} (${rankContext}, model acuan) · panjang ${Number.isFinite(evidence.length_km) ? `${formatId(evidence.length_km, 3)} km` : 'tidak tercatat'}</div><div class="mt-1 text-[11px] text-slate-700">${conditionText} · sumber kondisi ${evidence.condition_year || 'tahun tidak tercatat'}: ${escapeHtml(evidence.condition_source || 'tidak tercatat')} (tanggal publikasi tidak tersedia)</div><div class="mt-1"><strong>Alasan:</strong> ${escapeHtml(road.rationale || 'Belum dicatat.')}</div>${evidence.key_factors?.length ? `<div class="mt-1 text-[10px] text-slate-500"><strong>Kontribusi skor utama:</strong> ${evidence.key_factors.map((factor) => escapeHtml(factor.label)).join(', ')}</div>` : ''}<div class="mt-1 text-[10px] text-slate-600"><strong>Hasil aktual yang dicatat:</strong> ${escapeHtml(decisionLabel(road.recorded_decision))}${road.decision_date ? ` · ${escapeHtml(road.decision_date)}` : ''}${road.decision_note ? ` · ${escapeHtml(road.decision_note)}` : ''}</div></li>`;
     }).join('')}</ul>
     <div class="mt-3 rounded border border-amber-200 bg-amber-50 p-2.5 text-[10px] text-amber-900"><strong>Batas penggunaan:</strong> Ini draf bahan kajian, bukan persetujuan kegiatan, alokasi anggaran, atau izin pengadaan. Kondisi fisik mengacu pada data 2025; hasil peringkat mengikuti konteks mode/model di atas dan beberapa input model operasional memiliki tahun sumber historis. Verifikasi lapangan, kemutakhiran bukti, kesiapan teknis, manfaat, dan kewenangan anggaran tetap diperlukan.</div>
     <p class="mt-2 text-[10px] text-slate-500">Identitas ruas mengikuti daftar resmi. Kondisi dan nama berkas sumber disimpan saat ruas ditambahkan ke draf; tanggal publikasi berkas tidak tersedia. Persetujuan kebijakan model tidak tercatat dalam aplikasi.</p>`;
@@ -874,7 +874,7 @@ function handleRouting() {
     '#usulan': 'simulasi',
     '#data-metode': 'data-sumber',
     '#data-sumber': 'data-sumber',
-    '#model': 'data-sumber',
+    '#model': 'model',
     '#simulasi': 'simulasi',
     '#asb-costing': 'asb-costing',
     '#biaya': 'asb-costing',
@@ -930,7 +930,7 @@ function switchView(viewName) {
     link.removeAttribute('aria-current');
     link.classList.add(link.classList.contains('mobile-nav-link') ? 'text-slate-200' : 'text-slate-700');
   });
-  const navView = viewName === 'peta' || viewName === 'model' ? (viewName === 'peta' ? 'prioritas' : 'data-sumber') : viewName;
+  const navView = viewName === 'peta' ? 'prioritas' : viewName;
   document.querySelectorAll(`.nav-link[data-view="${navView}"]`).forEach((link) => {
     link.setAttribute('aria-current', 'page');
     if (!link.classList.contains('mobile-nav-link')) {
@@ -1044,7 +1044,7 @@ function setSelectValue(select, value) {
 }
 
 function writeRouteContext({ road = state.selectedRoadDetail?.identity?.road_key ?? '', view = state.currentView } = {}) {
-  const hashes = { dashboard: '#dashboard', prioritas: '#prioritas', peta: '#peta', 'data-sumber': '#data-metode', model: '#data-metode', simulasi: '#usulan', usulan: '#usulan' };
+  const hashes = { dashboard: '#dashboard', prioritas: '#prioritas', peta: '#peta', 'data-sumber': '#data-metode', model: '#model', simulasi: '#usulan', usulan: '#usulan' };
   const params = new URLSearchParams();
   params.set('mode', state.mode);
   params.set('model', state.modelCode);
@@ -1077,9 +1077,9 @@ function renderDashboard(data) {
   const kpiContainer = document.getElementById('kpi-cards-container');
   kpiContainer.innerHTML = `
     <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Ruas Kanonikal</div>
+      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Ruas Kabupaten</div>
       <div class="text-xl sm:text-2xl font-black text-slate-900 mt-1">${data.kpis.totalRoads} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
-      <div class="text-[10px] text-emerald-600 font-semibold mt-1">✓ SK Bupati Otoritatif</div>
+      <div class="text-[10px] text-emerald-600 font-semibold mt-1">Berdasarkan SK Bupati</div>
     </div>
     <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
       <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Total Panjang Jaringan</div>
@@ -1091,16 +1091,6 @@ function renderDashboard(data) {
       <div class="text-xl sm:text-2xl font-black text-emerald-600 mt-1">${data.kpis.mantapPct}%</div>
       <div class="text-[10px] text-slate-500 mt-1">${data.kpis.mantapKm.toFixed(3)} km (Baik + Sedang)</div>
     </div>
-    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Kelompok peringkat 1–35</div>
-      <div class="text-xl sm:text-2xl font-black text-rose-600 mt-1">${data.kpis.top35Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
-      <div class="text-[10px] text-rose-600 font-medium mt-1">Kelompok relatif model; bukan tingkat kegawatan</div>
-    </div>
-    <div class="min-w-0 min-h-28 bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-      <div class="min-h-8 text-[11px] font-bold uppercase tracking-wider leading-4 text-slate-500">Dalam peringkat 1–105</div>
-      <div class="text-xl sm:text-2xl font-black text-sky-700 mt-1">${data.kpis.top105Count} <span class="text-xs font-normal text-slate-500">Ruas</span></div>
-      <div class="text-[10px] text-sky-600 font-medium mt-1">Band Top 30% Jaringan</div>
-    </div>
   `;
 
   // 2. Category Weights
@@ -1111,7 +1101,7 @@ function renderDashboard(data) {
     <div>
       <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
         <span>${c.category_name}</span>
-        <span class="font-bold text-slate-900">${formatId(c.normalized_pct, 2)}% (${formatId(c.raw_weight, 4)})</span>
+        <span class="font-bold text-slate-900">${formatId(c.normalized_pct, 2)}%</span>
       </div>
       <div class="w-full bg-slate-100 rounded-full h-2">
         <div class="bg-sky-600 h-2 rounded-full" style="width: ${c.normalized_pct}%"></div>
@@ -3331,7 +3321,7 @@ function updateDynamicLegend() {
 function updateMapStatus() {
   const statMode = document.getElementById('map-stat-mode');
   if (statMode) {
-    statMode.textContent = `Mode: ${state.mode}`;
+    statMode.textContent = state.mode === 'BENCHMARK_2024' ? 'Audit peringkat 2024' : 'Operasional 2025';
     statMode.className = state.mode === 'BENCHMARK_2024' ? 'font-semibold text-amber-600' : 'font-semibold text-emerald-700';
   }
 }
@@ -3539,7 +3529,7 @@ function renderRoadDetailDrawer(data) {
       ? `Kondisi fisik tergolong mantap (${formatId(cond.mantap_pct, 1)}%); komposisinya ${formatId(cond.baik_pct, 1)}% baik dan ${formatId(cond.sedang_pct, 1)}% sedang.`
       : `Kemantapan fisik tercatat ${formatId(cond.mantap_pct, 1)}%, dengan ${formatId(cond.rusak_ringan_pct + cond.rusak_berat_pct, 1)}% rusak ringan atau berat.`;
     explanation.innerHTML = `<p><strong>${conditionText}</strong> Hasil ${res.operating_mode === 'BENCHMARK_2024' ? 'audit 2024' : 'operasional 2025'} menempatkan ruas ini pada peringkat <strong>#${res.priority_rank}</strong> (${getTierDisplayName(res.tier_category)}). Peringkat mengurutkan skor gabungan dan tidak menyatakan tingkat kerusakan atau keputusan pekerjaan.</p>
-      <p class="mt-1">Faktor dengan kontribusi terbesar pada skor ruas: ${drivers.map((factor) => `<strong>${escapeHtml(factor.variable_label)}</strong> (${formatId(factor.contribution, 4)})`).join(', ') || 'rincian kontribusi tidak tersedia'}.</p>
+      <p class="mt-1">Faktor dengan kontribusi terbesar pada skor ruas: ${drivers.map((factor) => `<strong>${escapeHtml(factor.variable_label)}</strong>`).join(', ') || 'rincian kontribusi tidak tersedia'}.</p>
       <p class="mt-1 text-[11px] text-slate-600">Kondisi fisik berasal dari ${escapeHtml(cond.source_filename || 'sumber kondisi tahun 2025')} (2025). Gunakan rincian perhitungan dan sumber untuk memeriksa bukti serta keterbatasannya.</p>`;
   }
 
@@ -4798,8 +4788,8 @@ function updateSimulationContextStatus(message) {
   const status = document.getElementById('sim-context-status');
   if (!status) return;
   const mode = state.mode === 'BENCHMARK_2024' ? 'Audit peringkat 2024' : 'Peringkat operasional 2025';
-  const scenario = state.simulation.scenarioName || 'Baseline terkonfigurasi';
-  status.textContent = `${message} · ${mode} · ${state.modelCode} · ${scenario}. Data kondisi profil yang ditampilkan tetap tahun 2025.`;
+  const scenario = state.simulation.scenarioName || 'Model acuan';
+  status.textContent = `${message} · ${mode} · ${scenario}. Data kondisi profil yang ditampilkan tetap tahun 2025.`;
 }
 
 // Load Simulation Context from API

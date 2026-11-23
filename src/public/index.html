@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Pendukung Prioritas Penanganan Jalan — Kabupaten Hulu Sungai Selatan</title>
+  <title>SIAP JALAN HSS</title>
+  <link rel="icon" type="image/jpeg" href="/siap-jalan-hss.jpeg">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -46,6 +47,19 @@
     }
     /* Map Mode Non-Blocking Drawer for Desktop (>= 1024px) */
     @media (min-width: 1024px) {
+      .app-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(90deg, rgba(15, 23, 42, .94) 0%, rgba(15, 23, 42, .78) 34%, rgba(15, 23, 42, .42) 54%, rgba(15, 23, 42, .58) 76%, rgba(15, 23, 42, .92) 100%), url('/siap-jalan-header.png');
+        background-size: cover;
+        background-position: center;
+      }
+      .app-header > div {
+        position: relative;
+        z-index: 1;
+      }
       .drawer-map-mode #drawer-backdrop {
         display: none !important;
       }
@@ -96,7 +110,7 @@
       #map-container.inspection-open #hss-map { height:100%; min-height:0 }
     }
     @media(max-width:767px) {
-      #map-container { scroll-margin-top: 108px }
+      #map-container { scroll-margin-top: 124px }
       #map-container.inspection-open #hss-map { height:clamp(235px,37svh,325px); min-height:0 }
       #road-inspector { border-left:0; border-top:1px solid #dbe4ee }
       .inspector-content { overflow:visible }
@@ -110,24 +124,19 @@
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
   <!-- TOP BAR -->
-  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <header class="app-header relative bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-sm">
+    <div class="relative z-10 mx-auto flex w-full max-w-[1920px] flex-col gap-2 px-4 py-2 sm:px-6 md:h-16 md:flex-row md:items-center md:justify-between md:gap-4 md:py-0 lg:px-8">
       
-      <!-- Left: Logo & System Identity -->
-      <div class="flex items-center space-x-3">
-        <div class="w-9 h-9 rounded bg-sky-600 flex items-center justify-center font-bold text-white shadow-inner">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-          </svg>
-        </div>
-        <div>
-          <div class="text-sm font-semibold tracking-wide text-white uppercase">Pemerintah Kabupaten Hulu Sungai Selatan</div>
-          <div class="text-xs text-sky-400 font-medium">Sistem Pendukung Prioritas Penanganan Jalan (Dinas PUTR)</div>
+      <div class="flex min-w-0 items-center gap-3">
+        <img src="/siap-jalan-hss.jpeg" alt="" width="48" height="48" class="h-12 w-12 shrink-0 rounded-full object-contain">
+        <div class="min-w-0">
+          <div class="text-sm font-bold tracking-wide text-white">SIAP JALAN HSS</div>
+          <div class="text-xs font-medium leading-tight text-sky-300">Sistem Integrasi Analisis Prioritas Jalan dan Jembatan Hulu Sungai Selatan</div>
         </div>
       </div>
 
-      <!-- Right: Operating Context Controls -->
-      <div class="flex items-center space-x-4">
+      <!-- Operating Context Controls -->
+      <div class="flex shrink-0 items-center justify-between gap-2 sm:gap-4">
         
         <!-- Operating Mode Selector -->
         <div class="flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700">
@@ -136,13 +145,6 @@
             <option value="OPERATIONAL_2025" selected>OPERASIONAL 2025 (Aktif)</option>
             <option value="BENCHMARK_2024">TOLOK UKUR 2024 (Audit)</option>
           </select>
-        </div>
-
-        <!-- Model Badge -->
-        <div class="hidden md:flex items-center space-x-1.5 px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-lg text-xs">
-          <span class="text-slate-400">Model:</span>
-          <span class="font-semibold text-emerald-400">POLICY_DEFAULT_V1</span>
-          <span class="text-slate-500 text-[10px] uppercase px-1 py-0.2 bg-slate-700 rounded">Terkunci</span>
         </div>
 
         <!-- Year Badge -->
@@ -182,6 +184,9 @@
     </a>
     <a href="#data-sumber" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800" data-view="data-sumber">
       <span>Data & Sumber</span>
+    </a>
+    <a href="#model" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800" data-view="model">
+      <span>Model Prioritas</span>
     </a>
     <a href="#simulasi" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800" data-view="simulasi">
       <span>Simulasi Skenario</span>
@@ -296,16 +301,11 @@
             <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard Eksekutif Prioritas Jalan</h1>
             <p class="text-sm text-slate-500">Ringkasan strategis kondisi kemantapan dan profil prioritas 350 ruas jalan kabupaten.</p>
           </div>
-          <div class="text-xs text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">
-            Status Model: <span class="font-bold text-slate-800">POLICY_DEFAULT_V1 (Terkunci)</span>
-          </div>
         </div>
 
-        <!-- 5 KPI Summary Cards -->
-        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4" id="kpi-cards-container">
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="kpi-cards-container">
           <!-- Populated dynamically via JS -->
-          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
-          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
           <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
           <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
           <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm animate-pulse h-24"></div>
@@ -318,16 +318,12 @@
           <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <h2 class="text-base font-bold text-slate-900">Bobot Kebijakan 4 Kategori</h2>
-                <p class="text-xs text-slate-500">Konfigurasi bobot operasional aktif model POLICY_DEFAULT_V1</p>
+                <h2 class="text-base font-bold text-slate-900">Bobot kategori penilaian</h2>
+                <p class="text-xs text-slate-500">Model acuan</p>
               </div>
-              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-sky-100 text-sky-800">Total: 100%</span>
             </div>
             <div id="category-weights-container" class="space-y-3">
               <!-- Populated via JS -->
-            </div>
-            <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600 border border-slate-200">
-              💡 <em>Catatan Kebijakan:</em> Nilai bobot di atas merupakan bobot kebijakan default murni. Modul penyesuaian bobot interaktif dan simulasi skenario pimpinan akan diaktifkan pada Fase 5.
             </div>
           </div>
 
@@ -1087,12 +1083,10 @@
           <div class="flex items-center space-x-3">
             <span class="font-bold text-slate-800" id="map-stat-visible-roads">Menampilkan 350 dari 350 ruas jalan</span>
             <span class="text-slate-300">|</span>
-            <span id="map-stat-mode" class="font-semibold text-emerald-700">Mode: OPERATIONAL_2025</span>
-            <span class="text-slate-300">|</span>
-            <span id="map-stat-model" class="font-mono text-slate-500">POLICY_DEFAULT_V1</span>
+            <span id="map-stat-mode" class="font-semibold text-emerald-700">Operasional 2025</span>
           </div>
           <div class="text-[11px] text-slate-400">
-            Klik ruas jalan untuk membuka transparansi 17 faktor & dekomposisi skor.
+            Klik ruas jalan untuk melihat kondisi dan alasan peringkatnya.
           </div>
         </div>
       </section>
@@ -1178,7 +1172,8 @@
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <div class="text-xs uppercase font-bold text-sky-600">Model Kebijakan Aktif</div>
-              <h2 class="text-lg font-bold text-slate-900">POLICY_DEFAULT_V1</h2>
+              <h2 class="text-lg font-bold text-slate-900">Model acuan</h2>
+              <p class="text-xs text-slate-500">Kode model <code>POLICY_DEFAULT_V1</code></p>
               <p class="text-xs text-slate-500">Bobot Kategori Historis (Level 1) + Bobot Lokal Netral Merata (Level 2)</p>
             </div>
             <div class="text-right">
@@ -1261,7 +1256,7 @@
           <div class="flex flex-wrap items-center gap-2">
             <div class="flex items-center space-x-1 border border-slate-200 bg-white p-1 rounded-lg shadow-sm text-xs">
               <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1.5">Preset:</span>
-              <button id="sim-preset-baseline" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition" title="Pulihkan ke konfigurasi awal POLICY_DEFAULT_V1">Baseline (Default)</button>
+              <button id="sim-preset-baseline" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition" title="Pulihkan bobot model acuan">Bobot acuan</button>
               <button id="sim-preset-pelayanan" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition" title="Fokuskan bobot ke fasilitas RSUD & Puskesmas">Fokus Pelayanan</button>
               <button id="sim-preset-akses" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 transition" title="Fokuskan ke konektivitas jalan provinsi & nasional">Fokus Aksesibilitas</button>
               <button id="sim-preset-kerusakan" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition" title="Fokuskan ke kondisi rusak berat & sedang">Fokus Kerusakan</button>
@@ -1271,7 +1266,7 @@
               <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
               </svg>
-              <span>Reset ke POLICY_DEFAULT_V1</span>
+              <span>Pulihkan bobot acuan</span>
             </button>
 
             <button id="sim-btn-goto-map" class="text-xs bg-sky-600 hover:bg-sky-700 text-white font-bold px-3 py-2 rounded-lg shadow-sm flex items-center space-x-1.5 transition">
@@ -1287,9 +1282,9 @@
         <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start space-x-3 text-xs text-amber-900 shadow-sm">
           <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm shrink-0">⚠️</div>
           <div class="flex-1">
-            <span class="font-bold text-amber-950">Lingkungan Simulasi Non-Destruktif:</span>
+            <span class="font-bold text-amber-950">Cakupan simulasi</span>
             <span class="text-amber-800 ml-1">
-              Seluruh penyesuaian koefisien bobot dihitung seketika pada memori peramban (*stateless in-memory*) dan <strong>TIDAK MENGUBAH</strong> model kebijakan aktif produksi (<code class="bg-amber-100/80 px-1 py-0.5 rounded font-mono font-bold text-amber-900">POLICY_DEFAULT_V1</code>) maupun database otoritatif PUTR.
+              Perubahan bobot hanya berlaku untuk simulasi ini. Model acuan tetap digunakan untuk peringkat operasional.
             </span>
           </div>
         </div>
@@ -1598,9 +1593,9 @@
           <!-- 6 Summary KPI Cards -->
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-2">
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-0.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">Kebutuhan Indikatif</span>
-              <div id="asb-kpi-total-cost" class="text-sm sm:text-base font-black text-slate-900 font-mono truncate">Rp 0</div>
-              <span class="text-[10px] text-slate-400 block" id="asb-kpi-total-cost-subtext">3.421 segmen ASB</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">Estimasi kebutuhan jaringan</span>
+              <div id="asb-kpi-total-cost" class="text-sm sm:text-base font-black text-slate-900 font-mono truncate">—</div>
+              <span class="text-[10px] text-slate-400 block" id="asb-kpi-total-cost-subtext">—</span>
             </div>
 
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-0.5">
@@ -1691,7 +1686,7 @@
                 </div>
               </div>
               <div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200 text-amber-900 text-[11px]">
-                <strong>G. Status Basis Data:</strong> Perhitungan menggunakan data kondisi jalan resmi 2025 (732,46 km jaringan kanonikal) dan harga satuan ASB BM 2027. Angka definitif kebutuhan jaringan terstandarisasi: <strong>Rp 784.322.010.000</strong> (3.421 segmen tertangani, 4.064 segmen rutin, 2 segmen review teknis).
+                 Estimasi kebutuhan jaringan untuk skenario terpilih tercantum di ringkasan anggaran. Estimasi memakai data kondisi jalan 2025 dan harga satuan ASB BM 2027.
               </div>
             </div>
           </div>
@@ -1703,7 +1698,7 @@
             📋 Rekapitulasi Ruas (350)
           </button>
           <button type="button" class="asb-subtab-btn py-2.5 px-3 sm:px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition" data-tab="optimasi-matematis">
-            🎯 Optimasi Solver (ILP)
+            Optimasi Anggaran
           </button>
           <button type="button" class="asb-subtab-btn py-2.5 px-3 sm:px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition" data-tab="register-tertunda">
             📑 Register Ruas Tertunda
@@ -1816,19 +1811,15 @@
           <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 sm:p-5 space-y-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div>
-                <div class="flex items-center space-x-2">
-                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 uppercase tracking-wider">Exact Solver Engine</span>
-                  <span class="text-xs text-slate-500 font-mono">Martello-Toth Branch & Bound ILP 0-1 Knapsack</span>
-                </div>
-                <h2 class="text-base font-bold text-slate-900 mt-1">Optimasi Anggaran Preskriptif Matematis</h2>
-                <p class="text-xs text-slate-500">Pemilihan kombinasi perlakuan segmen optimal matematis dengan LP relaxation bounding O(1) & presisi integer-sen tanpa pembulatan mengambang.</p>
+                <h2 class="text-base font-bold text-slate-900">Optimasi Anggaran</h2>
+                <p class="text-xs text-slate-500">Pilih tujuan untuk menyusun penanganan jalan sesuai plafon.</p>
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <button type="button" id="asb-btn-run-solver" class="inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-sky-600 hover:bg-sky-700 text-white shadow-xs transition">
                   <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                   </svg>
-                  <span>Jalankan Optimasi Solver (ILP)</span>
+                  <span>Hitung alokasi</span>
                 </button>
                 <button type="button" id="asb-btn-compare-4methods" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white hover:bg-slate-50 text-indigo-700 border border-slate-300 shadow-xs transition">
                   <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1849,12 +1840,10 @@
                   <div class="flex items-center justify-between mb-1.5">
                     <div class="flex items-center space-x-2">
                       <input type="radio" name="asb_optimization_objective" value="PRIORITY_WEIGHTED" checked class="text-sky-600 focus:ring-sky-500">
-                      <span class="font-bold text-slate-900">Objektif A: Terbobot Prioritas</span>
+                      <span class="font-bold text-slate-900">Manfaat berbobot prioritas</span>
                     </div>
-                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800">Direkomendasikan</span>
                   </div>
-                  <div class="font-mono text-[11px] text-sky-700 bg-white p-1.5 rounded mb-1 border border-sky-200">max &Sigma; (P_road &times; L_s &times; x_s)</div>
-                  <p class="text-[11px] text-slate-500 leading-relaxed">Maksimasi total kemanfaatan kebijakan (AHP/WSM) per kilometer segmen tertangani dalam batas pagu fiskal.</p>
+                  <p class="text-[11px] text-slate-500 leading-relaxed">Memilih kombinasi segmen berdasarkan skor prioritas dan panjang penanganan.</p>
                 </label>
 
                 <!-- Option B: Max Length -->
@@ -1862,12 +1851,10 @@
                   <div class="flex items-center justify-between mb-1.5">
                     <div class="flex items-center space-x-2">
                       <input type="radio" name="asb_optimization_objective" value="MAX_LENGTH" class="text-sky-600 focus:ring-sky-500">
-                      <span class="font-bold text-slate-900">Objektif B: Maksimasi Panjang</span>
+                      <span class="font-bold text-slate-900">Panjang jalan tertangani</span>
                     </div>
-                    <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600">Efisiensi Fisik</span>
                   </div>
-                  <div class="font-mono text-[11px] text-emerald-700 bg-white p-1.5 rounded mb-1 border border-emerald-200">max &Sigma; (L_s &times; x_s)</div>
-                  <p class="text-[11px] text-slate-500 leading-relaxed">Maksimasi total kilometer fisik jalan rusak yang tertangani standar ASB secara optimal tanpa bobot kebijakan.</p>
+                  <p class="text-[11px] text-slate-500 leading-relaxed">Mengutamakan total panjang jalan rusak yang bisa ditangani dalam plafon.</p>
                 </label>
 
                 <!-- Option C: Priority-Respecting -->
@@ -1875,12 +1862,10 @@
                   <div class="flex items-center justify-between mb-1.5">
                     <div class="flex items-center space-x-2">
                       <input type="radio" name="asb_optimization_objective" value="PRIORITY_RESPECTING" class="text-sky-600 focus:ring-sky-500">
-                      <span class="font-bold text-slate-900">Objektif C: Hierarki Prioritas</span>
+                      <span class="font-bold text-slate-900">Hierarki prioritas</span>
                     </div>
-                    <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-purple-100 text-purple-800">Kepatuhan Kebijakan</span>
                   </div>
-                  <div class="font-mono text-[11px] text-purple-700 bg-white p-1.5 rounded mb-1 border border-purple-200">Lexicographic Rank ILP</div>
-                  <p class="text-[11px] text-slate-500 leading-relaxed">Prioritaskan penuh ruas-ruas teratas SK Bupati sebelum mendanai ruas berikutnya dengan ILP pada sisa batas pagu.</p>
+                  <p class="text-[11px] text-slate-500 leading-relaxed">Mendahulukan ruas berperingkat tertinggi, lalu menggunakan sisa plafon untuk segmen lain yang memenuhi syarat.</p>
                 </label>
 
                 <!-- Option Benchmark: Greedy -->
@@ -1888,46 +1873,28 @@
                   <div class="flex items-center justify-between mb-1.5">
                     <div class="flex items-center space-x-2">
                       <input type="radio" name="asb_optimization_objective" value="GREEDY_BENCHMARK" class="text-sky-600 focus:ring-sky-500">
-                      <span class="font-bold text-slate-900">Baseline: Heuristik Greedy</span>
+                      <span class="font-bold text-slate-900">Urutan prioritas</span>
                     </div>
-                    <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600">Benchmark Fase 2</span>
                   </div>
-                  <div class="font-mono text-[11px] text-slate-700 bg-white p-1.5 rounded mb-1 border border-slate-200">Rank-ordered Greedy</div>
-                  <p class="text-[11px] text-slate-500 leading-relaxed">Metode benchmark sekuensial berurut sesuai peringkat AHP/WSM hingga pagu terlampaui.</p>
+                  <p class="text-[11px] text-slate-500 leading-relaxed">Mengalokasikan anggaran sesuai urutan peringkat hingga ruas berikutnya melampaui sisa plafon.</p>
                 </label>
 
               </div>
             </div>
 
-            <!-- Mathematical Solver Certification Ribbon -->
             <div id="asb-solver-cert-ribbon" class="bg-slate-900 text-white rounded-xl p-4 shadow-sm space-y-2">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
-                <div class="flex items-center space-x-2">
-                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Sertifikasi Bukti Keoptimalan Solver</span>
-                </div>
-                <div id="asb-solver-status-badge" class="px-2.5 py-0.5 rounded text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-700">
-                  OPTIMAL (Global Optimal Terbukti)
-                </div>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="text-xs font-bold">Status alokasi</h3>
+                <span id="asb-solver-status-badge" class="rounded px-2.5 py-0.5 text-xs font-bold" role="status">Belum tersedia</span>
               </div>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1">
-                <div>
-                  <span class="text-slate-400 block text-[11px]">Duality Gap (Keoptimalan):</span>
-                  <span id="asb-solver-gap" class="font-mono font-bold text-white text-sm">0,00% (Certified Exact)</span>
+              <details id="asb-solver-metrics" class="hidden border-t border-slate-800 pt-2 text-xs">
+                <summary class="cursor-pointer">Rincian optimasi</summary>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  <div><span class="text-slate-400 block">Selisih terhadap batas terbaik</span><span id="asb-solver-gap">—</span></div>
+                  <div><span class="text-slate-400 block">Simpul pencarian</span><span id="asb-solver-nodes">—</span></div>
+                  <div><span class="text-slate-400 block">Waktu eksekusi</span><span id="asb-solver-runtime">—</span></div>
                 </div>
-                <div>
-                  <span class="text-slate-400 block text-[11px]">Eksplorasi Simpul (B&B Nodes):</span>
-                  <span id="asb-solver-nodes" class="font-mono font-bold text-white text-sm">1 simpul (LP Exact)</span>
-                </div>
-                <div>
-                  <span class="text-slate-400 block text-[11px]">Waktu Eksekusi Solver:</span>
-                  <span id="asb-solver-runtime" class="font-mono font-bold text-white text-sm">12 ms</span>
-                </div>
-                <div>
-                  <span class="text-slate-400 block text-[11px]">Presisi Aritmatika:</span>
-                  <span class="font-mono font-bold text-emerald-300 text-sm">64-bit Integer (Sen)</span>
-                </div>
-              </div>
+              </details>
             </div>
 
             <!-- Kemantapan Road Condition Impact Panel (Part E) -->
@@ -1983,7 +1950,7 @@
                     <span>📊</span>
                     <span>Matriks Perbandingan 4 Metode Alokasi Pagu Anggaran</span>
                   </h3>
-                  <p class="text-[11px] text-slate-500">Evaluasi komparatif antara Heuristik Greedy Baseline dengan 3 Metode Optimasi Matematis Eksak (ILP).</p>
+                  <p class="text-[11px] text-slate-500">Bandingkan anggaran teralokasi dan panjang jalan yang ditangani oleh tiap metode.</p>
                 </div>
               </div>
 
@@ -1999,7 +1966,7 @@
                       <th class="px-3 py-3 text-right">Ditangani (km)</th>
                       <th class="px-3 py-3 text-right">Skor Terbobot</th>
                       <th class="px-3 py-3 text-center">Ruas Fisik</th>
-                      <th class="px-3 py-3 text-center">Status Solver</th>
+                      <th class="px-3 py-3 text-center">Status alokasi</th>
                       <th class="px-3 py-3 text-center">Aksi</th>
                     </tr>
                   </thead>
@@ -2009,19 +1976,6 @@
                 </table>
               </div>
 
-              <!-- Decision Explanation & Trade-off Insights -->
-              <div id="asb-method-tradeoff-box" class="bg-sky-50 border border-sky-200 rounded-xl p-3.5 text-xs text-sky-950 space-y-1">
-                <div class="font-bold flex items-center space-x-1.5">
-                  <span>💡</span>
-                  <span>Rasional Keputusan & Perbedaan Karakteristik Antar Metode:</span>
-                </div>
-                <p class="text-[11px] leading-relaxed text-slate-700">
-                  <strong>Heuristik Greedy:</strong> Terhenti saat menemukan ruas dengan pagu besar yang melebihi sisa anggaran (misal Ruas #20 Rp 14,1 M), menyisakan pagu menganggur.<br>
-                  <strong>Objektif A (Priority-Weighted ILP):</strong> Menemukan kombinasi segmen bernilai kebijakan tinggi yang memaksimalkan skor prioritas AHP/WSM dengan efisiensi penyerapan 99,99%.<br>
-                  <strong>Objektif B (Maximum Length ILP):</strong> Memaksimalkan kilometer fisik jalan yang diperbaiki, memberikan jangkauan penanganan terpanjang per rupiah.<br>
-                  <strong>Objektif C (Priority-Respecting ILP):</strong> Menjamin kepatuhan mutlak pada hierarki ruas prioritas teratas sebelum mengisi sisa pagu dengan ILP.
-                </p>
-              </div>
             </div>
 
           </div>
@@ -2937,10 +2891,10 @@
             <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fungsi Tujuan</label>
               <select name="optimization_objective" class="w-full text-xs rounded-lg border-slate-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 p-2.5 border">
-                <option value="PRIORITY_WEIGHTED">Objektif A: Terbobot Prioritas</option>
-                <option value="MAX_LENGTH">Objektif B: Maksimasi Panjang</option>
-                <option value="PRIORITY_RESPECTING">Objektif C: Hierarki Prioritas</option>
-                <option value="GREEDY_BENCHMARK">Baseline: Heuristik Greedy</option>
+                <option value="PRIORITY_WEIGHTED">Manfaat berbobot prioritas</option>
+                <option value="MAX_LENGTH">Panjang jalan tertangani</option>
+                <option value="PRIORITY_RESPECTING">Hierarki prioritas</option>
+                <option value="GREEDY_BENCHMARK">Urutan prioritas</option>
               </select>
             </div>
           </div>

@@ -51,6 +51,19 @@
     },
   };
 
+  const objectiveLabels = {
+    GREEDY_BENCHMARK: 'Urutan prioritas',
+    PRIORITY_WEIGHTED: 'Manfaat berbobot prioritas',
+    MAX_LENGTH: 'Panjang jalan tertangani',
+    PRIORITY_RESPECTING: 'Hierarki prioritas',
+  };
+  const solverStatusLabels = {
+    BENCHMARK_GREEDY: 'Alokasi berdasarkan urutan prioritas',
+    OPTIMAL: 'Solusi optimal',
+    FEASIBLE: 'Solusi layak',
+    INFEASIBLE: 'Tidak ada solusi yang memenuhi batasan',
+  };
+
   // Helper Formatters
   function formatRp(val) {
     if (val === undefined || val === null || isNaN(val)) return 'Rp 0';
@@ -203,10 +216,8 @@
       });
       await selectScenario(state.currentScenarioId);
       await fetchComparisonMethods();
-      showToast(
-        `Optimasi solver selesai! Status: ${res.data.solver_status} (Nodes: ${res.data.nodes_explored ?? res.data.solver_nodes ?? 0}, Gap: ${res.data.optimality_gap_pct ?? res.data.solver_gap_pct ?? 0}%)`,
-        'success'
-      );
+      showToast(solverStatusLabels[res.data.solver_status] || 'Status alokasi belum tersedia',
+        res.data.solver_status === 'INFEASIBLE' ? 'error' : 'success');
     } catch (err) {
       showError('Gagal menjalankan optimasi solver: ' + err.message);
     } finally {
@@ -357,7 +368,7 @@
     const elRoutineManual = document.getElementById('asb-kpi-routine-manual');
     const elTreatedLength = document.getElementById('asb-kpi-treated-length');
 
-    if (elTotalCost) elTotalCost.textContent = formatRp(d.total_cost_rp);
+    if (elTotalCost) elTotalCost.textContent = Number.isFinite(d.total_cost_rp) ? formatRp(d.total_cost_rp) : '—';
     if (elCeiling) elCeiling.textContent = formatRp(d.budget_ceiling_rp);
     if (elAllocated) elAllocated.textContent = formatRp(d.allocated_cost_rp);
 
@@ -384,11 +395,7 @@
 
     // Subtitle meta
     const elMeta = document.getElementById('asb-scenario-meta-desc');
-    if (elMeta) {
-      const objLabel = d.optimization_objective || 'PRIORITY_WEIGHTED';
-      const solverStatus = d.solver_status || 'OPTIMAL';
-      elMeta.textContent = `${d.description || 'Skenario perencanaan anggaran'} — Solver: ${solverStatus} (${objLabel}) · Presisi 64-bit integer-sen · Model Martello-Toth ILP Knapsack.`;
-    }
+    if (elMeta) elMeta.textContent = d.description || 'Estimasi penanganan jalan berdasarkan standar ASB BM 2027.';
 
     const elSubtext = document.getElementById('asb-kpi-total-cost-subtext');
     if (elSubtext) {
@@ -427,39 +434,19 @@
     const d = state.scenarioDetail;
     if (!d) return;
 
-    const elBadge = document.getElementById('asb-solver-status-badge');
-    const elGap = document.getElementById('asb-solver-gap');
-    const elNodes = document.getElementById('asb-solver-nodes');
-    const elRuntime = document.getElementById('asb-solver-runtime');
+    const status = d.solver_status;
+    const badge = document.getElementById('asb-solver-status-badge');
+    badge.textContent = solverStatusLabels[status] || 'Belum tersedia';
+    badge.classList.toggle('text-emerald-300', status === 'OPTIMAL');
+    badge.classList.toggle('text-amber-300', status === 'FEASIBLE' || status === 'INFEASIBLE');
 
-    if (elBadge) {
-      const status = d.solver_status || 'OPTIMAL';
-      if (status === 'OPTIMAL') {
-        elBadge.className = 'px-2.5 py-0.5 rounded text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
-        elBadge.textContent = 'OPTIMAL (Global Optimal Terbukti)';
-      } else if (status === 'FEASIBLE') {
-        elBadge.className = 'px-2.5 py-0.5 rounded text-xs font-bold bg-amber-950 text-amber-300 border border-amber-700';
-        elBadge.textContent = 'FEASIBLE (Solusi Layak ILP)';
-      } else {
-        elBadge.className = 'px-2.5 py-0.5 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700';
-        elBadge.textContent = 'BENCHMARK GREEDY (Heuristik Berurut)';
-      }
-    }
-
-    if (elGap) {
-      const gap = d.solver_gap_pct !== undefined && d.solver_gap_pct !== null ? d.solver_gap_pct : 0.0;
-      elGap.textContent = `${gap.toFixed(2)}% (Certified Exact)`;
-    }
-
-    if (elNodes) {
-      const nodes = d.solver_nodes || 1;
-      elNodes.textContent = `${nodes.toLocaleString('id-ID')} simpul (Martello-Toth LP Exact)`;
-    }
-
-    if (elRuntime) {
-      const runtime = d.solver_runtime_ms || 12;
-      elRuntime.textContent = `${runtime} ms`;
-    }
+    const metrics = document.getElementById('asb-solver-metrics');
+    metrics.classList.toggle('hidden', status !== 'OPTIMAL' && status !== 'FEASIBLE');
+    document.getElementById('asb-solver-gap').textContent = Number.isFinite(d.solver_gap_pct)
+      ? `${d.solver_gap_pct.toLocaleString('id-ID', { maximumFractionDigits: 4 })}%` : '—';
+    document.getElementById('asb-solver-nodes').textContent = d.solver_nodes?.toLocaleString('id-ID') ?? '—';
+    document.getElementById('asb-solver-runtime').textContent = Number.isFinite(d.solver_runtime_ms)
+      ? `${d.solver_runtime_ms.toLocaleString('id-ID')} ms` : '—';
 
     // Sync radio button
     const objective = d.optimization_objective || 'PRIORITY_WEIGHTED';
@@ -725,7 +712,6 @@
       routine_maintenance_roads: m.status_breakdown?.routine_maintenance_roads ?? m.routine_maintenance_roads ?? 0,
       manual_review_roads: m.status_breakdown?.manual_review_roads ?? m.manual_review_roads ?? 0,
       solver_status: m.solver_status,
-      solver_runtime_ms: m.runtime_ms ?? m.solver_runtime_ms ?? 0,
     }));
     const currentObj = data.current_objective || state.optimization.objective || state.scenarioDetail?.optimization_objective;
 
@@ -734,19 +720,10 @@
         const isCurrent = m.optimization_objective === currentObj;
         const absorptionPct = m.budget_ceiling_rp > 0 ? (m.allocated_cost_rp / m.budget_ceiling_rp) * 100 : 0;
 
-        const methodTitles = {
-          GREEDY_BENCHMARK: { name: 'Benchmark Heuristik Greedy', badge: 'Fase 2 Baseline' },
-          PRIORITY_WEIGHTED: { name: 'Objektif A: Terbobot Prioritas', badge: 'Exact ILP' },
-          MAX_LENGTH: { name: 'Objektif B: Maksimasi Panjang', badge: 'Exact ILP' },
-          PRIORITY_RESPECTING: { name: 'Objektif C: Hierarki Prioritas', badge: 'Lexicographic ILP' },
-        };
-        const titleInfo = methodTitles[m.optimization_objective] || { name: m.optimization_objective, badge: 'ILP' };
-
         return `
           <tr class="hover:bg-slate-50 border-b border-slate-200 transition ${isCurrent ? 'bg-sky-50/60 font-semibold' : ''}">
             <td class="px-3 py-3">
-              <div class="font-bold text-slate-900">${titleInfo.name}</div>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold ${isCurrent ? 'bg-sky-200 text-sky-800' : 'bg-slate-100 text-slate-600'}">${titleInfo.badge}</span>
+              <div class="font-bold text-slate-900">${objectiveLabels[m.optimization_objective] || 'Metode belum tersedia'}</div>
               ${isCurrent ? '<span class="ml-1 text-[10px] font-bold text-sky-700">● Terpilih Saat Ini</span>' : ''}
             </td>
             <td class="px-3 py-3 text-right font-mono">${formatRp(m.budget_ceiling_rp)}</td>
@@ -765,9 +742,8 @@
             </td>
             <td class="px-3 py-3 text-center">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.solver_status === 'OPTIMAL' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'}">
-                ${m.solver_status}
+                ${solverStatusLabels[m.solver_status] || 'Belum tersedia'}
               </span>
-              <span class="text-[10px] text-slate-400 block">${m.solver_runtime_ms || 12} ms</span>
             </td>
             <td class="px-3 py-3 text-center whitespace-nowrap">
               ${
@@ -1194,7 +1170,7 @@
             <td class="px-3 py-3 font-semibold text-slate-900">
               ${escapeHtml(scn.scenario_name)}
               ${isCurrent ? '<span class="ml-1.5 px-1.5 py-0.5 rounded text-[10px] bg-sky-200 text-sky-800 font-bold">Aktif</span>' : ''}
-              <div class="text-[10px] text-slate-400 font-mono">${escapeHtml(scn.scenario_code)} (${scn.budget_year}) [${scn.optimization_objective || 'GREEDY'}]</div>
+              <div class="text-[10px] text-slate-400 font-mono">${escapeHtml(scn.scenario_code)} (${scn.budget_year}) [${objectiveLabels[scn.optimization_objective] || 'Metode belum tersedia'}]</div>
             </td>
             <td class="px-3 py-3 text-center">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
